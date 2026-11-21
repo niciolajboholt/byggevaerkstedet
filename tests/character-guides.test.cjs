@@ -8,7 +8,7 @@ const context = vm.createContext({ localStorage: { getItem: () => null } });
 vm.runInContext(script.slice(0, script.indexOf('// ---------- list ----------')) + '\nthis.models=BUILDS;this.palette=COLORS;this.squares=brickSquares;', context);
 const ids = ['roed-kasket', 'groen-kasket', 'lyseroed-prinsesse', 'groen-dinosaur', 'pigget-skildpaddekonge', 'svampehat'];
 
-const magicIds = ["troldmand-med-briller", "troldkvinde-med-boelget-haar", "roedhaaret-troldmand", "sneugle", "talende-hat", "gylden-vingebold", "troldmandsborg", "flyvende-kost"];
+const magicIds = ["loeveskjold", "slangeskjold", "oerneskjold", "graevlingeskjold", "troldmand-med-briller", "troldkvinde-med-boelget-haar", "roedhaaret-troldmand", "sneugle", "talende-hat", "gylden-vingebold", "troldmandsborg", "flyvende-kost"];
 const themeCategories = {"lynmus": "Pokémon", "ildfirben": "Pokémon", "vand-skildpadde": "Pokémon", "froevaesen": "Pokémon", "roed-hvid-fangebold": "Pokémon", "brun-raev": "Pokémon", "groent-blokmonster": "Minecraft", "blokbygger": "Minecraft", "blokgris": "Minecraft", "diamantsvaerd": "Minecraft", "diamanthakke": "Minecraft", "graesblok": "Minecraft"};
 const guideIds = ids.concat(magicIds, Object.keys(themeCategories));
 
@@ -23,7 +23,7 @@ test('catalogue has unique IDs and descriptive character and magic guides', () =
   }
 });
 
-test('Magi is a separate filter containing exactly the eight new guides', () => {
+test('Magi is a separate filter containing exactly twelve guides including four house shields', () => {
   vm.runInContext('this.categories=CATS', context);
   assert.equal(context.categories.filter(c => c === 'Magi').length, 1);
   assert.deepEqual(Array.from(context.models.filter(b => b.cat === 'Magi'), b => b.id).sort(), magicIds.slice().sort());

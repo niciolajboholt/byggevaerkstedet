@@ -49,3 +49,18 @@ med det valgte tema. Modellerne findes også under **Alle** og kan likes som de
 Alle 20 har beskrivelse, byggetip, rækkevejledning og automatisk optalt brikliste.
 De digitale kontroller omfatter også kategoriernes præcise indhold og de seks
 første figurmodeller. Modellerne er ikke fysisk prøvebygget.
+
+## Fire kollegieskjolde
+
+Under **Magi** findes nu også fire stiliserede skjolde uden tekst:
+
+| Model | Farver og motiv | Brikker |
+| --- | --- | ---: |
+| Løvens kollegieskjold | Rød og guld, løve | 338 |
+| Slangens kollegieskjold | Grøn og sølvgrå, slange | 338 |
+| Ørnens kollegieskjold | Blå og bronze (brun), ørn | 338 |
+| Grævlingens kollegieskjold | Gul og sort, grævling | 338 |
+
+Alle fire er 19 × 22 brikfelter og har rækkevejledning, brikliste og byggetip.
+Magi-filteret indeholder dermed 12 modeller. Skjoldene er tilpasset brikkernes
+geometri og er ikke nøjagtige gengivelser af officielle våbenskjolde.
