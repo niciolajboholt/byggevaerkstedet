@@ -3,10 +3,13 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const {JSDOM,VirtualConsole}=require('jsdom');
 const html=fs.readFileSync(new URL('../index.html',`file://${__filename}`),'utf8');
-function app(){
+const snapshotStorage=a=>Object.fromEntries(Array.from({length:a.w.localStorage.length},(_,i)=>{const key=a.w.localStorage.key(i);return [key,a.w.localStorage.getItem(key)]}));
+function app(options={}){
  const errors=[];
  const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
- const d=new JSDOM(html,{url:'https://example.test/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){
+ const d=new JSDOM(html,{url:options.url||'https://example.test/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){
+  for(const [key,value] of Object.entries(options.storage||{}))w.localStorage.setItem(key,value);
+  w.confirm=()=>true;
   w.requestAnimationFrame=fn=>w.setTimeout(fn,0);w.scrollTo=()=>{};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
   w.HTMLCanvasElement.prototype.getContext=()=>new Proxy({},{get:(t,k)=>k==='measureText'?()=>({width:30}):()=>{},set:()=>true});
@@ -124,5 +127,82 @@ test('smallest assignment preserves all bricks and physical assembly order for e
   return {id:b.id,n,selected,minimum:Math.min(...parts.map(p=>p.n)),assigned:parts[selected].n,total:parts.reduce((s,p)=>s+p.n,0),expected:b.total,ordered:physical.every((p,i)=>!i||p.r0===physical[i-1].r1+1),first:physical[0].r0,last:physical.at(-1).r1,expectedLast:b.p.length-1};
  }))))`));
  for(const c of checks){assert.equal(c.assigned,c.minimum,`${c.id}: builder ${c.selected}`);assert.equal(c.total,c.expected);assert.ok(c.ordered);assert.equal(c.first,0);assert.equal(c.last,c.expectedLast)}
+ assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('solo resumes after leaving and reloading; restart is explicit and cancellable',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.click('aloneStart');
+ for(let i=0;i<3;i++)a.click('next');
+ a.click('detailBack');a.click('detailBack');await a.settle();a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
+ assert.equal(a.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');a.click('aloneStart');
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Række 4 af 10/);
+ const b=app({url:a.w.location.href,storage:snapshotStorage(a)});await b.settle();b.click('aloneStart');
+ assert.match(b.doc.getElementById('rowTitle').textContent,/Række 4 af 10/);
+ b.click('detailBack');b.click('restartBuild');b.click('confirmCancel');await b.settle();b.click('aloneStart');
+ assert.match(b.doc.getElementById('rowTitle').textContent,/Række 4 af 10/);
+ b.click('detailBack');b.click('restartBuild');b.click('confirmAccept');await b.settle();
+ assert.match(b.doc.getElementById('rowTitle').textContent,/Række 1 af 10/);
+ assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
+});
+
+test('all builders resume their own rows; changing distribution starts a separate build',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.choose('[data-mode="together"]');a.click('teamStart');
+ a.click('next');a.choose('#partTabs [data-i="1"]');a.click('next');a.click('next');
+ const b=app({url:a.w.location.href,storage:snapshotStorage(a)});await b.settle();b.click('teamStart');
+ assert.match(b.doc.getElementById('rowTitle').textContent,/Alfred: række 3/);
+ b.choose('#partTabs [data-i="0"]');assert.match(b.doc.getElementById('rowTitle').textContent,/Jens: række 2/);
+ b.click('detailBack');b.choose('#teamSplit [data-smallest="0"]');assert.equal(b.doc.getElementById('teamStart').textContent,'Start byggeriet');
+ b.choose('#teamSplit [data-s="even"]');b.click('teamStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Jens: række 2/);
+ assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
+});
+
+test('changed model geometry never resumes an incompatible row',async()=>{
+ const model={id:'own-test',name:'Own',p:['RR','YY']};
+ const a=app({url:'https://example.test/#m-own-test',storage:{bv_own:JSON.stringify([model])}});await a.settle();a.click('aloneStart');a.click('next');
+ const storage=snapshotStorage(a);storage.bv_own=JSON.stringify([{...model,p:['RR','YY','BB']}]);
+ const b=app({url:a.w.location.href,storage});await b.settle();
+ assert.equal(b.doc.getElementById('aloneStart').textContent,'Start byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 1 af 3/);
+ a.close();b.close();
+});
+
+test('shrinking drawing warns before removing bricks; undo restores dimensions and contents',async()=>{
+ const a=app({url:'https://example.test/#byg'});await a.settle();
+ const resize=n=>{a.doc.getElementById('size').value=String(n);a.doc.getElementById('size').dispatchEvent(new a.w.Event('change'))};
+ resize(24);a.w.eval('grid[12][12]="R"');resize(10);a.click('confirmCancel');await a.settle();
+ assert.equal(a.doc.getElementById('size').value,'24');assert.equal(a.w.eval('grid[12][12]'),'R');
+ resize(10);a.click('confirmAccept');await a.settle();resize(24);a.click('undo');assert.equal(a.doc.getElementById('size').value,'10');
+ a.click('undo');assert.equal(a.doc.getElementById('size').value,'24');assert.equal(a.w.eval('grid[12][12]'),'R');
+ a.click('save');await a.settle();assert.match(a.doc.getElementById('total').textContent,/1 brikker/);assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('shared links override reversed local names and lock complementary row assignments',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.choose('[data-mode="together"]');
+ const links=Array.from(a.doc.querySelectorAll('#shareLinks input'),el=>el.value);
+ const screens=links.map(url=>app({url,storage:{bv_team:JSON.stringify({n:2,names:['Alfred','Jens'],split:'even'})}}));
+ const assigned=[];
+ for(const b of screens){await b.settle();assert.equal(b.doc.getElementById('swapBuilders').disabled,true);b.click('teamStart');assigned.push(JSON.parse(b.w.eval('JSON.stringify(parts[active])')));assert.deepEqual(b.errors,[])}
+ assert.deepEqual(assigned.map(p=>p.name),['Jens','Alfred']);assert.equal(assigned[0].r1+1,assigned[1].r0);assert.equal(assigned.reduce((n,p)=>n+p.n,0),30);
+ for(const b of screens)b.close();a.close();
+});
+
+test('outdated and malformed sharing links show a clear warning',async()=>{
+ const plan={v:1,p:['R'],n:2,names:['Jens','Alfred'],split:'even',smallest:1,me:0};
+ for(const encoded of [encodeURIComponent(JSON.stringify(plan)),'%bad']){
+  const a=app({url:'https://example.test/#m-motiver50-01?team='+encoded});await a.settle();assert.match(a.doc.getElementById('resumeInfo').textContent,/beskadiget/);assert.deepEqual(a.errors,[]);a.close();
+ }
+});
+
+test('category and collection filters retain keyboard focus after activation',async()=>{
+ const a=app();await a.settle();a.click('filterOpen');
+ a.doc.querySelector('#tabs [data-t="Magi"]').focus();a.choose('#tabs [data-t="Magi"]');assert.equal(a.doc.activeElement.dataset.t,'Magi');
+ a.click('filterApply');a.doc.querySelector('[data-quick="50 nye"]').focus();a.choose('[data-quick="50 nye"]');assert.equal(a.doc.activeElement.dataset.quick,'50 nye');a.close();
+});
+
+test('keyboard drawing supports movement, placement, deletion, undo and saving',async()=>{
+ const a=app({url:'https://example.test/#byg'});await a.settle();const pad=a.doc.getElementById('pad');pad.focus();
+ const key=value=>pad.dispatchEvent(new a.w.KeyboardEvent('keydown',{key:value,bubbles:true,cancelable:true}));
+ key('ArrowRight');key('ArrowDown');key(' ');assert.match(a.doc.getElementById('padStatus').textContent,/Række 2, kolonne 2: Rød/);
+ key('Delete');assert.match(a.doc.getElementById('padStatus').textContent,/kolonne 2: tom/);a.click('undo');
+ assert.equal(a.w.eval('grid[1][1]'),'R');a.click('save');await a.settle();assert.match(a.doc.getElementById('total').textContent,/1 brikker/);
  assert.deepEqual(a.errors,[]);a.close();
 });

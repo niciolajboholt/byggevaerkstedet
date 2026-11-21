@@ -19,3 +19,10 @@ dialog{border:1px solid var(--line);background:var(--bg);color:var(--ink);border
 @media(max-width:760px){[data-theme=parent] .card:first-child .model-link{grid-template-rows:auto auto auto}[data-theme=parent] .card:first-child canvas{grid-row:1/4}[data-theme=parent] .card:first-child .card-cta{grid-column:1;grid-row:3;align-self:start;margin:0}}
 
 .builder-names-row{position:relative}#teamNames{column-gap:64px}.swap-builders{position:absolute;left:50%;top:29px;transform:translateX(-50%);display:grid;place-items:center;gap:2px;border:1px solid var(--line);background:var(--bg);color:var(--accent);border-radius:12px;min-height:48px;width:52px;padding:5px 2px}.swap-builders span{font-size:9px;font-weight:800;line-height:1.1}.swap-icon{--icon:url(assets/icons/arrows-left-right.svg);width:21px;height:21px}
+#pad:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+#shareLinks label{margin-top:12px}#shareLinks input{font-size:14px}
+#resumeInfo{margin-top:12px}
+@media(max-width:760px){
+  body:not(.building) #detailView{padding-bottom:100px}
+  body:not(.building) #aloneStart,body:not(.building) #teamStart{position:fixed;z-index:21;bottom:calc(76px + env(safe-area-inset-bottom));left:20px;right:20px;width:calc(100% - 40px);margin:0;box-shadow:0 0 0 8px var(--bg)}
+}
