@@ -154,6 +154,8 @@
         <div id="teamNames"></div>
         <div><label>Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div>
         <p class="meta" id="splitInfo" style="margin:0"></p>
+        <div><label>Hvem bruger denne iPad?</label><div class="chips" id="teamMe"></div></div>
+        <p class="meta" id="meInfo" style="margin:0"></p>
         <button class="btn" id="teamStart">Start byggeriet ▶</button>
       </div>
       <div id="partTabs" class="ptabs hide"></div>
@@ -557,6 +559,12 @@ function renderSetup(){
   $("teamNames").innerHTML=Array.from({length:team.n},(_,i)=>`<label style="color:${TEAM_COLORS[i]}">Bygger ${i+1}</label><input data-i="${i}" value="${esc(team.names[i]||"")}" placeholder="Navn">`).join("");
   $("teamSplit").innerHTML=[["even","Lige store dele"],["small",`Mindste del til ${esc(team.names[team.n-1]||"den yngste")}`]].map(([v,t])=>`<button data-s="${v}" class="${team.split===v?"on":""}">${t}</button>`).join("");
   $("splitInfo").textContent=parts.map(p=>`${p.name}: ${p.n} brikker`).join(" · ")+(parts.length<team.n?" (figuren er for lille til flere dele)":"");
+  if(team.me!=null&&team.me>=team.n)team.me=null;
+  $("teamMe").innerHTML=`<button data-me="" class="${team.me==null?"on":""}">Hele holdet</button>`+
+    Array.from({length:team.n},(_,i)=>`<button data-me="${i}" class="${team.me===i?"on":""}">Kun ${esc(team.names[i]||`Bygger ${i+1}`)}</button>`).join("");
+  $("meInfo").textContent=team.me==null?"Alle deles om denne iPad og skifter mellem fanerne.":
+    `Denne iPad viser kun ${team.names[team.me]?gen(team.names[team.me]):"din"} del. Den anden iPad skal stå på ${team.n} byggere og „${team.split==="even"?"Lige store dele":"Mindste del til den yngste"}“ – så får I præcis de samme dele.`;
+  $("teamMe").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.me=b.dataset.me===""?null:+b.dataset.me;saveTeam();render()});
   $("teamCount").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.n=+b.dataset.n;saveTeam();render()});
   $("teamSplit").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.split=b.dataset.s;saveTeam();render()});
   $("teamNames").querySelectorAll("input").forEach(inp=>inp.onchange=()=>{team.names[+inp.dataset.i]=inp.value.trim();saveTeam();render()});
@@ -566,10 +574,13 @@ function renderSetup(){
   $("prev").disabled=true;$("next").disabled=true;$("all").classList.add("hide");$("prog").style.width="0%";
   renderParts(cur.counts,"Hele figuren skal bruge");
 }
+// Danish genitive: "Alfreds", but "Jens'" for names ending in s, x or z
+function gen(n){return /[sxz]$/i.test(n)?n+"'":n+"s"}
 function saveTeam(){store.set("bv_team",team)}
 function renderTabsTeam(){
-  const all=parts.every(p=>p.done);
-  $("partTabs").innerHTML=parts.map((p,i)=>`<button data-i="${i}" class="${phase==="build"&&i===active?"on":""}" style="background:${p.color}">${esc(p.name)}${p.done?" ✓":""}</button>`).join("")+
+  const mine=team.me!=null?[team.me]:parts.map((_,i)=>i);
+  const all=mine.every(i=>parts[i].done);
+  $("partTabs").innerHTML=parts.map((p,i)=>!mine.includes(i)?"":`<button data-i="${i}" class="${phase==="build"&&i===active?"on":""}" style="background:${p.color}">${esc(p.name)}${p.done?" ✓":""}</button>`).join("")+
     (all?`<button data-i="asm" class="asm ${phase==="assemble"?"on":""}">🧩 Saml</button>`:"");
   $("partTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{
     clearInterval(asmTimer);
@@ -587,8 +598,13 @@ function renderPart(){
   $("doneBox").classList.add("hide");
   if(finished){
     const all=parts.every(q=>q.done), next=parts.findIndex(q=>!q.done);
+    if(team.me!=null){
+      $("partDone").classList.remove("hide");$("partDone").style.background=p.color;
+      $("partDone").innerHTML=`🎉 Godt gået, ${esc(p.name)}! Din del er færdig.<br><span style="font-size:15px;font-weight:600">Når de andre også er færdige, så tryk på 🧩 Saml og læg delene sammen.</span>`;
+      renderParts(p.counts,`${p.name} skal bruge`);return;
+    }
     $("partDone").classList.remove("hide");$("partDone").style.background=p.color;
-    $("partDone").innerHTML=`🎉 Godt gået, ${esc(p.name)}! Din del er færdig.<br><span style="font-size:15px;font-weight:600">${all?"Alle dele er klar – tryk på 🧩 Saml.":`Nu mangler ${esc(parts[next].name)}s del.`}</span>`;
+    $("partDone").innerHTML=`🎉 Godt gået, ${esc(p.name)}! Din del er færdig.<br><span style="font-size:15px;font-weight:600">${all?"Alle dele er klar – tryk på 🧩 Saml.":`Nu mangler ${esc(gen(parts[next].name))} del.`}</span>`;
   }
   renderParts(p.counts,`${p.name} skal bruge`);
 }
@@ -607,7 +623,7 @@ $("assembleGo").onclick=()=>{
   clearInterval(asmTimer);asmGap=1.2;
   asmTimer=setInterval(()=>{asmGap=Math.max(0,asmGap-0.04);renderAssemble();if(asmGap===0)clearInterval(asmTimer)},40);
 };
-$("teamStart").onclick=()=>{buildParts();phase="build";active=0;render()};
+$("teamStart").onclick=()=>{buildParts();phase="build";active=team.me!=null?team.me:0;render()};
 document.querySelectorAll("#modeBar button").forEach(b=>b.onclick=()=>{mode=b.dataset.mode;store.set("bv_mode",mode);phase="setup";clearInterval(asmTimer);render()});
 $("modelZoom").onchange=render;
 $("next").onclick=()=>{
