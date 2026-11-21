@@ -10,7 +10,10 @@ const ids = ['roed-kasket', 'groen-kasket', 'lyseroed-prinsesse', 'groen-dinosau
 
 const magicIds = ["loeveskjold", "slangeskjold", "oerneskjold", "graevlingeskjold", "troldmand-med-briller", "troldkvinde-med-boelget-haar", "roedhaaret-troldmand", "sneugle", "talende-hat", "gylden-vingebold", "troldmandsborg", "flyvende-kost"];
 const themeCategories = {"lynmus": "Pokémon", "ildfirben": "Pokémon", "vand-skildpadde": "Pokémon", "froevaesen": "Pokémon", "roed-hvid-fangebold": "Pokémon", "brun-raev": "Pokémon", "groent-blokmonster": "Minecraft", "blokbygger": "Minecraft", "blokgris": "Minecraft", "diamantsvaerd": "Minecraft", "diamanthakke": "Minecraft", "graesblok": "Minecraft"};
-const guideIds = ids.concat(magicIds, Object.keys(themeCategories));
+const approved=JSON.parse(readFileSync(new URL("../data/approved-motifs-50.json", `file://${__filename}`), "utf8"));
+const approvedId=b=>`motiver50-${String(b.number).padStart(2,"0")}`;
+const approvedById=new Map(approved.models.map(b=>[approvedId(b),b]));
+const guideIds = ids.concat(magicIds, Object.keys(themeCategories), [...approvedById.keys()]);
 
 test('every catalogue guide uses at most 250 bricks', () => {
   for (const b of context.models) {
@@ -23,23 +26,23 @@ test('catalogue has unique IDs and descriptive character and magic guides', () =
   for (const id of guideIds) {
     const b = context.models.find(b => b.id === id);
     assert.ok(b, id);
-    assert.equal(b.cat, themeCategories[id] || (magicIds.includes(id) ? 'Magi' : 'Figurer'));
+    assert.equal(b.cat, approvedById.get(id)?.group || themeCategories[id] || (magicIds.includes(id) ? 'Magi' : 'Figurer'));
     assert.ok(b.description && b.tip);
     assert.doesNotMatch(JSON.stringify(b), /mario|luigi|peach|yoshi|bowser|toad|nintendo|harry|potter|hermione|ron weasley|hedwig|hogwarts/i);
   }
 });
 
-test('Magi is a separate filter containing exactly twelve guides including four house shields', () => {
+test('Magi contains the previous twelve guides and five approved additions', () => {
   vm.runInContext('this.categories=CATS', context);
   assert.equal(context.categories.filter(c => c === 'Magi').length, 1);
-  assert.deepEqual(Array.from(context.models.filter(b => b.cat === 'Magi'), b => b.id).sort(), magicIds.slice().sort());
+  assert.deepEqual(Array.from(context.models.filter(b => b.cat === 'Magi'), b => b.id).sort(), magicIds.concat(approved.models.filter(b=>b.group==='Magi').map(approvedId)).sort());
 });
 
-for (const category of ['Pokémon', 'Minecraft']) test(`${category} has a separate filter and six guides`, () => {
+for (const category of ['Pokémon', 'Minecraft']) test(`${category} retains its six guides and five approved additions`, () => {
   assert.equal(context.categories.filter(c => c === category).length, 1);
   const actual = Array.from(context.models.filter(b => b.cat === category), b => b.id).sort();
-  assert.equal(actual.length, 6);
-  assert.deepEqual(actual, Object.keys(themeCategories).filter(id => themeCategories[id] === category).sort());
+  assert.equal(actual.length, 11);
+  assert.deepEqual(actual, Object.keys(themeCategories).filter(id => themeCategories[id] === category).concat(approved.models.filter(b=>b.group===category).map(approvedId)).sort());
 });
 
 for (const id of guideIds) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
@@ -88,4 +91,41 @@ for (const id of guideIds) test(`${id}: whole bricks, no overlap, connected mode
     assert.equal(runs.map(([c,n]) => c.repeat(n)).join('').padEnd(width, '.'), b.p[y]);
   }
   console.log(`${b.name}: ${b.total} bricks, ${b.p.length} rows, ${Object.keys(counts).length} colours`);
+});
+
+
+test('all 50 approved motifs keep the collage geometry, names, levels, counts and numbering', () => {
+  assert.equal(approved.models.length, 50);
+  const added=context.models.filter(b=>b.collection==='motiver-50');
+  assert.equal(added.length, 50);
+  assert.deepEqual(Array.from(added,b=>b.collageNumber), Array.from({length:50},(_,i)=>i+1));
+  for (const original of approved.models) {
+    const b=added.find(b=>b.id===approvedId(original));
+    assert.ok(b);
+    assert.equal(b.name, original.name);
+    assert.deepEqual(Array.from(b.p),original.p);
+    assert.equal(b.total, original.bricks);
+    assert.equal(b.level, original.level);
+    assert.equal(JSON.stringify(b.counts),JSON.stringify(original.counts));
+    assert.equal(b.cat,original.group);
+    assert.ok(context.categories.includes(original.group));
+  }
+  assert.equal(context.categories.filter(c=>c==='50 nye').length,1);
+});
+
+test('all approved motifs can be partitioned for two or three builders without losing or repeating bricks', () => {
+  vm.runInContext(script.match(/function splitRows\(b,weights\)\{[\s\S]*?\n\}/)[0], context);
+  for (const original of approved.models) {
+    const b=context.models.find(b=>b.id===approvedId(original));
+    for (const weights of [[1,1],[1,1,1],[1,.55],[1,1,.55]]) {
+      const parts=context.splitRows(b,weights);
+      assert.equal(parts.length,weights.length);
+      assert.equal(parts[0].r0,0);
+      assert.equal(parts[parts.length-1].r1,b.p.length-1);
+      parts.forEach((p,i)=>{assert.ok(p.r1>=p.r0);if(i)assert.equal(p.r0,parts[i-1].r1+1)});
+      const assigned=parts.flatMap(p=>b.tiles.filter(t=>t.row>=p.r0&&t.row<=p.r1));
+      assert.equal(assigned.length,b.total);
+      assert.equal(new Set(assigned.map(t=>`${t.x},${t.y}`)).size,b.total);
+    }
+  }
 });

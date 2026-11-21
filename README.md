@@ -76,3 +76,21 @@ Alle katalogets vejledninger må bruge højst **250 brikker**. Testpakken kontro
 samtlige modeller i `BUILDS`, også de oprindelige, og fejler ved en overskridelse.
 Brikgrænsen gælder de medfølgende vejledninger; egne tegninger i 2D-editoren
 bevarer deres eksisterende funktionalitet.
+
+## De 50 godkendte kollagemotiver
+
+De 50 motiver fra kollagen er lagt først i kataloget. Filteret **50 nye** samler
+dem, og hvert kort og hver vejledning viser det oprindelige motivnummer 01–50.
+Søg på et navn eller et tocifret motivnummer, fx `01` eller `47`.
+
+- Tegninger, navne, farver, brikantal og sværhedsgrader matcher den godkendte kollage.
+- 15 lette, 15 mellem og 20 svære modeller, på 30–199 brikker.
+- Ti temaer: Magi, Minecraft, Pokémon, Platformspil, Dyr, Fantasi, Køretøjer,
+  Rum og robotter, Natur og eventyr, Leg og hygge.
+- Alle har brikliste, motivbeskrivelse og rækkevejledning og kan også bruges med
+  **Byg sammen** med to eller tre byggere.
+
+`data/approved-motifs-50.json` bevarer kollagens datagrundlag til kontrol af, at
+appens brikmønstre og numre følger det godkendte oplæg. Testene sammenligner alle
+50 modeller med dette grundlag og kontrollerer også brikfordelingen i Byg sammen.
+De oprindelige modeller, links og gemte egne tegninger er bevaret.
