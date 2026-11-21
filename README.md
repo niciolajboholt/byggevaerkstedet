@@ -56,11 +56,21 @@ Under **Magi** findes nu også fire stiliserede skjolde uden tekst:
 
 | Model | Farver og motiv | Brikker |
 | --- | --- | ---: |
-| Løvens kollegieskjold | Rød og guld, løve | 338 |
+| Løvens våbenskjold | Rød/gul firedeling, hel oprejst løve, hjelm og løvværk | 1525 |
 | Slangens kollegieskjold | Grøn og sølvgrå, slange | 338 |
 | Ørnens kollegieskjold | Blå og bronze (brun), ørn | 338 |
 | Grævlingens kollegieskjold | Gul og sort, grævling | 338 |
 
-Alle fire er 19 × 22 brikfelter og har rækkevejledning, brikliste og byggetip.
+Slange-, ørne- og grævlingskjoldene er 19 × 22 brikfelter. Løveskjoldet er
+omtegnet efter brugerens reference og er 49 × 57 felter. Alle har rækkevejledning,
+brikliste og byggetip. Store modeller kan forstørres 2× og 3× med rulning i tegningen.
 Magi-filteret indeholder dermed 12 modeller. Skjoldene er tilpasset brikkernes
 geometri og er ikke nøjagtige gengivelser af officielle våbenskjolde.
+
+Løveskjoldet bevarer samme ID (`loeveskjold`), så eksisterende links og likes
+fortsat virker. Referencebilledet bruges som visuelt grundlag; appen indeholder
+en selvstændig briktegning, ikke en indlejret kopi af billedet. Båndet er uden tekst.
+
+Den geometriske tegning kan genskabes med `python3 scripts/generate-lion-guide.py`
+(kræver Pillow). Scriptet ændrer kun løvemodellen og tilføjer de nødvendige farver,
+hvis de mangler. Zoom bevarer det aktuelle byggetrin.

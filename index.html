@@ -54,6 +54,9 @@
   @media(max-width:760px){.viewer{grid-template-columns:1fr}}
   .panel{background:#fff;border-radius:18px;border:2px solid var(--line);padding:14px}
   .back{background:none;border:none;color:var(--accent);cursor:pointer;padding:0;margin-bottom:6px;font-weight:700}
+  .model-viewport{overflow:auto;max-height:75vh;border-radius:12px;background:#e6e8ec}
+  .model-zoom{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+  .model-zoom select{font:inherit;padding:4px 8px;border:2px solid var(--line);border-radius:8px;background:#fff}
   #big{width:100%;display:block;background:#e6e8ec;border-radius:12px;touch-action:manipulation}
   .stepbar{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
   .btn{border:none;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
@@ -116,7 +119,12 @@
       <h1 id="dName"></h1>
       <div class="meta" id="dMeta"></div>
       <p id="dDescription" class="sub hide"></p>
-      <canvas id="big"></canvas>
+      <div id="zoomControls" class="model-zoom hide">
+        <label for="modelZoom">Forstør tegningen</label>
+        <select id="modelZoom"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select>
+        <span class="meta">Rul i tegningen for at se detaljerne.</span>
+      </div>
+      <div id="modelViewport" class="model-viewport"><canvas id="big"></canvas></div>
       <div class="stepbar">
         <button class="btn ghost" id="prev">◀ Forrige</button>
         <button class="btn" id="next">Næste række ▶</button>
@@ -172,6 +180,7 @@
 
 <script>
 const COLORS = {
+  r:["Mørkerød","#941b2b"], A:["Okkerguld","#c59616"],
   R:["Rød","#d8383a"], O:["Orange","#ff8a1f"], Y:["Gul","#f3d24a"], G:["Grøn","#3f9a4e"], g:["Mørkegrøn","#1f7a3a"],
   B:["Blå","#2e5f99"], b:["Lyseblå","#7cc8f5"], P:["Lilla","#8e5bd8"], p:["Lyserød","#ff8fc0"], W:["Hvid","#ffffff"],
   K:["Sort","#2a2a2e"], N:["Brun","#8a5a33"], T:["Hudfarve","#f0cca6"], S:["Grå","#9aa1ab"]
@@ -180,7 +189,7 @@ const CATS = ["Alle","Likede","Egne","Dyr","Køretøjer","Natur","Mad","Jul","Fi
 
 const BUILDS = [
  // Four stylized house shields, composed only of complete bricks.
- {"id": "loeveskjold", "name": "Løvens kollegieskjold", "cat": "Magi", "description": "Et rødt kollegieskjold med gylden kant og en løve med gylden pels og orange manke. En stiliseret Plus-Plus-fortolkning uden tekst.", "tip": "Byg den gyldne kant og den røde baggrund række for række. Orange danner manken; gult danner løvens ansigt. Sorte felter markerer øjne og snude.", "p": [".YYYYYYYYYYYYYYYYY.", "YRRRRRRRRRRRRRRRRRY", "YRRRRRROOOOORRRRRRY", "YRRRROOOOOOOOORRRRY", "YRRROOYOOOOOYOORRRY", "YRRROOYYYYYYYOORRRY", "YRROOYYYYYYYYYOORRY", "YRROOYYKYYYKYYOORRY", "YRROOYYYYYYYYYOORRY", "YRROOYYYKKKYYYOORRY", "YRRROOYYKYYOORRRRRY", "YRRROOYWWWWWYOORRRY", ".YRRROOYYKYYOORRRY.", ".YRRRROOYYYOORRRRY.", "..YRRRROOOOORRRRY..", "..YRRRRRRRRRRRRRY..", "...YRRRRRRRRRRRY...", "....YRRRRRRRRRY....", ".....YRRRRRRRY.....", "......YRRRRRY......", ".......YRRRY.......", "........YYY........"]},
+ {"id": "loeveskjold", "name": "Løvens våbenskjold", "cat": "Magi", "description": "Våbenskjold efter billedreferencen: rød/gul firedeling, oprejst gylden løve med løftede poter og buet hale, sølvgrå hjelm, rødt løvværk og gyldent bånd. En detaljeret Plus-Plus-fortolkning uden tekst.", "tip": "Stort projekt: byg ornamenter og hjelm øverst som små dele, der samles med skjoldet længere nede. Rød/gul firedeling danner baggrunden; okkerguld og sort tegner den hele løve. Slut med det gyldne bånd.", "p": [".................................................", "........................KKK......................", "........................KYK......................", "........................KYYK.....................", ".......................YYKYKKK...................", "......................KYYYYYYK...................", "......................KKYYKYYYK..................", ".......................KKKKYYYYK.................", ".....................KrrrrRKKKK..................", "....................KrRrrRrRrrK..................", "...........KK......KKKKSKKSKKK......KK...........", "........KKYKYYKK..KrKKWSSSSKKrK..KKYYKYYK........", ".......KYYYYYYKKKKrKKKKSSSSSKKrKKKKYYYYYYK.......", "......KYYYKKKKKKKrKKKSSSSSSSKKKrKKKKKKKYYYK......", "......KKKKYYYKKKrKKKKKKKKKKSKKKKrKKKYYYKKKK......", ".....KKKKKKKKKKrKrrKKSSSSSSSKKrrrrKKKKKKKKKK.....", ".....KrrrrKKKKrrrrrKKKKSKKSWKKrrrrrKKKKrrrrK.....", ".....rrrrrKKKrrKrKKKKKSSSSSWSKKKrKrrKKKrrrrr.....", ".....KrrrrrKrKKKKrKKKKKSSSSSSKKrKKKKrKrrrrrK.....", ".....KKKKrrrrKKrrKKKKKKSSSSSSSKKrrKKrrrrrKKK.....", ".....KKKrrKrrKrrKKKKKKKKKKKKKKKKKrrKrrKrrKKKK....", "....KrKKrKrrKKKKKKKKKKYYYYYYKKKKKKKKKrrKrKKrK....", "....KrKKKrrKKKKYYYKKKKKrrYKKKKKKYYYYKKrrKKKrK....", "...KKrrKrKKKKKYrrrrrrrrrrKKKKKYYYYYKKKKKrKrrKK...", "...KKrrrrKKKKKYrSrSrrrrKKAAAKKYYYYYKKKKKrrrrKK...", "....KKKrrKKKKKYrKKKKrrKKAAKAAKYYYKYKKKKKrrKKK....", "....rKKKrrKKKKYrKKAKrrKAKAAAAKKKAAAKKKKrrKKKr....", ".....KKKrrrKKKYSAAKrrrKKrKAAAKKAAYKAKKrrrKKK.....", "......KKKrKrKKYrKKAKrrppKAAAAKKAYYYAKrKrrKK......", ".......KKKKKKKKrrKAAKKKKKKAAAKKKYYYAKKKKKK.......", "........KKKKKKKrrrKAAAKKKKYAAKKKYYKAKKKKK........", "........KKKKKKKSrKrKKKYAAAYAAKKKYYAKKKKKK........", "........KYKKYKKKKKrrrrKAAYAAAKKAYAAKKKKYK........", "........KYKKYKKSAAKKKKKAAAAAKKKAKYKKKKKYK........", "........KKKKKKKKAAAAAAAAAAAYAKKKArrKKKYKK........", "........KKKKKKKKKKKKKKKKAAAYAKKrAArYKKKKK........", ".........KKKKKKKYYYYYYYYKAAYAKKrKAKKKKKK.........", ".........KKrKKKYYYYYYYYYKAAYAKKrrAAKKrKK.........", "........KKKrrKKYYYYYYYYYYKAAAKKrrAAKKrKKK........", ".........KrrrKKKKYYKKKYYKAAYAKKAAAKKrrrK.........", ".........KrrrKKKKYYKAKYKKAAAAKrrrKKKrrrK.........", "..........rKrKrKYKYKAAKAAAAAAKKrrAKKrKr..........", "..........KKrrrKKKYKAAAAAKKAAKKrKKKrrKK..........", "..........KKrKrrKYYYKKKKKrKAAKrrYKKKrKK..........", "..........KKKKrrKKKYYYYYYrKAKKrKKKrKKKK..........", "...........YKKKrKKYKYYYSKKAAKrKYKKKKKY...........", "...........KKKKKK.KYKYYKAAAKKKKKKKKKKK...........", "............KYYK...KYKYKKKAKKYK...KKYKK..........", "...........KYYYK...KKYKYYrKKYK....KYYYK..........", "...........KYYK.....KKKKKrKKK......KYYYK.........", "...........KYYAKK.....KKYKKK....KKKYYYYK.........", "............KYYAAKKK...KKKK.KKKKYYAAAYK..........", "............KKYYYAAAKKKKKKKKYYYYAAYYYKK..........", "..............KKYYYYAAAAAAAAAAAYYYYKK............", "................KKKYYYYYYYYYYYYYKKKK.............", "...................KKKKKKYKKKKKK.................", ".........................KK......................"]},
  {"id": "slangeskjold", "name": "Slangens kollegieskjold", "cat": "Magi", "description": "Et mørkegrønt kollegieskjold med sølvgrå kant og en snoet sølvgrå slange med lyst hoved. En stiliseret Plus-Plus-fortolkning uden tekst.", "tip": "Følg den sølvgrå kant omkring den grønne baggrund. Slangen begynder øverst til højre og slynger sig som et S. Hvidt og sort markerer hoved og øje.", "p": [".SSSSSSSSSSSSSSSSS.", "SgggggggggggggggggS", "SgggggggSSSSSgggggS", "SgggggSSSWWKWSggggS", "SggggSSSgWWWWSggggS", "SggggSSSggggggggggS", "SggggSSSSgggggggggS", "SgggggSSSSSgggggggS", "SgggggggSSSSSgggggS", "SgggggggggSSSSggggS", "SggggggggggSSSggggS", "SggggggggggSSSggggS", ".SgggSSgggSSSSgggS.", ".SgggSSSSSSSSggggS.", "..SggggSSSSgggggS..", "..SgggggggggggggS..", "...SgggggggggggS...", "....SgggggggggS....", ".....SgggggggS.....", "......SgggggS......", ".......SgggS.......", "........SSS........"]},
  {"id": "oerneskjold", "name": "Ørnens kollegieskjold", "cat": "Magi", "description": "Et blåt kollegieskjold med brun kant som bronze og en ørn med udbredte vinger og gyldent næb. En stiliseret Plus-Plus-fortolkning uden tekst.", "tip": "Brun repræsenterer bronze. Byg vingerne på begge sider af ørnen, og hold de blå mellemrum fri. Den gule brik midt i hovedet er næbbet.", "p": [".NNNNNNNNNNNNNNNNN.", "NBBBBBBBBBBBBBBBBBN", "NBBBBBBBNNNBBBBBBBN", "NBBBBBBBNKNBBBBBBBN", "NBBNBBBBNYNBBBBNBBN", "NBBNNBBBNNNBBBNNBBN", "NBBNNNBBNNNBBNNNBBN", "NBBNNNNNNNNNNNNNBBN", "NBBBNNNNNNNNNNNBBBN", "NBBBBNNNNNNNNNBBBBN", "NBBBBBNNNNNNNBBBBBN", "NBBBBBBNNNNNBBBBBBN", ".NBBBBBYNNNYBBBBBN.", ".NBBBBBBNNNBBBBBBN.", "..NBBBBNNNNNBBBBN..", "..NBBBBBBBBBBBBBN..", "...NBBBBBBBBBBBN...", "....NBBBBBBBBBN....", ".....NBBBBBBBN.....", "......NBBBBBN......", ".......NBBBN.......", "........NNN........"]},
  {"id": "graevlingeskjold", "name": "Grævlingens kollegieskjold", "cat": "Magi", "description": "Et gult kollegieskjold med sort kant og et grævlingehoved med tydelige sorte og hvide ansigtsstriber. En stiliseret Plus-Plus-fortolkning uden tekst.", "tip": "Byg den sorte skjoldkant omkring den gule baggrund. De hvide striber skal løbe fra ørerne ned langs ansigtet. Snuden er hvid med sort næse.", "p": [".KKKKKKKKKKKKKKKKK.", "KYYYYYYYYYYYYYYYYYK", "KYYYYKKYYYYYKKYYYYK", "KYYYKWWKYYYKWWKYYYK", "KYYYKWWWKKKWWWKYYYK", "KYYYKKWWKKKWWKKYYYK", "KYYKKKWWKKKWWKKKYYK", "KYYKKWKWKKKWKWKKYYK", "KYYKKWWWKKKWWWKKYYK", "KYYYKKWWKKKWWKKYYYK", "KYYYKKWWWWWWWKKYYYK", "KYYYYKKWWWWWKKYYYYK", ".KYYYYKWWKWWKYYYYK.", ".KYYYYYWWKWWYYYYYK.", "..KYYYYYWWWYYYYYK..", "..KYYYYYYYYYYYYYK..", "...KYYYYYYYYYYYK...", "....KYYYYYYYYYK....", ".....KYYYYYYYK.....", "......KYYYYYK......", ".......KYYYK.......", "........KKK........"]},
@@ -353,6 +362,9 @@ let cur=null, step=0, showAll=false, turnA=false;
 function openBuild(id){
   cur=allBuilds().find(b=>b.id===id); if(!cur){go("");return}
   step=0;showAll=false;
+  $("modelZoom").value="1";
+  $("zoomControls").classList.toggle("hide",Math.max(cur.w,cur.p.length)<=24);
+  $("modelViewport").scrollTop=0;$("modelViewport").scrollLeft=0;
   $("dName").textContent=cur.name;
   $("dMeta").innerHTML=`<span class="pill p-${cur.level}">${cur.level}</span> ${cur.total} brikker · ${cur.w}×${cur.p.length} felter · ${cur.cat}`;
   $("dDescription").textContent=cur.description||"";
@@ -376,6 +388,7 @@ function rowRuns(b,y){
 }
 function renderStep(){
   const h=cur.p.length, finished=showAll||step>=h;
+  $("big").style.width=$("modelViewport").clientWidth*(+$("modelZoom").value||1)+"px";
   drawGrid($("big"),cur.p,finished?{tiles:cur.tiles}:{step,tiles:cur.tiles});
   $("prev").disabled=!showAll&&step===0;
   $("next").textContent=step>=h-1?"Færdig ✓":"Næste række ▶";
@@ -391,6 +404,7 @@ function renderStep(){
       `<div class="run"><span class="sw" style="background:${COLORS[ch][1]}"></span>${n} ${COLORS[ch][0].toLowerCase()}</div>`).join("");
   }
 }
+$("modelZoom").onchange=renderStep;
 $("next").onclick=()=>{step++;turnA=!turnA;renderTurn();renderStep()};
 $("prev").onclick=()=>{if(showAll){showAll=false;renderStep();return}if(step>0){step--;turnA=!turnA;renderTurn();renderStep()}};
 $("all").onclick=()=>{showAll=!showAll;if(!showAll&&step>=cur.p.length)step=0;renderStep()};
