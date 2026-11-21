@@ -53,7 +53,7 @@
       <div class="mode" id="modeBar"><button data-mode="alone" class="on"><i class="ic user-icon" aria-hidden="true"></i>Byg alene</button><button data-mode="together"><i class="ic users-icon" aria-hidden="true"></i>Byg sammen</button></div>
       <div id="teamSetup" class="team hide">
         <h2>Hvem bygger med?</h2>
-        <div><label>Antal byggere</label><div class="chips" id="teamCount"></div></div><div id="teamNames"></div>
+        <div><label>Antal byggere</label><div class="chips" id="teamCount"></div></div><div class="builder-names-row"><div id="teamNames"></div><button type="button" id="swapBuilders" class="swap-builders" aria-label="Byt plads på bygger 1 og bygger 2"><i class="ic swap-icon" aria-hidden="true"></i><span>Byt plads</span></button></div>
         <div><label>Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div><p class="meta" id="splitInfo"></p>
         <details class="device-options"><summary>Bruger I flere skærme?</summary><div><label>Hvem bruger denne skærm?</label><div class="chips" id="teamMe"></div></div><p class="meta" id="meInfo"></p></details>
         <button class="btn" id="teamStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
@@ -404,9 +404,21 @@ function splitRows(b,weights){
   return out;
 }
 function weightsFor(){const n=team.n;return team.split==="small"?[...Array(n-1).fill(1),0.55]:Array(n).fill(1)}
+function orderedParts(){return [...parts].sort((a,b)=>a.r0-b.r0)}
+function smallestBuilder(){
+  const chosen=Number.isInteger(team.smallest)?team.smallest:team.n-1;
+  return Math.max(0,Math.min(chosen,team.n-1));
+}
 function buildParts(){
   const cuts=splitRows(cur,weightsFor());
-  // with "small" the youngest (listed last) gets the smallest part, placed where it fell
+  // Partition geometry is stable on each device. Assign the actually smallest
+  // complete part to the selected builder, including uneven row-density cases.
+  if(team.split==="small"){
+    const counts=cuts.map(c=>cur.tiles.filter(k=>k.row>=c.r0&&k.row<=c.r1).length);
+    const smallest=counts.indexOf(Math.min(...counts));
+    const chosen=Math.min(smallestBuilder(),cuts.length-1);
+    [cuts[chosen],cuts[smallest]]=[cuts[smallest],cuts[chosen]];
+  }
   parts=cuts.map((c,i)=>{const counts={};let n=0;cur.tiles.forEach(k=>{if(k.row>=c.r0&&k.row<=c.r1){counts[k.c]=(counts[k.c]||0)+1;n++}});
     return {...c,name:team.names[i]||`Bygger ${i+1}`,color:TEAM_COLORS[i],step:0,done:false,counts,n}});
 }
@@ -473,21 +485,23 @@ function renderAlone(){
 }
 function renderSetup(){
   buildParts();
+  if(team.split==="small"&&smallestBuilder()>=parts.length){team.smallest=parts.length-1;saveTeam()}
   $("teamCount").innerHTML=[2,3].map(n=>`<button data-n="${n}" class="${team.n===n?"on":""}">${n}</button>`).join("");
   $("teamNames").innerHTML=Array.from({length:team.n},(_,i)=>`<label for="builderName${i}" style="color:${TEAM_COLORS[i]}">Bygger ${i+1}</label><input id="builderName${i}" data-i="${i}" value="${esc(team.names[i]||"")}" placeholder="Navn">`).join("");
-  $("teamSplit").innerHTML=[["even","Lige store dele"],["small",`Mindste del til ${esc(team.names[team.n-1]||"den yngste")}`]].map(([v,t])=>`<button data-s="${v}" class="${team.split===v?"on":""}">${t}</button>`).join("");
+  $("teamSplit").innerHTML=`<button data-s="even" class="${team.split==="even"?"on":""}" aria-pressed="${team.split==='even'}">Lige store dele</button>`+
+    Array.from({length:parts.length},(_,i)=>`<button data-s="small" data-smallest="${i}" class="${team.split==='small'&&smallestBuilder()===i?'on':''}" aria-pressed="${team.split==='small'&&smallestBuilder()===i}">Mindste del til ${esc(team.names[i]||`bygger ${i+1}`)}</button>`).join("");
   $("splitInfo").textContent=parts.map(p=>`${p.name}: ${p.n} brikker`).join(" · ")+(parts.length<team.n?" (figuren er for lille til flere dele)":"");
   if(team.me!=null&&team.me>=parts.length){team.me=null;saveTeam()}
   $("teamMe").innerHTML=`<button data-me="" class="${team.me==null?"on":""}">Hele holdet</button>`+
     Array.from({length:parts.length},(_,i)=>`<button data-me="${i}" class="${team.me===i?"on":""}">Kun ${esc(team.names[i]||`Bygger ${i+1}`)}</button>`).join("");
   $("meInfo").textContent=team.me==null?"Alle deles om denne iPad og skifter mellem fanerne.":
-    `Denne iPad viser kun ${team.names[team.me]?gen(team.names[team.me]):"din"} del. Den anden iPad skal stå på ${team.n} byggere og „${team.split==="even"?"Lige store dele":"Mindste del til den yngste"}“ – så får I præcis de samme dele.`;
+    `Denne iPad viser kun ${team.names[team.me]?gen(team.names[team.me]):"din"} del. Den anden iPad skal stå på ${team.n} byggere og „${team.split==="even"?"Lige store dele":"Mindste del til "+(team.names[smallestBuilder()]||`bygger ${smallestBuilder()+1}`)}“ – så får I præcis de samme dele.`;
   $("teamMe").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.me=b.dataset.me===""?null:+b.dataset.me;saveTeam();render()});
   $("teamCount").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.n=+b.dataset.n;saveTeam();render()});
-  $("teamSplit").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.split=b.dataset.s;saveTeam();render()});
+  $("teamSplit").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.split=b.dataset.s;if(b.dataset.smallest!=null)team.smallest=+b.dataset.smallest;saveTeam();render()});
   $("teamNames").querySelectorAll("input").forEach(inp=>inp.onchange=()=>{team.names[+inp.dataset.i]=inp.value.trim();saveTeam();render()});
   setCanvasWidth();
-  drawGrid($("big"),cur.p,{tiles:cur.tiles,bands:parts,gap:0.8,labels:true});
+  drawGrid($("big"),cur.p,{tiles:cur.tiles,bands:orderedParts(),gap:0.8,labels:true});
   $("stepBox").classList.add("hide");$("doneBox").classList.add("hide");
   $("prev").disabled=true;$("next").disabled=true;$("all").classList.add("hide");$("prog").style.width="0%";
   renderParts(cur.counts,"Hele figuren skal bruge");
@@ -495,6 +509,15 @@ function renderSetup(){
 // Danish genitive: "Alfreds", but "Jens'" for names ending in s, x or z
 function gen(n){return /[sxz]$/i.test(n)?n+"'":n+"s"}
 function saveTeam(){store.set("bv_team",team)}
+$("swapBuilders").onclick=()=>{
+  // Commit any currently edited name, even when the change event has not fired.
+  $("teamNames").querySelectorAll("input").forEach(inp=>team.names[+inp.dataset.i]=inp.value.trim());
+  const selected=smallestBuilder();
+  [team.names[0],team.names[1]]=[team.names[1],team.names[0]];
+  if(team.split==="small"&&selected<2)team.smallest=1-selected;
+  if(team.me===0||team.me===1)team.me=1-team.me;
+  saveTeam();render();
+};
 function renderTabsTeam(){
   const mine=team.me!=null?[team.me]:parts.map((_,i)=>i);
   const all=mine.every(i=>parts[i].done);
@@ -532,10 +555,10 @@ function renderPart(){
 }
 function renderAssemble(){
   setCanvasWidth();
-  drawGrid($("big"),cur.p,{tiles:cur.tiles,bands:parts,gap:asmGap,labels:asmGap>0.05});
+  drawGrid($("big"),cur.p,{tiles:cur.tiles,bands:orderedParts(),gap:asmGap,labels:asmGap>0.05});
   $("stepBox").classList.add("hide");$("all").classList.add("hide");
   $("prev").disabled=true;$("next").disabled=true;$("prog").style.width="100%";
-  const order=parts.map(p=>p.name);
+  const order=orderedParts().map(p=>p.name);
   $("assembleText").textContent=`Læg delene på bordet i den rækkefølge, du ser: ${order.join(" øverst, så ")} nederst. Skub dem forsigtigt sammen, så armene på kanten griber ind i hinanden. Tryk fast hele vejen langs samlingen.`;
   $("doneBox").classList.toggle("hide",asmGap>0.05);
   $("doneBox").textContent=`${cur.name} er færdig! Flot samarbejde, ${order.join(" og ")}!`;
@@ -661,7 +684,7 @@ function drawRowPieces(row){
 function openOverview(){
   $("overviewTitle").textContent=cur.name;
   $("overviewDialog").showModal();
-  drawGrid($("fullCanvas"),cur.p,mode==="together"?{tiles:cur.tiles,bands:parts,gap:.65,labels:true}:{tiles:cur.tiles});
+  drawGrid($("fullCanvas"),cur.p,mode==="together"?{tiles:cur.tiles,bands:orderedParts(),gap:.65,labels:true}:{tiles:cur.tiles});
   $("overviewLegend").textContent=mode==="together"?parts.map(p=>p.name+": "+p.n+" brikker").join(" · "):cur.total+" brikker · "+cur.p.length+" rækker";
 }
 $("skipLink").onclick=e=>{e.preventDefault();const target=document.querySelector("main:not(.hide)");if(target){target.tabIndex=-1;target.focus()}};

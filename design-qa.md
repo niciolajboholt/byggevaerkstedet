@@ -50,3 +50,9 @@ Browser console inspected: no errors originating from the app's domain. Unrelate
 This preserves the existing static web application, its exact diagrams, all 108 motifs, local likes and own models. Collection shortcuts remain visible; the parent view uses a featured model plus a grid instead of restricting the catalogue to the mock's two illustrative list rows. Generated previews are art direction, not exact engineering drawings or fixed counts. No new runtime shell or native-device bezel is introduced into the existing web app.
 
 P3 follow-ups: optional closer theme-tile artwork styling and further copy refinement. Remaining test gaps: physical iOS Safari, real touch use, screen-reader testing and physical trial-building. No merge into production is included in this preview handoff.
+
+## Builder controls follow-up
+
+Added a single “Byt plads” control between builders 1 and 2, plus one smallest-part choice for every available builder. The selected recipient and dedicated-device selection follow the person when names swap. Whole-part assignment guarantees that the chosen recipient receives the actual minimum brick count; setup and assembly remain sorted by physical row position.
+
+97/97 tests pass. New tests cover both recipients, swapping, persistence, dedicated-device identity and all catalogue motifs with two/three builders. Browser mobile check on Flyvende nøgle: Jens 14/Alfred 25, swap → Alfred 25/Jens 14, choose Alfred → Alfred 14/Jens 25. Starting the guide selects Alfred and shows his 14-piece materials list. No app-domain console errors observed. Both controls fit between/under the name fields at 390px. The private Site is updated; GitHub Pages remains unchanged.

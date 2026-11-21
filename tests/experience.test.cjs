@@ -99,3 +99,30 @@ test('one-row own model cannot select a non-existent dedicated builder',async()=
  a.click('teamStart');assert.equal(a.doc.querySelectorAll('#partTabs button').length,1);
  a.click('next');assert.deepEqual(a.errors,[]);a.close();
 });
+test('smallest part can be assigned to either named builder and survives swapping places',async()=>{
+ const a=app();await a.settle();a.choose('[data-id="motiver50-02"] .model-link');await a.settle();a.choose('[data-mode="together"]');
+ for(const i of [0,1]){
+  a.choose(`#teamSplit [data-smallest="${i}"]`);
+  const result=a.w.eval('JSON.stringify(parts.map(p=>({name:p.name,n:p.n})))');const parts=JSON.parse(result);
+  assert.equal(parts[i].n,Math.min(...parts.map(p=>p.n)));
+  assert.equal(a.doc.querySelector(`#teamSplit [data-smallest="${i}"]`).getAttribute('aria-pressed'),'true');
+ }
+ a.choose('#teamMe [data-me="1"]');a.click('swapBuilders');
+ assert.equal(a.doc.getElementById('builderName0').value,'Alfred');
+ assert.equal(a.doc.getElementById('builderName1').value,'Jens');
+ const saved=JSON.parse(a.w.localStorage.getItem('bv_team'));
+ assert.equal(saved.smallest,0);assert.equal(saved.me,0);assert.equal(saved.split,'small');
+ assert.equal(a.doc.querySelector('#teamSplit [data-smallest="0"]').textContent,'Mindste del til Alfred');
+ a.click('teamStart');assert.equal(a.doc.querySelector('#partTabs button').textContent,'Alfred');
+ assert.deepEqual(a.errors,[]);a.close();
+});
+test('smallest assignment preserves all bricks and physical assembly order for every motif and builder',async()=>{
+ const a=app();await a.settle();
+ const checks=JSON.parse(a.w.eval(`JSON.stringify(BUILDS.flatMap(b=>[2,3].flatMap(n=>Array.from({length:n},(_,selected)=>{
+  cur=b;team.n=n;team.split='small';team.smallest=selected;buildParts();
+  const physical=orderedParts();
+  return {id:b.id,n,selected,minimum:Math.min(...parts.map(p=>p.n)),assigned:parts[selected].n,total:parts.reduce((s,p)=>s+p.n,0),expected:b.total,ordered:physical.every((p,i)=>!i||p.r0===physical[i-1].r1+1),first:physical[0].r0,last:physical.at(-1).r1,expectedLast:b.p.length-1};
+ }))))`));
+ for(const c of checks){assert.equal(c.assigned,c.minimum,`${c.id}: builder ${c.selected}`);assert.equal(c.total,c.expected);assert.ok(c.ordered);assert.equal(c.first,0);assert.equal(c.last,c.expectedLast)}
+ assert.deepEqual(a.errors,[]);a.close();
+});
