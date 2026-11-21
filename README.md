@@ -94,3 +94,32 @@ Søg på et navn eller et tocifret motivnummer, fx `01` eller `47`.
 appens brikmønstre og numre følger det godkendte oplæg. Testene sammenligner alle
 50 modeller med dette grundlag og kontrollerer også brikfordelingen i Byg sammen.
 De oprindelige modeller, links og gemte egne tegninger er bevaret.
+
+## Ny designprøve — afventer visuel kontrol
+
+Branchen `design/family-preview` indeholder den godkendte retning med farverig
+børnevisning og rolig forældrevisning. Skiftet gemmes lokalt med `bv_appearance`.
+Motiver åbner først en forberedelsesside med hele figuren, brikliste og valg mellem
+alene/sammen. Under byggeri er rækkeknapperne fast placeret, og hver bygger ser sin
+egen del i stor størrelse med adgang til hele figuren. Eksisterende model-ID'er,
+mønstre, likes, egne tegninger og fordeling på separate enheder bevares.
+
+Appen er fortsat statisk. `app.css` og `assets/icons/` skal udgives sammen med
+`index.html`. Phosphor-ikonerne distribueres under MIT-licensen i
+`assets/icons/LICENSE`. De eksisterende modeltegninger genereres fra de præcise
+Plus-Plus-data, ikke fra billederne i designforslagene.
+
+Lokal afprøvning:
+
+```sh
+npm ci
+npm run dev -- --host 0.0.0.0 --port 4173 --strictPort
+```
+
+Rodadressen åbner `preview.html`, hvor mobil, iPad og stor skærm kan vælges.
+`index.html` er selve appen uden prøverammen. `preview.html` er ikke en ny
+produktionsforside. Appen har ingen runtime-afhængighed af npm eller Node.
+
+`npm test` kører katalogtestene og seks forløbstest med jsdom. Canvas er stubbet i
+forløbstestene; de erstatter ikke visuel browserkontrol. Se `design-qa.md` for den
+konkrete previewblokering. **Ingen merge eller produktionsudgivelse er udført.**

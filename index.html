@@ -12,177 +12,62 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1f2430">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#f6f3ec; --card:#fff; --ink:#1f2430; --muted:#6b7080; --line:#e6e1d6;
-    --accent:#2f6fed; --accent2:#ff8a1f; --ok:#22a06b;
-    --easy:#22a06b; --mid:#f2a516; --hard:#e5484d;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Baloo 2",system-ui,sans-serif;font-size:17px}
-  button,input,select{font:inherit}
-  header{background:var(--ink);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;cursor:pointer}
-  .logo img{display:block}
-  nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
-  nav button{background:transparent;color:#fff;border:1px solid #ffffff33;border-radius:999px;padding:4px 14px;cursor:pointer}
-  nav button.on{background:#fff;color:var(--ink)}
-  main{max-width:1100px;margin:0 auto;padding:18px}
-  h1{font-size:30px;margin:4px 0 2px;line-height:1.1}
-  .sub{color:var(--muted);margin:0 0 14px}
-  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-  .filters input{flex:1;min-width:180px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:#fff}
-  .filters select{padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:#fff}
-  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:thin}
-  .tabs button{white-space:nowrap;border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;cursor:pointer}
-  .tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-  .card{background:var(--card);border-radius:18px;padding:12px;border:2px solid var(--line);cursor:pointer;position:relative;transition:transform .12s}
-  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
-  .card canvas{width:100%;aspect-ratio:1;display:block;background:#e6e8ec;border-radius:12px}
-  .collage-number{display:inline-block;border-radius:6px;background:#edf1f7;color:#344054;padding:0 5px;font-size:14px;vertical-align:middle}
-  .card .name{font-weight:700;font-size:18px;margin-top:6px}
-  .meta{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted)}
-  .pill{border-radius:999px;padding:0 9px;color:#fff;font-weight:700;font-size:13px}
-  .p-Let{background:var(--easy)} .p-Mellem{background:var(--mid)} .p-Svær{background:var(--hard)}
-  .heart{position:absolute;top:8px;right:10px;font-size:22px;background:none;border:none;cursor:pointer;line-height:1}
-  .empty{color:var(--muted);padding:30px;text-align:center}
-  .new2d{display:flex;flex-direction:column;align-items:center;justify-content:center;border-style:dashed;min-height:200px;font-weight:800;color:var(--accent)}
-  .new2d span{font-size:48px;line-height:1}
-  /* viewer */
-  .viewer{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px}
-  @media(max-width:760px){.viewer{grid-template-columns:1fr}}
-  .panel{background:#fff;border-radius:18px;border:2px solid var(--line);padding:14px}
-  .back{background:none;border:none;color:var(--accent);cursor:pointer;padding:0;margin-bottom:6px;font-weight:700}
-  .model-viewport{overflow:auto;max-height:75vh;border-radius:12px;background:#e6e8ec}
-  .model-zoom{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
-  .model-zoom select{font:inherit;padding:4px 8px;border:2px solid var(--line);border-radius:8px;background:#fff}
-  #big{width:100%;display:block;background:#e6e8ec;border-radius:12px;touch-action:manipulation}
-  .stepbar{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
-  .btn{border:none;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
-  .btn.ghost{background:#eef2fb;color:var(--accent)}
-  .btn.orange{background:var(--accent2)}
-  .btn:disabled{opacity:.4;cursor:default}
-  .rowinfo{font-size:19px;font-weight:700;margin:8px 0 4px}
-  .runs{display:flex;flex-wrap:wrap;gap:6px}
-  .run{display:flex;align-items:center;gap:5px;border:2px solid var(--line);border-radius:10px;padding:2px 8px;font-weight:700}
-  .sw{width:18px;height:18px;border-radius:5px;border:1px solid #0002;display:inline-block}
-  .parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .part{display:flex;align-items:center;gap:8px}
-  .mode{display:flex;background:#eef0f4;border-radius:14px;padding:4px;margin:10px 0}
-  .mode button{flex:1;border:none;background:none;border-radius:10px;padding:8px;font-weight:800;cursor:pointer;color:var(--muted)}
-  .mode button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px #0002}
-  .team{display:flex;flex-direction:column;gap:10px}
-  .team label{font-weight:700}
-  .team input{padding:8px 12px;border-radius:10px;border:2px solid var(--line);width:100%}
-  .chips{display:flex;gap:6px;flex-wrap:wrap}
-  .chips button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:3px 14px;cursor:pointer;font-weight:700}
-  .chips button.on{border-color:var(--accent);background:var(--accent);color:#fff}
-  .ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-  .ptabs button{flex:1;min-width:90px;border:3px solid transparent;border-radius:12px;padding:8px;font-weight:800;color:#fff;cursor:pointer;opacity:.55}
-  .ptabs button.on{opacity:1;border-color:#0003}
-  .ptabs button.asm{background:var(--ok)}
-  .partdone{border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:19px;color:#fff;margin-bottom:8px}
-  .turn{margin-top:12px;border-radius:14px;padding:10px;text-align:center;font-weight:800;font-size:20px;color:#fff;background:var(--accent);cursor:pointer;user-select:none}
-    .progress{height:10px;background:#eee;border-radius:99px;overflow:hidden;margin-top:6px}
-  .progress div{height:100%;background:var(--ok);transition:width .2s}
-  /* builder */
-  .palette{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-  .palette button{width:36px;height:36px;border-radius:10px;border:3px solid transparent;cursor:pointer}
-  .palette button.on{border-color:var(--ink);transform:scale(1.1)}
-  #pad{width:100%;max-width:560px;display:block;background:#e6e8ec;border-radius:12px;touch-action:none;cursor:crosshair}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .row input{padding:9px 12px;border-radius:12px;border:2px solid var(--line);flex:1;min-width:140px}
-  footer{max-width:1100px;margin:20px auto 30px;padding:0 18px;color:var(--muted);font-size:14px}
-  footer a{color:var(--accent)}
-  .hide{display:none!important}
-  .done{font-size:26px;font-weight:800;color:var(--ok);text-align:center;margin:8px 0}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
-<header>
-  <div class="logo" onclick="go('')">
-    <img src="icon.svg" alt="" width="38" height="38" style="border-radius:9px">
-    Byggeværkstedet
-  </div>
-  <nav>
-    <button data-nav="" class="on">Vejledninger</button>
-    <button data-nav="byg">Byg i 2D</button>
-  </nav>
+<a class="skip" href="#listView">Spring til indhold</a>
+<header class="app-header">
+  <button class="logo" onclick="go('')" aria-label="Byggeværkstedet, forsiden"><img src="icon.svg" alt="" width="40" height="40"><span>Byggeværkstedet</span></button>
+  <div class="appearance" role="group" aria-label="Visning"><button data-theme="child" aria-pressed="true">Børn</button><button data-theme="parent" aria-pressed="false">Forældre</button></div>
 </header>
-
 <main id="listView">
-  <h1>Hvad skal vi bygge i dag?</h1>
-  <p class="sub">Vælg en model og byg den række for række. Sværhedsgraden følger antallet af brikker. Alle vejledninger er på højst 250 brikker.</p>
-  <div class="filters">
-    <input id="q" type="search" placeholder="Søg … fx fisk, raket, jul">
-    <select id="diff">
-      <option value="">Alle sværhedsgrader</option>
-      <option>Let</option><option>Mellem</option><option>Svær</option>
-    </select>
-  </div>
-  <div class="tabs" id="tabs"></div>
+  <section class="discovery-hero">
+    <p class="eyebrow">Små brikker. Store idéer.</p><h1 id="listHeading">Hvad vil du bygge?</h1>
+    <div class="search-row"><label class="search"><i class="ic search-icon" aria-hidden="true"></i><span class="sr">Søg efter motiv</span><input id="q" type="search" placeholder="Find et motiv" autocomplete="off"></label><button class="filter-button" id="filterOpen"><i class="ic sliders" aria-hidden="true"></i>Filtre<span id="filterCount" class="hide"></span></button></div>
+  </section>
+  <section class="theme-tiles" id="themeTiles" aria-label="Udforsk temaer">
+    <button data-category="Dyr" class="theme-tile animals"><canvas id="animalArt" width="120" height="120" aria-hidden="true"></canvas><span>Dyr<i class="ic arrow-right" aria-hidden="true"></i></span></button>
+    <button data-category="Magi" class="theme-tile magic"><canvas id="magicArt" width="120" height="120" aria-hidden="true"></canvas><span>Magi<i class="ic arrow-right" aria-hidden="true"></i></span></button>
+  </section>
+  <div class="collection-heading"><h2 id="collectionTitle">Vælg et motiv</h2><span id="resultCount" class="meta" aria-live="polite"></span></div>
+  <div class="quick-tabs" id="quickTabs"></div>
+  <div id="activeFilters" class="active-filters hide"><span id="filterSummary"></span><button id="resetFilters">Nulstil filtre</button></div>
   <div class="grid" id="grid"></div>
 </main>
-
 <main id="detailView" class="hide">
-  <button class="back" onclick="go('')">← Tilbage til alle modeller</button>
+  <button class="back" id="detailBack"><i class="ic arrow-left" aria-hidden="true"></i><span>Alle motiver</span></button>
+  <div class="detail-heading"><div><p class="eyebrow" id="guideLabel">Dit næste byggeri</p><h1 id="dName"></h1><div class="meta" id="dMeta"></div></div><button class="icon-button" id="guideFavorite" aria-label="Gem som favorit"><i class="ic heart-icon" aria-hidden="true"></i></button></div>
   <div class="viewer">
-    <div class="panel">
-      <h1 id="dName"></h1>
-      <div class="meta" id="dMeta"></div>
+    <section class="model-column">
       <p id="dDescription" class="sub hide"></p>
-      <div class="mode" id="modeBar"><button data-mode="alone" class="on">🙋 Byg alene</button><button data-mode="together">👫 Byg sammen</button></div>
-      <div id="zoomControls" class="model-zoom hide">
-        <label for="modelZoom">Forstør tegningen</label>
-        <select id="modelZoom"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select>
-        <span class="meta">Rul i tegningen for at se detaljerne.</span>
-      </div>
-      <div id="modelViewport" class="model-viewport"><canvas id="big"></canvas></div>
-      <div class="stepbar">
-        <button class="btn ghost" id="prev">◀ Forrige</button>
-        <button class="btn" id="next">Næste række ▶</button>
-        <button class="btn ghost" id="all">Vis hele</button>
-      </div>
-      <div class="progress"><div id="prog"></div></div>
-    </div>
-    <div class="panel">
+      <div id="partTabs" class="ptabs hide" aria-label="Vælg bygger"></div>
+      <div class="build-heading hide" id="buildHeading"><div><h2 id="buildPerson"></h2><p id="rowTitle" aria-live="polite"></p><div class="progress" role="progressbar" aria-label="Byggefremskridt" aria-valuemin="0" aria-valuemax="100" id="progressBar"><div id="prog"></div></div></div><button id="overviewButton" class="overview-button"><span>Hele figuren</span><canvas id="overviewCanvas" width="88" height="88" aria-hidden="true"></canvas></button></div>
+      <div id="zoomControls" class="model-zoom hide"><label for="modelZoom">Forstør tegningen</label><select id="modelZoom"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select></div>
+      <div id="modelViewport" class="model-viewport"><canvas id="big" role="img" aria-label="Byggetegning"></canvas></div>
+      <div id="partDone" class="partdone hide" role="status"></div>
+      <div class="done hide" id="doneBox" role="status">Færdig! Flot bygget!</div>
+    </section>
+    <section class="guide-column">
+      <div id="introBox"><h2>Gør klar til at bygge</h2><p class="sub">Find brikkerne frem, og vælg hvordan I vil bygge.</p></div>
+      <div class="mode" id="modeBar"><button data-mode="alone" class="on"><i class="ic user-icon" aria-hidden="true"></i>Byg alene</button><button data-mode="together"><i class="ic users-icon" aria-hidden="true"></i>Byg sammen</button></div>
       <div id="teamSetup" class="team hide">
-        <div class="rowinfo">Hvem bygger med?</div>
-        <div><label>Antal byggere</label><div class="chips" id="teamCount"></div></div>
-        <div id="teamNames"></div>
-        <div><label>Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div>
-        <p class="meta" id="splitInfo" style="margin:0"></p>
-        <div><label>Hvem bruger denne iPad?</label><div class="chips" id="teamMe"></div></div>
-        <p class="meta" id="meInfo" style="margin:0"></p>
-        <button class="btn" id="teamStart">Start byggeriet ▶</button>
+        <h2>Hvem bygger med?</h2>
+        <div><label>Antal byggere</label><div class="chips" id="teamCount"></div></div><div id="teamNames"></div>
+        <div><label>Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div><p class="meta" id="splitInfo"></p>
+        <details class="device-options"><summary>Bruger I flere skærme?</summary><div><label>Hvem bruger denne skærm?</label><div class="chips" id="teamMe"></div></div><p class="meta" id="meInfo"></p></details>
+        <button class="btn" id="teamStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
       </div>
-      <div id="partTabs" class="ptabs hide"></div>
-      <div id="partDone" class="partdone hide"></div>
-      <div id="assembleBox" class="hide">
-        <div class="rowinfo">Saml figuren 🧩</div>
-        <p id="assembleText" style="margin:4px 0 10px"></p>
-        <button class="btn orange" id="assembleGo">Vis hvordan ▶</button>
-      </div>
-      <div id="stepBox">
-        <div class="rowinfo" id="rowTitle"></div>
-        <div class="meta" style="margin-bottom:6px">Læs rækken fra venstre mod højre. Brikkerne skifter selv mellem at ligge ned og stå op – se på billedet.</div>
-        <div class="runs" id="runs"></div>
-      </div>
-      <div class="done hide" id="doneBox">🎉 Færdig! Flot bygget!</div>
+      <div id="assembleBox" class="hide"><h2>Saml figuren</h2><p id="assembleText"></p><button class="btn" id="assembleGo">Vis samlingen</button></div>
+      <div id="stepBox" class="hide"><div class="step-heading"><h2>Denne række</h2><button class="text-button" id="all">Vis hele</button></div><canvas id="rowPieces" aria-label="Brikkerne i den aktuelle række" role="img"></canvas><p class="meta" id="rowHint">Fra venstre mod højre · drej brikkerne som vist.</p><div class="runs" id="runs"></div></div>
+      <div id="materials"><h2 id="partsTitle">Det skal du bruge</h2><div class="parts" id="parts"></div><p class="meta" id="total"></p></div>
       <p id="buildTip" class="meta hide"></p>
-      <h3 style="margin:16px 0 6px" id="partsTitle">Det skal du bruge</h3>
-      <div class="parts" id="parts"></div>
-      <div class="meta" style="margin-top:8px" id="total"></div>
-      <div class="row" style="margin-top:12px">
-        <button class="btn orange hide" id="editOwn">Redigér i 2D</button>
-        <button class="btn ghost hide" id="delOwn">Slet min model</button>
-      </div>
-    </div>
+      <button class="btn start-button" id="aloneStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
+      <div class="row own-actions"><button class="btn ghost hide" id="editOwn">Redigér i 2D</button><button class="btn ghost hide" id="delOwn">Slet min model</button></div>
+    </section>
   </div>
+  <div class="stepbar hide" id="buildControls"><button class="btn ghost" id="prev"><i class="ic arrow-left" aria-hidden="true"></i>Forrige</button><button class="btn" id="next">Næste række</button></div>
 </main>
-
 <main id="builderView" class="hide">
   <h1>Byg i 2D</h1>
   <p class="sub">Tegn jeres egen model. Træk med fingeren for at lægge brikker. Gemte modeller kommer under „Egne".</p>
@@ -191,25 +76,25 @@
       <label>Størrelse
         <select id="size"><option>10</option><option>12</option><option selected>16</option><option>20</option><option>24</option></select>
       </label>
-      <button class="btn ghost" id="undo">↶ Fortryd</button>
+      <button class="btn ghost" id="undo">Fortryd</button>
       <button class="btn ghost" id="clear">Ryd</button>
     </div>
     <div class="palette" id="pal"></div>
-    <canvas id="pad"></canvas>
+    <canvas id="pad" aria-label="Tegnefelt til din egen model"></canvas>
     <div class="row" style="margin-top:10px">
-      <input id="ownName" placeholder="Navn på modellen, fx Alfreds drage">
+      <input id="ownName" aria-label="Navn på modellen" placeholder="Navn på modellen, fx Alfreds drage">
       <button class="btn" id="save">Gem model</button>
     </div>
     <div class="meta" id="saveMsg" style="margin-top:6px"></div>
   </div>
 </main>
 
-<footer>
-  Alle modeller her er lavet til Jens og Alfred. Hver brik er en dobbelt-plus, og brikkerne ligger skiftevis ned og op, så de griber ind i hinanden.
-  Vil I have flere modeller, er der tusindvis på <a href="https://plusplusinstructions.com/da/instructions/" target="_blank" rel="noopener">plusplusinstructions.com</a>.
-</footer>
-
+<footer><span>Skabt til Jens & Alfred</span><span>Hele Plus-Plus-brikker · højst 250 i katalogets motiver</span></footer>
+<nav class="bottom-nav" aria-label="Hovednavigation"><button data-nav="" class="on"><i class="ic squares" aria-hidden="true"></i>Motiver</button><button data-nav="mine"><i class="ic heart-icon" aria-hidden="true"></i>Mine</button><button data-nav="byg"><i class="ic plus-icon" aria-hidden="true"></i>Byg selv</button></nav>
+<dialog id="filterDialog"><div class="dialog-heading"><h2>Find dit byggeri</h2><button class="icon-button" id="filterClose" aria-label="Luk filtre"><i class="ic close-icon" aria-hidden="true"></i></button></div><label class="field-label" for="diff">Sværhedsgrad</label><select id="diff"><option value="">Alle sværhedsgrader</option><option>Let</option><option>Mellem</option><option>Svær</option></select><p class="meta">Sværhedsgraden følger antallet af brikker.</p><label class="field-label" for="pieceLimit">Antal brikker</label><select id="pieceLimit"><option value="250">Op til 250 brikker</option><option value="60">Op til 60 brikker</option><option value="120">Op til 120 brikker</option></select><h3>Tema</h3><div class="tabs" id="tabs"></div><button class="btn" id="filterApply">Vis motiver</button></dialog>
+<dialog id="overviewDialog"><div class="dialog-heading"><h2 id="overviewTitle">Hele figuren</h2><button class="icon-button" id="overviewClose" aria-label="Luk overblik"><i class="ic close-icon" aria-hidden="true"></i></button></div><canvas id="fullCanvas" role="img" aria-label="Hele figuren med byggernes dele"></canvas><p id="overviewLegend" class="meta"></p></dialog>
 <script>
+
 const COLORS = {
   r:["Mørkerød","#941b2b"], A:["Okkerguld","#c59616"],
   R:["Rød","#d8383a"], O:["Orange","#ff8a1f"], Y:["Gul","#f3d24a"], G:["Grøn","#3f9a4e"], g:["Mørkegrøn","#1f7a3a"],
@@ -420,50 +305,56 @@ function drawGrid(cv,p,opts={}){
 let tab="Alle";
 const $=id=>document.getElementById(id);
 function renderTabs(){
-  $("tabs").innerHTML=CATS.map(c=>`<button class="${c===tab?"on":""}" data-t="${c}">${c==="Likede"?"♥ Likede":c}</button>`).join("");
+  $("tabs").innerHTML=CATS.filter(c=>!["Likede","Egne"].includes(c)).map(c=>`<button class="${c===tab?"on":""}" aria-pressed="${c===tab}" data-t="${esc(c)}">${esc(c)}</button>`).join("");
   $("tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;renderTabs();renderList()});
+  $("quickTabs").innerHTML=[["Alle","Alle motiver"],["50 nye","50 nye"],["Likede","Favoritter"],["Egne","Egne"]].map(([v,n])=>`<button class="${v===tab?"on":""}" aria-pressed="${v===tab}" data-quick="${v}">${n}</button>`).join("");
+  $("quickTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.quick;renderTabs();renderList()});
 }
 function renderList(){
-  const q=$("q").value.trim().toLowerCase(), d=$("diff").value;
+  const q=$("q").value.trim().toLowerCase(), d=$("diff").value, limit=+$("pieceLimit").value;
   let items=allBuilds().filter(b=>{
     if(tab==="Likede"&&!likes.has(b.id))return false;
     if(tab==="50 nye"&&b.collection!=="motiver-50")return false;
-    if(tab!=="Alle"&&tab!=="Likede"&&tab!=="50 nye"&&b.cat!==tab)return false;
+    if(!["Alle","Likede","50 nye"].includes(tab)&&b.cat!==tab)return false;
     if(d&&b.level!==d)return false;
-    if(q){const number=b.collageNumber?String(b.collageNumber).padStart(2,"0"):"";const hay=(b.name+" "+b.cat+" "+b.level+" "+number+" nr. "+number).toLowerCase(); if(!hay.includes(q))return false}
+    if((limit<250||!b.own)&&b.total>limit)return false;
+    if(q){const number=b.collageNumber?String(b.collageNumber).padStart(2,"0"):"";if(!(b.name+" "+b.cat+" "+b.level+" "+number).toLowerCase().includes(q))return false}
     return true;
   });
+  $("collectionTitle").textContent=tab==="Alle"?"Vælg et motiv":tab==="Likede"?"Dine favoritter":tab==="Egne"?"Jeres egne motiver":tab;
+  $("resultCount").textContent=items.length+" motiver";
+  const filtered=!!d||limit<250||!["Alle","Likede","Egne","50 nye"].includes(tab);
+  $("activeFilters").classList.toggle("hide",!filtered);
+  $("filterSummary").textContent=[tab!=="Alle"?tab:"",d,limit<250?`Højst ${limit} brikker`:""].filter(Boolean).join(" · ");
+  $("filterCount").textContent=[!!d,limit<250,!["Alle","Likede","Egne","50 nye"].includes(tab)].filter(Boolean).length;
+  $("filterCount").classList.toggle("hide",!filtered);
   const g=$("grid");
-  let html="";
-  if(tab==="Alle"||tab==="Egne") html+=`<div class="card new2d" onclick="go('byg')"><span>＋</span>Byg i 2D</div>`;
-  html+=items.map(b=>`<div class="card" data-id="${b.id}">
-      <button class="heart" data-like="${b.id}" aria-label="Like">${likes.has(b.id)?"❤️":"🤍"}</button>
-      <canvas></canvas>
-      <div class="name">${b.collageNumber?`<span class="collage-number">${String(b.collageNumber).padStart(2,"0")}</span> `:""}${esc(b.name)}</div>
-      <div class="meta"><span class="pill p-${b.level}">${b.level}</span>${b.total} brikker</div>
-    </div>`).join("");
-  if(!items.length) html+=`<div class="empty">Ingen modeller passer til søgningen.</div>`;
-  g.innerHTML=html;
+  g.innerHTML=items.map(b=>`<article class="card" data-id="${esc(b.id)}"><button class="heart" data-like="${esc(b.id)}" aria-label="${likes.has(b.id)?"Fjern favorit":"Gem favorit"}: ${esc(b.name)}" aria-pressed="${likes.has(b.id)}"><i class="ic heart-icon" aria-hidden="true"></i></button><button class="model-link" aria-label="Se vejledning: ${esc(b.name)}, ${b.total} brikker"><canvas aria-hidden="true"></canvas><div class="name">${esc(b.name)}</div><div class="meta"><span class="pill p-${b.level}">${b.level}</span><span>${b.total} brikker</span></div></button></article>`).join("")||`<div class="empty"><h3>${tab==="Likede"?"Gem dine første favoritter":tab==="Egne"?"Hvad vil I finde på?":"Ingen motiver passer endnu"}</h3><p>${tab==="Likede"?"Tryk på hjertet ved et motiv, så finder du det her.":tab==="Egne"?"Tegn et motiv i Byg selv, og gem det her.":"Prøv et andet søgeord, eller nulstil filtrene."}</p><button class="btn ghost" id="emptyAction">${tab==="Egne"?"Byg selv":"Se alle motiver"}</button></div>`;
   g.querySelectorAll(".card[data-id]").forEach(el=>{
     const b=items.find(x=>x.id===el.dataset.id);
     requestAnimationFrame(()=>drawGrid(el.querySelector("canvas"),b.p));
-    el.onclick=e=>{if(e.target.dataset.like)return;go("m-"+b.id)};
+    el.querySelector(".model-link").onclick=()=>go("m-"+b.id);
   });
-  g.querySelectorAll("[data-like]").forEach(h=>h.onclick=e=>{e.stopPropagation();const id=h.dataset.like;likes.has(id)?likes.delete(id):likes.add(id);store.set("bv_likes",[...likes]);renderList()});
+  g.querySelectorAll("[data-like]").forEach(h=>h.onclick=()=>{toggleFavorite(h.dataset.like);renderList()});
+  if($("emptyAction"))$("emptyAction").onclick=()=>tab==="Egne"?go("byg"):resetFilters();
+  $("themeTiles").classList.toggle("hide",tab!=="Alle"||!!q||!!d||limit<250);
+  requestAnimationFrame(()=>{drawGrid($("animalArt"),BUILDS.find(b=>b.name==="Panda").p);drawGrid($("magicArt"),BUILDS.find(b=>b.id==="motiver50-01").p)});
 }
+function toggleFavorite(id){likes.has(id)?likes.delete(id):likes.add(id);store.set("bv_likes",[...likes])}
+function resetFilters(){tab="Alle";$("q").value="";$("diff").value="";$("pieceLimit").value="250";renderTabs();renderList()}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
 // ---------- detail ----------
-let cur=null, step=0, showAll=false;
+let cur=null, step=0, showAll=false, started=false;
 // "Byg sammen": the model is cut into horizontal parts, one per builder. Each
 // builder follows their own row-by-row guide; at the end the parts are joined.
 // Flat bricks alternate lying/standing, so the edges of two parts interlock.
-const TEAM_COLORS=["#2f6fed","#7a4fd6","#e0703c"];
+const TEAM_COLORS=["#164ddd","#b65d39","#6c51a6"];
 let mode=store.get("bv_mode","alone"), team=store.get("bv_team",{n:2,names:["Jens","Alfred","Far"],split:"even"});
 let phase="setup", parts=[], active=0, asmGap=0, asmTimer=null;
 function openBuild(id){
   cur=allBuilds().find(b=>b.id===id); if(!cur){go("");return}
-  step=0;showAll=false;phase="setup";parts=[];active=0;clearInterval(asmTimer);
+  step=0;showAll=false;started=false;phase="setup";parts=[];active=0;clearInterval(asmTimer);
   $("modelZoom").value="1";
   $("zoomControls").classList.toggle("hide",Math.max(cur.w,cur.p.length)<=24);
   $("modelViewport").scrollTop=0;$("modelViewport").scrollLeft=0;
@@ -474,7 +365,12 @@ function openBuild(id){
   $("buildTip").textContent=cur.tip||"";
   $("buildTip").classList.toggle("hide",!cur.tip);
   $("editOwn").classList.toggle("hide",!cur.own);$("delOwn").classList.toggle("hide",!cur.own);
+  updateFavorite();
   render();
+}
+function updateFavorite(){
+  $("guideFavorite").setAttribute("aria-pressed",String(likes.has(cur.id)));
+  $("guideFavorite").setAttribute("aria-label",likes.has(cur.id)?"Fjern favorit":"Gem som favorit");
 }
 // The row read left to right: runs of the same colour, gaps shown as empty spots.
 function rowRuns(b,y){
@@ -515,14 +411,30 @@ function buildParts(){
     return {...c,name:team.names[i]||`Bygger ${i+1}`,color:TEAM_COLORS[i],step:0,done:false,counts,n}});
 }
 function render(){
-  document.querySelectorAll("#modeBar button").forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));
+  if(!cur)return;
+  const activeBuild=started&&(mode!=="together"||phase!=="setup");
+  document.body.classList.toggle("building",activeBuild);
+  $("buildControls").classList.toggle("hide",!activeBuild||phase==="assemble");
+  $("buildHeading").classList.toggle("hide",!activeBuild||phase==="assemble");
+  $("introBox").classList.toggle("hide",activeBuild);
+  $("aloneStart").classList.toggle("hide",activeBuild||mode==="together");
+  $("guideLabel").textContent=activeBuild?(mode==="together"?"Byg sammen":"Byg alene"):"Dit næste byggeri";
+  document.querySelectorAll("#modeBar button").forEach(b=>{b.classList.toggle("on",b.dataset.mode===mode);b.setAttribute("aria-pressed",String(b.dataset.mode===mode))});
   const together=mode==="together";
   $("teamSetup").classList.toggle("hide",!(together&&phase==="setup"));
-  $("partTabs").classList.toggle("hide",!(together&&phase!=="setup"));
+  $("partTabs").classList.toggle("hide",!(together&&activeBuild));
   $("assembleBox").classList.toggle("hide",!(together&&phase==="assemble"));
   $("partDone").classList.add("hide");
+  $("doneBox").classList.add("hide");
+  $("buildPerson").textContent=mode==="together"&&parts[active]?parts[active].name+" bygger sin del":"Byg række for række";
+  if(!activeBuild){
+    $("stepBox").classList.add("hide");
+    if(together)renderSetup();
+    else {setCanvasWidth();drawGrid($("big"),cur.p,{tiles:cur.tiles});renderParts(cur.counts,"Det skal du bruge")}
+    return;
+  }
+  drawGrid($("overviewCanvas"),cur.p,{tiles:cur.tiles});
   if(!together){renderAlone();return}
-  if(phase==="setup"){renderSetup();return}
   renderTabsTeam();
   if(phase==="assemble"){renderAssemble();return}
   renderPart();
@@ -530,17 +442,21 @@ function render(){
 function setCanvasWidth(){
   // reset first so a wider earlier drawing cannot stretch the viewport we measure
   $("big").style.width="100%";
-  $("big").style.width=$("modelViewport").clientWidth*(+$("modelZoom").value||1)+"px";
+  const viewportWidth=$("modelViewport").clientWidth;
+  const available=started&&window.innerWidth<=760?Math.min(viewportWidth,window.innerHeight*.39):Math.min(viewportWidth,560);
+  $("big").style.width=available*(+$("modelZoom").value||1)+"px";
 }
 function stepUi(rowTitle,row,finished,firstDisabled,lastLabel,progress){
+  $("progressBar").setAttribute("aria-valuenow",String(Math.max(0,Math.min(100,progress))));
   $("prev").disabled=firstDisabled;
-  $("next").textContent=lastLabel;$("next").disabled=finished;
+  $("next").textContent=lastLabel.replace(/[▶✓]/g,"").trim();$("next").disabled=finished;
   $("prog").style.width=progress+"%";
   $("stepBox").classList.toggle("hide",finished);
   if(!finished){
     $("rowTitle").textContent=rowTitle;
+    drawRowPieces(row);
     $("runs").innerHTML=rowRuns(cur,row).map(([ch,n])=>ch==="."?
-      `<div class="run" style="border-style:dashed;color:var(--muted)">${n} tom${n>1?"me":""} plads${n>1?"er":""}</div>`:
+      `<div class="run gap">${n} tom${n>1?"me":""} plads${n>1?"er":""}</div>`:
       `<div class="run"><span class="sw" style="background:${COLORS[ch][1]}"></span>${n} ${COLORS[ch][0].toLowerCase()}</div>`).join("");
   }
 }
@@ -549,14 +465,15 @@ function renderAlone(){
   setCanvasWidth();
   drawGrid($("big"),cur.p,finished?{tiles:cur.tiles}:{step,tiles:cur.tiles});
   $("all").classList.remove("hide");$("all").textContent=showAll?"Trin for trin":"Vis hele";
-  stepUi(`Række ${step+1} af ${h} (oppefra)`,step,finished,!showAll&&step===0,step>=h-1?"Færdig ✓":"Næste række ▶",finished?100:Math.round(step/h*100));
+  stepUi(`Række ${step+1} af ${h} (oppefra)`,step,finished,!showAll&&step===0,step>=h-1?"Færdig ✓":"Næste række ▶",finished?100:Math.round((step+1)/h*100));
   $("doneBox").classList.toggle("hide",!finished||showAll);
+  if(finished){$("rowTitle").textContent="Alle rækker er bygget";$("doneBox").textContent="Færdig! Flot bygget!"}
   renderParts(cur.counts,"Det skal du bruge");
 }
 function renderSetup(){
   buildParts();
   $("teamCount").innerHTML=[2,3].map(n=>`<button data-n="${n}" class="${team.n===n?"on":""}">${n}</button>`).join("");
-  $("teamNames").innerHTML=Array.from({length:team.n},(_,i)=>`<label style="color:${TEAM_COLORS[i]}">Bygger ${i+1}</label><input data-i="${i}" value="${esc(team.names[i]||"")}" placeholder="Navn">`).join("");
+  $("teamNames").innerHTML=Array.from({length:team.n},(_,i)=>`<label for="builderName${i}" style="color:${TEAM_COLORS[i]}">Bygger ${i+1}</label><input id="builderName${i}" data-i="${i}" value="${esc(team.names[i]||"")}" placeholder="Navn">`).join("");
   $("teamSplit").innerHTML=[["even","Lige store dele"],["small",`Mindste del til ${esc(team.names[team.n-1]||"den yngste")}`]].map(([v,t])=>`<button data-s="${v}" class="${team.split===v?"on":""}">${t}</button>`).join("");
   $("splitInfo").textContent=parts.map(p=>`${p.name}: ${p.n} brikker`).join(" · ")+(parts.length<team.n?" (figuren er for lille til flere dele)":"");
   if(team.me!=null&&team.me>=team.n)team.me=null;
@@ -581,7 +498,7 @@ function renderTabsTeam(){
   const mine=team.me!=null?[team.me]:parts.map((_,i)=>i);
   const all=mine.every(i=>parts[i].done);
   $("partTabs").innerHTML=parts.map((p,i)=>!mine.includes(i)?"":`<button data-i="${i}" class="${phase==="build"&&i===active?"on":""}" style="background:${p.color}">${esc(p.name)}${p.done?" ✓":""}</button>`).join("")+
-    (all?`<button data-i="asm" class="asm ${phase==="assemble"?"on":""}">🧩 Saml</button>`:"");
+    (all?`<button data-i="asm" class="asm ${phase==="assemble"?"on":""}">Saml figuren</button>`:"");
   $("partTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{
     clearInterval(asmTimer);
     if(b.dataset.i==="asm"){phase="assemble";asmGap=1.2}else{phase="build";active=+b.dataset.i}
@@ -591,20 +508,24 @@ function renderTabsTeam(){
 function renderPart(){
   const p=parts[active], rows=p.r1-p.r0+1, finished=p.step>=rows;
   setCanvasWidth();
-  drawGrid($("big"),cur.p,{tiles:cur.tiles,focus:p,step:finished?null:p.r0+p.step});
-  $("all").classList.add("hide");
+  // Draw the actual assigned rows at full scale; retain their original H/V orientations.
+  const localPattern=cur.p.slice(p.r0,p.r1+1);
+  const localTiles=cur.tiles.filter(k=>k.row>=p.r0&&k.row<=p.r1).map(k=>({...k,y:k.y-p.r0,row:k.row-p.r0}));
+  drawGrid($("big"),localPattern,{tiles:localTiles,step:finished?null:p.step});
+  $("all").classList.remove("hide");$("all").textContent="Se hele figuren";
   const total=parts.reduce((t,q)=>t+q.r1-q.r0+1,0), doneRows=parts.reduce((t,q)=>t+Math.min(q.step,q.r1-q.r0+1),0);
   stepUi(`${p.name}: række ${p.step+1} af ${rows} i din del`,p.r0+p.step,finished,p.step===0&&!finished?true:false,p.step>=rows-1?"Min del er færdig ✓":"Næste række ▶",Math.round(doneRows/total*100));
   $("doneBox").classList.add("hide");
   if(finished){
+    $("rowTitle").textContent="Din del er færdig";
     const all=parts.every(q=>q.done), next=parts.findIndex(q=>!q.done);
     if(team.me!=null){
       $("partDone").classList.remove("hide");$("partDone").style.background=p.color;
-      $("partDone").innerHTML=`🎉 Godt gået, ${esc(p.name)}! Din del er færdig.<br><span style="font-size:15px;font-weight:600">Når de andre også er færdige, så tryk på 🧩 Saml og læg delene sammen.</span>`;
+      $("partDone").innerHTML=`Godt gået, ${esc(p.name)}! Din del er færdig.<br><span style="font-size:15px;font-weight:600">Når de andre også er færdige, så tryk på Saml figuren og læg delene sammen.</span>`;
       renderParts(p.counts,`${p.name} skal bruge`);return;
     }
     $("partDone").classList.remove("hide");$("partDone").style.background=p.color;
-    $("partDone").innerHTML=`🎉 Godt gået, ${esc(p.name)}! Din del er færdig.<br><span style="font-size:15px;font-weight:600">${all?"Alle dele er klar – tryk på 🧩 Saml.":`Nu mangler ${esc(gen(parts[next].name))} del.`}</span>`;
+    $("partDone").innerHTML=`Godt gået, ${esc(p.name)}! Din del er færdig.<br><span style="font-size:15px;font-weight:600">${all?"Alle dele er klar – tryk på Saml figuren.":`Nu mangler ${esc(gen(parts[next].name))} del.`}</span>`;
   }
   renderParts(p.counts,`${p.name} skal bruge`);
 }
@@ -616,15 +537,15 @@ function renderAssemble(){
   const order=parts.map(p=>p.name);
   $("assembleText").textContent=`Læg delene på bordet i den rækkefølge, du ser: ${order.join(" øverst, så ")} nederst. Skub dem forsigtigt sammen, så armene på kanten griber ind i hinanden. Tryk fast hele vejen langs samlingen.`;
   $("doneBox").classList.toggle("hide",asmGap>0.05);
-  $("doneBox").textContent=`🎉 ${cur.name} er færdig! Flot samarbejde, ${order.join(" og ")}!`;
+  $("doneBox").textContent=`${cur.name} er færdig! Flot samarbejde, ${order.join(" og ")}!`;
   renderParts(cur.counts,"Hele figuren");
 }
 $("assembleGo").onclick=()=>{
   clearInterval(asmTimer);asmGap=1.2;
   asmTimer=setInterval(()=>{asmGap=Math.max(0,asmGap-0.04);renderAssemble();if(asmGap===0)clearInterval(asmTimer)},40);
 };
-$("teamStart").onclick=()=>{buildParts();phase="build";active=team.me!=null?team.me:0;render()};
-document.querySelectorAll("#modeBar button").forEach(b=>b.onclick=()=>{mode=b.dataset.mode;store.set("bv_mode",mode);phase="setup";clearInterval(asmTimer);render()});
+$("teamStart").onclick=()=>{buildParts();started=true;phase="build";active=team.me!=null?Math.min(team.me,parts.length-1):0;render();window.scrollTo(0,0)};
+document.querySelectorAll("#modeBar button").forEach(b=>b.onclick=()=>{started=false;mode=b.dataset.mode;store.set("bv_mode",mode);phase="setup";clearInterval(asmTimer);render()});
 $("modelZoom").onchange=render;
 $("next").onclick=()=>{
   if(mode==="together"&&phase==="build"){const p=parts[active];p.step++;if(p.step>=p.r1-p.r0+1)p.done=true;render();return}
@@ -634,7 +555,7 @@ $("prev").onclick=()=>{
   if(mode==="together"&&phase==="build"){const p=parts[active];if(p.step>0){p.step--;p.done=false}render();return}
   if(showAll){showAll=false;render();return}if(step>0){step--;render()}
 };
-$("all").onclick=()=>{showAll=!showAll;if(!showAll&&step>=cur.p.length)step=0;render()};
+$("all").onclick=openOverview;
 $("delOwn").onclick=()=>{
   if($("delOwn").dataset.sure!=="1"){$("delOwn").dataset.sure="1";$("delOwn").textContent="Tryk igen for at slette";return}
   own=own.filter(o=>o.id!==cur.id);store.set("bv_own",own);$("delOwn").dataset.sure="";$("delOwn").textContent="Slet min model";go("")
@@ -645,8 +566,8 @@ $("editOwn").onclick=()=>{editing=cur;go("byg")};
 let size=16, grid=[], color="R", history=[], editing=null, painting=false;
 function newGrid(n){size=n;grid=Array.from({length:n},()=>Array(n).fill("."))}
 function renderPal(){
-  $("pal").innerHTML=Object.entries(COLORS).map(([k,[n,c]])=>`<button title="${n}" data-c="${k}" class="${k===color?"on":""}" style="background:${c}"></button>`).join("")+
-    `<button title="Viskelæder" data-c="." class="${color==="."?"on":""}" style="background:#fff;font-size:18px">⌫</button>`;
+  $("pal").innerHTML=Object.entries(COLORS).map(([k,[n,c]])=>`<button aria-label="${n}" title="${n}" data-c="${k}" class="${k===color?"on":""}" style="background:${c}"></button>`).join("")+
+    `<button aria-label="Viskelæder" title="Viskelæder" data-c="." class="${color==="."?"on":""}" style="background:#fff;font-size:18px">Visk</button>`;
   $("pal").querySelectorAll("button").forEach(b=>b.onclick=()=>{color=b.dataset.c;renderPal()});
 }
 let geo=null;
@@ -701,16 +622,18 @@ function openBuilder(){
 function go(h){ if(location.hash.slice(1)===h)route(); else location.hash=h; }
 function route(){
   const h=location.hash.slice(1);
-  $("listView").classList.toggle("hide",!!h);
+  $("listView").classList.toggle("hide",!!h&&h!=="mine");
+  if(h==="mine"){tab="Likede";renderTabs()}
   $("detailView").classList.toggle("hide",!h.startsWith("m-"));
   $("builderView").classList.toggle("hide",h!=="byg");
-  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.nav===(h==="byg"?"byg":"")));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.nav===(h==="byg"?"byg":h==="mine"?"mine":"")));
+  document.body.classList.remove("building");
   if(h.startsWith("m-"))requestAnimationFrame(()=>openBuild(h.slice(2)));
   else if(h==="byg")openBuilder();
   else {editing=null;renderList()}
   window.scrollTo(0,0);
 }
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.nav));
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{if(b.dataset.nav===""&&location.hash==="#mine"){tab="Alle";renderTabs()}go(b.dataset.nav)});
 $("q").oninput=renderList;$("diff").onchange=renderList;
 window.addEventListener("hashchange",route);
 // Redraw on resize/rotation without resetting progress in the open guide.
@@ -718,6 +641,40 @@ let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>
   const h=location.hash.slice(1);
   if(h.startsWith("m-")&&cur)render(); else if(h==="byg")drawPad(); else renderList();
 },200)});
+function applyTheme(value){
+  document.documentElement.dataset.theme=value;
+  store.set("bv_appearance",value);
+  document.querySelectorAll("[data-theme]").forEach(b=>{if(b.tagName==="BUTTON")b.setAttribute("aria-pressed",String(b.dataset.theme===value))});
+  $("listHeading").textContent=value==="parent"?"Find et byggeri":"Hvad vil du bygge?";
+  document.querySelector('meta[name="theme-color"]').content=value==="parent"?"#faf9f5":"#fffdf7";
+  requestAnimationFrame(()=>{if(cur&&!$("detailView").classList.contains("hide"))render();else if(!$("listView").classList.contains("hide"))renderList()});
+}
+function drawRowPieces(row){
+  const cv=$("rowPieces"),ctx=cv.getContext("2d"), css=cv.clientWidth||300,dpr=window.devicePixelRatio||1;
+  const tiles=cur.tiles.filter(k=>k.row===row), cols=Math.min(8,tiles.length||1),rows=Math.ceil(tiles.length/cols)||1;
+  const h=Math.max(56,rows*45),u=Math.min(7,(css-8)/(cols*6));
+  cv.width=css*dpr;cv.height=h*dpr;cv.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
+  tiles.forEach((k,i)=>drawBrick(ctx,4+(i%cols)*(css/cols)+u*2,Math.floor(i/cols)*45+12,u,{...k,x:0,y:0},false));
+  cv.setAttribute("aria-label",tiles.length+" brikker i rækken. Se farver og tomme pladser i tekstlisten nedenfor.");
+}
+function openOverview(){
+  $("overviewTitle").textContent=cur.name;
+  $("overviewDialog").showModal();
+  drawGrid($("fullCanvas"),cur.p,mode==="together"?{tiles:cur.tiles,bands:parts,gap:.65,labels:true}:{tiles:cur.tiles});
+  $("overviewLegend").textContent=mode==="together"?parts.map(p=>p.name+": "+p.n+" brikker").join(" · "):cur.total+" brikker · "+cur.p.length+" rækker";
+}
+$("overviewButton").onclick=openOverview;$("overviewClose").onclick=()=>$("overviewDialog").close();
+$("aloneStart").onclick=()=>{started=true;render();window.scrollTo(0,0)};
+$("detailBack").onclick=()=>{if(started){clearInterval(asmTimer);started=false;phase="setup";render();window.scrollTo(0,0)}else go("")};
+$("guideFavorite").onclick=()=>{toggleFavorite(cur.id);updateFavorite()};
+$("filterOpen").onclick=()=>$("filterDialog").showModal();
+$("filterClose").onclick=()=>$("filterDialog").close();
+$("filterApply").onclick=()=>{$("filterDialog").close();renderTabs();renderList()};
+$("resetFilters").onclick=resetFilters;$("pieceLimit").onchange=renderList;
+$("diff").onchange=renderList;
+document.querySelectorAll("[data-category]").forEach(b=>b.onclick=()=>{tab=b.dataset.category;renderTabs();renderList()});
+document.querySelectorAll("button[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));
+applyTheme(store.get("bv_appearance","child"));
 renderTabs();route();
 </script>
 </body>
