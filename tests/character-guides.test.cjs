@@ -39,6 +39,8 @@ for (const category of ['Pokémon', 'Minecraft']) test(`${category} has a separa
 for (const id of guideIds) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
   const b = context.models.find(b => b.id === id);
   const width = b.p[0].length;
+  assert.match(b.p[0], /[^.]/, 'the first instruction places at least one brick');
+  assert.match(b.p[b.p.length - 1], /[^.]/, 'the last instruction places at least one brick');
   const limit = id === 'loeveskjold' ? 64 : 24;
   assert.ok(width <= limit && b.p.length <= limit, 'fits the supported guide dimensions');
   assert.ok(b.p.every(row => row.length === width), 'rectangular pattern');

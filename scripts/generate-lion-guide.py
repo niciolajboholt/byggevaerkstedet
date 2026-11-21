@@ -105,6 +105,7 @@ print('Components:',[len(c) for c in components])
 for comp in components[1:]:
  if len(comp)>12:raise ValueError('A major ornament needs a physical connection')
  for x,y in comp:grid[y][x]='.'
+while all(c=='.' for c in grid[0]):grid.pop(0)
 while all(c=='.' for c in grid[-1]):grid.pop()
 p=[''.join(r) for r in grid]
 rows=len(p)
