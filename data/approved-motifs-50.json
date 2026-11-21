@@ -1,0 +1,1364 @@
+{
+  "title": "50 motiver til Byggeværkstedet",
+  "status": "Til gennemgang – ikke udgivet i appen",
+  "max_bricks": 250,
+  "source_urls": [
+    "https://plusplusinstructions.com/creator-studio/",
+    "https://plusplusinstructions.com/da/instructions/"
+  ],
+  "models": [
+    {
+      "id": "forslag-01",
+      "number": 1,
+      "group": "Magi",
+      "name": "Stjernestav",
+      "p": [
+        ".....Y...",
+        "....YYY..",
+        "..YYYYYYY",
+        "...YYYYY.",
+        "...YY.YY.",
+        "....NN...",
+        "...NN....",
+        "..NN.....",
+        ".NN......",
+        "NN......."
+      ],
+      "bricks": 30,
+      "counts": {
+        "Y": 20,
+        "N": 10
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-02",
+      "number": 2,
+      "group": "Magi",
+      "name": "Flyvende nøgle",
+      "p": [
+        "WW.......WW",
+        "WWW.....WWW",
+        ".WWWYYYWWW.",
+        "..WWY.YWW..",
+        "...WYYYW...",
+        ".....Y.....",
+        ".....Y.....",
+        ".....YYY...",
+        ".....Y.....",
+        ".....YYY..."
+      ],
+      "bricks": 39,
+      "counts": {
+        "W": 22,
+        "Y": 17
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-03",
+      "number": 3,
+      "group": "Magi",
+      "name": "Eliksirflaske",
+      "p": [
+        "...NNN...",
+        "...NNN...",
+        "..WWWWW..",
+        "...WbW...",
+        "...WbW...",
+        "..WbbbW..",
+        ".WbbbbbW.",
+        "WbWbbbbbW",
+        "WbPPPPPbW",
+        "WPPpPPPPW",
+        "WPPPPpPPW",
+        ".WPPPPPW.",
+        "..WWWWW.."
+      ],
+      "bricks": 77,
+      "counts": {
+        "N": 6,
+        "W": 29,
+        "b": 18,
+        "P": 22,
+        "p": 2
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-04",
+      "number": 4,
+      "group": "Magi",
+      "name": "Den gyldne tryllebog",
+      "p": [
+        ".NNNNNNNNNNN.",
+        "NPPPPPPPPPPPN",
+        "NPYYYYYYYYYPN",
+        "NPYPPPPPPPYPN",
+        "NPYPPPYPPPYPN",
+        "NPYPPYYYPPYPN",
+        "NPYPYYYYYPYPN",
+        "NPYPPYYYPPYPN",
+        "NPYPPPYPPPYPN",
+        "NPYPPPPPPPYPN",
+        "NPYYYYYYYYYPN",
+        "NPPPPPPPPPPPN",
+        ".NWWWWWWWWWN.",
+        ".NNNNNNNNNNN."
+      ],
+      "bricks": 176,
+      "counts": {
+        "N": 46,
+        "P": 76,
+        "Y": 45,
+        "W": 9
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-05",
+      "number": 5,
+      "group": "Magi",
+      "name": "Føniks",
+      "p": [
+        "......YYY......",
+        ".....OROYO.....",
+        "O....ORRRO....O",
+        "OO...ORORO...OO",
+        "OOO..RRRRR..OOO",
+        "OROOORRRRROOORO",
+        ".OROORRRRROORO.",
+        "..ORORRRRRORO..",
+        "...OORRRRROO...",
+        "....ORORORO....",
+        ".....ROROR.....",
+        "....ORORORO....",
+        "...OOROROROO...",
+        ".....OYRYO.....",
+        "......YRY......",
+        ".......Y......."
+      ],
+      "bricks": 120,
+      "counts": {
+        "Y": 9,
+        "O": 60,
+        "R": 51
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-06",
+      "number": 6,
+      "group": "Minecraft",
+      "name": "Diamant",
+      "p": [
+        "...BBB...",
+        "..BbbbB..",
+        ".BbWbbbB.",
+        "BbWbbbbbB",
+        "BbbbbbbbB",
+        ".BbbbbbB.",
+        "..BbbbB..",
+        "...BbB...",
+        "....B...."
+      ],
+      "bricks": 49,
+      "counts": {
+        "B": 18,
+        "b": 29,
+        "W": 2
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-07",
+      "number": 7,
+      "group": "Minecraft",
+      "name": "Fakkel",
+      "p": [
+        "..Y..",
+        ".OYO.",
+        ".OYO.",
+        "ROOOR",
+        ".RRR.",
+        ".NNN.",
+        ".NTN.",
+        ".NNN.",
+        ".NTN.",
+        ".NNN.",
+        ".NTN.",
+        ".NNN."
+      ],
+      "bricks": 36,
+      "counts": {
+        "Y": 3,
+        "O": 7,
+        "R": 5,
+        "N": 18,
+        "T": 3
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-08",
+      "number": 8,
+      "group": "Minecraft",
+      "name": "Blokkiste",
+      "p": [
+        ".NNNNNNNNN.",
+        "NNNTTTTTNNN",
+        "NTNNNNNNNTN",
+        "NNNNNSNNNNN",
+        "NTNNSSSNNTN",
+        "NTNNNSNNNTN",
+        "NNNTTTTTNNN",
+        ".NNNNNNNNN."
+      ],
+      "bricks": 84,
+      "counts": {
+        "N": 63,
+        "T": 16,
+        "S": 5
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-09",
+      "number": 9,
+      "group": "Minecraft",
+      "name": "Lyserød axolotl",
+      "p": [
+        ".p.........p.",
+        "pPp.......pPp",
+        ".ppp.....ppp.",
+        "...ppppppp...",
+        ".ppppppppppp.",
+        "pppKpppppKppp",
+        ".ppppppppppp.",
+        "...ppppppp...",
+        "....ppppp....",
+        "..ppppppppp..",
+        ".pp..ppp..pp."
+      ],
+      "bricks": 84,
+      "counts": {
+        "p": 80,
+        "P": 2,
+        "K": 2
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-10",
+      "number": 10,
+      "group": "Minecraft",
+      "name": "Blokskelet",
+      "p": [
+        "...WWWWWWW...",
+        "...WWWWWWW...",
+        "...WKKWKKW...",
+        "...WKKWKKW...",
+        "...WWWKWWW...",
+        "...WWKKKWW...",
+        ".....WWW.....",
+        "...WWWWWWW...",
+        ".WWWW.W.WWWW.",
+        "WW.WWWWWWW.WW",
+        "WW.WW.W.WW.WW",
+        "WW.WWWWWWW.WW",
+        "...WWWWWWW...",
+        ".....WWW.....",
+        "....WW.WW....",
+        "....WW.WW....",
+        "....WW.WW....",
+        "...WWW.WWW..."
+      ],
+      "bricks": 120,
+      "counts": {
+        "W": 108,
+        "K": 12
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-11",
+      "number": 11,
+      "group": "Pokémon",
+      "name": "Lilla fangebold",
+      "p": [
+        "..PPP..",
+        ".PpPpP.",
+        "PPPPPPP",
+        "KKKWKKK",
+        "WWWWWWW",
+        ".WWWWW.",
+        "..WWW.."
+      ],
+      "bricks": 37,
+      "counts": {
+        "P": 13,
+        "p": 2,
+        "K": 6,
+        "W": 16
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-12",
+      "number": 12,
+      "group": "Pokémon",
+      "name": "Kuglerund sanger",
+      "p": [
+        ".p.....p.",
+        ".pp...pp.",
+        ".ppppppp.",
+        "ppbpppbpp",
+        "ppKpppKpp",
+        "ppppppppp",
+        ".pppKppp.",
+        "..ppppp..",
+        ".pp...pp."
+      ],
+      "bricks": 56,
+      "counts": {
+        "p": 51,
+        "b": 2,
+        "K": 3
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-13",
+      "number": 13,
+      "group": "Pokémon",
+      "name": "And med hovedpine",
+      "p": [
+        ".....KK.....",
+        "....YYYY....",
+        "...YYYYYY...",
+        "..YKYYYYKY..",
+        "..YYYYYYYY..",
+        ".YYTTTTTTYY.",
+        ".YYTTTTTTYY.",
+        "..YYYYYYYY..",
+        ".YYYYYYYYYY.",
+        "YYY.YYYY.YYY",
+        ".YYYYYYYYYY.",
+        "..YYYYYYYY..",
+        "..YYYYYYYY..",
+        "..YYYYYYYY..",
+        "...YY..YY...",
+        "..TTT..TTT.."
+      ],
+      "bricks": 120,
+      "counts": {
+        "K": 4,
+        "Y": 98,
+        "T": 18
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-14",
+      "number": 14,
+      "group": "Pokémon",
+      "name": "Den sovende kæmpe",
+      "p": [
+        "...B.......B...",
+        "...BB.....BB...",
+        "...BBBBBBBBB...",
+        "..BBTTTTTTTBB..",
+        "..BTKTTTTTKTB..",
+        "..BTTTTTTTTTB..",
+        "...BTTTKTTTB...",
+        "..BBBBTTTBBBB..",
+        ".BBBTTTTTTTBBB.",
+        "BBBBTTTTTTTBBBB",
+        "BBBTTTTTTTTTBBB",
+        "BBBTTTTTTTTTBBB",
+        ".BBTTTTTTTTTBB.",
+        ".BBTTTTTTTTTBB.",
+        "..BBTTTTTTTBB..",
+        "..BBBTTTTTBBB..",
+        "...BBBBBBBBB...",
+        "..TTTT...TTTT..",
+        "..TWWT...TWWT.."
+      ],
+      "bricks": 199,
+      "counts": {
+        "B": 86,
+        "T": 106,
+        "K": 3,
+        "W": 4
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-15",
+      "number": 15,
+      "group": "Pokémon",
+      "name": "Stenven",
+      "p": [
+        "....SSSSSSS....",
+        "...SSSSSSSSS...",
+        "...SSKSSSKSS...",
+        "...SSSSSSSSS...",
+        "...SSSKKKSSS...",
+        "SS.SSSSSSSSS.SS",
+        "SSSSSSSSSSSSSSS",
+        "SSSSSSSSSSSSSSS",
+        ".SS.SSSSSSS.SS.",
+        ".....SSSSS.....",
+        "......SSS......"
+      ],
+      "bricks": 105,
+      "counts": {
+        "S": 100,
+        "K": 5
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-16",
+      "number": 16,
+      "group": "Platformspil",
+      "name": "Guldmønt",
+      "p": [
+        "..YYY..",
+        ".YOYYY.",
+        "YYOYYYY",
+        "YYOYYYY",
+        "YYOYYYY",
+        "YYOYYYY",
+        ".YYYYY.",
+        "..YYY.."
+      ],
+      "bricks": 44,
+      "counts": {
+        "Y": 39,
+        "O": 5
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-17",
+      "number": 17,
+      "group": "Platformspil",
+      "name": "Kraftstjerne",
+      "p": [
+        ".....Y.....",
+        "....YYY....",
+        "....YYY....",
+        "YYYYYYYYYYY",
+        ".YYYKYKYYY.",
+        "..YYKYKYY..",
+        "...YYYYY...",
+        "..YYYYYYY..",
+        ".YYYY.YYYY.",
+        ".YYY...YYY."
+      ],
+      "bricks": 60,
+      "counts": {
+        "Y": 56,
+        "K": 4
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-18",
+      "number": 18,
+      "group": "Platformspil",
+      "name": "Det runde spøgelse",
+      "p": [
+        "...WWWWW...",
+        "..WWWWWWW..",
+        ".WWWWWWWWW.",
+        "WWWKWWWKWWW",
+        "WWWWWWWWWWW",
+        ".WWKKKKKWW.",
+        ".WWKRRRKWW.",
+        "..WWRRRWW..",
+        "...WWWWW..."
+      ],
+      "bricks": 73,
+      "counts": {
+        "W": 58,
+        "K": 9,
+        "R": 6
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-19",
+      "number": 19,
+      "group": "Platformspil",
+      "name": "Rød skildpaddeskal",
+      "p": [
+        "...RRRRR...",
+        "..RNNNNNR..",
+        ".RRNRRRNRR.",
+        "RRNRRRRRNRR",
+        "RRNNNNNNNRR",
+        ".RRRRRRRRR.",
+        "WWWWWWWWWWW",
+        ".WKKWWWKKW."
+      ],
+      "bricks": 72,
+      "counts": {
+        "R": 36,
+        "N": 16,
+        "W": 16,
+        "K": 4
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-20",
+      "number": 20,
+      "group": "Platformspil",
+      "name": "Plante i grønt rør",
+      "p": [
+        "...RRRRR...",
+        "..RRWWRRR..",
+        ".RRRWWRRRR.",
+        ".RRRRRRWWR.",
+        "..RRRRRRR..",
+        "...WKWKW...",
+        "....GGG....",
+        ".GG.GGG.GG.",
+        ".GGGGGGGGG.",
+        "....GGG....",
+        ".ggGGGGGgg.",
+        "gGGGGGGGGGg",
+        "gGgGGGGGgGg",
+        "ggggggggggg",
+        ".GgGGGGGgG.",
+        ".GgGGGGGgG.",
+        ".GgGGGGGgG.",
+        ".ggggggggg."
+      ],
+      "bricks": 142,
+      "counts": {
+        "R": 31,
+        "W": 9,
+        "K": 2,
+        "G": 64,
+        "g": 36
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-21",
+      "number": 21,
+      "group": "Dyr",
+      "name": "Lille ælling",
+      "p": [
+        "....YYY..",
+        "...YKYY..",
+        "...YYYYOO",
+        "....YYY..",
+        ".YYYYYY..",
+        "YYYYYYY..",
+        ".YYYYY...",
+        "..OOO...."
+      ],
+      "bricks": 37,
+      "counts": {
+        "Y": 31,
+        "K": 1,
+        "O": 5
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-22",
+      "number": 22,
+      "group": "Dyr",
+      "name": "Kanin",
+      "p": [
+        "..W...W..",
+        "..Wp.Wp..",
+        "..Wp.Wp..",
+        "..WWWWW..",
+        ".WWWWWWW.",
+        ".WKWWWKW.",
+        "WWWWpWWWW",
+        ".WWWWWWW.",
+        "..WWWWW..",
+        ".WWWWWWW.",
+        "..WW.WW.."
+      ],
+      "bricks": 61,
+      "counts": {
+        "W": 54,
+        "p": 5,
+        "K": 2
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-23",
+      "number": 23,
+      "group": "Dyr",
+      "name": "Panda",
+      "p": [
+        "..KK.....KK..",
+        ".KKKK...KKKK.",
+        ".KWWWWWWWWWK.",
+        ".WWWWWWWWWWW.",
+        "WWKKWWWWWKKWW",
+        "WWKWKWWWKWKWW",
+        "WWWWWWKWWWWWW",
+        ".WWWWWKWWWWW.",
+        "..WWWWWWWWW..",
+        "...KKWWWKK...",
+        "..KKWWWWWKK..",
+        "..KKWWWWWKK..",
+        "...KK...KK..."
+      ],
+      "bricks": 122,
+      "counts": {
+        "K": 40,
+        "W": 82
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-24",
+      "number": 24,
+      "group": "Dyr",
+      "name": "Havskildpadde",
+      "p": [
+        ".....GGG.....",
+        ".....GKG.....",
+        ".....GGG.....",
+        "..GGGgGgGGG..",
+        ".GGGgGGGgGGG.",
+        "GGGgGGgGGgGGG",
+        ".GGgGgGgGgGG.",
+        "..GgGGgGGgG..",
+        "..GGgGGGgGG..",
+        ".GGGGgGgGGGG.",
+        "GGG..GGG..GGG",
+        "......G......"
+      ],
+      "bricks": 92,
+      "counts": {
+        "G": 73,
+        "K": 1,
+        "g": 18
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-25",
+      "number": 25,
+      "group": "Dyr",
+      "name": "Søhest",
+      "p": [
+        "...OOO.",
+        "..OYOYO",
+        "..OKOOO",
+        "OOOOOOO",
+        "OO..OO.",
+        "...OOO.",
+        "..OOYO.",
+        ".OOYYO.",
+        ".OYYOO.",
+        "..OYOO.",
+        "...OOO.",
+        "..OO.OO",
+        "..OOOOO",
+        "...OOO."
+      ],
+      "bricks": 60,
+      "counts": {
+        "O": 51,
+        "Y": 8,
+        "K": 1
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-26",
+      "number": 26,
+      "group": "Fantasi",
+      "name": "Flagermus",
+      "p": [
+        "...K...K...",
+        "K..KKKKK..K",
+        "KKKKYKYKKKK",
+        ".KKKKKKKKK.",
+        "..KKKKKKK..",
+        "....KKK....",
+        ".....K....."
+      ],
+      "bricks": 40,
+      "counts": {
+        "K": 38,
+        "Y": 2
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-27",
+      "number": 27,
+      "group": "Fantasi",
+      "name": "Venlig trold",
+      "p": [
+        "...GGGGG...",
+        "..GGGGGGG..",
+        ".GGKGGGKGG.",
+        "..GGGGGGG..",
+        "...GWWWG...",
+        "....GGG....",
+        "..GNNNNNG..",
+        ".GGNNNNNGG.",
+        "...NNNNN...",
+        "...GG.GG..."
+      ],
+      "bricks": 61,
+      "counts": {
+        "G": 41,
+        "K": 2,
+        "W": 3,
+        "N": 15
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-28",
+      "number": 28,
+      "group": "Fantasi",
+      "name": "Enhjørning",
+      "p": [
+        ".........Y...",
+        "........YY...",
+        ".......WWWW..",
+        "......WpWKWW.",
+        ".....WppWWWW.",
+        "....WppWWWW..",
+        "....WpWWW....",
+        "...WppWWW....",
+        "..ppWWWWWWW..",
+        ".ppWWWWWWWWW.",
+        "..WWWWWWWWWWW",
+        "pWWWWWWWWWWWW",
+        ".ppWWWWWWWWW.",
+        "...WWW...WWW.",
+        "...WWW...WWW.",
+        "...ppp...ppp."
+      ],
+      "bricks": 111,
+      "counts": {
+        "Y": 3,
+        "W": 86,
+        "p": 21,
+        "K": 1
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-29",
+      "number": 29,
+      "group": "Fantasi",
+      "name": "Ilddrage",
+      "p": [
+        ".........RRRR...",
+        "........ROKRRR..",
+        "........RRRRRROO",
+        ".R......RRRRR...",
+        ".RR....RRRR.....",
+        ".ROR..RRRRR.....",
+        ".RORRRRRRRRR....",
+        ".RROOORRYYRRR...",
+        "..ROORRYYYRRRR..",
+        "...RRRRYYYRR....",
+        "R..RRRRYYYRR....",
+        "RRRRRRRYYYRR....",
+        ".RRRRRRRRRRR....",
+        "..RRRRRRRRR.....",
+        "...RRRRRRRR.....",
+        "....RRR.RRR.....",
+        "...RRRW.RRRW...."
+      ],
+      "bricks": 146,
+      "counts": {
+        "R": 119,
+        "O": 10,
+        "K": 1,
+        "Y": 14,
+        "W": 2
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-30",
+      "number": 30,
+      "group": "Fantasi",
+      "name": "Havmonster",
+      "p": [
+        ".............GGG..",
+        "............GKGGG.",
+        "............GGGGGG",
+        "............GGGG..",
+        "...........GGGG...",
+        "..........GGGG....",
+        "...GG....GGGG.....",
+        "..GGGG..GGGG......",
+        ".GGGGGGGGGG.......",
+        "GGGGGGGGGGGG......",
+        "GGGGgGGgGGGGG.....",
+        ".GGGGGGGGGGGG.....",
+        "..GGGGGGGGGG......",
+        "...GGG..GGG.......",
+        "...bbb..bbb......."
+      ],
+      "bricks": 109,
+      "counts": {
+        "G": 100,
+        "K": 1,
+        "g": 2,
+        "b": 6
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-31",
+      "number": 31,
+      "group": "Køretøjer",
+      "name": "Mini-racer",
+      "p": [
+        ".....RRRR....",
+        "....RbbRRR...",
+        ".RRRRbbRRRRR.",
+        "RRRRRRRRRRRRY",
+        "RRKKRRRRKKRRR",
+        "..KK....KK..."
+      ],
+      "bricks": 51,
+      "counts": {
+        "R": 38,
+        "b": 4,
+        "Y": 1,
+        "K": 8
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-32",
+      "number": 32,
+      "group": "Køretøjer",
+      "name": "Helikopter",
+      "p": [
+        "....KKKKKKKKK.",
+        "........K.....",
+        "......BBBBB...",
+        ".....BBbbbBB..",
+        "B...BBBbbbbBB.",
+        "BBBBBBBBBBBBBB",
+        "BBBBBBBBBBBBBB",
+        ".....BBBBBBBB.",
+        ".......K.K....",
+        ".....KKKKKKK.."
+      ],
+      "bricks": 77,
+      "counts": {
+        "K": 19,
+        "B": 51,
+        "b": 7
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-33",
+      "number": 33,
+      "group": "Køretøjer",
+      "name": "Gravemaskine",
+      "p": [
+        ".......YYYYY..",
+        "......YbbbYY..",
+        "......YbbbYY..",
+        "......YYYYYY..",
+        ".YY..YYYYYYYY.",
+        ".YYYYYYYYYYYYY",
+        ".YY..YYYYYYYYY",
+        ".Y...YYYYYYYYY",
+        ".Y....KKKKKKK.",
+        ".YY..KSSSSSSSK",
+        "YYY..KKKKKKKKK"
+      ],
+      "bricks": 98,
+      "counts": {
+        "Y": 67,
+        "b": 6,
+        "K": 18,
+        "S": 7
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-34",
+      "number": 34,
+      "group": "Køretøjer",
+      "name": "Brandbil",
+      "p": [
+        "......RR...........",
+        "......YY...........",
+        "..RRRRRRRRRRRRRRR..",
+        "..RbbbbRWWWWWWWWR..",
+        "..RbbbbRWRRWRRWRR..",
+        "..RbbbbRWWWWWWWWR..",
+        ".RRRRRRRRRRRRRRRRR.",
+        "YRRRRRRRRRRRRRRRRRY",
+        "RRKKKRRRRRRRRKKKRRR",
+        ".KSSSK......KSSSK..",
+        "..KKK........KKK..."
+      ],
+      "bricks": 135,
+      "counts": {
+        "R": 78,
+        "Y": 4,
+        "b": 12,
+        "W": 19,
+        "K": 16,
+        "S": 6
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-35",
+      "number": 35,
+      "group": "Køretøjer",
+      "name": "Damplokomotiv",
+      "p": [
+        "......SSS.........",
+        ".....SSSSS........",
+        "......SSS.........",
+        "......KKK...RRRRR.",
+        "......KKK...RbbbR.",
+        "...RRRRRRRRRRbbbR.",
+        "..RRRRRRRRRRRbbbR.",
+        "..RRRRRRRRRRRRRRR.",
+        "YYRRRRRRRRRRRRRRR.",
+        "YRRRRRRRRRRRRRRRRR",
+        "..KKKKRRKKKKRRKKKK",
+        "..KSSK..KSSK..KSSK",
+        "..KKKK..KKKK..KKKK"
+      ],
+      "bricks": 146,
+      "counts": {
+        "S": 17,
+        "K": 36,
+        "R": 81,
+        "b": 9,
+        "Y": 3
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-36",
+      "number": 36,
+      "group": "Rum og robotter",
+      "name": "UFO",
+      "p": [
+        "....bbb....",
+        "...bWbbb...",
+        "..bbbbbbb..",
+        ".SSSSSSSSS.",
+        "SSYSSYSSYSS",
+        ".SSSSSSSSS.",
+        "..SSSSSSS..",
+        "...Y.Y.Y..."
+      ],
+      "bricks": 54,
+      "counts": {
+        "b": 14,
+        "W": 1,
+        "S": 33,
+        "Y": 6
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-37",
+      "number": 37,
+      "group": "Rum og robotter",
+      "name": "Minirobot",
+      "p": [
+        "....Y....",
+        "....S....",
+        "..SSSSS..",
+        "..SbSbS..",
+        "..SSKSS..",
+        "...SSS...",
+        ".SBBYBBS.",
+        "SSBBBBBSS",
+        "..BBBBB..",
+        "...S.S...",
+        "..KK.KK.."
+      ],
+      "bricks": 47,
+      "counts": {
+        "Y": 2,
+        "S": 24,
+        "b": 2,
+        "K": 5,
+        "B": 14
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-38",
+      "number": 38,
+      "group": "Rum og robotter",
+      "name": "Rumhjelm",
+      "p": [
+        "..WWWWW..",
+        ".WWbbbWW.",
+        "WWbWbbbWW",
+        "WWbbbbbWW",
+        "WWbbbbbWW",
+        ".WWbbbWW.",
+        "..WWWWW..",
+        "..SSSSS.."
+      ],
+      "bricks": 56,
+      "counts": {
+        "W": 31,
+        "b": 20,
+        "S": 5
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-39",
+      "number": 39,
+      "group": "Rum og robotter",
+      "name": "Astronaut",
+      "p": [
+        "....WWWWW....",
+        "...WWWWWWW...",
+        "..WWbbbbWWW..",
+        "..WWbWbbbWW..",
+        "..WWbbbbbWW..",
+        "...WWWWWWW...",
+        "....SSSSS....",
+        "..WWWWWWWWW..",
+        ".WWWRWbWWWWW.",
+        "WWWWSSSWWWWWW",
+        "WWWWSSSWWWWWW",
+        ".WWWSSSWWWWW.",
+        "...WWWWWWW...",
+        "...WWWWWWW...",
+        "...WWW.WWW...",
+        "...WWW.WWW...",
+        "..SSSS.SSSS.."
+      ],
+      "bricks": 142,
+      "counts": {
+        "W": 105,
+        "b": 14,
+        "S": 22,
+        "R": 1
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-40",
+      "number": 40,
+      "group": "Rum og robotter",
+      "name": "Rumstation",
+      "p": [
+        ".......WWW.......",
+        ".......WbW.......",
+        ".......WWW.......",
+        "...BBBBSSSBBBB...",
+        "...BbBBSSSBBbB...",
+        "...BBBBSSSBBBB...",
+        "SSSSSSSSSSSSSSSSS",
+        "...BBBBSSSBBBB...",
+        "...BBbBSSSBbBB...",
+        "...BBBBSSSBBBB...",
+        ".......SSS.......",
+        "......WWWWW......",
+        "......WbbbW......",
+        "......WWWWW......"
+      ],
+      "bricks": 110,
+      "counts": {
+        "W": 20,
+        "b": 8,
+        "B": 44,
+        "S": 38
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-41",
+      "number": 41,
+      "group": "Natur og eventyr",
+      "name": "Kaktus",
+      "p": [
+        "...GGG...",
+        "...GgG...",
+        "G..GGG...",
+        "GG.GgG.GG",
+        "GGGGGGGGG",
+        "...GgG.GG",
+        "...GGG...",
+        "..NNNNN..",
+        "..NTNTN..",
+        "...NNN..."
+      ],
+      "bricks": 47,
+      "counts": {
+        "G": 31,
+        "g": 3,
+        "N": 11,
+        "T": 2
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-42",
+      "number": 42,
+      "group": "Natur og eventyr",
+      "name": "Vulkan",
+      "p": [
+        ".....O.....",
+        "....OYO....",
+        "....ROR....",
+        "....NRN....",
+        "...NNRNN...",
+        "..NNORONN..",
+        ".NNNOOONNN.",
+        "NNNNORONNNN",
+        "NNNNNRNNNNN",
+        "GGGGGGGGGGG"
+      ],
+      "bricks": 64,
+      "counts": {
+        "O": 11,
+        "Y": 1,
+        "R": 7,
+        "N": 34,
+        "G": 11
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-43",
+      "number": 43,
+      "group": "Natur og eventyr",
+      "name": "Planet med ring",
+      "p": [
+        ".....OOOOO.....",
+        "....OOOYYOO....",
+        "...OOYYYYYOO...",
+        "..SSSYYYYYOOS..",
+        "SSSSOOYYYOSSSSS",
+        ".SSSSSSSSSSSSS.",
+        "...OOSSSSSOO...",
+        "....OOOYYOO....",
+        ".....OOOOO....."
+      ],
+      "bricks": 81,
+      "counts": {
+        "O": 33,
+        "Y": 17,
+        "S": 31
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-44",
+      "number": 44,
+      "group": "Natur og eventyr",
+      "name": "Piratskib",
+      "p": [
+        ".......K.......",
+        ".......KWW.....",
+        ".......WKKW....",
+        ".......WKKWW...",
+        ".......WWWWWW..",
+        "...W...WWWWWWW.",
+        "...WW..WWWWWWWW",
+        "...WWW.K.......",
+        "...WWWWK.......",
+        "...WWWWW.......",
+        "NNNNNNNNNNNNNNN",
+        "NNNTNNTNNTNNTNN",
+        ".NNNNNNNNNNNNN.",
+        "..NNNNNNNNNNN..",
+        "...NNNNNNNNN...",
+        "....bbbbbbb...."
+      ],
+      "bricks": 121,
+      "counts": {
+        "K": 8,
+        "W": 43,
+        "N": 59,
+        "T": 4,
+        "b": 7
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-45",
+      "number": 45,
+      "group": "Natur og eventyr",
+      "name": "Skattekiste",
+      "p": [
+        "...NNNNNNNNN...",
+        "..NYYYYYYYYYN..",
+        ".NYNNYNNNYNNYN.",
+        "NYNNNYNNNYNNNYN",
+        "NYYYYYYYYYYYYYN",
+        "NNNNNNNYNNNNNNN",
+        "NYYYYYSSSYYYYYN",
+        "NYNNNNSSSNNNNYN",
+        "NYNNNNNYNNNNNYN",
+        "NYNNNNNYNNNNNYN",
+        "NYYYYYYYYYYYYYN",
+        ".NNNNNNNNNNNNN."
+      ],
+      "bricks": 166,
+      "counts": {
+        "N": 98,
+        "Y": 62,
+        "S": 6
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-46",
+      "number": 46,
+      "group": "Leg og hygge",
+      "name": "Fodbold",
+      "p": [
+        "...WWW...",
+        "..WWKWW..",
+        ".WWKKKWW.",
+        "WWKKKKKWW",
+        "WKKWWWKKW",
+        "WWKWWWKWW",
+        ".WWKKKWW.",
+        "..WWKWW..",
+        "...WWW..."
+      ],
+      "bricks": 57,
+      "counts": {
+        "W": 38,
+        "K": 19
+      },
+      "level": "Let"
+    },
+    {
+      "id": "forslag-47",
+      "number": 47,
+      "group": "Leg og hygge",
+      "name": "Padelbat",
+      "p": [
+        "..BBBBB..",
+        ".BbbbbbB.",
+        "BbKbKbKbB",
+        "BbbbbbbbB",
+        "BbKbKbKbB",
+        "BbbbbbbbB",
+        "BbKbKbKbB",
+        ".BbbbbbB.",
+        "..BBBBB..",
+        "...NNN...",
+        "...NNN...",
+        "...NNN...",
+        "...KKK..."
+      ],
+      "bricks": 81,
+      "counts": {
+        "B": 24,
+        "b": 36,
+        "K": 12,
+        "N": 9
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-48",
+      "number": 48,
+      "group": "Leg og hygge",
+      "name": "Spilcontroller",
+      "p": [
+        "...SSS...SSS...",
+        "..SSSSSSSSSSS..",
+        ".SSKSSSSSSRSSS.",
+        "SSKKKSSSSYSGSSS",
+        "SSSKSSSKSSBSSSS",
+        "SSSSSSSSSSSSSSS",
+        ".SSSSSSSSSSSSS.",
+        "..SSS.....SSS.."
+      ],
+      "bricks": 94,
+      "counts": {
+        "S": 84,
+        "K": 6,
+        "R": 1,
+        "Y": 1,
+        "G": 1,
+        "B": 1
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "forslag-49",
+      "number": 49,
+      "group": "Leg og hygge",
+      "name": "Elguitar",
+      "p": [
+        ".....NN......",
+        ".....NN......",
+        ".....NN......",
+        ".....NN......",
+        ".....NN......",
+        "..RRRNN......",
+        ".RRRRNNR.....",
+        ".RRRRNNRR....",
+        "..RRRKKRRR...",
+        ".RRRRKKRRRR..",
+        ".RRRRNNRRRR..",
+        "..RRRKKRRR...",
+        "...RRRRRR...."
+      ],
+      "bricks": 72,
+      "counts": {
+        "N": 18,
+        "R": 48,
+        "K": 6
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "forslag-50",
+      "number": 50,
+      "group": "Leg og hygge",
+      "name": "Julegave",
+      "p": [
+        ".YY...YY.",
+        ".YYY.YYY.",
+        "..YYYYY..",
+        "RRRYYYRRR",
+        "RRRYYYRRR",
+        "YYYYYYYYY",
+        "RRRYYYRRR",
+        "RRRYYYRRR",
+        "RRRYYYRRR"
+      ],
+      "bricks": 69,
+      "counts": {
+        "Y": 39,
+        "R": 30
+      },
+      "level": "Mellem"
+    }
+  ]
+}
