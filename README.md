@@ -62,7 +62,7 @@ Under **Magi** findes nu også fire stiliserede skjolde uden tekst:
 | Grævlingens kollegieskjold | Gul og sort, grævling | 338 |
 
 Slange-, ørne- og grævlingskjoldene er 19 × 22 brikfelter. Løveskjoldet er
-omtegnet efter brugerens reference og er 49 × 57 felter. Alle har rækkevejledning,
+omtegnet efter brugerens reference og er 49 × 56 felter. Alle har rækkevejledning,
 brikliste og byggetip. Store modeller kan forstørres 2× og 3× med rulning i tegningen.
 Magi-filteret indeholder dermed 12 modeller. Skjoldene er tilpasset brikkernes
 geometri og er ikke nøjagtige gengivelser af officielle våbenskjolde.
