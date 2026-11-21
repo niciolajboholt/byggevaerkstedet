@@ -13,3 +13,7 @@ dialog{border:1px solid var(--line);background:var(--bg);color:var(--ink);border
 
 /* Keep physical brick proportions at every viewport size. */
 #big{margin-inline:auto}.building #big{max-height:none}
+/* QA: keep the appearance switch beside the brand on small screens. */
+@media(max-width:760px){.app-header{padding:14px 20px 8px;flex-wrap:nowrap;gap:8px}.logo,[data-theme=parent] .logo{font-size:18px;gap:8px;white-space:nowrap}.logo img{width:28px;height:28px}.appearance{flex-shrink:0;padding:3px}.appearance button{font-size:11px;padding:0 7px;min-height:32px}.discovery-hero{padding:20px;margin-bottom:18px}.discovery-hero .eyebrow{margin-bottom:8px}.search-row{margin-top:16px}.theme-tiles{margin-bottom:24px}.theme-tile canvas{width:64px;height:64px}}
+.card-cta{display:none}[data-theme=parent] .card:first-child .card-cta{display:inline-flex;background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;font-weight:800;width:max-content;margin-top:12px}
+@media(max-width:760px){[data-theme=parent] .card:first-child .model-link{grid-template-rows:auto auto auto}[data-theme=parent] .card:first-child canvas{grid-row:1/4}[data-theme=parent] .card:first-child .card-cta{grid-column:1;grid-row:3;align-self:start;margin:0}}

@@ -273,8 +273,8 @@ function drawGrid(cv,p,opts={}){
   const css=cv.clientWidth||cv.width, dpr=window.devicePixelRatio||1;
   const extra=opts.bands?(opts.gap||0)*(opts.bands.length-1):0; // room for parts pulled apart
   const side=Math.max(w,h+extra)*3+4;      // room for arms poking out of the edge
-  const u=css/side, cell=u*3, W=css, H=css;
-  cv.width=W*dpr;cv.height=H*dpr;cv.style.height=css+"px";
+  const u=css/side, cell=u*3, W=css, H=opts.compact?Math.min(css,Math.max(120,(h*3+4)*u)):css;
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+"px";
   const ctx=cv.getContext("2d");ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.clearRect(0,0,W,H);
   const ox=(W-w*cell)/2, oy=(H-h*cell)/2;
@@ -329,7 +329,7 @@ function renderList(){
   $("filterCount").textContent=[!!d,limit<250,!["Alle","Likede","Egne","50 nye"].includes(tab)].filter(Boolean).length;
   $("filterCount").classList.toggle("hide",!filtered);
   const g=$("grid");
-  g.innerHTML=items.map(b=>`<article class="card" data-id="${esc(b.id)}"><button class="heart" data-like="${esc(b.id)}" aria-label="${likes.has(b.id)?"Fjern favorit":"Gem favorit"}: ${esc(b.name)}" aria-pressed="${likes.has(b.id)}"><i class="ic heart-icon" aria-hidden="true"></i></button><button class="model-link" aria-label="Se vejledning: ${esc(b.name)}, ${b.total} brikker"><canvas aria-hidden="true"></canvas><div class="name">${esc(b.name)}</div><div class="meta"><span class="pill p-${b.level}">${b.level}</span><span>${b.total} brikker</span></div></button></article>`).join("")||`<div class="empty"><h3>${tab==="Likede"?"Gem dine første favoritter":tab==="Egne"?"Hvad vil I finde på?":"Ingen motiver passer endnu"}</h3><p>${tab==="Likede"?"Tryk på hjertet ved et motiv, så finder du det her.":tab==="Egne"?"Tegn et motiv i Byg selv, og gem det her.":"Prøv et andet søgeord, eller nulstil filtrene."}</p><button class="btn ghost" id="emptyAction">${tab==="Egne"?"Byg selv":"Se alle motiver"}</button></div>`;
+  g.innerHTML=items.map(b=>`<article class="card" data-id="${esc(b.id)}"><button class="heart" data-like="${esc(b.id)}" aria-label="${likes.has(b.id)?"Fjern favorit":"Gem favorit"}: ${esc(b.name)}" aria-pressed="${likes.has(b.id)}"><i class="ic heart-icon" aria-hidden="true"></i></button><button class="model-link" aria-label="Se vejledning: ${esc(b.name)}, ${b.total} brikker"><canvas aria-hidden="true"></canvas><div class="name">${esc(b.name)}</div><div class="meta"><span class="pill p-${b.level}">${b.level}</span><span>${b.total} brikker</span></div><span class="card-cta">Se vejledning</span></button></article>`).join("")||`<div class="empty"><h3>${tab==="Likede"?"Gem dine første favoritter":tab==="Egne"?"Hvad vil I finde på?":"Ingen motiver passer endnu"}</h3><p>${tab==="Likede"?"Tryk på hjertet ved et motiv, så finder du det her.":tab==="Egne"?"Tegn et motiv i Byg selv, og gem det her.":"Prøv et andet søgeord, eller nulstil filtrene."}</p><button class="btn ghost" id="emptyAction">${tab==="Egne"?"Byg selv":"Se alle motiver"}</button></div>`;
   g.querySelectorAll(".card[data-id]").forEach(el=>{
     const b=items.find(x=>x.id===el.dataset.id);
     requestAnimationFrame(()=>drawGrid(el.querySelector("canvas"),b.p));
@@ -383,7 +383,7 @@ function renderParts(counts,title){
   const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]), n=entries.reduce((t,e)=>t+e[1],0);
   $("partsTitle").textContent=title;
   $("parts").innerHTML=entries.map(([k,n])=>`<div class="part"><span class="sw" style="background:${COLORS[k][1]}"></span>${n} × ${COLORS[k][0]}</div>`).join("");
-  $("total").textContent=`I alt ${n} brikker i ${entries.length} farver.`;
+  $("total").textContent=`I alt ${n} brikker i ${entries.length} farve${entries.length===1?"":"r"}.`;
 }
 // Cut rows into parts whose brick counts follow the weights as closely as possible.
 function splitRows(b,weights){
@@ -498,7 +498,7 @@ function saveTeam(){store.set("bv_team",team)}
 function renderTabsTeam(){
   const mine=team.me!=null?[team.me]:parts.map((_,i)=>i);
   const all=mine.every(i=>parts[i].done);
-  $("partTabs").innerHTML=parts.map((p,i)=>!mine.includes(i)?"":`<button data-i="${i}" class="${phase==="build"&&i===active?"on":""}" style="background:${p.color}">${esc(p.name)}${p.done?" ✓":""}</button>`).join("")+
+  $("partTabs").innerHTML=parts.map((p,i)=>!mine.includes(i)?"":`<button data-i="${i}" class="${phase==="build"&&i===active?"on":""}" aria-pressed="${phase==='build'&&i===active}" style="background:${p.color}">${esc(p.name)}${p.done?" ✓":""}</button>`).join("")+
     (all?`<button data-i="asm" class="asm ${phase==="assemble"?"on":""}">Saml figuren</button>`:"");
   $("partTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{
     clearInterval(asmTimer);
@@ -512,10 +512,10 @@ function renderPart(){
   // Draw the actual assigned rows at full scale; retain their original H/V orientations.
   const localPattern=cur.p.slice(p.r0,p.r1+1);
   const localTiles=cur.tiles.filter(k=>k.row>=p.r0&&k.row<=p.r1).map(k=>({...k,y:k.y-p.r0,row:k.row-p.r0}));
-  drawGrid($("big"),localPattern,{tiles:localTiles,step:finished?null:p.step});
+  drawGrid($("big"),localPattern,{tiles:localTiles,step:finished?null:p.step,compact:true});
   $("all").classList.remove("hide");$("all").textContent="Se hele figuren";
   const total=parts.reduce((t,q)=>t+q.r1-q.r0+1,0), doneRows=parts.reduce((t,q)=>t+Math.min(q.step,q.r1-q.r0+1),0);
-  stepUi(`${p.name}: række ${p.step+1} af ${rows} i din del`,p.r0+p.step,finished,p.step===0&&!finished?true:false,p.step>=rows-1?"Min del er færdig ✓":"Næste række ▶",Math.round(doneRows/total*100));
+  stepUi(`${p.name}: række ${p.step+1} af ${rows} i din del`,p.r0+p.step,finished,p.step===0&&!finished?true:false,p.step>=rows-1?"Min del er færdig ✓":"Næste række ▶",Math.round(Math.min(p.step+1,rows)/rows*100));
   $("doneBox").classList.add("hide");
   if(finished){
     $("rowTitle").textContent="Din del er færdig";

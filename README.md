@@ -95,7 +95,7 @@ appens brikmønstre og numre følger det godkendte oplæg. Testene sammenligner 
 50 modeller med dette grundlag og kontrollerer også brikfordelingen i Byg sammen.
 De oprindelige modeller, links og gemte egne tegninger er bevaret.
 
-## Ny designprøve — afventer visuel kontrol
+## Ny designprøve
 
 Branchen `design/family-preview` indeholder den godkendte retning med farverig
 børnevisning og rolig forældrevisning. Skiftet gemmes lokalt med `bv_appearance`.
@@ -121,5 +121,7 @@ Rodadressen åbner `preview.html`, hvor mobil, iPad og stor skærm kan vælges.
 produktionsforside. Appen har ingen runtime-afhængighed af npm eller Node.
 
 `npm test` kører katalogtestene og otte forløbstest med jsdom. Canvas er stubbet i
-forløbstestene; de erstatter ikke visuel browserkontrol. Se `design-qa.md` for den
-konkrete previewblokering. **Ingen merge eller produktionsudgivelse er udført.**
+forløbstestene; de erstatter ikke visuel browserkontrol. Browserkontrol på mobil- og iPad-størrelser er gennemført på den private
+prøveadresse; se `design-qa.md` for evidens og afgrænsninger. **Ingen merge eller produktionsudgivelse er udført.**
+
+Privat prøveadresse: https://byggevaerkstedet-designproeve.nicolajbach12.chatgpt.site/

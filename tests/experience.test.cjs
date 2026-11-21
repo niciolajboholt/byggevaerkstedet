@@ -35,6 +35,7 @@ test('cooperative guide keeps each builders progress and enables assembly',async
  a.choose('[data-mode="together"]');a.click('teamStart');
  assert.equal(a.doc.querySelectorAll('#partTabs button').length,2);
  a.click('next');const first=a.doc.getElementById('rowTitle').textContent;
+ assert.equal(a.doc.getElementById('progressBar').getAttribute('aria-valuenow'),'50');
  a.choose('#partTabs [data-i="1"]');a.choose('#partTabs [data-i="0"]');
  assert.equal(a.doc.getElementById('rowTitle').textContent,first);
  for(let i=0;i<10;i++)if(!a.doc.getElementById('next').disabled)a.click('next');

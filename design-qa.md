@@ -1,50 +1,52 @@
 # Design QA — Byggeværkstedet family preview
 
-final result: blocked
+final result: passed
 
-## Visual target
+## Scope and visual targets
 
-- Child: `/workspace/scratch/8dee175dd0b6/generated_images/exec-4a7bd9a5-2066-4640-8fc9-f64fb48aebbd.png` (combined approved concept, two mobile screens).
-- Parent: `/workspace/scratch/8dee175dd0b6/generated_images/exec-e1743945-e525-457d-9c11-dfbf07dc927c.png` (approved calm parent concept, two mobile screens).
-- Targets: mobile 390 × 844 CSS pixels, iPad 834 × 1194, desktop 1100 × 844. The local preview wrapper supplies these viewports through a same-origin iframe.
-- States required: child discovery, parent discovery, model preparation, solo guide, cooperative guide, filters, own-model editor.
+Approved child combination: `/workspace/scratch/8dee175dd0b6/generated_images/exec-4a7bd9a5-2066-4640-8fc9-f64fb48aebbd.png`.
+Approved parent concept: `/workspace/scratch/8dee175dd0b6/generated_images/exec-e1743945-e525-457d-9c11-dfbf07dc927c.png`.
 
-## Blocking finding
+Implementation: https://byggevaerkstedet-designproeve.nicolajbach12.chatgpt.site/
 
-[P1] Browser preview infrastructure did not expose the implementation.
+Browser: cloud Chrome. Content viewports: mobile 390 × 844 CSS px and iPad 834 × 1194 CSS px, supplied by the same-origin `preview.html` harness. These are viewport checks, not physical-device Safari/touch tests.
 
-`sites-preview start` and `sites-preview status` report a running preview. Opening `http://terminal.local:4173/` in the cloud browser returned **Site Unavailable — Unable to access this site** (HTTP 403 in browser issue report). One supported stop/start recovery followed by browser reload produced the same result. This is not evidence of a site-side bot block. No alternative browser or sandbox/network changes were used.
+## Evidence and comparison
 
-Implementation screenshot: unavailable. Full-view and focused comparisons: not performed. Source/implementation pixel density cannot be normalized without a rendered implementation. Browser console errors and visual mobile/iPad behaviour: unverified.
+- `docs/design-qa/comparison.jpg`: child and parent source crops together with their browser-rendered discovery screens.
+- `docs/design-qa/final-comparison.jpg`: approved guide source together with final cooperative guide and child discovery.
+- Accepted original screenshots are saved under `/workspace/shared/bygge-qa/`: child-mobile.jpg, parent-mobile.jpg, coop-mobile.jpg and parent-ipad.jpg.
+- Browser screenshots: mobile 390 × 844 px, iPad 834 × 1194 px, 1 pixel per CSS px. Source panels are presentation crops, not exact device captures; they were contained without warping in comparison boards. Comparison concerns hierarchy, typography, palette and controls, not a pixel-perfect match to generated model geometry.
+- Focused checks: inspected mobile header/switch, guide tabs/progress, row pieces and bottom controls. The final guide image resolves the earlier excess whitespace; current builder row 3/4 reports 75%.
+
+## Findings and fixes
+
+No remaining actionable P0/P1/P2 findings in the reviewed scope.
+
+1. [P1, resolved] Supported local preview route returned Site Unavailable. A separate owner-private Site was deployed; after user-assisted login it was rendered and tested in the cloud browser. GitHub Pages production is unchanged.
+2. [P2, resolved] Mobile brand and appearance switch wrapped onto separate rows, creating excessive top whitespace. Reduced header sizing/gaps. Recaptured both themes.
+3. [P2, resolved] Short cooperative parts occupied a square canvas with excessive whitespace. Added proportional compact height without changing piece geometry. Recaptured the final guide.
+4. [P2, resolved] Progress bar reflected the whole team while the heading described one builder. It now follows the selected builder's rows; browser verified row 3/4 = 75%. Regression assertion added.
+5. Independent code review fixed the skip-link route, the mobile back control's accessible name, and dedicated-builder selection for one-row own models. Targeted tests cover these changes.
 
 ## Required fidelity surfaces
 
-- Typography: Nunito for children, Nunito Sans for the quieter parent appearance. Actual font loading and wrapping require browser verification.
-- Spacing/layout: responsive discovery grid, preparation screen, fixed building controls and separate builder tabs implemented. Overflow, visible control positions and touch-target sizes require browser verification.
-- Colours/tokens: cobalt/yellow child theme, forest-green/ivory parent theme, shared semantic tokens. Actual rendered contrast requires browser verification.
-- Image quality: uses the app's original exact piece renderer and original motif data; the model drawings must remain precise building instructions. No generated illustration is substituted for exact brick geometry. Existing source logo retained, locally vendored Phosphor icons used for standard UI controls. Visual sharpness and alignment require browser verification.
-- Copy/content: Danish controls and existing motif descriptions. No model patterns, names, counts or collection membership changed. Some conceptual mock imagery cannot serve as exact build geometry; real source geometry intentionally takes precedence.
+- Fonts: rounded Nunito child headings, quieter Nunito Sans parent typography; readable wrapping and navigation checked in captures.
+- Spacing/layout: mobile header tightened after comparison; fixed guide controls remain visible, parent featured motif adapts to iPad without distorted pieces. iPad first canvas measured 372.5 × 373 CSS px after resize settled.
+- Colours/tokens: cobalt/yellow child theme and forest-green/ivory parent theme match the selected directions. Active controls use text plus visual state. No claim of a full WCAG audit.
+- Assets: exact original Plus-Plus geometry and data take precedence over illustrative mock counts/shapes. Source logo retained, locally vendored Phosphor icons used. Real H/V orientations are preserved when assigned parts are cropped. No raster design screenshot replaces interactive UI.
+- Copy/content: Danish labels and exact existing motifs retained. Generic builder-part text accurately describes arbitrary partitions instead of assuming the generated mock's star/handle split. Small plural wording corrected.
 
-## Functional checks completed
+## Interaction verification
 
-95 automated Node tests pass: 87 existing catalogue/geometry checks and eight experience tests. Experience tests execute the complete application in jsdom with a stubbed Canvas API; they do not claim browser rendering verification.
+Browser-tested: theme switch, motif preparation, solo start, next row, completion of all 10 Stjernestav rows, back to preparation, cooperative start and row advancement, whole-model dialog, difficulty filter (27 easy motifs), filter reset, iPad resize.
 
-Tested: preparation before start, solo completion and previous row, overview dialog, two-builder progress isolation and assembly availability, three builders and dedicated-device assignment, theme persistence without resetting a guide, search/favourites/filter composition, and saving/reopening/editing an own model.
+Browser console inspected: no errors originating from the app's domain. Unrelated cloud-browser extension metadata errors were observed and excluded explicitly.
 
-## Intentional implementation choice
+`npm test`: 95/95 pass. Existing 87 geometry/catalogue tests and eight jsdom experience tests. Canvas is stubbed in jsdom; browser captures supply visual evidence separately.
 
-This is an incremental redesign of the existing GitHub Pages application. Its existing static runtime and precise canvas renderer are retained, instead of replacing it with a separate mobile-native prototype template. `preview.html` is a local review harness only. Production publication and merging are deliberately pending the user's review.
+## Accepted differences and limits
 
-## Follow-up checklist
+This preserves the existing static web application, its exact diagrams, all 108 motifs, local likes and own models. Collection shortcuts remain visible; the parent view uses a featured model plus a grid instead of restricting the catalogue to the mock's two illustrative list rows. Generated previews are art direction, not exact engineering drawings or fixed counts. No new runtime shell or native-device bezel is introduced into the existing web app.
 
-1. Restore access to the supported cloud-browser local preview.
-2. Capture each required state at the target CSS sizes.
-3. Normalize and combine the source and implementation screenshots.
-4. Review all five fidelity surfaces and browser console output.
-5. Fix actionable findings and repeat comparison; change `final result` only when justified by rendered evidence.
-
-## Private review copy
-
-A separate owner-private Site was deployed successfully at https://byggevaerkstedet-designproeve.nicolajbach12.chatgpt.site. The browser reached its ChatGPT sign-in gate. Login requires user assistance; rendered-app visual QA remains blocked. No production GitHub Pages update was performed.
-
-Independent code review identified and fixed the skip-link route, the mobile back button accessible name, and a one-row own-model/dedicated-builder crash. Two targeted regression tests cover these fixes.
+P3 follow-ups: optional closer theme-tile artwork styling and further copy refinement. Remaining test gaps: physical iOS Safari, real touch use, screen-reader testing and physical trial-building. No merge into production is included in this preview handoff.
