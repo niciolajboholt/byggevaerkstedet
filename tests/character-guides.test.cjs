@@ -8,18 +8,35 @@ const context = vm.createContext({ localStorage: { getItem: () => null } });
 vm.runInContext(script.slice(0, script.indexOf('// ---------- list ----------')) + '\nthis.models=BUILDS;this.palette=COLORS;this.squares=brickSquares;', context);
 const ids = ['roed-kasket', 'groen-kasket', 'lyseroed-prinsesse', 'groen-dinosaur', 'pigget-skildpaddekonge', 'svampehat'];
 
-test('catalogue has unique IDs and six named character guides', () => {
+const magicIds = ["troldmand-med-briller", "troldkvinde-med-boelget-haar", "roedhaaret-troldmand", "sneugle", "talende-hat", "gylden-vingebold", "troldmandsborg", "flyvende-kost"];
+const themeCategories = {"lynmus": "Pokémon", "ildfirben": "Pokémon", "vand-skildpadde": "Pokémon", "froevaesen": "Pokémon", "roed-hvid-fangebold": "Pokémon", "brun-raev": "Pokémon", "groent-blokmonster": "Minecraft", "blokbygger": "Minecraft", "blokgris": "Minecraft", "diamantsvaerd": "Minecraft", "diamanthakke": "Minecraft", "graesblok": "Minecraft"};
+const guideIds = ids.concat(magicIds, Object.keys(themeCategories));
+
+test('catalogue has unique IDs and descriptive character and magic guides', () => {
   assert.equal(new Set(context.models.map(b => b.id)).size, context.models.length);
-  for (const id of ids) {
+  for (const id of guideIds) {
     const b = context.models.find(b => b.id === id);
     assert.ok(b, id);
-    assert.equal(b.cat, 'Figurer');
+    assert.equal(b.cat, themeCategories[id] || (magicIds.includes(id) ? 'Magi' : 'Figurer'));
     assert.ok(b.description && b.tip);
-    assert.doesNotMatch(JSON.stringify(b), /mario|luigi|peach|yoshi|bowser|toad|nintendo/i);
+    assert.doesNotMatch(JSON.stringify(b), /mario|luigi|peach|yoshi|bowser|toad|nintendo|harry|potter|hermione|ron weasley|hedwig|hogwarts/i);
   }
 });
 
-for (const id of ids) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
+test('Magi is a separate filter containing exactly the eight new guides', () => {
+  vm.runInContext('this.categories=CATS', context);
+  assert.equal(context.categories.filter(c => c === 'Magi').length, 1);
+  assert.deepEqual(Array.from(context.models.filter(b => b.cat === 'Magi'), b => b.id).sort(), magicIds.slice().sort());
+});
+
+for (const category of ['Pokémon', 'Minecraft']) test(`${category} has a separate filter and six guides`, () => {
+  assert.equal(context.categories.filter(c => c === category).length, 1);
+  const actual = Array.from(context.models.filter(b => b.cat === category), b => b.id).sort();
+  assert.equal(actual.length, 6);
+  assert.deepEqual(actual, Object.keys(themeCategories).filter(id => themeCategories[id] === category).sort());
+});
+
+for (const id of guideIds) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
   const b = context.models.find(b => b.id === id);
   const width = b.p[0].length;
   assert.ok(width <= 24 && b.p.length <= 24, 'fits the existing editor');
