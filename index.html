@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<a class="skip" href="#listView">Spring til indhold</a>
+<a class="skip" id="skipLink" href="#listView">Spring til indhold</a>
 <header class="app-header">
   <button class="logo" onclick="go('')" aria-label="Byggeværkstedet, forsiden"><img src="icon.svg" alt="" width="40" height="40"><span>Byggeværkstedet</span></button>
   <div class="appearance" role="group" aria-label="Visning"><button data-theme="child" aria-pressed="true">Børn</button><button data-theme="parent" aria-pressed="false">Forældre</button></div>
@@ -36,7 +36,7 @@
   <div class="grid" id="grid"></div>
 </main>
 <main id="detailView" class="hide">
-  <button class="back" id="detailBack"><i class="ic arrow-left" aria-hidden="true"></i><span>Alle motiver</span></button>
+  <button class="back" id="detailBack" aria-label="Tilbage til alle motiver"><i class="ic arrow-left" aria-hidden="true"></i><span>Alle motiver</span></button>
   <div class="detail-heading"><div><p class="eyebrow" id="guideLabel">Dit næste byggeri</p><h1 id="dName"></h1><div class="meta" id="dMeta"></div></div><button class="icon-button" id="guideFavorite" aria-label="Gem som favorit"><i class="ic heart-icon" aria-hidden="true"></i></button></div>
   <div class="viewer">
     <section class="model-column">
@@ -414,6 +414,7 @@ function render(){
   if(!cur)return;
   const activeBuild=started&&(mode!=="together"||phase!=="setup");
   document.body.classList.toggle("building",activeBuild);
+  $("detailBack").setAttribute("aria-label",activeBuild?"Tilbage til forberedelse":"Tilbage til alle motiver");
   $("buildControls").classList.toggle("hide",!activeBuild||phase==="assemble");
   $("buildHeading").classList.toggle("hide",!activeBuild||phase==="assemble");
   $("introBox").classList.toggle("hide",activeBuild);
@@ -476,9 +477,9 @@ function renderSetup(){
   $("teamNames").innerHTML=Array.from({length:team.n},(_,i)=>`<label for="builderName${i}" style="color:${TEAM_COLORS[i]}">Bygger ${i+1}</label><input id="builderName${i}" data-i="${i}" value="${esc(team.names[i]||"")}" placeholder="Navn">`).join("");
   $("teamSplit").innerHTML=[["even","Lige store dele"],["small",`Mindste del til ${esc(team.names[team.n-1]||"den yngste")}`]].map(([v,t])=>`<button data-s="${v}" class="${team.split===v?"on":""}">${t}</button>`).join("");
   $("splitInfo").textContent=parts.map(p=>`${p.name}: ${p.n} brikker`).join(" · ")+(parts.length<team.n?" (figuren er for lille til flere dele)":"");
-  if(team.me!=null&&team.me>=team.n)team.me=null;
+  if(team.me!=null&&team.me>=parts.length){team.me=null;saveTeam()}
   $("teamMe").innerHTML=`<button data-me="" class="${team.me==null?"on":""}">Hele holdet</button>`+
-    Array.from({length:team.n},(_,i)=>`<button data-me="${i}" class="${team.me===i?"on":""}">Kun ${esc(team.names[i]||`Bygger ${i+1}`)}</button>`).join("");
+    Array.from({length:parts.length},(_,i)=>`<button data-me="${i}" class="${team.me===i?"on":""}">Kun ${esc(team.names[i]||`Bygger ${i+1}`)}</button>`).join("");
   $("meInfo").textContent=team.me==null?"Alle deles om denne iPad og skifter mellem fanerne.":
     `Denne iPad viser kun ${team.names[team.me]?gen(team.names[team.me]):"din"} del. Den anden iPad skal stå på ${team.n} byggere og „${team.split==="even"?"Lige store dele":"Mindste del til den yngste"}“ – så får I præcis de samme dele.`;
   $("teamMe").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.me=b.dataset.me===""?null:+b.dataset.me;saveTeam();render()});
@@ -663,6 +664,7 @@ function openOverview(){
   drawGrid($("fullCanvas"),cur.p,mode==="together"?{tiles:cur.tiles,bands:parts,gap:.65,labels:true}:{tiles:cur.tiles});
   $("overviewLegend").textContent=mode==="together"?parts.map(p=>p.name+": "+p.n+" brikker").join(" · "):cur.total+" brikker · "+cur.p.length+" rækker";
 }
+$("skipLink").onclick=e=>{e.preventDefault();const target=document.querySelector("main:not(.hide)");if(target){target.tabIndex=-1;target.focus()}};
 $("overviewButton").onclick=openOverview;$("overviewClose").onclick=()=>$("overviewDialog").close();
 $("aloneStart").onclick=()=>{started=true;render();window.scrollTo(0,0)};
 $("detailBack").onclick=()=>{if(started){clearInterval(asmTimer);started=false;phase="setup";render();window.scrollTo(0,0)}else go("")};

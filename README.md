@@ -120,6 +120,6 @@ Rodadressen åbner `preview.html`, hvor mobil, iPad og stor skærm kan vælges.
 `index.html` er selve appen uden prøverammen. `preview.html` er ikke en ny
 produktionsforside. Appen har ingen runtime-afhængighed af npm eller Node.
 
-`npm test` kører katalogtestene og seks forløbstest med jsdom. Canvas er stubbet i
+`npm test` kører katalogtestene og otte forløbstest med jsdom. Canvas er stubbet i
 forløbstestene; de erstatter ikke visuel browserkontrol. Se `design-qa.md` for den
 konkrete previewblokering. **Ingen merge eller produktionsudgivelse er udført.**

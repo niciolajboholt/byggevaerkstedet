@@ -27,7 +27,7 @@ Implementation screenshot: unavailable. Full-view and focused comparisons: not p
 
 ## Functional checks completed
 
-93 automated Node tests pass: 87 existing catalogue/geometry checks and six experience tests. Experience tests execute the complete application in jsdom with a stubbed Canvas API; they do not claim browser rendering verification.
+95 automated Node tests pass: 87 existing catalogue/geometry checks and eight experience tests. Experience tests execute the complete application in jsdom with a stubbed Canvas API; they do not claim browser rendering verification.
 
 Tested: preparation before start, solo completion and previous row, overview dialog, two-builder progress isolation and assembly availability, three builders and dedicated-device assignment, theme persistence without resetting a guide, search/favourites/filter composition, and saving/reopening/editing an own model.
 
@@ -42,3 +42,9 @@ This is an incremental redesign of the existing GitHub Pages application. Its ex
 3. Normalize and combine the source and implementation screenshots.
 4. Review all five fidelity surfaces and browser console output.
 5. Fix actionable findings and repeat comparison; change `final result` only when justified by rendered evidence.
+
+## Private review copy
+
+A separate owner-private Site was deployed successfully at https://byggevaerkstedet-designproeve.nicolajbach12.chatgpt.site. The browser reached its ChatGPT sign-in gate. Login requires user assistance; rendered-app visual QA remains blocked. No production GitHub Pages update was performed.
+
+Independent code review identified and fixed the skip-link route, the mobile back button accessible name, and a one-row own-model/dedicated-builder crash. Two targeted regression tests cover these fixes.

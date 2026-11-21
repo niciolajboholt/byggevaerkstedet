@@ -84,3 +84,17 @@ test('three builders and one-screen-per-builder assignment preserve exact parts'
  a.click('overviewButton');assert.match(a.doc.getElementById('overviewLegend').textContent,/Jens.*Alfred.*Far/);
  assert.deepEqual(a.errors,[]);a.close();
 });
+test('keyboard skip navigation focuses visible content without changing app route',async()=>{
+ const a=app();await a.settle();a.click('skipLink');await a.settle();
+ assert.equal(a.w.location.hash,'');assert.equal(a.doc.activeElement.id,'listView');
+ a.choose('[data-id="motiver50-01"] .model-link');await a.settle();a.click('aloneStart');
+ assert.equal(a.doc.getElementById('detailBack').getAttribute('aria-label'),'Tilbage til forberedelse');
+ a.click('skipLink');assert.equal(a.doc.activeElement.id,'detailView');assert.deepEqual(a.errors,[]);a.close();
+});
+test('one-row own model cannot select a non-existent dedicated builder',async()=>{
+ const a=app();await a.settle();a.choose('[data-nav="byg"]');await a.settle();a.w.eval('grid[1][1]="R";grid[1][2]="Y"');a.click('save');await a.settle();
+ a.w.eval('team.me=1');a.choose('[data-mode="together"]');
+ assert.equal(a.doc.querySelectorAll('#teamMe [data-me="1"]').length,0);
+ a.click('teamStart');assert.equal(a.doc.querySelectorAll('#partTabs button').length,1);
+ a.click('next');assert.deepEqual(a.errors,[]);a.close();
+});
