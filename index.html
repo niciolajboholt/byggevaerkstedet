@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Byggeværkstedet – Jens & Alfreds byggevejledninger</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-title" content="Byggeværkstedet">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1f2430">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
@@ -17,7 +24,7 @@
   button,input,select{font:inherit}
   header{background:var(--ink);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;cursor:pointer}
-  .logo svg{width:34px;height:34px}
+  .logo img{display:block}
   nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
   nav button{background:transparent;color:#fff;border:1px solid #ffffff33;border-radius:999px;padding:4px 14px;cursor:pointer}
   nav button.on{background:#fff;color:var(--ink)}
@@ -79,7 +86,7 @@
 <body>
 <header>
   <div class="logo" onclick="go('')">
-    <svg viewBox="0 0 34 34"><g><rect x="11" y="2" width="12" height="30" rx="4" fill="#ff8a1f"/><rect x="2" y="11" width="30" height="12" rx="4" fill="#2f6fed"/><rect x="11" y="11" width="12" height="12" fill="#ffd23f"/></g></svg>
+    <img src="icon.svg" alt="" width="38" height="38" style="border-radius:9px">
     Byggeværkstedet
   </div>
   <nav>
