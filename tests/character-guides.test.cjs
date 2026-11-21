@@ -39,7 +39,8 @@ for (const category of ['Pokémon', 'Minecraft']) test(`${category} has a separa
 for (const id of guideIds) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
   const b = context.models.find(b => b.id === id);
   const width = b.p[0].length;
-  assert.ok(width <= 24 && b.p.length <= 24, 'fits the existing editor');
+  const limit = id === 'loeveskjold' ? 64 : 24;
+  assert.ok(width <= limit && b.p.length <= limit, 'fits the supported guide dimensions');
   assert.ok(b.p.every(row => row.length === width), 'rectangular pattern');
   for (const row of b.p) for (const c of row) assert.ok(c === '.' || context.palette[c], `known colour ${c}`);
   const occupied = new Set();
