@@ -12,6 +12,12 @@ const magicIds = ["loeveskjold", "slangeskjold", "oerneskjold", "graevlingeskjol
 const themeCategories = {"lynmus": "Pokémon", "ildfirben": "Pokémon", "vand-skildpadde": "Pokémon", "froevaesen": "Pokémon", "roed-hvid-fangebold": "Pokémon", "brun-raev": "Pokémon", "groent-blokmonster": "Minecraft", "blokbygger": "Minecraft", "blokgris": "Minecraft", "diamantsvaerd": "Minecraft", "diamanthakke": "Minecraft", "graesblok": "Minecraft"};
 const guideIds = ids.concat(magicIds, Object.keys(themeCategories));
 
+test('every catalogue guide uses at most 250 bricks', () => {
+  for (const b of context.models) {
+    assert.ok(b.total > 0 && b.total <= 250, `${b.id}: ${b.total} bricks exceeds the 250-brick limit`);
+  }
+});
+
 test('catalogue has unique IDs and descriptive character and magic guides', () => {
   assert.equal(new Set(context.models.map(b => b.id)).size, context.models.length);
   for (const id of guideIds) {
@@ -41,7 +47,7 @@ for (const id of guideIds) test(`${id}: whole bricks, no overlap, connected mode
   const width = b.p[0].length;
   assert.match(b.p[0], /[^.]/, 'the first instruction places at least one brick');
   assert.match(b.p[b.p.length - 1], /[^.]/, 'the last instruction places at least one brick');
-  const limit = id === 'loeveskjold' ? 64 : 24;
+  const limit = 24;
   assert.ok(width <= limit && b.p.length <= limit, 'fits the supported guide dimensions');
   assert.ok(b.p.every(row => row.length === width), 'rectangular pattern');
   for (const row of b.p) for (const c of row) assert.ok(c === '.' || context.palette[c], `known colour ${c}`);

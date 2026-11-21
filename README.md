@@ -52,25 +52,27 @@ første figurmodeller. Modellerne er ikke fysisk prøvebygget.
 
 ## Fire kollegieskjolde
 
-Under **Magi** findes nu også fire stiliserede skjolde uden tekst:
+Under **Magi** findes fire kompakte skjolde uden tekst:
 
 | Model | Farver og motiv | Brikker |
 | --- | --- | ---: |
-| Løvens våbenskjold | Rød/gul firedeling, hel oprejst løve, hjelm og løvværk | 1525 |
-| Slangens kollegieskjold | Grøn og sølvgrå, slange | 338 |
-| Ørnens kollegieskjold | Blå og bronze (brun), ørn | 338 |
-| Grævlingens kollegieskjold | Gul og sort, grævling | 338 |
+| Løvens våbenskjold | Rød/gul firedeling og en hel oprejst løve | 237 |
+| Slangens kollegieskjold | Grøn og sølvgrå, slange | 237 |
+| Ørnens kollegieskjold | Blå og bronze (brun), ørn | 237 |
+| Grævlingens kollegieskjold | Gul og sort, grævling | 237 |
 
-Slange-, ørne- og grævlingskjoldene er 19 × 22 brikfelter. Løveskjoldet er
-omtegnet efter brugerens reference og er 49 × 56 felter. Alle har rækkevejledning,
-brikliste og byggetip. Store modeller kan forstørres 2× og 3× med rulning i tegningen.
-Magi-filteret indeholder dermed 12 modeller. Skjoldene er tilpasset brikkernes
-geometri og er ikke nøjagtige gengivelser af officielle våbenskjolde.
+Alle fire er 17 × 19 brikfelter og har rækkevejledning, brikliste og byggetip.
+Løveskjoldet er forenklet efter brugerens reference med hele løven og firedelingen.
+Hjelm, bånd og ydre ornamenter er udeladt for at overholde brikgrænsen.
+De samme model-ID'er bevarer links og likes. Magi indeholder 12 modeller.
+Skjoldene er stiliserede Plus-Plus-fortolkninger og er ikke fysisk prøvebygget.
 
-Løveskjoldet bevarer samme ID (`loeveskjold`), så eksisterende links og likes
-fortsat virker. Referencebilledet bruges som visuelt grundlag; appen indeholder
-en selvstændig briktegning, ikke en indlejret kopi af billedet. Båndet er uden tekst.
+Genskab skjoldene med `python3 scripts/generate-house-guides.py` uden eksterne
+pakker. Scriptet kontrollerer størrelsen, før det erstatter de fire modeller.
 
-Den geometriske tegning kan genskabes med `python3 scripts/generate-lion-guide.py`
-(kræver Pillow). Scriptet ændrer kun løvemodellen og tilføjer de nødvendige farver,
-hvis de mangler. Zoom bevarer det aktuelle byggetrin.
+## Maksimum 250 brikker
+
+Alle katalogets vejledninger må bruge højst **250 brikker**. Testpakken kontrollerer
+samtlige modeller i `BUILDS`, også de oprindelige, og fejler ved en overskridelse.
+Brikgrænsen gælder de medfølgende vejledninger; egne tegninger i 2D-editoren
+bevarer deres eksisterende funktionalitet.
