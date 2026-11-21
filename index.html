@@ -115,6 +115,7 @@
     <div class="panel">
       <h1 id="dName"></h1>
       <div class="meta" id="dMeta"></div>
+      <p id="dDescription" class="sub hide"></p>
       <canvas id="big"></canvas>
       <div class="stepbar">
         <button class="btn ghost" id="prev">◀ Forrige</button>
@@ -130,6 +131,7 @@
         <div class="runs" id="runs"></div>
       </div>
       <div class="done hide" id="doneBox">🎉 Færdig! Flot bygget!</div>
+      <p id="buildTip" class="meta hide"></p>
       <div class="turn" id="turn" title="Tryk for at skifte">Jens' tur</div>
       <h3 style="margin:16px 0 6px">Det skal du bruge</h3>
       <div class="parts" id="parts"></div>
@@ -177,6 +179,14 @@ const COLORS = {
 const CATS = ["Alle","Likede","Egne","Dyr","Køretøjer","Natur","Mad","Jul","Figurer"];
 
 const BUILDS = [
+ // Six character guides; each occupied field is one complete Plus-Plus brick.
+ {"id": "roed-kasket", "name": "Helten med rød kasket", "cat": "Figurer", "description": "En kompakt helt med rød kasket, mørkt overskæg, blå smækbukser og hvide handsker.", "tip": "Start med kasketten. Hold de tomme pladser fri til armene og mellem benene. De to gule brikker er smækknapper.", "p": [".....RRRRR.....", "....RRRRRRR....", "...RRRRRRRRR...", "....NTTTTTN....", "....NTKTTKN....", "....TTTTTTT....", "....TKKTKKT....", ".....TKKKT.....", "...RRRBBBRRR...", "..RRBRBBBRBRR..", ".WWRBYBBBYBRWW.", ".WWRBBBBBBBRWW.", "....BBBBBBB....", "....BBBBBBB....", "....BBB.BBB....", "...NNNN.NNNN...", "...NNNN.NNNN..."]},
+ {"id": "groen-kasket", "name": "Makkeren med grøn kasket", "cat": "Figurer", "description": "En høj, slank makker med grøn kasket, mørkt overskæg og blå smækbukser.", "tip": "Byg kasket og ansigt først. Fortsæt med grønne ærmer, blå smækbukser og de lange ben. De hvide felter er handsker.", "p": [".....GGGGG.....", "....GGGGGGG....", "...GGGGGGGGG...", ".....NTTTN.....", ".....TKTTK.....", ".....TTTTT.....", ".....TKTKT.....", ".....TKKKT.....", "....GGGBGGG....", "...GGBBBBBGG...", "..WGBYBBYBGW...", "..WGGBBBBBGGW..", ".....BBBBB.....", ".....BBBBB.....", ".....BB.BB.....", ".....BB.BB.....", ".....BB.BB.....", "....NNN.NNN....", "...NNNN.NNNN..."]},
+ {"id": "lyseroed-prinsesse", "name": "Prinsessen med gyldent hår", "cat": "Figurer", "description": "En prinsesse med gyldent hår, takket krone, lyserød kjole og blåt brystsmykke.", "tip": "Kronens tre spidser samles af rækken nedenunder. Byg håret på begge sider af ansigtet og lad nederdelen vokse udad.", "p": [".....Y.Y.Y.....", ".....YYYYY.....", ".....YbYbY.....", "....YYYYYYY....", "....YTTTTTY....", "...YYTKTKTYY...", "...YYTTTTTYY...", "...YYYTpTYYY...", "...YppTTTppY...", "..pppppBppppp..", ".WWppppBppppWW.", ".WWWpppppppWWW.", "...WpppppppW...", "....ppppppp....", "...ppppppppp...", "..ppPpppppPpp..", "..pPPpppppPPp..", ".ppPPpppppPPpp.", ".ppppppppppppp.", "..ppppppppppp.."]},
+ {"id": "groen-dinosaur", "name": "Den grønne ven med store sko", "cat": "Figurer", "description": "En venlig grøn dinosaur i profil med stor snude, hvid mave, rødt rygfelt og orange sko.", "tip": "Start med øjnene og den store snude. Det røde felt ligger på ryggen til venstre, den hvide mave til højre. Slut med orange sko.", "p": ["........GGGG....", ".......GWKWGG...", ".......GWWGGGG..", ".......GGGGGGGG.", ".......GGGGGGGG.", ".......GGWWWWW..", "......GGGWW.....", ".....RRGGWWW....", ".....RRGGWWGGG..", "....GGGGGWWGGG..", ".G..GGGGGWWW....", ".GGGGGGGGWWW....", "..GGGGGGGWWW....", "...GGGGGGWW.....", "....GGGGGGG.....", "....GGG.GGG.....", "...OOOO.OOOO....", "..OOOOO.OOOOO..."]},
+ {"id": "pigget-skildpaddekonge", "name": "Kongen med det piggede skjold", "cat": "Figurer", "description": "En kraftig fantasikonge med grønt pigskjold, gulorange krop, rødt hår og lyse horn.", "tip": "Byg hornene og det røde hår øverst. Skjoldet er grønt med hvide pigge til venstre; snuden vender mod højre. Sorte felter markerer armbånd.", "p": [".........W.R.W.....", ".........WOROW.....", "........OORRROO....", ".......OOOKOOKOO...", "...W..GOOOOOOOOOO..", "...WGGGOOOTTTTTTO..", "..GGGGGOOOTWTTWT...", ".WGGgGGGOOOTTTT....", ".GGgggGGGOOOTT.....", "WGGgWgGGGOOTTTTOO..", ".GGgggGGGOOTTTTOKK.", ".WGGgGGGOOOTTTTOKW.", "..GGGGGOOOOTTTTOOW.", "...WGGGOOOOOTTOO...", "....WGOOOOOOOOOO...", ".....OOOOOOOOOO....", ".....OOOO.OOOO.....", "....OOOWW.OOOWW....", "....OOWWW.OOWWW...."]},
+ {"id": "svampehat", "name": "Den lille ven med svampehat", "cat": "Figurer", "description": "En lille figur med stor hvid hat med røde pletter, blå vest og brune sko.", "tip": "Byg den brede svampehat først. De røde felter er hattens pletter. Ansigtet og kroppen er smallere og skal være centreret under hatten.", "p": [".....WWWWW.....", "...WWWRRRWWW...", "..WWWWRRRWWWW..", ".WRRWWRRRWWRRW.", "WWRRRWWWWWRRRWW", "WWRRRWWWWWRRRWW", "WWWWWWWWWWWWWWW", ".WWWWWWWWWWWWW.", ".....TTTTT.....", ".....TKTKT.....", ".....TTTTT.....", "....BYTTTYB....", "...TBYTTTYBT...", "...TBBTTTBBT...", "....WWWWWWW....", ".....WW.WW.....", "....NNN.NNN....", "...NNNN.NNNN..."]},
+
  {id:"hjerte",name:"Hjerte",cat:"Figurer",p:[".RR...RR.","RWRR.RRRR","RRRRRRRRR","RRRRRRRRR",".RRRRRRR.","..RRRRR..","...RRR...","....R...."]},
  {id:"regnbue",name:"Regnbue",cat:"Natur",p:["....RRRRRR....","..RROOOOOORR..",".ROOYYYYYYOOR.","ROYYGGGGGGYYOR","ROYGBB..BBGYOR","ROYGB....BGYOR","ROYGB....BGYOR"]},
  {id:"sol",name:"Glad sol",cat:"Natur",p:[".....O.....",".O...O...O.","..O.YYY.O..","...YYYYY...","..YYKYKYY..","OOYYYYYYYOO","..YKYYYKY..","...YKKKY...","..O.YYY.O..",".O...O...O.",".....O....."]},
@@ -315,6 +325,10 @@ function openBuild(id){
   step=0;showAll=false;
   $("dName").textContent=cur.name;
   $("dMeta").innerHTML=`<span class="pill p-${cur.level}">${cur.level}</span> ${cur.total} brikker · ${cur.w}×${cur.p.length} felter · ${cur.cat}`;
+  $("dDescription").textContent=cur.description||"";
+  $("dDescription").classList.toggle("hide",!cur.description);
+  $("buildTip").textContent=cur.tip||"";
+  $("buildTip").classList.toggle("hide",!cur.tip);
   const entries=Object.entries(cur.counts).sort((a,b)=>b[1]-a[1]);
   $("parts").innerHTML=entries.map(([k,n])=>`<div class="part"><span class="sw" style="background:${COLORS[k][1]}"></span>${n} × ${COLORS[k][0]}</div>`).join("");
   $("total").textContent=`I alt ${cur.total} brikker i ${entries.length} farver.`;
