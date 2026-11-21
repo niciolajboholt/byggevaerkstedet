@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Byggeværkstedet – Jens & Alfreds byggevejledninger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fff; --ink:#1f2430; --muted:#6b7080; --line:#e6e1d6;
+    --accent:#2f6fed; --accent2:#ff8a1f; --ok:#22a06b;
+    --easy:#22a06b; --mid:#f2a516; --hard:#e5484d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Baloo 2",system-ui,sans-serif;font-size:17px}
+  button,input,select{font:inherit}
+  header{background:var(--ink);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;cursor:pointer}
+  .logo svg{width:34px;height:34px}
+  nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  nav button{background:transparent;color:#fff;border:1px solid #ffffff33;border-radius:999px;padding:4px 14px;cursor:pointer}
+  nav button.on{background:#fff;color:var(--ink)}
+  main{max-width:1100px;margin:0 auto;padding:18px}
+  h1{font-size:30px;margin:4px 0 2px;line-height:1.1}
+  .sub{color:var(--muted);margin:0 0 14px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .filters input{flex:1;min-width:180px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:#fff}
+  .filters select{padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:#fff}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:thin}
+  .tabs button{white-space:nowrap;border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;cursor:pointer}
+  .tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+  .card{background:var(--card);border-radius:18px;padding:12px;border:2px solid var(--line);cursor:pointer;position:relative;transition:transform .12s}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .card canvas{width:100%;aspect-ratio:1;display:block;background:#e6e8ec;border-radius:12px}
+  .card .name{font-weight:700;font-size:18px;margin-top:6px}
+  .meta{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted)}
+  .pill{border-radius:999px;padding:0 9px;color:#fff;font-weight:700;font-size:13px}
+  .p-Let{background:var(--easy)} .p-Mellem{background:var(--mid)} .p-Svær{background:var(--hard)}
+  .heart{position:absolute;top:8px;right:10px;font-size:22px;background:none;border:none;cursor:pointer;line-height:1}
+  .empty{color:var(--muted);padding:30px;text-align:center}
+  .new2d{display:flex;flex-direction:column;align-items:center;justify-content:center;border-style:dashed;min-height:200px;font-weight:800;color:var(--accent)}
+  .new2d span{font-size:48px;line-height:1}
+  /* viewer */
+  .viewer{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px}
+  @media(max-width:760px){.viewer{grid-template-columns:1fr}}
+  .panel{background:#fff;border-radius:18px;border:2px solid var(--line);padding:14px}
+  .back{background:none;border:none;color:var(--accent);cursor:pointer;padding:0;margin-bottom:6px;font-weight:700}
+  #big{width:100%;display:block;background:#e6e8ec;border-radius:12px;touch-action:manipulation}
+  .stepbar{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .btn{border:none;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
+  .btn.ghost{background:#eef2fb;color:var(--accent)}
+  .btn.orange{background:var(--accent2)}
+  .btn:disabled{opacity:.4;cursor:default}
+  .rowinfo{font-size:19px;font-weight:700;margin:8px 0 4px}
+  .runs{display:flex;flex-wrap:wrap;gap:6px}
+  .run{display:flex;align-items:center;gap:5px;border:2px solid var(--line);border-radius:10px;padding:2px 8px;font-weight:700}
+  .sw{width:18px;height:18px;border-radius:5px;border:1px solid #0002;display:inline-block}
+  .parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .part{display:flex;align-items:center;gap:8px}
+  .turn{margin-top:12px;border-radius:14px;padding:10px;text-align:center;font-weight:800;font-size:20px;color:#fff;background:var(--accent);cursor:pointer;user-select:none}
+  .turn.a{background:#7a4fd6}
+  .progress{height:10px;background:#eee;border-radius:99px;overflow:hidden;margin-top:6px}
+  .progress div{height:100%;background:var(--ok);transition:width .2s}
+  /* builder */
+  .palette{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .palette button{width:36px;height:36px;border-radius:10px;border:3px solid transparent;cursor:pointer}
+  .palette button.on{border-color:var(--ink);transform:scale(1.1)}
+  #pad{width:100%;max-width:560px;display:block;background:#e6e8ec;border-radius:12px;touch-action:none;cursor:crosshair}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .row input{padding:9px 12px;border-radius:12px;border:2px solid var(--line);flex:1;min-width:140px}
+  footer{max-width:1100px;margin:20px auto 30px;padding:0 18px;color:var(--muted);font-size:14px}
+  footer a{color:var(--accent)}
+  .hide{display:none!important}
+  .done{font-size:26px;font-weight:800;color:var(--ok);text-align:center;margin:8px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="go('')">
+    <svg viewBox="0 0 34 34"><g><rect x="11" y="2" width="12" height="30" rx="4" fill="#ff8a1f"/><rect x="2" y="11" width="30" height="12" rx="4" fill="#2f6fed"/><rect x="11" y="11" width="12" height="12" fill="#ffd23f"/></g></svg>
+    Byggeværkstedet
+  </div>
+  <nav>
+    <button data-nav="" class="on">Vejledninger</button>
+    <button data-nav="byg">Byg i 2D</button>
+  </nav>
+</header>
+
+<main id="listView">
+  <h1>Hvad skal vi bygge i dag?</h1>
+  <p class="sub">Vælg en model og byg den række for række. Sværhedsgraden følger antallet af brikker.</p>
+  <div class="filters">
+    <input id="q" type="search" placeholder="Søg … fx fisk, raket, jul">
+    <select id="diff">
+      <option value="">Alle sværhedsgrader</option>
+      <option>Let</option><option>Mellem</option><option>Svær</option>
+    </select>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<main id="detailView" class="hide">
+  <button class="back" onclick="go('')">← Tilbage til alle modeller</button>
+  <div class="viewer">
+    <div class="panel">
+      <h1 id="dName"></h1>
+      <div class="meta" id="dMeta"></div>
+      <canvas id="big"></canvas>
+      <div class="stepbar">
+        <button class="btn ghost" id="prev">◀ Forrige</button>
+        <button class="btn" id="next">Næste række ▶</button>
+        <button class="btn ghost" id="all">Vis hele</button>
+      </div>
+      <div class="progress"><div id="prog"></div></div>
+    </div>
+    <div class="panel">
+      <div id="stepBox">
+        <div class="rowinfo" id="rowTitle"></div>
+        <div class="meta" style="margin-bottom:6px">Læs rækken fra venstre mod højre. Brikkerne skifter selv mellem at ligge ned og stå op – se på billedet.</div>
+        <div class="runs" id="runs"></div>
+      </div>
+      <div class="done hide" id="doneBox">🎉 Færdig! Flot bygget!</div>
+      <div class="turn" id="turn" title="Tryk for at skifte">Jens' tur</div>
+      <h3 style="margin:16px 0 6px">Det skal du bruge</h3>
+      <div class="parts" id="parts"></div>
+      <div class="meta" style="margin-top:8px" id="total"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn orange hide" id="editOwn">Redigér i 2D</button>
+        <button class="btn ghost hide" id="delOwn">Slet min model</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="builderView" class="hide">
+  <h1>Byg i 2D</h1>
+  <p class="sub">Tegn jeres egen model. Træk med fingeren for at lægge brikker. Gemte modeller kommer under „Egne".</p>
+  <div class="panel">
+    <div class="row">
+      <label>Størrelse
+        <select id="size"><option>10</option><option>12</option><option selected>16</option><option>20</option><option>24</option></select>
+      </label>
+      <button class="btn ghost" id="undo">↶ Fortryd</button>
+      <button class="btn ghost" id="clear">Ryd</button>
+    </div>
+    <div class="palette" id="pal"></div>
+    <canvas id="pad"></canvas>
+    <div class="row" style="margin-top:10px">
+      <input id="ownName" placeholder="Navn på modellen, fx Alfreds drage">
+      <button class="btn" id="save">Gem model</button>
+    </div>
+    <div class="meta" id="saveMsg" style="margin-top:6px"></div>
+  </div>
+</main>
+
+<footer>
+  Alle modeller her er lavet til Jens og Alfred. Hver brik er en dobbelt-plus, og brikkerne ligger skiftevis ned og op, så de griber ind i hinanden.
+  Vil I have flere modeller, er der tusindvis på <a href="https://plusplusinstructions.com/da/instructions/" target="_blank" rel="noopener">plusplusinstructions.com</a>.
+</footer>
+
+<script>
+const COLORS = {
+  R:["Rød","#d8383a"], O:["Orange","#ff8a1f"], Y:["Gul","#f3d24a"], G:["Grøn","#3f9a4e"], g:["Mørkegrøn","#1f7a3a"],
+  B:["Blå","#2e5f99"], b:["Lyseblå","#7cc8f5"], P:["Lilla","#8e5bd8"], p:["Lyserød","#ff8fc0"], W:["Hvid","#ffffff"],
+  K:["Sort","#2a2a2e"], N:["Brun","#8a5a33"], T:["Hudfarve","#f0cca6"], S:["Grå","#9aa1ab"]
+};
+const CATS = ["Alle","Likede","Egne","Dyr","Køretøjer","Natur","Mad","Jul","Figurer"];
+
+const BUILDS = [
+ {id:"hjerte",name:"Hjerte",cat:"Figurer",p:[".RR...RR.","RWRR.RRRR","RRRRRRRRR","RRRRRRRRR",".RRRRRRR.","..RRRRR..","...RRR...","....R...."]},
+ {id:"regnbue",name:"Regnbue",cat:"Natur",p:["....RRRRRR....","..RROOOOOORR..",".ROOYYYYYYOOR.","ROYYGGGGGGYYOR","ROYGBB..BBGYOR","ROYGB....BGYOR","ROYGB....BGYOR"]},
+ {id:"sol",name:"Glad sol",cat:"Natur",p:[".....O.....",".O...O...O.","..O.YYY.O..","...YYYYY...","..YYKYKYY..","OOYYYYYYYOO","..YKYYYKY..","...YKKKY...","..O.YYY.O..",".O...O...O.",".....O....."]},
+ {id:"trae",name:"Træ",cat:"Natur",p:["....G....","...GGG...","..GGgGG..",".GGGGGgG.","..GgGGG..",".GGGGgGG.","GGgGGGGGG","GGGGGGgGG",".GGGGGGG.","....N....","....N....","...NNN..."]},
+ {id:"blomst",name:"Blomst",cat:"Natur",p:["..p...p..",".ppp.ppp.",".ppppppp.","..pYYYp..",".ppYYYpp.",".ppppppp.","..pp.pp..","....G....",".GG.G....","..GGG.GG.","....GGG..","....G...."]},
+ {id:"stjerne",name:"Stjerne",cat:"Figurer",p:[".....Y.....","....YYY....","....YYY....","YYYYYYYYYYY",".YYYYYYYYY.","..YYYYYYY..","...YYYYY...","..YYYYYYY..",".YYYY.YYYY.",".YYY...YYY.","YY.......YY"]},
+ {id:"lyn",name:"Lyn",cat:"Natur",p:["...YYYY","..YYYY.","..YYY..",".YYY...",".YYYYYY","YYYYYY.","...YYY.","..YYY..","..YY...",".YY....",".Y....."]},
+ {id:"svamp",name:"Fluesvamp",cat:"Natur",p:["...RRRRR...","..RWWRRRR..",".RRWWRRWWR.","RRRRRRRWWRR","RWWRRRRRRRR","RRRRRWWRRRR","...TTTTT...","...TTTTT...","...TTTTT...","....TTT...."]},
+ {id:"hus",name:"Hus",cat:"Figurer",p:[".....R.....","....RRR....","...RRRRR...","..RRRRRRR..",".RRRRRRRRR.","RRRRRRRRRRR",".TTTTTTTTT.",".TbbTTTbbT.",".TbbTNTbbT.",".TTTTNTTTT.",".TTTTNTTTT.","GGGGGGGGGGG"]},
+ {id:"krone",name:"Krone",cat:"Figurer",p:["Y....Y....Y","YY..YYY..YY","YYYYYYYYYYY","YRYYYbYYYRY","YYYYYYYYYYY","OOOOOOOOOOO"]},
+ {id:"spoegelse",name:"Lille spøgelse",cat:"Figurer",p:["...WWWW...","..WWWWWW..",".WWWWWWWW.",".WKKWWKKW.",".WKKWWKKW.",".WWWWWWWW.","WWWWKKWWWW","WWWWKKWWWW","WWWWWWWWWW","WWWWWWWWWW","WW.WW.WW.W"]},
+ {id:"robot",name:"Robot",cat:"Figurer",p:["......Y......","......S......","..SSSSSSSSS..","..SbbSSSbbS..","..SbKSSSKbS..","..SSSSSSSSS..","..SSRRRRRSS..","..SSSSSSSSS..","....SSSSS....",".BBBBBBBBBBB.","SBBBRBGBYBBBS","SBBBBBBBBBBBS","SBBBSSSSSBBBS","..BBBBBBBBB..","...SS...SS...","..KKK...KKK.."]},
+ {id:"fisk",name:"Guldfisk",cat:"Dyr",p:["....OOO.....","..OOOOOO..O.",".OKOOWOOO.OO","OOOOOWOOOOOO","OOOOOWOOOOOO",".OOOOWOOO.OO","..OOOOOO..O.","....OOO....."]},
+ {id:"kat",name:"Kat",cat:"Dyr",p:[".S.......S.",".SS.....SS.",".SpS...SpS.",".SSSSSSSSS.","SSSSSSSSSSS","SSGKSSSGKSS","SSSSSSSSSSS","SSSSSpSSSSS",".SSSKSKSSS.","..SSSSSSS..","...SSSSS..."]},
+ {id:"hund",name:"Hund",cat:"Dyr",p:[".NN......NN.","NNNTTTTTTNNN","NNTTTTTTTTNN","NNTKTTTTKTNN",".NTTTTTTTTN.","..TTTKKTTT..","..TTTKKTTT..","..TTTTTTTT..","...TTppTT...","....TppT....",".....TT....."]},
+ {id:"ugle",name:"Ugle",cat:"Dyr",p:[".N.......N.",".NN.....NN.",".NNNNNNNNN.","NWWWNNNWWWN","NWKWNNNWKWN","NWWWNONWWWN","NNNNNONNNNN","NNTTTTTTTNN","NNTNTNTNTNN","NNTTTTTTTNN",".NNTNTNTNN.","...OO.OO..."]},
+ {id:"sommerfugl",name:"Sommerfugl",cat:"Dyr",p:["....K...K....",".....K.K.....",".PPP..K..PPP.","PPYPP.K.PPYPP","PYYPPPKPPPYYP","PPYPPPKPPPYPP",".PPPPPKPPPPP.","..ppppKpppp..",".ppBppKppBpp.",".pppp.K.pppp.","..pp.....pp.."]},
+ {id:"pingvin",name:"Pingvin",cat:"Dyr",p:["...KKKKK...","..KKKKKKK..",".KKWWKWWKK.",".KWKWWWKWK.",".KWWWOWWWK.",".KKWOOOWKK.","KKWWWWWWWKK","KKWWWWWWWKK","KKWWWWWWWKK",".KWWWWWWWK.",".KKWWWWWKK.","..KKKKKKK..",".OOO...OOO."]},
+ {id:"dino",name:"Dinosaur",cat:"Dyr",p:[".........GGGGG..","........GGKGGGG.","........GGGGGGGG","........GGGG....","........GGGGGG..","G......GGGG.....","GG....GGGGGG....","GGG..GGGGGG.G...",".GGgGGgGGGG.....","..GGGGGGGGG.....","...GGGGGGG......","....GG..GG......","....GGG.GGG....."]},
+ {id:"raket",name:"Raket",cat:"Køretøjer",p:["....R....","...RRR...","...WWW...","..WWWWW..","..WbbbW..","..WbBbW..","..WbbbW..","..WWWWW..","..WWWWW..",".RWWWWWR.","RRWWRWWRR","RR.SSS.RR","...OYO...","...YOY...","....O...."]},
+ {id:"bil",name:"Rød bil",cat:"Køretøjer",p:["....RRRRR.....","...RbbRbbR....","..RRbbRbbRR...",".RRRRRRRRRRRR.","YRRRRRRRRRRRRO","RRRKKRRRRKKRRR","..KSSK..KSSK..","...KK....KK..."]},
+ {id:"fly",name:"Fly",cat:"Køretøjer",p:[".B.............",".BB............",".BBB.....BB....",".BBBBBBBBBBBBB.","BBbBbBbBbBbBBBB",".BBBBBBBBBBBBBB","......BBB......",".....BBB.......","....BB........."]},
+ {id:"baad",name:"Sejlbåd",cat:"Køretøjer",p:["......R......","......WW.....","......WWW....","......WWWW...","......K......","......K......","NNNNNNNNNNNNN",".NNNNNNNNNNN.","..NNNNNNNNN..","bbbbbbbbbbbbb","BbBBbBBbBBbBB"]},
+ {id:"is",name:"Isvaffel",cat:"Mad",p:["....R....","...ppp...","..ppppp..",".ppWpppp.",".ppppppp.",".bbbbbbb.","bbbbbbbbb","TTTTTTTTT",".TNTNTNT.",".TTNTNTT.","..TNTNT..","..TTNTT..","...TNT...","....T...."]},
+ {id:"jordbaer",name:"Jordbær",cat:"Mad",p:["...g.g...","..gGgGg..",".RRgGgRR.","RRRRRRRRR","RYRRRYRRR","RRRYRRRYR",".RYRRRYR.",".RRRYRRR.","..RRRRR..","...RYR...","....R...."]},
+ {id:"juletrae",name:"Juletræ",cat:"Jul",p:[".....Y.....","....YYY....",".....G.....","....GGG....","...GGRGG...","....GGG....","...GGGGG...","..GGBGGYG..","...GGGGG...","..GRGGGGG..",".GGGGGRGGG.","GGYGGGGGBGG","....NNN....","....NNN...."]},
+ {id:"snemand",name:"Snemand",cat:"Jul",p:["...KKKKK...","...KKKKK...","..KKKKKKK..","...WWWWW...","..WWKWKWW..","..WWWOWWW..","..WWWWWWW..","...RRRRR...","..WWWRWWW..",".WWWWRWWWW.","NNWWWKWWWNN",".WWWWWWWWW.",".WWWWKWWWW.",".WWWWWWWWW.","..WWWWWWW.."]},
+ {id:"nissehue",name:"Nissehue",cat:"Jul",p:["........WW",".......RWW","......RR..",".....RRR..","....RRRR..","...RRRRR..","..RRRRRRR.",".RRRRRRRRR","WWWWWWWWWW","WWWWWWWWWW"]},
+];
+
+// ---------- storage (best effort) ----------
+const store = {
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let likes = new Set(store.get("bv_likes",[]));
+let own = store.get("bv_own",[]);
+
+// Real plus-plus geometry: one brick is a straight "++" of 9 unit squares
+// (5 long, arms at positions 2 and 4). Flat bricks only lock together in a
+// checkerboard of horizontal and vertical bricks with centres 3 units apart,
+// so every pixel of a model is exactly one brick: horizontal when x+y is even,
+// vertical when odd.
+const BRICK_H=[[-2,0],[-1,0],[0,0],[1,0],[2,0],[-1,-1],[-1,1],[1,-1],[1,1]];
+const BRICK_V=BRICK_H.map(([x,y])=>[y,x]);
+function tile(p){
+  const out=[];
+  p.forEach((row,y)=>[...row].forEach((c,x)=>{if(c!=="."&&COLORS[c])out.push({c,x,y,row:y,o:(x+y)%2===0?"h":"v"})}));
+  return out;
+}
+function pieces(p){const c={};const t=tile(p);t.forEach(k=>c[k.c]=(c[k.c]||0)+1);return {c,n:t.length,t}}
+function diff(n){return n<60?"Let":n<85?"Mellem":"Svær"}
+function enrich(b){const {c,n,t}=pieces(b.p);b.counts=c;b.total=n;b.tiles=t;b.level=diff(n);b.w=Math.max(...b.p.map(r=>r.length));return b}
+BUILDS.forEach(enrich);
+function allBuilds(){return BUILDS.concat(own.map(o=>enrich({...o,cat:"Egne",own:true})))}
+
+// ---------- drawing ----------
+function brickSquares(k){return (k.o==="h"?BRICK_H:BRICK_V).map(([dx,dy])=>[3*k.x+1+dx,3*k.y+1+dy])}
+function drawBrick(ctx,ox,oy,u,k,ghost){
+  const sq=brickSquares(k), set=new Set(sq.map(([x,y])=>x+","+y));
+  const X=x=>ox+x*u, Y=y=>oy+y*u;
+  ctx.fillStyle=ghost?"#c9ccd2":COLORS[k.c][1];
+  ctx.beginPath();sq.forEach(([x,y])=>ctx.rect(X(x),Y(y),u+0.4,u+0.4));ctx.fill();
+  if(ghost)return;
+  ctx.strokeStyle=k.c==="K"?"#5b606a":"#23262d";ctx.lineWidth=Math.max(0.6,u*0.09);ctx.lineCap="square";
+  ctx.beginPath();
+  sq.forEach(([x,y])=>{
+    if(!set.has(x+","+(y-1))){ctx.moveTo(X(x),Y(y));ctx.lineTo(X(x+1),Y(y))}
+    if(!set.has(x+","+(y+1))){ctx.moveTo(X(x),Y(y+1));ctx.lineTo(X(x+1),Y(y+1))}
+    if(!set.has((x-1)+","+y)){ctx.moveTo(X(x),Y(y));ctx.lineTo(X(x),Y(y+1))}
+    if(!set.has((x+1)+","+y)){ctx.moveTo(X(x+1),Y(y));ctx.lineTo(X(x+1),Y(y+1))}
+  });
+  ctx.stroke();
+}
+function drawGrid(cv,p,opts={}){
+  const w=Math.max(...p.map(r=>r.length)),h=p.length;
+  const css=cv.clientWidth||cv.width, dpr=window.devicePixelRatio||1;
+  const side=Math.max(w,h)*3+4;            // room for arms poking out of the edge
+  const u=css/side, cell=u*3, W=css, H=css;
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.height=css+"px";
+  const ctx=cv.getContext("2d");ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  const ox=(W-w*cell)/2, oy=(H-h*cell)/2;
+  if(opts.dots){ctx.fillStyle="#d3d6dc";
+    for(let yy=0;yy<h;yy++)for(let xx=0;xx<w;xx++){ctx.beginPath();ctx.arc(ox+(xx+.5)*cell,oy+(yy+.5)*cell,Math.max(1,cell*0.06),0,7);ctx.fill()}}
+  const tiles=opts.tiles||tile(p), step=opts.step;
+  if(step!=null&&step<h) tiles.forEach(k=>{if(k.row>step)drawBrick(ctx,ox,oy,u,k,true)});
+  tiles.forEach(k=>{if(step==null||k.row<=step)drawBrick(ctx,ox,oy,u,k)});
+  if(step!=null&&step<h){
+    ctx.strokeStyle="#ff8a1f";ctx.lineWidth=Math.max(2,u*0.5);
+    ctx.beginPath();ctx.roundRect(ox-u,oy+step*cell-u*0.5,w*cell+2*u,cell+u,8);ctx.stroke();
+  }
+  return {cell,ox,oy,w,h};
+}
+
+// ---------- list ----------
+let tab="Alle";
+const $=id=>document.getElementById(id);
+function renderTabs(){
+  $("tabs").innerHTML=CATS.map(c=>`<button class="${c===tab?"on":""}" data-t="${c}">${c==="Likede"?"♥ Likede":c}</button>`).join("");
+  $("tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;renderTabs();renderList()});
+}
+function renderList(){
+  const q=$("q").value.trim().toLowerCase(), d=$("diff").value;
+  let items=allBuilds().filter(b=>{
+    if(tab==="Likede"&&!likes.has(b.id))return false;
+    if(tab!=="Alle"&&tab!=="Likede"&&b.cat!==tab)return false;
+    if(d&&b.level!==d)return false;
+    if(q){const hay=(b.name+" "+b.cat+" "+b.level).toLowerCase(); if(!hay.includes(q))return false}
+    return true;
+  });
+  const g=$("grid");
+  let html="";
+  if(tab==="Alle"||tab==="Egne") html+=`<div class="card new2d" onclick="go('byg')"><span>＋</span>Byg i 2D</div>`;
+  html+=items.map(b=>`<div class="card" data-id="${b.id}">
+      <button class="heart" data-like="${b.id}" aria-label="Like">${likes.has(b.id)?"❤️":"🤍"}</button>
+      <canvas></canvas>
+      <div class="name">${esc(b.name)}</div>
+      <div class="meta"><span class="pill p-${b.level}">${b.level}</span>${b.total} brikker</div>
+    </div>`).join("");
+  if(!items.length) html+=`<div class="empty">Ingen modeller passer til søgningen.</div>`;
+  g.innerHTML=html;
+  g.querySelectorAll(".card[data-id]").forEach(el=>{
+    const b=items.find(x=>x.id===el.dataset.id);
+    requestAnimationFrame(()=>drawGrid(el.querySelector("canvas"),b.p));
+    el.onclick=e=>{if(e.target.dataset.like)return;go("m-"+b.id)};
+  });
+  g.querySelectorAll("[data-like]").forEach(h=>h.onclick=e=>{e.stopPropagation();const id=h.dataset.like;likes.has(id)?likes.delete(id):likes.add(id);store.set("bv_likes",[...likes]);renderList()});
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+// ---------- detail ----------
+let cur=null, step=0, showAll=false, turnA=false;
+function openBuild(id){
+  cur=allBuilds().find(b=>b.id===id); if(!cur){go("");return}
+  step=0;showAll=false;
+  $("dName").textContent=cur.name;
+  $("dMeta").innerHTML=`<span class="pill p-${cur.level}">${cur.level}</span> ${cur.total} brikker · ${cur.w}×${cur.p.length} felter · ${cur.cat}`;
+  const entries=Object.entries(cur.counts).sort((a,b)=>b[1]-a[1]);
+  $("parts").innerHTML=entries.map(([k,n])=>`<div class="part"><span class="sw" style="background:${COLORS[k][1]}"></span>${n} × ${COLORS[k][0]}</div>`).join("");
+  $("total").textContent=`I alt ${cur.total} brikker i ${entries.length} farver.`;
+  $("editOwn").classList.toggle("hide",!cur.own);$("delOwn").classList.toggle("hide",!cur.own);
+  renderStep();
+}
+// Bricks that start in this row, left to right, grouped when colour and direction repeat.
+// The row read left to right: runs of the same colour, gaps shown as empty spots.
+function rowRuns(b,y){
+  const row=b.p[y].padEnd(b.w,"."),out=[];let i=0;
+  while(i<row.length){let j=i;while(j<row.length&&row[j]===row[i])j++;out.push([row[i],j-i]);i=j}
+  while(out.length&&out[out.length-1][0]===".")out.pop();
+  if(out.length&&out[0][0]===".")out[0][2]="first";
+  return out;
+}
+function renderStep(){
+  const h=cur.p.length, finished=showAll||step>=h;
+  drawGrid($("big"),cur.p,finished?{tiles:cur.tiles}:{step,tiles:cur.tiles});
+  $("prev").disabled=!showAll&&step===0;
+  $("next").textContent=step>=h-1?"Færdig ✓":"Næste række ▶";
+  $("next").disabled=finished;
+  $("all").textContent=showAll?"Trin for trin":"Vis hele";
+  $("prog").style.width=(finished?100:Math.round(step/h*100))+"%";
+  $("stepBox").classList.toggle("hide",finished);
+  $("doneBox").classList.toggle("hide",!finished||showAll);
+  if(!finished){
+    $("rowTitle").textContent=`Række ${step+1} af ${h} (oppefra)`;
+    $("runs").innerHTML=rowRuns(cur,step).map(([ch,n])=>ch==="."?
+      `<div class="run" style="border-style:dashed;color:var(--muted)">${n} tom${n>1?"me":""} plads${n>1?"er":""}</div>`:
+      `<div class="run"><span class="sw" style="background:${COLORS[ch][1]}"></span>${n} ${COLORS[ch][0].toLowerCase()}</div>`).join("");
+  }
+}
+$("next").onclick=()=>{step++;turnA=!turnA;renderTurn();renderStep()};
+$("prev").onclick=()=>{if(showAll){showAll=false;renderStep();return}if(step>0){step--;turnA=!turnA;renderTurn();renderStep()}};
+$("all").onclick=()=>{showAll=!showAll;if(!showAll&&step>=cur.p.length)step=0;renderStep()};
+function renderTurn(){$("turn").textContent=turnA?"Alfreds tur":"Jens' tur";$("turn").classList.toggle("a",turnA)}
+$("turn").onclick=()=>{turnA=!turnA;renderTurn()};
+$("delOwn").onclick=()=>{
+  if($("delOwn").dataset.sure!=="1"){$("delOwn").dataset.sure="1";$("delOwn").textContent="Tryk igen for at slette";return}
+  own=own.filter(o=>o.id!==cur.id);store.set("bv_own",own);$("delOwn").dataset.sure="";$("delOwn").textContent="Slet min model";go("")
+};
+$("editOwn").onclick=()=>{editing=cur;go("byg")};
+
+// ---------- builder ----------
+let size=16, grid=[], color="R", history=[], editing=null, painting=false;
+function newGrid(n){size=n;grid=Array.from({length:n},()=>Array(n).fill("."))}
+function renderPal(){
+  $("pal").innerHTML=Object.entries(COLORS).map(([k,[n,c]])=>`<button title="${n}" data-c="${k}" class="${k===color?"on":""}" style="background:${c}"></button>`).join("")+
+    `<button title="Viskelæder" data-c="." class="${color==="."?"on":""}" style="background:#fff;font-size:18px">⌫</button>`;
+  $("pal").querySelectorAll("button").forEach(b=>b.onclick=()=>{color=b.dataset.c;renderPal()});
+}
+let geo=null;
+function drawPad(){geo=drawGrid($("pad"),grid.map(r=>r.join("")),{dots:true})}
+function cellAt(e){
+  const r=$("pad").getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
+  const cx=Math.floor((x-geo.ox)/geo.cell), cy=Math.floor((y-geo.oy)/geo.cell);
+  return (cx>=0&&cy>=0&&cx<size&&cy<size)?[cx,cy]:null;
+}
+function paint(e){const c=cellAt(e);if(!c)return;const [x,y]=c;if(grid[y][x]!==color){grid[y][x]=color;drawPad()}}
+$("pad").addEventListener("pointerdown",e=>{painting=true;history.push(JSON.stringify(grid));if(history.length>50)history.shift();$("pad").setPointerCapture(e.pointerId);paint(e)});
+$("pad").addEventListener("pointermove",e=>{if(painting)paint(e)});
+["pointerup","pointercancel"].forEach(t=>$("pad").addEventListener(t,()=>painting=false));
+$("undo").onclick=()=>{if(history.length){grid=JSON.parse(history.pop());drawPad()}};
+$("clear").onclick=()=>{history.push(JSON.stringify(grid));newGrid(size);drawPad()};
+$("size").onchange=()=>{
+  const n=+$("size").value, old=grid; newGrid(n);
+  for(let y=0;y<Math.min(n,old.length);y++)for(let x=0;x<Math.min(n,old.length);x++)grid[y][x]=old[y][x];
+  drawPad();
+};
+function trimPattern(g){
+  let rows=g.map(r=>r.join(""));
+  let top=rows.findIndex(r=>/[^.]/.test(r)); if(top<0)return null;
+  let bot=rows.length-1-[...rows].reverse().findIndex(r=>/[^.]/.test(r));
+  rows=rows.slice(top,bot+1);
+  let L=Math.min(...rows.map(r=>{const i=r.search(/[^.]/);return i<0?999:i}));
+  let R=Math.max(...rows.map(r=>{let i=r.length-1;while(i>=0&&r[i]===".")i--;return i}));
+  return rows.map(r=>r.slice(L,R+1));
+}
+$("save").onclick=()=>{
+  const p=trimPattern(grid);
+  if(!p){$("saveMsg").textContent="Læg mindst én brik, før du gemmer.";return}
+  const name=$("ownName").value.trim()||"Min model";
+  if(editing){const o=own.find(o=>o.id===editing.id);if(o){o.name=name;o.p=p}}
+  else own.push({id:"own-"+Date.now(),name,p});
+  store.set("bv_own",own);
+  const id=editing?editing.id:own[own.length-1].id; editing=null;
+  go("m-"+id);
+};
+function openBuilder(){
+  if(editing){
+    const n=Math.max(editing.p.length,editing.w);
+    const s=[10,12,16,20,24].find(v=>v>=n)||24; $("size").value=s; newGrid(s);
+    editing.p.forEach((r,y)=>[...r].forEach((ch,x)=>grid[y][x]=ch));
+    $("ownName").value=editing.name;
+  } else if(!grid.length){newGrid(16)}
+  $("saveMsg").textContent="";
+  renderPal();history=[];requestAnimationFrame(drawPad);
+}
+
+// ---------- routing ----------
+function go(h){ if(location.hash.slice(1)===h)route(); else location.hash=h; }
+function route(){
+  const h=location.hash.slice(1);
+  $("listView").classList.toggle("hide",!!h);
+  $("detailView").classList.toggle("hide",!h.startsWith("m-"));
+  $("builderView").classList.toggle("hide",h!=="byg");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.nav===(h==="byg"?"byg":"")));
+  if(h.startsWith("m-"))requestAnimationFrame(()=>openBuild(h.slice(2)));
+  else if(h==="byg")openBuilder();
+  else {editing=null;renderList()}
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.nav));
+$("q").oninput=renderList;$("diff").onchange=renderList;
+window.addEventListener("hashchange",route);
+let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(route,200)});
+renderTabs();renderTurn();route();
+</script>
+</body>
+</html>
