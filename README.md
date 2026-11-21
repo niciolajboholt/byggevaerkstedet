@@ -113,7 +113,7 @@ Lokal afprøvning:
 
 ```sh
 npm ci
-npm run dev -- --host 0.0.0.0 --port 4173 --strictPort
+npm run dev -- --port 4173
 ```
 
 Rodadressen åbner `preview.html`, hvor mobil, iPad og stor skærm kan vælges.
@@ -125,3 +125,24 @@ forløbstestene; de erstatter ikke visuel browserkontrol. Browserkontrol på mob
 prøveadresse; se `design-qa.md` for evidens og afgrænsninger. **Ingen merge eller produktionsudgivelse er udført.**
 
 Privat prøveadresse: https://byggevaerkstedet-designproeve.nicolajbach12.chatgpt.site/
+
+## UX-rettelser, 21. november 2026
+
+Designet ovenfor blev udgivet i PR #8. Den efterfølgende rettelsesrunde ligger
+separat på `fix/ux-progress-and-sharing` og er endnu ikke udgivet.
+
+- `bv_progress` gemmer byggefremskridt pr. motiv, præcis geometri, byggemåde og
+  navngiven fordeling. Fortsæt gendanner rækkerne; Start forfra kræver bekræftelse.
+  Fremskridt synkroniseres ikke mellem enheder.
+- Størrelsesskift i tegneværktøjet advarer før beskæring. Fortryd gendanner både
+  feltstørrelse og brikker. Der er endnu ingen automatisk tegningskladde.
+- Katalogmotiver har ét delingslink pr. bygger under Flere skærme. Linket
+  fastholder navnerækkefølge, fordeling og geometri. Ændringer kræver, at alle
+  får nye links. Egne modeller bruges fortsat på den enhed, hvor de er gemt.
+- Mobil har en fast Start/Fortsæt-knap. Tema- og samlingsvalg bevarer fokus.
+  Tegnefeltet kan betjenes med piletaster, Enter/mellemrum og Delete.
+
+Prøveserveren lytter kun på `127.0.0.1`. Den kan ikke åbnes fra en anden enhed.
+105 tests bestod i rettelsesrunden. På værter, der blokerer Node-underprocesser,
+kan de samme tests køres med `node --test --test-isolation=none tests/*.test.cjs`.
+Se `docs/ux-fixes-2026-11-21.md` for browserkontrol og begrænsninger.

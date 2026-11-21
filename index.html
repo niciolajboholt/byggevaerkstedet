@@ -55,7 +55,8 @@
         <h2>Hvem bygger med?</h2>
         <div><label>Antal byggere</label><div class="chips" id="teamCount"></div></div><div class="builder-names-row"><div id="teamNames"></div><button type="button" id="swapBuilders" class="swap-builders" aria-label="Byt plads på bygger 1 og bygger 2"><i class="ic swap-icon" aria-hidden="true"></i><span>Byt plads</span></button></div>
         <div><label>Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div><p class="meta" id="splitInfo"></p>
-        <details class="device-options"><summary>Bruger I flere skærme?</summary><div><label>Hvem bruger denne skærm?</label><div class="chips" id="teamMe"></div></div><p class="meta" id="meInfo"></p></details>
+        <details class="device-options"><summary>Bruger I flere skærme?</summary><div><label>Hvem bruger denne skærm?</label><div class="chips" id="teamMe"></div></div><p class="meta" id="meInfo"></p><p class="meta">Kopiér hvert link til den rigtige skærm. Links fastholder navnene og deres dele. Brug nye links på alle skærme, hvis I ændrer fordelingen.</p><div id="shareLinks"></div></details>
+        <button class="btn ghost hide" id="unlockTeam">Lav en ny fordeling</button>
         <button class="btn" id="teamStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
       </div>
       <div id="assembleBox" class="hide"><h2>Saml figuren</h2><p id="assembleText"></p><button class="btn" id="assembleGo">Vis samlingen</button></div>
@@ -63,6 +64,7 @@
       <div id="materials"><h2 id="partsTitle">Det skal du bruge</h2><div class="parts" id="parts"></div><p class="meta" id="total"></p></div>
       <p id="buildTip" class="meta hide"></p>
       <button class="btn start-button" id="aloneStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
+      <p class="meta" id="resumeInfo" role="status"></p><button class="btn ghost hide" id="restartBuild">Start forfra</button>
       <div class="row own-actions"><button class="btn ghost hide" id="editOwn">Redigér i 2D</button><button class="btn ghost hide" id="delOwn">Slet min model</button></div>
     </section>
   </div>
@@ -80,7 +82,8 @@
       <button class="btn ghost" id="clear">Ryd</button>
     </div>
     <div class="palette" id="pal"></div>
-    <canvas id="pad" aria-label="Tegnefelt til din egen model"></canvas>
+    <p class="meta" id="padHelp">Brug piletaster til at flytte markøren, mellemrum eller Enter til at lægge en brik og Delete til at fjerne. Tab forlader feltet.</p>
+    <canvas id="pad" tabindex="0" role="group" aria-label="Tegnefelt til din egen model" aria-describedby="padHelp padStatus"></canvas><p id="padStatus" class="meta" role="status" aria-live="polite"></p>
     <div class="row" style="margin-top:10px">
       <input id="ownName" aria-label="Navn på modellen" placeholder="Navn på modellen, fx Alfreds drage">
       <button class="btn" id="save">Gem model</button>
@@ -93,6 +96,7 @@
 <nav class="bottom-nav" aria-label="Hovednavigation"><button data-nav="" class="on"><i class="ic squares" aria-hidden="true"></i>Motiver</button><button data-nav="mine"><i class="ic heart-icon" aria-hidden="true"></i>Mine</button><button data-nav="byg"><i class="ic plus-icon" aria-hidden="true"></i>Byg selv</button></nav>
 <dialog id="filterDialog"><div class="dialog-heading"><h2>Find dit byggeri</h2><button class="icon-button" id="filterClose" aria-label="Luk filtre"><i class="ic close-icon" aria-hidden="true"></i></button></div><label class="field-label" for="diff">Sværhedsgrad</label><select id="diff"><option value="">Alle sværhedsgrader</option><option>Let</option><option>Mellem</option><option>Svær</option></select><p class="meta">Sværhedsgraden følger antallet af brikker.</p><label class="field-label" for="pieceLimit">Antal brikker</label><select id="pieceLimit"><option value="250">Op til 250 brikker</option><option value="60">Op til 60 brikker</option><option value="120">Op til 120 brikker</option></select><h3>Tema</h3><div class="tabs" id="tabs"></div><button class="btn" id="filterApply">Vis motiver</button></dialog>
 <dialog id="overviewDialog"><div class="dialog-heading"><h2 id="overviewTitle">Hele figuren</h2><button class="icon-button" id="overviewClose" aria-label="Luk overblik"><i class="ic close-icon" aria-hidden="true"></i></button></div><canvas id="fullCanvas" role="img" aria-label="Hele figuren med byggernes dele"></canvas><p id="overviewLegend" class="meta"></p></dialog>
+<dialog id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmText"><h2 id="confirmTitle">Er du sikker?</h2><p id="confirmText"></p><div class="row"><button class="btn ghost" id="confirmCancel" autofocus>Annuller</button><button class="btn" id="confirmAccept">Fortsæt</button></div></dialog>
 <script>
 
 const COLORS = {
@@ -227,7 +231,7 @@ const BUILDS = [
 // ---------- storage (best effort) ----------
 const store = {
   get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
-  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
 };
 let likes = new Set(store.get("bv_likes",[]));
 let own = store.get("bv_own",[]);
@@ -304,11 +308,22 @@ function drawGrid(cv,p,opts={}){
 // ---------- list ----------
 let tab="Alle";
 const $=id=>document.getElementById(id);
+function confirmAction(message){
+  return new Promise(resolve=>{
+    const dialog=$("confirmDialog");$("confirmText").textContent=message;
+    const finish=value=>{dialog.close();resolve(value)};
+    $("confirmAccept").onclick=()=>finish(true);$("confirmCancel").onclick=()=>finish(false);
+    dialog.oncancel=e=>{e.preventDefault();finish(false)};dialog.showModal();
+  });
+}
 function renderTabs(){
+  const focused=document.activeElement, focusKey=focused?.dataset.t, quickKey=focused?.dataset.quick;
   $("tabs").innerHTML=CATS.filter(c=>!["Likede","Egne"].includes(c)).map(c=>`<button class="${c===tab?"on":""}" aria-pressed="${c===tab}" data-t="${esc(c)}">${esc(c)}</button>`).join("");
   $("tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;renderTabs();renderList()});
   $("quickTabs").innerHTML=[["Alle","Alle motiver"],["50 nye","50 nye"],["Likede","Favoritter"],["Egne","Egne"]].map(([v,n])=>`<button class="${v===tab?"on":""}" aria-pressed="${v===tab}" data-quick="${v}">${n}</button>`).join("");
   $("quickTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.quick;renderTabs();renderList()});
+  if(focusKey)Array.from($("tabs").children).find(b=>b.dataset.t===focusKey)?.focus();
+  if(quickKey)Array.from($("quickTabs").children).find(b=>b.dataset.quick===quickKey)?.focus();
 }
 function renderList(){
   const q=$("q").value.trim().toLowerCase(), d=$("diff").value, limit=+$("pieceLimit").value;
@@ -352,8 +367,49 @@ let cur=null, step=0, showAll=false, started=false;
 const TEAM_COLORS=["#164ddd","#b65d39","#6c51a6"];
 let mode=store.get("bv_mode","alone"), team=store.get("bv_team",{n:2,names:["Jens","Alfred","Far"],split:"even"});
 let phase="setup", parts=[], active=0, asmGap=0, asmTimer=null;
+// Geometry and the complete assignment identify a resumable build; the device's
+// selected person is deliberately excluded so switching screens keeps each part.
+function progressKey(){return JSON.stringify([cur.id,cur.p,mode,mode==="together"?[team.n,team.names.slice(0,team.n),team.split,team.split==="small"?smallestBuilder():null]:null])}
+function progressRecords(){const records=store.get("bv_progress",{});return records&&typeof records==="object"&&!Array.isArray(records)?records:{}}
+function savedProgress(){return progressRecords()[progressKey()]}
+let progressSaved=true;
+function saveProgress(){
+  if(!started||!cur)return;
+  const records=progressRecords(), key=progressKey(), previous=records[key];
+  const steps=parts.map((p,i)=>i===active?p.step:(previous?.parts?.[i]??p.step));
+  records[key]={step,active,phase,parts:steps};
+  progressSaved=store.set("bv_progress",records);
+}
+function beginBuild(restart=false){
+  if(shareWarning)return;
+  const saved=restart?null:savedProgress();
+  if(restart){const records=progressRecords();delete records[progressKey()];store.set("bv_progress",records)}
+  step=Number.isInteger(saved?.step)?Math.max(0,Math.min(saved.step,cur.p.length)):0;
+  showAll=false;
+  if(mode==="together"){
+    buildParts();
+    parts.forEach((p,i)=>{p.step=Number.isInteger(saved?.parts?.[i])?Math.max(0,Math.min(saved.parts[i],p.r1-p.r0+1)):0;p.done=p.step===p.r1-p.r0+1});
+    active=team.me!=null?Math.min(team.me,parts.length-1):Math.max(0,Math.min(saved?.active||0,parts.length-1));
+    phase=saved?.phase==="assemble"&&parts.filter((p,i)=>team.me==null||i===team.me).every(p=>p.done)?"assemble":"build";
+    asmGap=1.2;
+  }
+  started=true;render();window.scrollTo(0,0);
+}
+let sharedPlan=false, shareWarning="";
+function readTeamLink(encoded){
+  sharedPlan=false;shareWarning="";
+  if(!encoded)return;
+  try{
+    const plan=JSON.parse(decodeURIComponent(encoded));
+    if(plan.v!==1||JSON.stringify(plan.p)!==JSON.stringify(cur.p)||![2,3].includes(plan.n)||!Array.isArray(plan.names)||plan.names.length!==plan.n||!plan.names.every(n=>typeof n==="string"&&n.length<=80)||!["even","small"].includes(plan.split)||!Number.isInteger(plan.smallest)||plan.smallest<0||plan.smallest>=plan.n||!Number.isInteger(plan.me)||plan.me<0||plan.me>=plan.n)throw Error("Invalid plan");
+    team={n:plan.n,names:plan.names,split:plan.split,smallest:plan.smallest,me:plan.me};
+    mode="together";sharedPlan=true;
+  }catch{shareWarning="Dette delingslink passer ikke til motivet eller er beskadiget. Bed om et nyt link, før I bygger sammen."}
+}
 function openBuild(id){
+  const [modelId,encoded]=id.split("?team=");id=modelId;
   cur=allBuilds().find(b=>b.id===id); if(!cur){go("");return}
+  readTeamLink(encoded);
   step=0;showAll=false;started=false;phase="setup";parts=[];active=0;clearInterval(asmTimer);
   $("modelZoom").value="1";
   $("zoomControls").classList.toggle("hide",Math.max(cur.w,cur.p.length)<=24);
@@ -424,6 +480,7 @@ function buildParts(){
 }
 function render(){
   if(!cur)return;
+  saveProgress();
   const activeBuild=started&&(mode!=="together"||phase!=="setup");
   document.body.classList.toggle("building",activeBuild);
   $("detailBack").setAttribute("aria-label",activeBuild?"Tilbage til forberedelse":"Tilbage til alle motiver");
@@ -444,8 +501,14 @@ function render(){
     $("stepBox").classList.add("hide");
     if(together)renderSetup();
     else {setCanvasWidth();drawGrid($("big"),cur.p,{tiles:cur.tiles});renderParts(cur.counts,"Det skal du bruge")}
+    const saved=savedProgress();
+    $("aloneStart").textContent=$("teamStart").textContent=saved?"Fortsæt byggeriet":"Start byggeriet";
+    $("aloneStart").disabled=$("teamStart").disabled=!!shareWarning;
+    $("restartBuild").classList.toggle("hide",!saved);
+    $("resumeInfo").textContent=shareWarning||(!progressSaved?"Fremskridtet kunne ikke gemmes. Hold siden åben, og frigør plads i browseren.":saved?"Dit fremskridt er gemt på denne enhed.":"Ny opsætning starter fra første række. Tidligere fremskridt bevares for den gamle opsætning.");
     return;
   }
+  $("restartBuild").classList.add("hide");$("resumeInfo").textContent=progressSaved?"":"Fremskridtet kunne ikke gemmes. Hold siden åben, og frigør plads i browseren.";
   drawGrid($("overviewCanvas"),cur.p,{tiles:cur.tiles});
   if(!together){renderAlone();return}
   renderTabsTeam();
@@ -456,7 +519,7 @@ function setCanvasWidth(){
   // reset first so a wider earlier drawing cannot stretch the viewport we measure
   $("big").style.width="100%";
   const viewportWidth=$("modelViewport").clientWidth;
-  const available=started&&window.innerWidth<=760?Math.min(viewportWidth,window.innerHeight*.39):Math.min(viewportWidth,560);
+  const available=window.innerWidth<=760?Math.min(viewportWidth,window.innerHeight*(started?.39:.25)):Math.min(viewportWidth,560);
   $("big").style.width=available*(+$("modelZoom").value||1)+"px";
 }
 function stepUi(rowTitle,row,finished,firstDisabled,lastLabel,progress){
@@ -495,11 +558,20 @@ function renderSetup(){
   $("teamMe").innerHTML=`<button data-me="" class="${team.me==null?"on":""}">Hele holdet</button>`+
     Array.from({length:parts.length},(_,i)=>`<button data-me="${i}" class="${team.me===i?"on":""}">Kun ${esc(team.names[i]||`Bygger ${i+1}`)}</button>`).join("");
   $("meInfo").textContent=team.me==null?"Alle deles om denne iPad og skifter mellem fanerne.":
-    `Denne iPad viser kun ${team.names[team.me]?gen(team.names[team.me]):"din"} del. Den anden iPad skal stå på ${team.n} byggere og „${team.split==="even"?"Lige store dele":"Mindste del til "+(team.names[smallestBuilder()]||`bygger ${smallestBuilder()+1}`)}“ – så får I præcis de samme dele.`;
+    `Denne skærm viser ${team.names[team.me]||"din"} del. Åbn byggerens link på hver skærm, så navnerækkefølge og fordeling er ens. Fremskridt gemmes kun på den enkelte enhed.`;
   $("teamMe").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.me=b.dataset.me===""?null:+b.dataset.me;saveTeam();render()});
   $("teamCount").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.n=+b.dataset.n;saveTeam();render()});
   $("teamSplit").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.split=b.dataset.s;if(b.dataset.smallest!=null)team.smallest=+b.dataset.smallest;saveTeam();render()});
   $("teamNames").querySelectorAll("input").forEach(inp=>inp.onchange=()=>{team.names[+inp.dataset.i]=inp.value.trim();saveTeam();render()});
+  $("teamNames").querySelectorAll("input").forEach(inp=>inp.maxLength=80);
+  document.querySelectorAll("#teamCount button,#teamNames input,#teamSplit button,#swapBuilders").forEach(el=>el.disabled=sharedPlan);
+  $("unlockTeam").classList.toggle("hide",!sharedPlan);
+  $("shareLinks").innerHTML=cur.own?'<p class="meta">Delingslinks er kun til katalogets motiver. Egne modeller findes kun på denne enhed; byg dem sammen på én skærm.</p>':parts.map((p,i)=>{
+    const plan={v:1,p:cur.p,n:team.n,names:Array.from({length:team.n},(_,j)=>team.names[j]||`Bygger ${j+1}`),split:team.split,smallest:smallestBuilder(),me:i};
+    const url=location.href.split("#")[0]+"#m-"+cur.id+"?team="+encodeURIComponent(JSON.stringify(plan));
+    return `<label>${esc(p.name)} · række ${p.r0+1}–${p.r1+1}<input readonly aria-label="Delingslink til ${esc(p.name)}" value="${esc(url)}"></label>`;
+  }).join("");
+  $("shareLinks").querySelectorAll("input").forEach(inp=>inp.onclick=()=>inp.select());
   setCanvasWidth();
   drawGrid($("big"),cur.p,{tiles:cur.tiles,bands:orderedParts(),gap:0.8,labels:true});
   $("stepBox").classList.add("hide");$("doneBox").classList.add("hide");
@@ -568,7 +640,9 @@ $("assembleGo").onclick=()=>{
   clearInterval(asmTimer);asmGap=1.2;
   asmTimer=setInterval(()=>{asmGap=Math.max(0,asmGap-0.04);renderAssemble();if(asmGap===0)clearInterval(asmTimer)},40);
 };
-$("teamStart").onclick=()=>{buildParts();started=true;phase="build";active=team.me!=null?Math.min(team.me,parts.length-1):0;render();window.scrollTo(0,0)};
+$("teamStart").onclick=()=>beginBuild();
+$("restartBuild").onclick=async()=>{if(await confirmAction("Start dette byggeri forfra? Det gemte fremskridt for denne opsætning slettes."))beginBuild(true)};
+$("unlockTeam").onclick=async()=>{if(await confirmAction("Lav en ny fordeling? Send nye links til alle byggere, hvis du ændrer navne eller dele.")){sharedPlan=false;window.history.replaceState(null,"",location.href.split("#")[0]+"#m-"+cur.id);render()}};
 document.querySelectorAll("#modeBar button").forEach(b=>b.onclick=()=>{started=false;mode=b.dataset.mode;store.set("bv_mode",mode);phase="setup";clearInterval(asmTimer);render()});
 $("modelZoom").onchange=render;
 $("next").onclick=()=>{
@@ -587,7 +661,8 @@ $("delOwn").onclick=()=>{
 $("editOwn").onclick=()=>{editing=cur;go("byg")};
 
 // ---------- builder ----------
-let size=16, grid=[], color="R", history=[], editing=null, painting=false;
+let size=16, grid=[], color="R", history=[], editing=null, painting=false, cursorX=0, cursorY=0;
+function rememberDrawing(){history.push(JSON.stringify({size,grid}));if(history.length>50)history.shift()}
 function newGrid(n){size=n;grid=Array.from({length:n},()=>Array(n).fill("."))}
 function renderPal(){
   $("pal").innerHTML=Object.entries(COLORS).map(([k,[n,c]])=>`<button aria-label="${n}" title="${n}" data-c="${k}" class="${k===color?"on":""}" style="background:${c}"></button>`).join("")+
@@ -595,23 +670,47 @@ function renderPal(){
   $("pal").querySelectorAll("button").forEach(b=>b.onclick=()=>{color=b.dataset.c;renderPal()});
 }
 let geo=null;
-function drawPad(){geo=drawGrid($("pad"),grid.map(r=>r.join("")),{dots:true})}
+function drawPad(){
+  cursorX=Math.min(cursorX,size-1);cursorY=Math.min(cursorY,size-1);
+  $("size").value=String(size);
+  geo=drawGrid($("pad"),grid.map(r=>r.join("")),{dots:true});
+  if(document.activeElement===$("pad")){
+    const ctx=$("pad").getContext("2d"),x=geo.ox+cursorX*geo.cell,y=geo.oy+cursorY*geo.cell;
+    ctx.strokeStyle="#164ddd";ctx.lineWidth=3;ctx.strokeRect(x,y,geo.cell,geo.cell);
+  }
+  $("padStatus").textContent=`Række ${cursorY+1}, kolonne ${cursorX+1}: ${grid[cursorY][cursorX]==="."?"tom":COLORS[grid[cursorY][cursorX]][0]}. Valgt: ${color==="."?"viskelæder":COLORS[color][0]}.`;
+}
 function cellAt(e){
   const r=$("pad").getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
   const cx=Math.floor((x-geo.ox)/geo.cell), cy=Math.floor((y-geo.oy)/geo.cell);
   return (cx>=0&&cy>=0&&cx<size&&cy<size)?[cx,cy]:null;
 }
 function paint(e){const c=cellAt(e);if(!c)return;const [x,y]=c;if(grid[y][x]!==color){grid[y][x]=color;drawPad()}}
-$("pad").addEventListener("pointerdown",e=>{painting=true;history.push(JSON.stringify(grid));if(history.length>50)history.shift();$("pad").setPointerCapture(e.pointerId);paint(e)});
+$("pad").addEventListener("pointerdown",e=>{painting=true;rememberDrawing();$("pad").setPointerCapture(e.pointerId);paint(e)});
 $("pad").addEventListener("pointermove",e=>{if(painting)paint(e)});
 ["pointerup","pointercancel"].forEach(t=>$("pad").addEventListener(t,()=>painting=false));
-$("undo").onclick=()=>{if(history.length){grid=JSON.parse(history.pop());drawPad()}};
-$("clear").onclick=()=>{history.push(JSON.stringify(grid));newGrid(size);drawPad()};
-$("size").onchange=()=>{
-  const n=+$("size").value, old=grid; newGrid(n);
+$("undo").onclick=()=>{if(history.length){const previous=JSON.parse(history.pop());size=previous.size;grid=previous.grid;drawPad()}};
+$("clear").onclick=()=>{rememberDrawing();newGrid(size);drawPad()};
+$("size").onchange=async()=>{
+  const n=+$("size").value, old=grid;
+  const cutsBricks=old.some((row,y)=>row.some((ch,x)=>ch!=="."&&(y>=n||x>=n)));
+  if(cutsBricks&&!await confirmAction("Det mindre felt fjerner brikker uden for kanten. Fortsæt? Du kan genskabe dem med Fortryd.")){$("size").value=String(size);return}
+  rememberDrawing();newGrid(n);
   for(let y=0;y<Math.min(n,old.length);y++)for(let x=0;x<Math.min(n,old.length);x++)grid[y][x]=old[y][x];
   drawPad();
 };
+$("pad").addEventListener("focus",drawPad);
+$("pad").addEventListener("blur",drawPad);
+$("pad").addEventListener("keydown",e=>{
+  if(!["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"," ","Enter","Delete","Backspace"].includes(e.key))return;
+  e.preventDefault();
+  if(e.key==="ArrowLeft")cursorX=Math.max(0,cursorX-1);
+  else if(e.key==="ArrowRight")cursorX=Math.min(size-1,cursorX+1);
+  else if(e.key==="ArrowUp")cursorY=Math.max(0,cursorY-1);
+  else if(e.key==="ArrowDown")cursorY=Math.min(size-1,cursorY+1);
+  else {const next=["Delete","Backspace"].includes(e.key)?".":color;if(grid[cursorY][cursorX]!==next){rememberDrawing();grid[cursorY][cursorX]=next}}
+  drawPad();
+});
 function trimPattern(g){
   let rows=g.map(r=>r.join(""));
   let top=rows.findIndex(r=>/[^.]/.test(r)); if(top<0)return null;
@@ -633,13 +732,14 @@ $("save").onclick=()=>{
 };
 function openBuilder(){
   if(editing){
+    history=[];
     const n=Math.max(editing.p.length,editing.w);
     const s=[10,12,16,20,24].find(v=>v>=n)||24; $("size").value=s; newGrid(s);
     editing.p.forEach((r,y)=>[...r].forEach((ch,x)=>grid[y][x]=ch));
     $("ownName").value=editing.name;
   } else if(!grid.length){newGrid(16)}
   $("saveMsg").textContent="";
-  renderPal();history=[];requestAnimationFrame(drawPad);
+  renderPal();requestAnimationFrame(drawPad);
 }
 
 // ---------- routing ----------
@@ -689,7 +789,7 @@ function openOverview(){
 }
 $("skipLink").onclick=e=>{e.preventDefault();const target=document.querySelector("main:not(.hide)");if(target){target.tabIndex=-1;target.focus()}};
 $("overviewButton").onclick=openOverview;$("overviewClose").onclick=()=>$("overviewDialog").close();
-$("aloneStart").onclick=()=>{started=true;render();window.scrollTo(0,0)};
+$("aloneStart").onclick=()=>beginBuild();
 $("detailBack").onclick=()=>{if(started){clearInterval(asmTimer);started=false;phase="setup";render();window.scrollTo(0,0)}else go("")};
 $("guideFavorite").onclick=()=>{toggleFavorite(cur.id);updateFavorite()};
 $("filterOpen").onclick=()=>$("filterDialog").showModal();
