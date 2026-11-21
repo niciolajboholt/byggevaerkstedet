@@ -31,3 +31,21 @@ Kør kontrollen uden at installere pakker:
 ```sh
 node --test tests/character-guides.test.cjs
 ```
+
+## Temaer og filtrering
+
+Tre særskilte kategorier samler yderligere 20 vejledninger:
+
+| Filter | Indhold | Antal vejledninger |
+| --- | --- | ---: |
+| Magi | Tre troldmandselever, postugle, talende hat, gylden vingebold, borg og flyvekost | 8 |
+| Pokémon | Gul lynmus, ildfirben, vandskildpadde, frøvæsen, fangebold og brun ræv | 6 |
+| Minecraft | Grønt blokmonster, blokbygger, blokgris, diamantsværd, diamanthakke og græsblok | 6 |
+
+Tryk på et tema over kataloget. Søgefeltet og sværhedsfilteret kan bruges sammen
+med det valgte tema. Modellerne findes også under **Alle** og kan likes som de
+øvrige vejledninger. Beskrivende modelnavne er bevaret.
+
+Alle 20 har beskrivelse, byggetip, rækkevejledning og automatisk optalt brikliste.
+De digitale kontroller omfatter også kategoriernes præcise indhold og de seks
+første figurmodeller. Modellerne er ikke fysisk prøvebygget.
