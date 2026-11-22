@@ -62,3 +62,50 @@ Automatiske tests dækker hele katalogets geometri og alle 2-/3-personers
 kombinationer med hver mulig modtager af mindre opgaver, samt turskift,
 placering, fortryd, genindlæsning, filtre, kategorier og gamle delingslinks.
 Canvas- og touchadfærd kræver også browserkontrol; jsdom erstatter ikke dette.
+
+## Live synkronisering leveret 22. november 2026
+
+Fra Byg sammen kan et fælles byggerum nu oprettes med **Byg på flere enheder**.
+Værten er første bygger; de øvrige vælger en ledig rolle via QR eller link.
+Hver enhed har sin egen kø og kan gøre næste stykke klar parallelt. Serveren
+bekræfter påsætninger i modellens rækkefølge og sender fælles status til alle.
+
+Den tidligere foreslåede backend er implementeret i `sync/`, klient og live-UI
+i `live-sync-client.js` og `live-sync-ui.js`. QR-koder laves lokalt med den
+MIT-licenserede generator i `vendor/`; invitationslinket sendes ikke til en
+QR-tjeneste. Brugerfladen på én iPad og eksisterende v1-links er bevaret.
+
+Et byggerum udløber 24 timer efter oprettelsen. Deltageradgang gemmes lokalt,
+separat pr. rum og bygger; aktiv rolle er separat pr. browserfane. Gemte tokens
+kan genoptage en optaget rolle efter genindlæsning, men invitationen alene kan
+ikke overtage den. En deltager kan vælge Skift bygger og fortsætte med en anden
+gemt eller ledig rolle. Mistet lokal adgang kan kræve et nyt byggerum.
+
+Forbindelsesbrud markerer tilstanden tydeligt. Ukendte udfald af en handling
+bliver ikke automatisk gentaget; klienten henter først serverens nyeste status.
+WebSockets genoprettes med stigende ventetid og en rolig HTTP-fallback. Når en
+iPad kommer i forgrunden, hentes status, og forbindelsen oprettes på ny.
+Fortryd knyttes til den konkrete seneste samling; ændres byggeriet, mens
+bekræftelsen er åben, skal brugeren tage stilling igen.
+
+Backenddeploy og kildebundle er registreret i `sync/deployment.json`.
+Cloudflare-kontoen er bekræftet på Free; ingen abonnementer eller andre
+Workers er ændret. Workers Free sætter selv CPU-grænsen. WebSocket-opbevaring
+bruger hibernation, og begrænsninger for oprettelser/handlinger er beskrevet i
+`sync/README.md`. De almindelige Cloudflare-kvoter deles fortsat på kontoen.
+
+### Verifikation og rollback
+
+- Node-tests: katalog, lokal bygning, pure room logic, Worker/DO HTTP-harness,
+  transport/reconnect og to isolerede UI-sessioner med forskellige lagre.
+- Den reelle Cloudflare SQLite/RPC-tjeneste er testet med syntetisk model:
+  privat adgang, samtidig rolleclaim, parallel klargøring, revisioner,
+  samlerækkefølge, idempotens, fortryd, persistens, Origin og afslutning.
+- `python3 scripts/test-live-service.py` gentager en afgrænset serverkontrol;
+  den opretter et syntetisk byggerum og afslutter det igen.
+- Browserkontrol af offentlig app: oprettelse, invitation, to byggerroller,
+  WebSocket-status, opdateringer mellem faner, genindlæsning og afslutning.
+  Dette erstatter ikke en fysisk prøve på familiens to iPads.
+- Frontend kan rulles tilbage til commit `b00072d` uden at ændre det lokale
+  Byg sammen. Undlad at slette Durable Object-navnerum ved en frontendrollback.
+  Backenden kan blive stående, så eksisterende rum udløber normalt efter 24 timer.

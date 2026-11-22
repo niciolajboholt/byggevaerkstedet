@@ -1,0 +1,12 @@
+{
+  "script": "byggevaerkstedet-sync",
+  "url": "https://byggevaerkstedet-sync.nicolajbach12.workers.dev",
+  "compatibility_date": "2026-11-22",
+  "migration_tag": "v1",
+  "deployment_id": "4ffec292-ec85-42c7-b882-a02b919faec9",
+  "version_id": "ffe49a6a-655b-44a3-ad6b-1b0495a3470d",
+  "bundle_sha256": "0f9e55ca20e1f945f8b3ff43ffacf4ad69226f2470bf15472d92b76b698296a6",
+  "plan": "Free (confirmed by API rejection of unsupported custom CPU limit)",
+  "billing_changes": false,
+  "other_workers_modified": false
+}

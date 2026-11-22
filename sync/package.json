@@ -1,0 +1,9 @@
+{
+  "name":"byggevaerkstedet-sync",
+  "private":true,
+  "scripts":{
+    "build":"esbuild worker.mjs --bundle --format=esm --platform=browser --external:cloudflare:workers --outfile=dist/worker.mjs",
+    "test":"node --test ../tests/live-room.test.cjs"
+  },
+  "devDependencies":{"esbuild":"^0.27.0"}
+}

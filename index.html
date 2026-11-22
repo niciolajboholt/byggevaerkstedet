@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="categories.css">
 <link rel="stylesheet" href="cooperative.css">
+<link rel="stylesheet" href="live-sync.css">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#listView">Spring til indhold</a>
@@ -103,6 +104,9 @@
 <script src="build-tasks.js"></script>
 <script src="cooperative.js"></script>
 <script src="categories.js"></script>
+<script src="vendor/qrcode-generator.js"></script>
+<script src="live-sync-client.js"></script>
+<script src="live-sync-ui.js"></script>
 <script>
 
 const COLORS = {
@@ -483,6 +487,7 @@ function saveProgress(){
   progressSaved=store.set("bv_progress",records);
 }
 function beginBuild(restart=false){
+  if(globalThis.LiveSyncUI?.active())return;
   if(globalThis.CoopUI?.enabled())return CoopUI.begin(restart);
   if(shareWarning)return;
   const saved=restart?null:savedProgress();
@@ -583,6 +588,7 @@ function buildParts(){
     return {...c,name:team.names[i]||`Bygger ${i+1}`,color:TEAM_COLORS[i],step:0,done:false,counts,n}});
 }
 function render(){
+  if(globalThis.LiveSyncUI?.active())return LiveSyncUI.render();
   if(!cur)return;
   document.body.classList.remove("task-building");
   $("taskInstruction").classList.add("hide");$("buildPerson").style.color="";
@@ -754,11 +760,13 @@ $("unlockTeam").onclick=async()=>{if(await confirmAction("Lav en ny fordeling? S
 document.querySelectorAll("#modeBar button").forEach(b=>b.onclick=()=>{started=false;mode=b.dataset.mode;store.set("bv_mode",mode);phase="setup";clearInterval(asmTimer);render()});
 $("modelZoom").onchange=render;
 $("next").onclick=event=>{
+  if(globalThis.LiveSyncUI?.active())return LiveSyncUI.next(event);
   if(globalThis.CoopUI?.enabled())return CoopUI.next(event);
   if(mode==="together"&&phase==="build"){const p=parts[active];p.step++;if(p.step>=p.r1-p.r0+1)p.done=true;render();return}
   step++;render();
 };
 $("prev").onclick=()=>{
+  if(globalThis.LiveSyncUI?.active())return LiveSyncUI.previous();
   if(globalThis.CoopUI?.enabled())return CoopUI.previous();
   if(mode==="together"&&phase==="build"){const p=parts[active];if(p.step>0){p.step--;p.done=false}render();return}
   if(showAll){showAll=false;render();return}if(step>0){step--;render()}
@@ -856,6 +864,8 @@ function openBuilder(){
 function go(h){ if(location.hash.slice(1)===h)route(); else location.hash=h; }
 function route(){
   const h=location.hash.slice(1);
+  if(h.startsWith('live=')){void LiveSyncUI.joinInvite(h.slice(5));return}
+  globalThis.LiveSyncUI?.clearActive();
   $("listView").classList.toggle("hide",!!h&&h!=="mine");
   if(h==="mine"){tab="Likede";renderTabs()}
   $("detailView").classList.toggle("hide",!h.startsWith("m-"));
@@ -892,6 +902,7 @@ function drawRowPieces(row){
   cv.setAttribute("aria-label",tiles.length+" brikker i rækken. Se farver og tomme pladser i tekstlisten nedenfor.");
 }
 function openOverview(){
+  if(globalThis.LiveSyncUI?.active())return LiveSyncUI.openOverview();
   if(globalThis.CoopUI?.enabled())return CoopUI.overview();
   $("overviewTitle").textContent=cur.name;
   $("overviewDialog").showModal();
@@ -901,7 +912,7 @@ function openOverview(){
 $("skipLink").onclick=e=>{e.preventDefault();const target=document.querySelector("main:not(.hide)");if(target){target.tabIndex=-1;target.focus()}};
 $("overviewButton").onclick=openOverview;$("overviewClose").onclick=()=>$("overviewDialog").close();
 $("aloneStart").onclick=()=>beginBuild();
-$("detailBack").onclick=()=>{if(started){clearInterval(asmTimer);started=false;phase="setup";render();window.scrollTo(0,0)}else go("")};
+$("detailBack").onclick=()=>{if(globalThis.LiveSyncUI?.active()){go('');return}if(started){clearInterval(asmTimer);started=false;phase="setup";render();window.scrollTo(0,0)}else go("")};
 $("guideFavorite").onclick=()=>{toggleFavorite(cur.id);updateFavorite()};
 $("filterOpen").onclick=()=>$("filterDialog").showModal();
 $("filterClose").onclick=()=>$("filterDialog").close();
@@ -911,6 +922,12 @@ $("diff").onchange=renderList;
 document.querySelectorAll("[data-category]").forEach(b=>b.onclick=()=>{tab=b.dataset.category;renderTabs();renderList()});
 document.querySelectorAll("button[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));
 applyTheme(store.get("bv_appearance","child"));
+LiveSyncUI.init();
+LiveSyncUI.setQRRenderer((container,url)=>{
+  const qr=qrcode(0,'M');qr.addData(url);qr.make();
+  container.innerHTML=qr.createSvgTag({cellSize:3,margin:4,scalable:true});
+  const svg=container.querySelector('svg');svg?.setAttribute('role','img');svg?.setAttribute('aria-label','QR-kode til det fælles byggeri');
+});
 const categoryExplorer=CategoriesExplorer.create({container:$("themeTiles"),getBuilds:allBuilds,getCategories:()=>CATS,draw:drawGrid,onSelect:c=>{tab=c;renderTabs();renderList()}});
 renderTabs();route();
 </script>
