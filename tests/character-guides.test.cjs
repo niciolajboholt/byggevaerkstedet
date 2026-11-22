@@ -45,7 +45,8 @@ for (const category of ['Pokémon', 'Minecraft']) test(`${category} retains its 
   assert.deepEqual(actual, Object.keys(themeCategories).filter(id => themeCategories[id] === category).concat(approved.models.filter(b=>b.group===category).map(approvedId)).sort());
 });
 
-for (const id of guideIds) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
+const animals = JSON.parse(readFileSync(new URL('../data/approved-animals-20.json', `file://${__filename}`), 'utf8'));
+for (const id of guideIds.concat(animals.models.map(b=>b.id))) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
   const b = context.models.find(b => b.id === id);
   const width = b.p[0].length;
   assert.match(b.p[0], /[^.]/, 'the first instruction places at least one brick');
@@ -127,5 +128,16 @@ test('all approved motifs can be partitioned for two or three builders without l
       assert.equal(assigned.length,b.total);
       assert.equal(new Set(assigned.map(t=>`${t.x},${t.y}`)).size,b.total);
     }
+  }
+});
+
+ test('all 20 approved animals preserve the reviewed patterns and counts', () => {
+  assert.equal(animals.models.length,20);
+  assert.equal(context.models.filter(b=>b.collection==='dyr-20').length,20);
+  for(const original of animals.models){
+    const b=context.models.find(b=>b.id===original.id);
+    assert.equal(b.cat,'Dyr');assert.equal(b.name,original.name);
+    assert.equal(JSON.stringify(b.p),JSON.stringify(original.p));
+    assert.equal(b.total,original.bricks);
   }
 });

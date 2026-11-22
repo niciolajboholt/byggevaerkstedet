@@ -1,0 +1,605 @@
+{
+  "title": "20 nye dyr til Byggeværkstedet",
+  "status": "godkendt_2026-11-22",
+  "maxPieces": 250,
+  "difficultyRule": "Let <60, Mellem 60-84, Svær 85-250; antal brikker, samme regel som appen",
+  "physicallyTested": false,
+  "models": [
+    {
+      "id": "dyr20-bi",
+      "name": "Bi",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 1,
+      "description": "Gule og sorte striber, hvide vinger og små ben.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..WW.WW..",
+        ".WWWWWWW.",
+        "..YKYKY..",
+        ".YYKYKYY.",
+        "KYYKYKYYK",
+        ".YYKYKYY.",
+        "..YKYKY..",
+        "..K...K.."
+      ],
+      "bricks": 46,
+      "counts": {
+        "W": 11,
+        "Y": 21,
+        "K": 14
+      },
+      "level": "Let"
+    },
+    {
+      "id": "dyr20-mariehoene",
+      "name": "Mariehøne",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 2,
+      "description": "Rød krop med sorte prikker, hoved og midterstribe.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "...K.K...",
+        "..KKKKK..",
+        ".RRRKRRR.",
+        "RRKRKRKRR",
+        "RRRRKRRRR",
+        "RRKRKRKRR",
+        ".RRRKRRR.",
+        "..RRKRR..",
+        "...K.K..."
+      ],
+      "bricks": 55,
+      "counts": {
+        "K": 19,
+        "R": 36
+      },
+      "level": "Let"
+    },
+    {
+      "id": "dyr20-snegl",
+      "name": "Snegl",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 3,
+      "description": "Et rundt sneglehus med spiral og to følehorn.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".........K.K",
+        "..NNNN...T.T",
+        ".NOOONN..TTT",
+        "NONNNON..TKT",
+        "NONONONTTTTT",
+        ".NOOONTTTTTT",
+        ".TTTTTTTTTT.",
+        "..TTTTTTTT.."
+      ],
+      "bricks": 68,
+      "counts": {
+        "K": 3,
+        "N": 18,
+        "T": 36,
+        "O": 11
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-krabbe",
+      "name": "Krabbe",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 4,
+      "description": "Røde kløer, hævede øjne og ben ud til siderne.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "R.R.......R.R",
+        "RRR.......RRR",
+        ".RR..K.K..RR.",
+        "..RRRRRRRRR..",
+        ".RRRRRRRRRRR.",
+        "..RRRRRRRRR..",
+        ".RR.RR.RR.RR.",
+        "RR...R.R...RR"
+      ],
+      "bricks": 59,
+      "counts": {
+        "R": 57,
+        "K": 2
+      },
+      "level": "Let"
+    },
+    {
+      "id": "dyr20-froe",
+      "name": "Frø",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 5,
+      "description": "Store øjne, bred mund og grønne bagben.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..GG...GG..",
+        ".GWKG.GKWG.",
+        ".GGGGGGGGG.",
+        "..GGGGGGG..",
+        "..GKKKKKG..",
+        ".GGGGGGGGG.",
+        "GG.GGGGG.GG",
+        "GGG.....GGG"
+      ],
+      "bricks": 59,
+      "counts": {
+        "G": 50,
+        "W": 2,
+        "K": 7
+      },
+      "level": "Let"
+    },
+    {
+      "id": "dyr20-spurv",
+      "name": "Spurv",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 6,
+      "description": "En lille brun fugl med lys mave og orange næb.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "....NNN..",
+        "...NWKNN.",
+        "...NNNNYO",
+        "..NNNTN..",
+        ".NNNNTTN.",
+        "NNNNNTTTN",
+        ".NNNNTTT.",
+        "..NNNNN..",
+        "...O.O..."
+      ],
+      "bricks": 49,
+      "counts": {
+        "N": 34,
+        "W": 1,
+        "K": 1,
+        "Y": 1,
+        "O": 3,
+        "T": 9
+      },
+      "level": "Let"
+    },
+    {
+      "id": "dyr20-mus",
+      "name": "Mus",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 7,
+      "description": "Runde ører, lyserød næse og buet hale.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "...SS....SS.",
+        "..SpSS..SpSS",
+        "..SSSSSSSSSS",
+        "...SKSSSSKS.",
+        "....SSpSSS..",
+        "S...SSSSSS..",
+        "SS..SSTTSS..",
+        ".SSSSSTTSS..",
+        "..SSSSSSS...",
+        "....p...p..."
+      ],
+      "bricks": 69,
+      "counts": {
+        "S": 58,
+        "p": 5,
+        "K": 2,
+        "T": 4
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-raev",
+      "name": "Ræv",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 8,
+      "description": "Spidse ører, hvide kinder og sort snude.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "OO.......OO",
+        "OOO.....OOO",
+        "OKOO...OOKO",
+        ".OOOOOOOOO.",
+        ".OWKOOOKWO.",
+        ".OWWOOOWWO.",
+        "..OWWOWWO..",
+        "...OWKWO...",
+        "...OOOOO...",
+        "..OOOWOOO..",
+        ".OOOOWOOOO.",
+        "..OO.W.OO.."
+      ],
+      "bricks": 83,
+      "counts": {
+        "O": 63,
+        "K": 5,
+        "W": 15
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-egern",
+      "name": "Egern",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 9,
+      "description": "En stor buet hale og lys mave.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..NNN....NN.",
+        ".NNTNN..NNNN",
+        "NN..NN..NKN.",
+        "NN..NN..NNN.",
+        "NN.NNN.NNN..",
+        "NNNNN.NNNN..",
+        ".NNN.NNTNN..",
+        ".NNNNNTTNN..",
+        "..NNNNTTNN..",
+        "...NNNNNN...",
+        "...NNNNNN...",
+        "..NNN.NNN..."
+      ],
+      "bricks": 88,
+      "counts": {
+        "N": 81,
+        "T": 6,
+        "K": 1
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "dyr20-pindsvin",
+      "name": "Pindsvin",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 10,
+      "description": "Pigget brun ryg og en lille lys snude.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..N.N.N.N....",
+        ".NNNNNNNNN...",
+        "NNNNNNNNNNN..",
+        ".NNNNNNNNNTT.",
+        "NNNNNNNNNTKTT",
+        ".NNNNNNNTTTTK",
+        "..NNTTTTTTTT.",
+        "...NN...NN..."
+      ],
+      "bricks": 74,
+      "counts": {
+        "N": 55,
+        "T": 17,
+        "K": 2
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-flamingo",
+      "name": "Flamingo",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 11,
+      "description": "Lyserød fugl med bøjet næb og ét bøjet ben.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".........ppp.",
+        "........ppKp.",
+        "........pppKK",
+        "........pp..K",
+        "........pp...",
+        "........pp...",
+        "..pppppppp...",
+        ".ppppppppp...",
+        "pppRpppppp...",
+        ".ppRRpppp....",
+        "..pppppp.....",
+        "...p.p.......",
+        "...p.p.......",
+        "...p.pppp....",
+        "...p....p....",
+        "..pp........."
+      ],
+      "bricks": 73,
+      "counts": {
+        "p": 66,
+        "K": 4,
+        "R": 3
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-gris",
+      "name": "Gris",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 12,
+      "description": "Lyserøde ører, rund tryne og mørke klove.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".pp.....pp.",
+        ".ppp...ppp.",
+        "..ppppppp..",
+        ".ppppppppp.",
+        "ppKpppppKpp",
+        "ppppppppppp",
+        "pppTTTTTppp",
+        ".ppTKKTppp.",
+        "..ppppppp..",
+        "..pp...pp..",
+        "..KK...KK.."
+      ],
+      "bricks": 83,
+      "counts": {
+        "p": 68,
+        "K": 8,
+        "T": 7
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-faar",
+      "name": "Får",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 13,
+      "description": "Hvid uld og et mørkt ansigt med lyse øjne.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "...WWWWW...",
+        "..WWWWWWW..",
+        ".WWWWWWWWW.",
+        "WWKKWWWWKKW",
+        "WWKKKKKKKWW",
+        "WWKWWKWWKWW",
+        ".WKKKKKKKW.",
+        "..WKKKKKW..",
+        "...WWWWW...",
+        "...KK.KK..."
+      ],
+      "bricks": 79,
+      "counts": {
+        "W": 49,
+        "K": 30
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-hest",
+      "name": "Hest",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 14,
+      "description": "Brun hest med manke, lang snude, hale og hove.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".......N.N..",
+        "......NNNN..",
+        ".....NNKNN..",
+        ".....NNNNTT.",
+        ".....NNNNTTT",
+        "NNNNNNNNNN..",
+        "NNNNNNNNNN..",
+        "N.NNNNNNNN..",
+        "N..NNNNNN...",
+        "...NN..NN...",
+        "...NN..NN...",
+        "...KK..KK..."
+      ],
+      "bricks": 72,
+      "counts": {
+        "N": 62,
+        "K": 5,
+        "T": 5
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "dyr20-elefant",
+      "name": "Elefant",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 15,
+      "description": "Stor grå elefant med øre, stødtand og nedhængende snabel.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".......SSSSSSS....",
+        ".....SSSSSSSSSSS..",
+        "...SSSSSSSSSSSSSS.",
+        "..SSSSSSSSSSSSSSSS",
+        "..SSSSSSSSSSTTSSSS",
+        ".SSSSSSSSSSSTTKSSS",
+        ".SSSSSSSSSSSTTSSSS",
+        "SSSSSSSSSSSSSSSSSS",
+        "S.SSSSSSSSSSSSSSSS",
+        "S..SSSSSSSSSSSS.SS",
+        "...SSS.....SSS..SS",
+        "...SSS.....SSS..SS",
+        "...SSS.....SSS.SSS",
+        "...SSS.....SSS.SS."
+      ],
+      "bricks": 181,
+      "counts": {
+        "S": 174,
+        "T": 6,
+        "K": 1
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "dyr20-giraf",
+      "name": "Giraf",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 16,
+      "description": "Lang gul hals, brune pletter og små horn.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "......N..N..",
+        ".....YYYYYY.",
+        ".....YKYYYN.",
+        ".....YYYYYYY",
+        "......YYYYY.",
+        "......YNNY..",
+        "......YYYY..",
+        "......NYYY..",
+        "......YYNY..",
+        "......YYYY..",
+        "..YYYYYYYY..",
+        ".YYNNYYYYYY.",
+        "YYYYYYNNYYYY",
+        "YYYYNYYYYYYY",
+        "NYYYYYYYNNYY",
+        "..YY.....YY.",
+        "..YY.....YY.",
+        "..YY.....YY.",
+        "..NN.....NN."
+      ],
+      "bricks": 116,
+      "counts": {
+        "N": 19,
+        "Y": 96,
+        "K": 1
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "dyr20-loeve",
+      "name": "Løve",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 17,
+      "description": "En stor brun manke omkring et gyldent løveansigt.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "...NNNNNNN...",
+        "..NNNNNNNNN..",
+        ".NNYYYYYYYNN.",
+        "NNYYNYYYNYYNN",
+        "NNYYKYYYKYYNN",
+        "NNYYYYYYYYYNN",
+        "NNYYYTTTYYYNN",
+        ".NNYYTKTYYNN.",
+        "..NNYYYYYNN..",
+        "...NNNNNNN...",
+        "....YYYYY....",
+        "...YYYYYYY...",
+        "..YYYYYYYYY..",
+        "..YYYYYYYYY..",
+        "..YYYYYYYYY..",
+        ".YYY..Y..YYY.",
+        ".NNY.....YNN."
+      ],
+      "bricks": 158,
+      "counts": {
+        "N": 57,
+        "Y": 93,
+        "K": 3,
+        "T": 5
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "dyr20-tiger",
+      "name": "Tiger",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 18,
+      "description": "Orange pels med sorte striber, ører og hvid snude.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..KK.......KK..",
+        ".KOOO.....OOOK.",
+        ".KOOOOOOOOOOOK.",
+        "..OOKOOOOKOOO..",
+        ".OOKOOOOOOKOOO.",
+        "OOKWKOOOOKWKOOO",
+        "OOOWWOOOOWWOOOO",
+        "OOKOOOTTTOOOKOO",
+        ".OOOOTTKTTKOOO.",
+        "..OOOWWWWWOOO..",
+        "...OOKOOOKOO...",
+        "....OOOOOOO....",
+        "...OOKOOOKOO...",
+        "..OOKOOOOOKOO..",
+        "..KKK.....KKK.."
+      ],
+      "bricks": 160,
+      "counts": {
+        "K": 32,
+        "O": 110,
+        "W": 11,
+        "T": 7
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "dyr20-krokodille",
+      "name": "Krokodille",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 19,
+      "description": "Lang grøn krop, takket ryg og en mund med hvide tænder.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "...........G.G.........",
+        "..........GGKGGGGGGGGG.",
+        "...G.G.G.GGGGGGGGGGGGGG",
+        "..GGGGGGGGGGGGGGGGGGGGG",
+        ".GGGGGGGGGGGWWWWWWWWWW.",
+        "GGGGGGGGGGGGGGGGGGGGGG.",
+        ".GGGGGGGGGGGGGGGG......",
+        "..GGGGGGGGGGGGG........",
+        "...GGGGGGGGGGG.........",
+        "....GGG....GGG.........",
+        "...GGGG....GGGG........"
+      ],
+      "bricks": 149,
+      "counts": {
+        "G": 138,
+        "K": 1,
+        "W": 10
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "dyr20-blaeksprutte",
+      "name": "Blæksprutte",
+      "cat": "Dyr",
+      "collection": "dyr-20",
+      "number": 20,
+      "description": "Et rundt hoved med store øjne og otte snoede arme.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".......ppppp.......",
+        "......ppppppp......",
+        ".....ppppppppp.....",
+        "....ppppppppppp....",
+        "....ppWKpppKWpp....",
+        "....ppWWpppWWpp....",
+        "....ppppppppppp....",
+        ".....pppKKpppp.....",
+        "pp...ppppppppp...pp",
+        "ppp..pp.p.p.pp..ppp",
+        ".pppppp.p.p.pppppp.",
+        "..ppp.p.p.p.p.ppp..",
+        ".ppp..p.p.p.p..ppp.",
+        "ppp...p.p.p.p...ppp",
+        ".....pp.p.p.pp....."
+      ],
+      "bricks": 149,
+      "counts": {
+        "p": 139,
+        "W": 6,
+        "K": 4
+      },
+      "level": "Svær"
+    }
+  ]
+}
