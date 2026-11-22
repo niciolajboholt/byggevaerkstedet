@@ -513,6 +513,7 @@ function openBuild(id){
   const [modelId,encoded]=id.split("?team=");id=modelId;
   cur=allBuilds().find(b=>b.id===id); if(!cur){go("");return}
   readTeamLink(encoded);
+  if(!encoded){team.me=null;saveTeam()}
   step=0;showAll=false;started=false;phase="setup";parts=[];active=0;clearInterval(asmTimer);
   $("modelZoom").value="1";
   $("zoomControls").classList.toggle("hide",Math.max(cur.w,cur.p.length)<=24);

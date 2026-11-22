@@ -208,7 +208,7 @@ test('keyboard drawing supports movement, placement, deletion, undo and saving',
  const key=value=>pad.dispatchEvent(new a.w.KeyboardEvent('keydown',{key:value,bubbles:true,cancelable:true}));
  key('ArrowRight');key('ArrowDown');key(' ');assert.match(a.doc.getElementById('padStatus').textContent,/Række 2, kolonne 2: Rød/);
  key('Delete');assert.match(a.doc.getElementById('padStatus').textContent,/kolonne 2: tom/);a.click('undo');
- assert.equal(a.w.eval('grid[1][1]'),'R');a.click('save');await a.settle();assert.match(a.doc.getElementById('total').textContent,/1 brikker/);
+ assert.equal(a.w.eval('grid[1][1]'),'R');a.click('save');await a.settle();assert.match(a.doc.getElementById('total').textContent,/1 brik/);
  assert.deepEqual(a.errors,[]);a.close();
 });
 
@@ -218,6 +218,14 @@ test('keyboard drawing supports movement, placement, deletion, undo and saving',
  assert.equal(JSON.parse(a.w.localStorage.getItem('bv_team')).smallest,1);
  assert.match(a.doc.getElementById('splitInfo').textContent,/Alfred: 1 brikker/);
  a.click('teamStart');a.click('next');a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
- assert.match(a.doc.getElementById('rowTitle').textContent,/1 brikker/);
+ assert.match(a.doc.getElementById('rowTitle').textContent,/1 brik/);
+ assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('ordinary model opening defaults to shared iPad despite a saved dedicated-screen preference',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01',storage:{bv_mode:'"together"',bv_team:JSON.stringify({n:2,names:['Jens','Alfred'],split:'even',me:0})}});await a.settle();
+ assert.ok(a.doc.querySelector('#teamSplit [data-s="even"]').textContent.includes('Opgaver på skift'));
+ a.click('teamStart');assert.match(a.doc.getElementById('buildPerson').textContent,/Jens/);
+ a.click('next');a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
  assert.deepEqual(a.errors,[]);a.close();
 });

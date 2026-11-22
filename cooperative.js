@@ -22,6 +22,7 @@ function begin(restart=false){
  started=true;phase='build';showAll=false;render();window.scrollTo(0,0);$('buildPerson').focus({preventScroll:true});
 }
 function name(i){return team.names[i]||`Bygger ${i+1}`}
+const unit=n=>n===1?'brik':'brikker';
 function renderSetupTasks(){
  // Keep the existing name editor and the older multi-screen links compatible.
  const selected=team.smallest;renderSetup();
@@ -58,14 +59,14 @@ function taskPiece(task){
  const row=Array(maxX-minX+1).fill('.');task.tiles.forEach(t=>row[t.x-minX]=t.c);
  const tiles=task.tiles.map(t=>({...t,x:t.x-minX,y:0,row:0}));
  drawGrid($('big'),[row.join('')],{tiles,compact:true});
- $('big').setAttribute('aria-label',`${name(task.owner)} bygger ${task.n} brikker fra række ${task.row+1}. Brikkernes retning følger modellen.`);
+ $('big').setAttribute('aria-label',`${name(task.owner)} bygger ${task.n} ${unit(task.n)} fra række ${task.row+1}. Brikkernes retning følger modellen.`);
 }
 function taskMaterials(task){
  const cv=$('rowPieces'),ctx=cv.getContext('2d'),css=cv.clientWidth||300,dpr=window.devicePixelRatio||1;
  const cols=Math.min(8,task.n||1),rows=Math.ceil(task.n/cols)||1,h=Math.max(56,rows*45),u=Math.min(7,(css-8)/(cols*6));
  cv.width=css*dpr;cv.height=h*dpr;cv.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
  task.tiles.forEach((k,i)=>drawBrick(ctx,4+(i%cols)*(css/cols)+u*2,Math.floor(i/cols)*45+12,u,{...k,x:0,y:0},false));
- cv.setAttribute('aria-label',`${task.n} brikker til opgaven. Farver og antal står i listen.`);
+ cv.setAttribute('aria-label',`${task.n} ${unit(task.n)} til opgaven. Farver og antal står i listen.`);
  $('runs').innerHTML=Object.entries(task.counts).map(([c,n])=>`<div class="run"><span class="sw" style="background:${COLORS[c][1]}"></span>${n} ${COLORS[c][0].toLowerCase()}</div>`).join('');
 }
 function keys(tasks){return tasks.flatMap(t=>t.tiles.map(k=>`${k.x},${k.y}`))}
@@ -84,6 +85,7 @@ function render(){
  if(key!==progressKey()||!session){key=progressKey();session=BuildTasks.restoreSession(plan,getSaved()?.taskSession)||BuildTasks.createSession(plan)}
  save();$('restartBuild').classList.add('hide');$('resumeInfo').textContent=progressSaved?'':'Fremskridtet kunne ikke gemmes. Hold siden åben, og frigør plads i browseren.';
  setCanvasWidth();
+ $('big').style.width=Math.min(parseFloat($('big').style.width)||560,Math.max(160,window.innerHeight*.42))+'px';
  const complete=session.stage==='done',task=BuildTasks.currentTask(plan,session),ready=session.stage==='ready';
  const attached=plan.tasks.slice(0,session.index),counts=Array.from({length:team.n},(_,i)=>attached.filter(t=>t.owner===i).reduce((sum,t)=>sum+t.n,0));
  $('partTabs').innerHTML=counts.map((n,i)=>`<span class="task-builder ${task&&task.owner===i?'current':''}" style="--builder-color:${TEAM_COLORS[i]}">${esc(name(i))}<small>${n} / ${plan.totals[i]} brikker</small></span>`).join('');
@@ -104,7 +106,7 @@ function render(){
  }
  $('buildPerson').textContent=`${gen(name(task.owner))} tur`;
  $('buildPerson').style.color=TEAM_COLORS[task.owner];
- $('rowTitle').textContent=`Opgave ${session.index+1} af ${plan.tasks.length} · række ${task.row+1} · ${task.n} brikker`;
+ $('rowTitle').textContent=`Opgave ${session.index+1} af ${plan.tasks.length} · række ${task.row+1} · ${task.n} ${unit(task.n)}`;
  if(ready){
   drawGrid($('big'),cur.p,{tiles:cur.tiles,taskView:viewState()});
   $('big').setAttribute('aria-label',`Sæt ${gen(name(task.owner))} stykke på den fremhævede plads i række ${task.row+1}. Grå brikker mangler endnu.`);
