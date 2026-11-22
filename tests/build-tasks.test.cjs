@@ -7,8 +7,9 @@ const BuildTasks=require('../build-tasks.js');
 function catalogue(){
  const html=readFileSync(new URL('../index.html',`file://${__filename}`),'utf8');
  const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
- const context=vm.createContext({localStorage:{getItem:()=>null}});
- vm.runInContext(script.slice(0,script.indexOf('// ---------- list ----------'))+'\nthis.models=BUILDS;',context);
+ const catalogueData=JSON.parse(readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));
+ const context=vm.createContext({catalogueData,localStorage:{getItem:()=>null}});
+ vm.runInContext(script.slice(0,script.indexOf('// ---------- list ----------'))+'\nBUILDS.push(...catalogueData.models.map(enrich));CATS.push(...catalogueData.categories);catalogueReady=true;this.models=BUILDS;',context);
  return Array.from(context.models);
 }
 const models=catalogue();

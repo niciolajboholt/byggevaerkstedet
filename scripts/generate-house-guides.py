@@ -68,20 +68,16 @@ def patterns():
 
 
 def main():
-    path=ROOT/'index.html'
+    path=ROOT/'data/motiver.json'
     models={b['id']:b for b in patterns()}
-    lines=path.read_text().splitlines()
+    catalogue=json.loads(path.read_text())
     updated=set()
-    for i,line in enumerate(lines):
-        if not line.lstrip().startswith('{"id": '):
-            continue
-        old=json.loads(line.strip().rstrip(','))
+    for i,old in enumerate(catalogue['models']):
         if old['id'] in models:
-            new=models[old['id']]
-            lines[i]=' '+json.dumps(new,ensure_ascii=False)+','
+            catalogue['models'][i]={**old,**models[old['id']]}
             updated.add(old['id'])
     assert updated==set(models), 'Each existing shield must be replaced'
-    path.write_text('\n'.join(lines)+'\n')
+    path.write_text(json.dumps(catalogue,ensure_ascii=False,indent=2)+'\n')
     for b in models.values():
         print(b['name'],sum(c!='.' for row in b['p'] for c in row),'brikker')
 

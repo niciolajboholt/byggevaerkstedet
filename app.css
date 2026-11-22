@@ -26,3 +26,5 @@ dialog{border:1px solid var(--line);background:var(--bg);color:var(--ink);border
   body:not(.building) #detailView{padding-bottom:100px}
   body:not(.building) #aloneStart,body:not(.building) #teamStart{position:fixed;z-index:21;bottom:calc(76px + env(safe-area-inset-bottom));left:20px;right:20px;width:calc(100% - 40px);margin:0;box-shadow:0 0 0 8px var(--bg)}
 }
+
+.catalogue-status{max-width:680px;margin:24px auto;padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--soft);color:var(--ink)}.catalogue-status p{margin-bottom:12px}header[inert],main[inert],nav[inert],footer[inert]{opacity:.4;pointer-events:none}

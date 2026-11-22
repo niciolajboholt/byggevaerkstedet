@@ -4,7 +4,7 @@ Plus-plus building guides for Jens and Alfred. A single static page (`index.html
 original models, row-by-row instructions, and a 2D builder whose models are stored
 in the browser (localStorage) on each device.
 
-Hosted as a static site. To add models, edit the `BUILDS` array in `index.html`.
+Hosted as a static site. All motif names, categories, descriptions and patterns are loaded from **`data/motiver.json`**. Edit that file to change the catalogue; `index.html` contains the application UI and code.
 
 ## Seks figurvejledninger
 
@@ -73,7 +73,7 @@ pakker. Scriptet kontrollerer størrelsen, før det erstatter de fire modeller.
 ## Brikgrænser
 
 Katalogets vejledninger må bruge højst **250 brikker**, bortset fra **Klublogoer**, som må bruge op til **300 brikker**. Testpakken kontrollerer
-samtlige modeller i `BUILDS`, også de oprindelige, og fejler ved en overskridelse.
+samtlige modeller fra `data/motiver.json`, også de oprindelige, og fejler ved en overskridelse.
 Brikgrænsen gælder de medfølgende vejledninger; egne tegninger i 2D-editoren
 bevarer deres eksisterende funktionalitet.
 
@@ -150,3 +150,13 @@ Se `docs/ux-fixes-2026-11-21.md` for browserkontrol og begrænsninger.
 ## 62 nye motiver
 
 Den godkendte samling indeholder 15 skibe (inklusive Titanic med fire skorstene), 15 blomster, 15 eksotiske dyr og 17 internationale klublogoer. Ajax, FC Porto, Manchester City og Tottenham er alle med. Mønstre og brikantal bevares i `data/approved-themes-62.json`. De fire kategorier findes på forsiden og under Filtre.
+
+## Ret navne og kategorier
+
+Åbn `data/motiver.json` på GitHub og vælg blyanten. Find motivet og ret `name`, `cat`, `description` eller `tip`. Gem med Commit changes. Appen henter filen igen ved genindlæsning, så navneændringer ikke kræver ændringer i appkoden.
+
+Behold `id` uændret: links, favoritter og gemt fremdrift bruger dette felt. Behold også `p`, hvis det kun er navnet, der skal ændres; ændrede brikmønstre får med vilje deres eget fremskridt. `categories` styrer rækkefølgen af temaerne. En ny kategori i et motivs `cat` kommer også automatisk med.
+
+`data/approved-*.json` er historiske gennemgangsdata til kontrol af mønstre og brikantal. De er ikke indlæsningskilder og skal ikke rettes ved almindelige navneændringer.
+
+`catalogue.js` indlæser og validerer JSON-filen med genvalidering af browserens cache. Appen viser indlæsningsstatus og en Prøv igen-knap ved netværksfejl eller en ugyldig fil. Brugerens lokale data slettes ikke.

@@ -9,6 +9,7 @@ function app(options={}){
  const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
  const d=new JSDOM(html,{url:options.url||'https://example.test/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){
   for(const [key,value] of Object.entries(options.storage||{}))w.localStorage.setItem(key,value);
+  w.fetch=options.catalogueFetch|| (async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'))}));
   w.confirm=()=>true;
   w.requestAnimationFrame=fn=>w.setTimeout(fn,0);w.scrollTo=()=>{};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
@@ -245,4 +246,18 @@ test('four new categories expose all 62 approved motifs and large crests remain 
  a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
  a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1/);
  assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('catalogue load failure can retry without touching saved user data',async()=>{
+ const data=JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));let calls=0;
+ const storage={bv_likes:JSON.stringify(['motiver50-01'])};
+ const a=app({storage,catalogueFetch:async()=>{if(!calls++)throw Error('offline');return {ok:true,json:async()=>data}}});await a.settle();
+ assert.equal(a.doc.getElementById('catalogueStatus').getAttribute('role'),'alert');assert.equal(a.doc.getElementById('listView').inert,true);assert.equal(a.w.localStorage.getItem('bv_likes'),storage.bv_likes);
+ a.click('catalogueRetry');await a.settle();assert.equal(a.doc.querySelectorAll('#grid .card').length,250);assert.equal(a.doc.getElementById('listView').inert,false);assert.deepEqual(a.errors,[]);a.close();
+});
+test('renaming a motif through JSON preserves its favourite and saved solo step',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.click('guideFavorite');a.click('aloneStart');a.click('next');const storage=snapshotStorage(a);a.close();
+ const data=JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));data.models.find(m=>m.id==='motiver50-01').name='Min stjernestav';
+ const b=app({url:'https://example.test/#m-motiver50-01',storage,catalogueFetch:async()=>({ok:true,json:async()=>data})});await b.settle();
+ assert.equal(b.doc.getElementById('dName').textContent,'Min stjernestav');assert.equal(b.doc.getElementById('guideFavorite').getAttribute('aria-pressed'),'true');assert.equal(b.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 2/);assert.deepEqual(b.errors,[]);b.close();
 });
