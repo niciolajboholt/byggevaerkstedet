@@ -47,7 +47,8 @@ for (const category of ['Pokémon', 'Minecraft']) test(`${category} retains its 
 
 const animals = JSON.parse(readFileSync(new URL('../data/approved-animals-20.json', `file://${__filename}`), 'utf8'));
 const halloween = JSON.parse(readFileSync(new URL('../data/approved-halloween-40.json', `file://${__filename}`), 'utf8'));
-for (const id of guideIds.concat(animals.models.map(b=>b.id),halloween.models.map(b=>b.id))) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
+const carsAndLogos = JSON.parse(readFileSync(new URL('../data/approved-cars-and-logos-20.json', `file://${__filename}`), 'utf8'));
+for (const id of guideIds.concat(animals.models.map(b=>b.id),halloween.models.map(b=>b.id),carsAndLogos.models.map(b=>b.id))) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
   const b = context.models.find(b => b.id === id);
   const width = b.p[0].length;
   assert.match(b.p[0], /[^.]/, 'the first instruction places at least one brick');
@@ -152,5 +153,23 @@ test('all 40 Halloween guides preserve approved patterns and have their own cate
   assert.equal(b.cat,'Halloween');assert.equal(b.name,original.name);
   assert.equal(JSON.stringify(b.p),JSON.stringify(original.p));
   assert.equal(b.total,original.bricks);
+ }
+});
+
+test('approved revised selection retains exactly 6 cars and 14 logos with original patterns and counts', () => {
+ assert.equal(carsAndLogos.models.length,20);
+ assert.equal(context.categories.filter(c=>c==='Billogoer').length,1);
+ const added=context.models.filter(b=>b.collection==='biler-og-logoer-20');
+ assert.equal(added.length,20);
+ assert.equal(added.filter(b=>b.cat==='Køretøjer').length,6);
+ assert.equal(added.filter(b=>b.cat==='Billogoer').length,14);
+ for(const original of carsAndLogos.models){
+  const b=added.find(b=>b.id===original.id);
+  assert.ok(b);assert.equal(b.cat,original.cat);assert.equal(b.name,original.name);
+  assert.equal(JSON.stringify(b.p),JSON.stringify(original.p));
+  assert.equal(b.total,original.bricks);
+ }
+ for(const name of ['Ferrari','Lamborghini','Porsche','McLaren']){
+  assert.ok(added.some(b=>b.name===name && b.cat==='Billogoer'));
  }
 });

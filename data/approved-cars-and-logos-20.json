@@ -1,0 +1,640 @@
+{
+  "title": "Biler og superbillogoer til Byggeværkstedet",
+  "status": "godkendt_2026-11-22",
+  "maxPieces": 250,
+  "difficultyRule": "Let <60, Mellem 60-84, Svær 85-250; antal brikker, samme regel som appen",
+  "physicallyTested": false,
+  "models": [
+    {
+      "id": "biler20-lille-bybil",
+      "name": "Lille bybil",
+      "cat": "Køretøjer",
+      "collection": "biler-og-logoer-20",
+      "number": 1,
+      "description": "Lille blå bil med lys rude, gule lygter og sorte hjul.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "...BBBB....",
+        "..BbbBBB...",
+        ".BBbbBBBB..",
+        "BBBBBBBBBBY",
+        "BBKKBBKKBBB",
+        "..KK..KK..."
+      ],
+      "bricks": 44,
+      "counts": {
+        "B": 31,
+        "b": 4,
+        "Y": 1,
+        "K": 8
+      },
+      "level": "Let"
+    },
+    {
+      "id": "biler20-sportsvogn",
+      "name": "Sportsvogn",
+      "cat": "Køretøjer",
+      "collection": "biler-og-logoer-20",
+      "number": 2,
+      "description": "Lav rød sportsvogn med skrå forrude og brede hjul.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "......RRRR.....",
+        ".....RbbbRR....",
+        "...RRRbbbRRRR..",
+        ".RRRRRRRRRRRRRY",
+        "RRRKKRRRRRKKRRR",
+        ".RKSKRRRRRKSKR.",
+        "..KKK.....KKK.."
+      ],
+      "bricks": 68,
+      "counts": {
+        "R": 45,
+        "b": 6,
+        "Y": 1,
+        "K": 14,
+        "S": 2
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "biler20-formelbil",
+      "name": "Formelbil",
+      "cat": "Køretøjer",
+      "collection": "biler-og-logoer-20",
+      "number": 3,
+      "description": "Formelbil set ovenfra med fire frie hjul og to spoilere.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..RRRRRRR..",
+        "..RRRRRRR..",
+        "KK..RRR..KK",
+        "KKKKKKKKKKK",
+        "KK.RKKKR.KK",
+        "..RRRRRRR..",
+        "...RRRRR...",
+        "...RRRRR...",
+        "KK..RRR..KK",
+        "KK..RRR..KK",
+        "KKRRRRRRRKK",
+        "..RRRRRRR.."
+      ],
+      "bricks": 90,
+      "counts": {
+        "R": 56,
+        "K": 34
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-politibil",
+      "name": "Politibil",
+      "cat": "Køretøjer",
+      "collection": "biler-og-logoer-20",
+      "number": 4,
+      "description": "Blå og hvid politibil med rødt og blåt blink.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".....BRR......",
+        "....WWWWW.....",
+        "...WbbWbbW....",
+        "..WWbbWbbWWW..",
+        "WWWWWWWWWWWWWY",
+        "BBBBBBBBBBBBBB",
+        "BBKKBBBBBBKKBB",
+        ".KSKBBBBBBKSK.",
+        "..KK......KK.."
+      ],
+      "bricks": 83,
+      "counts": {
+        "B": 31,
+        "R": 2,
+        "W": 27,
+        "b": 8,
+        "Y": 1,
+        "K": 12,
+        "S": 2
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "biler20-brandbil",
+      "name": "Brandbil",
+      "cat": "Køretøjer",
+      "collection": "biler-og-logoer-20",
+      "number": 5,
+      "description": "Stor rød brandbil med grå stige og hvide rum langs siden.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..SSSSSSSSSSSSSSS...",
+        "..SSS.SSS.SSS.SSS...",
+        "..SSSSSSSSSSSSSSS...",
+        ".....RRRRRRRR.......",
+        "..RRRRRRRRRRRRRRR...",
+        ".RRRRRRRRRRRRRbbRR..",
+        "RRRRRRRRRRRRRRbbRRRY",
+        "RWWWWWWWWWWWRRRRRRRR",
+        "RRKKRRRRRRRRRRKKRRRR",
+        ".KSSKRRRRRRRRKSSKRR.",
+        "..KK..........KK...."
+      ],
+      "bricks": 164,
+      "counts": {
+        "S": 46,
+        "R": 90,
+        "b": 4,
+        "Y": 1,
+        "W": 11,
+        "K": 12
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-monstertruck",
+      "name": "Monstertruck",
+      "cat": "Køretøjer",
+      "collection": "biler-og-logoer-20",
+      "number": 6,
+      "description": "Grøn monstertruck med højt chassis og store grå hjulnav.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".....GGGGGG.....",
+        "....GbbGbbGG....",
+        "..GGGbbGbbGGGG..",
+        ".GGGGGGGGGGGGGG.",
+        "GGGGGGGGGGGGGGGG",
+        "..KKKKKKKKKKKK..",
+        ".KKKKK....KKKKK.",
+        "KKSSSKK..KKSSSKK",
+        "KKSSSKK..KKSSSKK",
+        ".KKKKK....KKKKK.",
+        "..KKK......KKK.."
+      ],
+      "bricks": 122,
+      "counts": {
+        "G": 48,
+        "b": 8,
+        "K": 54,
+        "S": 12
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-volkswagen",
+      "name": "Volkswagen",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 7,
+      "description": "Blåt cirkelemblem med et hvidt V over et W; forenklet til hele brikker.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "........B........",
+        ".....BBBBBBB.....",
+        "...BBBWWWWWBBB...",
+        "..BBWWBBBBBWWBB..",
+        "..BWWWBBBBBWWWB..",
+        ".BBWBWWBBBWWBWBB.",
+        ".BWBBBWWBWWBBBWB.",
+        ".BWBBBBWWWBBBBWB.",
+        "BBWWWBBWWWBBWWWBB",
+        ".BWWWBBWWWBBWWWB.",
+        ".BWBWWBWWWBWWBWB.",
+        ".BBWWWWWBWWWWWBB.",
+        "..BWWWWWBWWWWWB..",
+        "..BBWWWBBBWWWBB..",
+        "...BBBWWWWWBBB...",
+        ".....BBBBBBB.....",
+        "........B........"
+      ],
+      "bricks": 197,
+      "counts": {
+        "B": 107,
+        "W": 90
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-bmw",
+      "name": "BMW",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 8,
+      "description": "Sort ring med blå og hvide kvarterer; bogstaverne er udeladt i denne brikfortolkning.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "........K........",
+        ".....KKKKKKK.....",
+        "...KKKKKWKKKKK...",
+        "..KKKWWWWWWWKKK..",
+        "..KKWWWWWBBBWKK..",
+        ".KKWWWWWWBBBBWKK.",
+        ".KKWWWWWWBBBBWKK.",
+        ".KKWWWWWWBBBBWKK.",
+        "KKWWWWWWWWWWWWWKK",
+        ".KKWBBBBWWWWWWKK.",
+        ".KKWBBBBWWWWWWKK.",
+        ".KKWBBBBWWWWWWKK.",
+        "..KKWBBBWWWWWKK..",
+        "..KKKWWWWWWWKKK..",
+        "...KKKKKWKKKKK...",
+        ".....KKKKKKK.....",
+        "........K........"
+      ],
+      "bricks": 197,
+      "counts": {
+        "K": 84,
+        "W": 83,
+        "B": 30
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-mercedes-benz",
+      "name": "Mercedes-Benz",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 9,
+      "description": "Sort tretakket stjerne inde i en ring på hvid baggrund.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "........K........",
+        ".....KKKKKKK.....",
+        "...KKKWWKWWKKK...",
+        "..KKWWWWKWWWWKK..",
+        "..KWWWWWKWWWWWK..",
+        ".KKWWWWWKWWWWWKK.",
+        ".KWWWWWWKWWWWWWK.",
+        ".KWWWWWWKWWWWWWK.",
+        "KKWWWWWKKKWWWWWKK",
+        ".KWWWWKKKKKWWWWK.",
+        ".KWWWKKWWWKKWWWK.",
+        ".KKKKWWWWWWWKKKK.",
+        "..KWWWWWWWWWWWK..",
+        "..KKWWWWWWWWWKK..",
+        "...KKKWWWWWKKK...",
+        ".....KKKKKKK.....",
+        "........K........"
+      ],
+      "bricks": 197,
+      "counts": {
+        "K": 82,
+        "W": 115
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-audi",
+      "name": "Audi",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 10,
+      "description": "Fire sorte ringe i en vandret kæde med hvide felter imellem.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "....K....K....K....K....",
+        "..KKKKKKKKKKKKKKKKKKKK..",
+        ".KKWWWKKWWWKKWWWKKWWWKK.",
+        ".KWWWWKKWWWKKWWWKKWWWWK.",
+        "KKWWWKKKKWKKKKWKKKKWWWKK",
+        ".KWWWWKKWWWKKWWWKKWWWWK.",
+        ".KKWWWKKWWWKKWWWKKWWWKK.",
+        "..KKKKKKKKKKKKKKKKKKKK..",
+        "....K....K....K....K...."
+      ],
+      "bricks": 160,
+      "counts": {
+        "K": 100,
+        "W": 60
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-tesla",
+      "name": "Tesla",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 11,
+      "description": "Rødt T med buet overkant og en tilspidset lodret stamme.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "..RRRRRRR..",
+        "RRRRRRRRRRR",
+        ".RRR...RRR.",
+        "...RRRRR...",
+        "....RRR....",
+        "....RRR....",
+        "....RRR....",
+        "....RRR....",
+        "....RRR....",
+        "....RRR....",
+        ".....R....."
+      ],
+      "bricks": 48,
+      "counts": {
+        "R": 48
+      },
+      "level": "Let"
+    },
+    {
+      "id": "biler20-renault",
+      "name": "Renault",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 12,
+      "description": "En sort, høj diamant med hvid midte, som en kompakt klassisk brikfortolkning.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".....K.....",
+        ".....K.....",
+        "....KWK....",
+        "...KKWKK...",
+        "..KKWWWKK..",
+        ".KKWWWWWKK.",
+        "KKWWWWWWWKK",
+        ".KKWWWWWKK.",
+        "..KKWWWKK..",
+        "...KKWKK...",
+        "....KWK....",
+        ".....K.....",
+        ".....K....."
+      ],
+      "bricks": 63,
+      "counts": {
+        "K": 36,
+        "W": 27
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "biler20-mitsubishi",
+      "name": "Mitsubishi",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 13,
+      "description": "Tre røde romber samlet i et tredelt mærke.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".....R.....",
+        "....RRR....",
+        "....RRR....",
+        "...RRRRR...",
+        "....RRR....",
+        "....RRR....",
+        ".....R.....",
+        "..RRRRRRR..",
+        ".RRRR.RRRR.",
+        "RRRR...RRRR"
+      ],
+      "bricks": 42,
+      "counts": {
+        "R": 42
+      },
+      "level": "Let"
+    },
+    {
+      "id": "biler20-chevrolet",
+      "name": "Chevrolet",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 14,
+      "description": "Et gyldent butterfly-mærke med et bredt tværbånd.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "....YYYYYY.....",
+        "....YYYYYY.....",
+        ".YYYYYYYYYYYYYY",
+        ".YYYYYYYYYYYYY.",
+        ".YYYYYYYYYYYYY.",
+        "YYYYYYYYYYYYYY.",
+        "....YYYYYY.....",
+        "....YYYYYY....."
+      ],
+      "bricks": 78,
+      "counts": {
+        "Y": 78
+      },
+      "level": "Mellem"
+    },
+    {
+      "id": "biler20-volvo",
+      "name": "Volvo",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 15,
+      "description": "Cirkel med pil mod øverste højre hjørne og blåt midterbånd; teksten er udeladt.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".............KKKKKK",
+        "........K....KKKKKK",
+        ".....KKKKKKK...KKKK",
+        "...KKKKWWWKKKKKKK.K",
+        "..KKKWWWWWWWKKKK..K",
+        "..KKWWWWWWWWWKK...K",
+        ".KKWWWWWWWWWWWKK...",
+        ".BBBBBBBBBBBBBBB...",
+        ".BBBBBBBBBBBBBBB...",
+        "KBBBBBBBBBBBBBBBK..",
+        ".BBBBBBBBBBBBBBB...",
+        ".KKWWWWWWWWWWWKK...",
+        ".KKWWWWWWWWWWWKK...",
+        "..KKWWWWWWWWWKK....",
+        "..KKKWWWWWWWKKK....",
+        "...KKKKWWWKKKK.....",
+        ".....KKKKKKK.......",
+        "........K.........."
+      ],
+      "bricks": 220,
+      "counts": {
+        "K": 89,
+        "W": 71,
+        "B": 60
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-skoda",
+      "name": "Škoda",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 16,
+      "description": "Grøn vinget pil og cirkel på hvidt; forenklet efter Škodas officielle emblem.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        "......GGGGG......",
+        "....GWWWWWWWG....",
+        "...GWWWGGGWWWG...",
+        "..GWGGGWGGGWWWG..",
+        ".GWWGGGGGGGWWWWG.",
+        ".WGGWGGGGGGGWWWW.",
+        "GWGGGGGGGGGGWWWWG",
+        "GWGGGGGGGGGGWWWWG",
+        "GWWWGGGGGGGGWWWWG",
+        "GWWWWGGGGWGGWWWWG",
+        "GWWWWWGGGWGGWWWWG",
+        ".WGGGWGGGGGWGWWW.",
+        ".GWGGGGGGGGGGGWG.",
+        "..GWWWWWWWWWWWG..",
+        "...GWWWWWWWWWG...",
+        "....GWWWWWWWG....",
+        "......GGGGG......"
+      ],
+      "bricks": 221,
+      "counts": {
+        "G": 120,
+        "W": 101
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-ferrari",
+      "name": "Ferrari",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 17,
+      "description": "Gult skjold med en stejlende sort hest og italiensk trikolore. Små bogstaver er udeladt.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".KKKKKKKKKKKKK.",
+        "KGGGGWWWWWRRRRK",
+        "KYYYYYYYYYYYYYK",
+        "KYYYYYYKYYYYYYK",
+        "KYYYYYKKKYYYYYK",
+        "KYYYYYYKKYYYYYK",
+        "KYYYYYYKKYYYYYK",
+        "KYYYKYKKKYYYYYK",
+        "KYYYKKKKKYYYYYK",
+        "KYYYKKKKYYKYYYK",
+        "KYYYYYKKKYYYYYK",
+        "KYYYYYYKKYYYYYK",
+        ".KYYYYYKKKKYYK.",
+        "..KYYYYKKKYYK..",
+        "..KYYYYKKYYYK..",
+        "...KYYYYKYYK...",
+        "....KYYYYYK....",
+        ".....KYKYK.....",
+        ".....KYYYK.....",
+        "......KYK......",
+        ".......K......."
+      ],
+      "bricks": 243,
+      "counts": {
+        "K": 90,
+        "G": 4,
+        "W": 5,
+        "R": 4,
+        "Y": 140
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-lamborghini",
+      "name": "Lamborghini",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 18,
+      "description": "Sort skjold med gylden kant og en gylden tyr. Bogstaverne er udeladt.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".AAAAAAAAAAAAA.",
+        "AKKKKKKKKKKKKKA",
+        "AKKKKKKKKKKKKKA",
+        "AKKKKKKAKKKKKKA",
+        "AKKKKKKKKKKKKKA",
+        "AKKKKKKAAAKKKKA",
+        "AKKKKKAAAAKKKKA",
+        "AKKKKAAAAKAKKKA",
+        "AKKKKKAAAKKKKKA",
+        "AKKKAAAAAKAKKKA",
+        "AKKKAKKAAKAKKKA",
+        ".AKKAKKAKKAKKA.",
+        "..AKAKKAKKKKA..",
+        "...AAAAAKKAA...",
+        "....AAKKKKA....",
+        "....AKKKKKA....",
+        ".....AKKKA.....",
+        "......AKA......",
+        ".......A......."
+      ],
+      "bricks": 219,
+      "counts": {
+        "A": 85,
+        "K": 134
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-porsche",
+      "name": "Porsche",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 19,
+      "description": "Gyldent våbenskjold med røde og sorte felter, gevirer og en lille hest i midten. Tekst er udeladt.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".AAAAAAAAAAAAA.",
+        "AYYYYYYYYYYYYYA",
+        "AYYYYYYYYYYYYYA",
+        "AYYYYYYYKKKKKKA",
+        "AYYYKYYYRRRRRRA",
+        "AYKKKYYYRRRRRRA",
+        "AYYYYYYYKKKKKKA",
+        "AYYYKAAAAAKKKKA",
+        "AYKKKAYKYARRRRA",
+        "AYYYYAYKYARRRRA",
+        "AKKKKAKKYAYYYYA",
+        "AKKKKAYKYAYYYYA",
+        ".RRRRAYKYAYYKA.",
+        "..RRRAYYYAKKK..",
+        "..KKKAAAAAYYA..",
+        "...KKKKYYYYK...",
+        "....RRRYYKK....",
+        ".....RRYYA.....",
+        ".....AYYYA.....",
+        "......AYA......",
+        ".......A......."
+      ],
+      "bricks": 243,
+      "counts": {
+        "A": 65,
+        "Y": 94,
+        "K": 52,
+        "R": 32
+      },
+      "level": "Svær"
+    },
+    {
+      "id": "biler20-mclaren",
+      "name": "McLaren",
+      "cat": "Billogoer",
+      "collection": "biler-og-logoer-20",
+      "number": 20,
+      "description": "Orange fartmærke som en buet pil. Ordmærket er udeladt.",
+      "tip": "Følg rækken fra venstre mod højre. Se brikkernes vandrette og lodrette retning på tegningen.",
+      "p": [
+        ".........OOOOOO.",
+        "......OOOOOOOOOO",
+        "....OOOOOOOOOOOO",
+        ".OOOOOOOOOOOOOO.",
+        "OOO...OOOOOOOOO.",
+        ".........OOOOO..",
+        ".........OOO....",
+        ".........OO.....",
+        "........OO......",
+        "........O......."
+      ],
+      "bricks": 67,
+      "counts": {
+        "O": 67
+      },
+      "level": "Mellem"
+    }
+  ],
+  "revision": "6 biler og 14 billogoer, heraf Ferrari, Lamborghini, Porsche og McLaren.",
+  "logoStyle": "Forenklede Plus-Plus-fortolkninger uden små bogstaver.",
+  "referenceSources": [
+    "https://www.lamborghini.com/en-en/history/logos",
+    "https://www.porsche.com/international/accessoriesandservice/classic/producthighlights/crest/",
+    "https://www.mclaren.com/cars/us_en/post/our-new-brand-world",
+    "https://github.com/simple-icons/simple-icons"
+  ]
+}
