@@ -121,3 +121,11 @@ test('targeted undo cannot undo a newer attachment after another builder updates
  const changed=Core.command(r,actor(0),{id:'correct-undo-id',expectedRevision:r.revision,action:'undo',taskId:task(r,1)},at).room;
  assert.equal(changed.attached,1);assert.ok(changed.ready.includes(task(r,1)));
 });
+
+test('room envelope accepts 300 whole bricks and rejects 301',()=>{
+ const p=Array(15).fill('R'.repeat(20));
+ const room=Core.newRoom('a'.repeat(32),{...input,model:{id:'large-crest',name:'Stort klublogo',p}},credentials,at);
+ assert.equal(room.model.p.join('').replace(/\./g,'').length,300);
+ assert.equal(Tasks.createPlan(room.model.p,{builderCount:2}).total,300);
+ rejects(()=>Core.newRoom('a'.repeat(32),{...input,model:{...input.model,p:p.concat('R'.padEnd(20,'.'))}},credentials,at),400,'invalid_size');
+});

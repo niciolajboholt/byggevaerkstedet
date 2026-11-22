@@ -15,9 +15,10 @@ const approvedId=b=>`motiver50-${String(b.number).padStart(2,"0")}`;
 const approvedById=new Map(approved.models.map(b=>[approvedId(b),b]));
 const guideIds = ids.concat(magicIds, Object.keys(themeCategories), [...approvedById.keys()]);
 
-test('every catalogue guide uses at most 250 bricks', () => {
+test('catalogue allows 300 bricks only for club crests and 250 for all other themes', () => {
   for (const b of context.models) {
-    assert.ok(b.total > 0 && b.total <= 250, `${b.id}: ${b.total} bricks exceeds the 250-brick limit`);
+    const limit=b.cat==='Klublogoer'?300:250;
+    assert.ok(b.total > 0 && b.total <= limit, `${b.id}: ${b.total} bricks exceeds ${limit}`);
   }
 });
 
@@ -48,7 +49,8 @@ for (const category of ['Pokémon', 'Minecraft']) test(`${category} retains its 
 const animals = JSON.parse(readFileSync(new URL('../data/approved-animals-20.json', `file://${__filename}`), 'utf8'));
 const halloween = JSON.parse(readFileSync(new URL('../data/approved-halloween-40.json', `file://${__filename}`), 'utf8'));
 const carsAndLogos = JSON.parse(readFileSync(new URL('../data/approved-cars-and-logos-20.json', `file://${__filename}`), 'utf8'));
-for (const id of guideIds.concat(animals.models.map(b=>b.id),halloween.models.map(b=>b.id),carsAndLogos.models.map(b=>b.id))) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
+const themes62 = JSON.parse(readFileSync(new URL('../data/approved-themes-62.json', `file://${__filename}`), 'utf8'));
+for (const id of guideIds.concat(themes62.models.map(b=>b.id),animals.models.map(b=>b.id),halloween.models.map(b=>b.id),carsAndLogos.models.map(b=>b.id))) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
   const b = context.models.find(b => b.id === id);
   const width = b.p[0].length;
   assert.match(b.p[0], /[^.]/, 'the first instruction places at least one brick');
@@ -173,3 +175,15 @@ test('approved revised selection retains exactly 6 cars and 14 logos with origin
   assert.ok(added.some(b=>b.name===name && b.cat==='Billogoer'));
  }
 });
+
+ test('62 approved additions preserve reviewed patterns, four categories and all seventeen international crests',()=>{
+ const added=context.models.filter(b=>b.collection==='temaer-62');assert.equal(added.length,62);
+ for(const [cat,n] of [['Skibe',15],['Blomster',15],['Eksotiske dyr',15],['Klublogoer',17]]){
+  assert.equal(added.filter(b=>b.cat===cat).length,n);assert.equal(context.categories.filter(c=>c===cat).length,1);
+ }
+ for(const m of themes62.models){const b=added.find(b=>b.id===m.id);assert.ok(b);assert.equal(b.name,m.name);assert.equal(JSON.stringify(b.p),JSON.stringify(m.p));assert.equal(b.total,m.bricks)}
+ const clubs=added.filter(b=>b.cat==='Klublogoer');
+ for(const name of ['Ajax','FC Porto','Manchester City','Tottenham Hotspur'])assert.ok(clubs.some(b=>b.name===name));
+ assert.ok(!clubs.some(b=>['AaB','OB','AGF','Brøndby IF','F.C. København'].includes(b.name)));
+ const titanic=added.find(b=>b.name==='Titanic');assert.equal(titanic.total,168);assert.equal([...titanic.p[0]].filter(c=>c==='K').length,4);
+ });

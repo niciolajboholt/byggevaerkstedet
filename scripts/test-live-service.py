@@ -40,4 +40,12 @@ s,r=command(host,'undo');assert s==200,(s,r);room=r['room'];assert room['attache
 assert req(base,token=host)[1]['room']['attached']==1
 assert req(base,token=host,origin='https://evil.invalid')[0]==403
 s,r=command(host,'close');assert s==200,(s,r)
+large={**payload,'model':{'id':'synthetic-300','name':'300 brikker – test','p':['R'*20]*15}}
+s,accepted=req('/rooms','POST',large);assert s==201,(s,accepted)
+assert len(accepted['room']['model']['p'])==15
+close={'id':str(uuid.uuid4()),'expectedRevision':0,'action':'close'}
+assert req('/rooms/'+accepted['roomId']+'/commands','POST',close,accepted['token'])[0]==200
+large['model']['p']=large['model']['p']+['R'+'.'*19]
+s,rejected=req('/rooms','POST',large);assert s==400 and rejected['code']=='invalid_size',(s,rejected)
+print('300-brick deployed boundary: 300 accepted and 301 rejected; synthetic room closed.')
 print('Live HTTP runtime: create, private auth, atomic join race, parallel ready, revision conflict, ordered attach, deduplication, undo, persistence, origin and close passed.')

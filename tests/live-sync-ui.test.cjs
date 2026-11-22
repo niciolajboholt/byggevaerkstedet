@@ -116,3 +116,11 @@ test('room list handles empty, expired and closed entries and removes only local
  a.choose('[data-room-forget="0"]');assert.equal(a.doc.querySelectorAll('[data-room-open]').length,1);
  assert.equal(backend.state,null);assert.deepEqual(a.errors,[]);a.close();
 });
+
+test('a club crest above 250 bricks can create a live room and take turns',async()=>{
+ const backend=server(),a=app(backend,'https://example.test/');await a.until(()=>a.doc.querySelector('[data-id="tema62-manchester-city"] .model-link'));
+ a.choose('[data-id="tema62-manchester-city"] .model-link');await a.until(()=>a.doc.getElementById('dName').textContent==='Manchester City');
+ a.choose('[data-mode="together"]');a.click('liveRoomCreate');await a.until(()=>a.doc.getElementById('liveInviteLink')&&!a.doc.getElementById('next').disabled);
+ assert.equal(backend.state.model.name,'Manchester City');assert.equal(backend.state.model.p.join('').replace(/\./g,'').length,277);
+ a.click('next');await a.until(()=>a.doc.getElementById('next').textContent==='Stykket er sat på');assert.deepEqual(a.errors,[]);a.close();
+});

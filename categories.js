@@ -1,7 +1,7 @@
 /* Compact discovery themes. Catalogue data and filter state remain owned by the app. */
 (function (global) {
   'use strict';
-  const FEATURED = ['Dyr', 'Magi', 'Køretøjer', 'Billogoer', 'Pokémon', 'Minecraft'];
+  const FEATURED = ['Dyr', 'Magi', 'Køretøjer', 'Billogoer', 'Pokémon', 'Minecraft', 'Skibe', 'Blomster', 'Eksotiske dyr', 'Klublogoer'];
   const SPECIAL = new Set(['Alle', '50 nye', 'Likede', 'Egne']);
   const countLabel = n => n + (n === 1 ? ' motiv' : ' motiver');
   const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

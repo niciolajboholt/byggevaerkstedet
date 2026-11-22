@@ -9,7 +9,7 @@ One SQLite-backed Durable Object (`LiveRoom`) owns each building room. A separat
 Rooms expire after 24 hours. The alarm deletes the private room row and closes
 its sockets. Tokens are random 192-bit values; only SHA-256 hashes persist.
 Snapshots contain no tokens, token hashes, idempotency ledger, or raw IP address.
-Request-body limits, a strict origin allowlist, fixed palette/24×24/250-brick bounds,
+Request-body limits, a strict origin allowlist, fixed palette/24×24/300-brick bounds,
 role ownership, revision checks and bounded idempotency protect the room state.
 
 ## Build and verify

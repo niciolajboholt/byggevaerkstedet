@@ -1,4 +1,4 @@
-/* Keep six themes compact enough that the catalogue remains within easy reach. */
+/* Keep featured themes compact enough that the catalogue remains within easy reach. */
 #themeTiles.category-explorer{display:block;margin:0 0 24px}
 .category-explorer-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .category-explorer-heading h2{font-size:18px;margin:0}
@@ -20,3 +20,5 @@
 [data-theme=parent] #themeTiles .compact-theme{background:var(--soft);border:1px solid var(--line)}
 @media(max-width:760px){.featured-categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#themeTiles .compact-theme{min-height:70px;padding:7px 9px;gap:7px;border-radius:15px}#themeTiles .compact-theme canvas{width:42px;height:42px}#themeTiles .compact-theme .theme-name{font-size:15px}#themeTiles .compact-theme .theme-count{font-size:10px}#themeTiles .compact-theme>.ic{width:14px;height:14px}.category-explorer-heading h2{font-size:17px}}
 @media(max-width:370px){#themeTiles .compact-theme canvas{width:34px;height:34px}#themeTiles .compact-theme .theme-name{font-size:14px}#themeTiles .compact-theme>.ic{display:none}}
+
+.theme-6{background:#dcecf7}.theme-7{background:#f8e5ec}.theme-8{background:#e1efdf}.theme-9{background:#e9e5f5}

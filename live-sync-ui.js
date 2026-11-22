@@ -137,7 +137,8 @@ async function beginCreate(){
  if(busy||!cur)return;
  // Save a name still being edited before creating the shared immutable plan.
  document.querySelectorAll('#teamNames input').forEach(el=>team.names[+el.dataset.i]=el.value.trim());saveTeam();
- if(cur.total>250||cur.w>24||cur.p.length>24){$id('resumeInfo').textContent='Live byggeri understøtter højst 250 brikker på 24 × 24 felter.';return}
+ const maxBricks=cur.cat==='Klublogoer'?300:250;
+ if(cur.total>maxBricks||cur.w>24||cur.p.length>24){$id('resumeInfo').textContent=`Live byggeri understøtter højst ${maxBricks} brikker på 24 × 24 felter.`;return}
  const operation=++lifecycle;busy=true;loading=true;loadingInvite=null;notice='';isActive=true;ensureClient();render();
  try{
   const data=await client.create({model:{id:cur.id,name:cur.name,p:cur.p},builders:Array.from({length:team.n},(_,i)=>team.names[i]||`Bygger ${i+1}`),smallest:team.split==='small'?smallestBuilder():null});

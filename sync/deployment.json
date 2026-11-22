@@ -3,10 +3,12 @@
   "url": "https://byggevaerkstedet-sync.nicolajbach12.workers.dev",
   "compatibility_date": "2026-11-22",
   "migration_tag": "v1",
-  "deployment_id": "4ffec292-ec85-42c7-b882-a02b919faec9",
-  "version_id": "ffe49a6a-655b-44a3-ad6b-1b0495a3470d",
-  "bundle_sha256": "0f9e55ca20e1f945f8b3ff43ffacf4ad69226f2470bf15472d92b76b698296a6",
+  "deployment_id": "7b1f119a-4cca-445f-92ef-08d143883d49",
+  "version_id": "84348e0c-3591-4012-a4e0-927a2e60d5ad",
+  "bundle_sha256": "c563046dde34eafc4e4253016c68c11470528ba71fcfcc068657507c71e3a55c",
   "plan": "Free (confirmed by API rejection of unsupported custom CPU limit)",
   "billing_changes": false,
-  "other_workers_modified": false
+  "other_workers_modified": false,
+  "previous_version_id": "ffe49a6a-655b-44a3-ad6b-1b0495a3470d",
+  "max_bricks": 300
 }

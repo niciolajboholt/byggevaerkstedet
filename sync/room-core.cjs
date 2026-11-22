@@ -16,7 +16,7 @@ function validateCreate(input) {
   if (!Array.isArray(p)||!p.length||p.length>24||!p.every(r=>typeof r==='string'&&r.length>0&&r.length<=24&&COLORS.test(r))) fail(400,'invalid_pattern','Motivet må højst være 24×24 felter.');
   const w=Math.max(...p.map(r=>r.length)),pattern=p.map(r=>r.padEnd(w,'.'));
   const count=pattern.join('').replace(/\./g,'').length;
-  if (count<1||count>250) fail(400,'invalid_size','Motivet skal indeholde 1–250 brikker.');
+  if (count<1||count>300) fail(400,'invalid_size','Motivet skal indeholde 1–300 brikker.');
   return {model:{id:model.id,name:model.name.trim(),p:pattern},builders:builders.map(n=>n.trim()),smallest};
 }
 function newRoom(roomId,input,credentials,now=Date.now()) {

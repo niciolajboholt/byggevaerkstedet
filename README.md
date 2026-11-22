@@ -70,9 +70,9 @@ Skjoldene er stiliserede Plus-Plus-fortolkninger og er ikke fysisk prøvebygget.
 Genskab skjoldene med `python3 scripts/generate-house-guides.py` uden eksterne
 pakker. Scriptet kontrollerer størrelsen, før det erstatter de fire modeller.
 
-## Maksimum 250 brikker
+## Brikgrænser
 
-Alle katalogets vejledninger må bruge højst **250 brikker**. Testpakken kontrollerer
+Katalogets vejledninger må bruge højst **250 brikker**, bortset fra **Klublogoer**, som må bruge op til **300 brikker**. Testpakken kontrollerer
 samtlige modeller i `BUILDS`, også de oprindelige, og fejler ved en overskridelse.
 Brikgrænsen gælder de medfølgende vejledninger; egne tegninger i 2D-editoren
 bevarer deres eksisterende funktionalitet.
@@ -146,3 +146,7 @@ Prøveserveren lytter kun på `127.0.0.1`. Den kan ikke åbnes fra en anden enhe
 105 tests bestod i rettelsesrunden. På værter, der blokerer Node-underprocesser,
 kan de samme tests køres med `node --test --test-isolation=none tests/*.test.cjs`.
 Se `docs/ux-fixes-2026-11-21.md` for browserkontrol og begrænsninger.
+
+## 62 nye motiver
+
+Den godkendte samling indeholder 15 skibe (inklusive Titanic med fire skorstene), 15 blomster, 15 eksotiske dyr og 17 internationale klublogoer. Ajax, FC Porto, Manchester City og Tottenham er alle med. Mønstre og brikantal bevares i `data/approved-themes-62.json`. De fire kategorier findes på forsiden og under Filtre.

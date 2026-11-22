@@ -230,3 +230,19 @@ test('ordinary model opening defaults to shared iPad despite a saved dedicated-s
  a.click('next');a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
  assert.deepEqual(a.errors,[]);a.close();
 });
+
+test('four new categories expose all 62 approved motifs and large crests remain visible by default',async()=>{
+ const a=app();await a.settle();
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+ for(const [cat,n] of [['Skibe',15],['Blomster',15],['Eksotiske dyr',15],['Klublogoer',17]]){
+  a.choose(`.featured-categories [data-theme-category="${cat}"]`);
+  assert.equal(a.doc.querySelectorAll('#grid .card').length,n);
+  a.click('resetFilters');
+ }
+ a.choose('.featured-categories [data-theme-category="Klublogoer"]');
+ a.doc.getElementById('pieceLimit').value='250';a.doc.getElementById('pieceLimit').dispatchEvent(new a.w.Event('change'));
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,8);
+ a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+ a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1/);
+ assert.deepEqual(a.errors,[]);a.close();
+});

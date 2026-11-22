@@ -1,7 +1,7 @@
 # Live Sync v1 — shared implementation contract
 
 API base: `https://byggevaerkstedet-sync.nicolajbach12.workers.dev` (root will verify before app activation).
-Room expires 24 hours after creation. Max 3 builders, pattern max 24x24 / 250 bricks, palette as build-tasks.js/catalogue. Shared-screen offline flow remains unchanged. No accounts required.
+Room expires 24 hours after creation. Max 3 builders, pattern max 24x24 / 300 bricks (catalogue UI: club crests up to 300, other themes up to 250), palette as build-tasks.js/catalogue. Shared-screen offline flow remains unchanged. No accounts required.
 
 - POST `/rooms` JSON `{model:{id,name,p},builders:["Jens","Alfred"],smallest:null|index}` -> `{roomId,inviteToken,token,me:0,room}`. Host is builder0, slot0 claimed at create. All tokens cryptographically random >=128 bits. Store token hashes, never include credentials in snapshots/logs.
 - POST `/rooms/:roomId/join` Authorization Bearer inviteToken, JSON `{builder:1}` -> `{token,me:1,room}`. Slots atomically claim once. Local client persists per-room credential for resume; invite alone cannot reclaim occupied slot. Return409 if occupied. Snapshot via valid invite is permitted for join selection; never returns credentials.
