@@ -46,7 +46,8 @@ for (const category of ['Pokémon', 'Minecraft']) test(`${category} retains its 
 });
 
 const animals = JSON.parse(readFileSync(new URL('../data/approved-animals-20.json', `file://${__filename}`), 'utf8'));
-for (const id of guideIds.concat(animals.models.map(b=>b.id))) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
+const halloween = JSON.parse(readFileSync(new URL('../data/approved-halloween-40.json', `file://${__filename}`), 'utf8'));
+for (const id of guideIds.concat(animals.models.map(b=>b.id),halloween.models.map(b=>b.id))) test(`${id}: whole bricks, no overlap, connected model, exact parts and row instructions`, () => {
   const b = context.models.find(b => b.id === id);
   const width = b.p[0].length;
   assert.match(b.p[0], /[^.]/, 'the first instruction places at least one brick');
@@ -140,4 +141,16 @@ test('all approved motifs can be partitioned for two or three builders without l
     assert.equal(JSON.stringify(b.p),JSON.stringify(original.p));
     assert.equal(b.total,original.bricks);
   }
+});
+
+test('all 40 Halloween guides preserve approved patterns and have their own category', () => {
+ assert.equal(halloween.models.length,40);
+ assert.equal(context.categories.filter(c=>c==='Halloween').length,1);
+ assert.equal(context.models.filter(b=>b.cat==='Halloween').length,40);
+ for(const original of halloween.models){
+  const b=context.models.find(b=>b.id===original.id);
+  assert.equal(b.cat,'Halloween');assert.equal(b.name,original.name);
+  assert.equal(JSON.stringify(b.p),JSON.stringify(original.p));
+  assert.equal(b.total,original.bricks);
+ }
 });
