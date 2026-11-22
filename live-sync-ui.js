@@ -153,7 +153,7 @@ async function joinInvite(encoded){
  if(loadingInvite===encoded)return;
  const operation=++lifecycle;c.disconnect();isActive=true;room=null;plan=null;invite=parsed;loading=true;loadingInvite=encoded;notice='';showDetail();render();
  try{
-  const role=c.activeRole(parsed.roomId);
+  const role=c.activeRole(parsed.roomId)??c.savedRoles(parsed.roomId)[0]?.me;
   if(role!=null){try{if(await c.resume(parsed.roomId,role))return}catch(e){if(!['401','403','unauthorized','forbidden','invalid_token'].includes(String(e.code)))throw e}}
   const loaded=await c.loadInvite(parsed);if(operation===lifecycle&&isActive)adopt(loaded);
  }catch(e){if(operation===lifecycle&&isActive){notice=friendly(e);room=null}}
@@ -202,8 +202,33 @@ function clearActive(){
  document.body.classList.remove('live-building','task-building','building');panel()?.classList.add('hide');document.querySelector('#detailView .viewer')?.classList.remove('hide');
  $id('modeBar')?.classList.remove('hide');$id('guideFavorite')?.classList.remove('hide');$id('buildPerson').style.color='';
 }
+function showRooms(){
+ const c=ensureClient(),dialog=$id('liveRoomsDialog'),entries=Object.values(c.records()),groups=new Map();
+ for(const saved of entries){
+  if(!LiveRoomClient.validRoomId(saved?.roomId)||typeof saved.inviteToken!=='string'||!Number.isInteger(saved.me))continue;
+  const old=groups.get(saved.roomId);if(!old||(saved.updatedAt||0)>(old.updatedAt||0))groups.set(saved.roomId,saved);
+ }
+ const rooms=[...groups.values()].sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+ $id('liveRoomsList').innerHTML=rooms.length?rooms.map((saved,i)=>{
+  const expired=saved.expiresAt&&saved.expiresAt<=Date.now(),status=expired?'Udløbet':saved.closed?'Afsluttet':'Klar til at fortsætte';
+  return `<article class="saved-room"><div><h3>${escText(saved.modelName||'Byggerum')}</h3><p>${escText((Array.isArray(saved.builders)?saved.builders:[]).join(' og '))}</p><p class="meta">${status}</p></div><div class="saved-room-actions"><button type="button" class="btn" data-room-open="${i}" ${expired||saved.closed?'disabled':''}>Fortsæt</button><button type="button" class="text-button" data-room-forget="${i}">Fjern fra listen</button></div></article>`;
+ }).join(''):'<p>Du har ingen gemte byggerum endnu. Vælg et motiv, tryk Byg sammen og derefter Byg på flere enheder.</p>';
+ dialog.querySelectorAll('[data-room-open]').forEach(button=>button.onclick=()=>{
+  const saved=rooms[+button.dataset.roomOpen];dialog.close();go('live='+encodeURIComponent(JSON.stringify({roomId:saved.roomId,inviteToken:saved.inviteToken})));
+ });
+ dialog.querySelectorAll('[data-room-forget]').forEach(button=>button.onclick=()=>{
+  const saved=rooms[+button.dataset.roomForget];for(const entry of entries)if(entry.roomId===saved.roomId)c.forget(entry.roomId,entry.me);
+  showRooms();$id('liveRoomsHeading').focus();
+ });
+ if(!dialog.open)dialog.showModal();
+}
 function init(){
  if($id('liveRoomPanel'))return;
+ const roomsButton=document.createElement('button');roomsButton.id='liveRoomsOpen';roomsButton.type='button';roomsButton.className='btn ghost live-rooms-open';roomsButton.textContent='Mine byggerum';roomsButton.onclick=showRooms;
+ document.querySelector('.discovery-hero').after(roomsButton);
+ const dialog=document.createElement('dialog');dialog.id='liveRoomsDialog';dialog.className='live-rooms-dialog';dialog.setAttribute('aria-labelledby','liveRoomsHeading');
+ dialog.innerHTML='<div class="live-panel-heading"><h2 id="liveRoomsHeading" tabindex="-1">Mine byggerum</h2><button type="button" class="btn ghost" id="liveRoomsClose" autofocus>Luk</button></div><p class="meta">Rum, du har oprettet eller deltaget i på denne enhed. Rum udløber efter 24 timer. At fjerne et rum fra listen lukker det ikke for de andre.</p><div id="liveRoomsList"></div>';
+ document.body.append(dialog);$id('liveRoomsClose').onclick=()=>dialog.close();
  const div=document.createElement('section');div.id='liveRoomPanel';div.className='live-room-panel hide';div.setAttribute('aria-label','Live byggerum');
  document.querySelector('#detailView .viewer').before(div);
  const btn=document.createElement('button');btn.id='liveRoomCreate';btn.type='button';btn.className='btn ghost live-create';btn.textContent='Byg på flere enheder';btn.onclick=beginCreate;

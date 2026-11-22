@@ -29,9 +29,9 @@ class LiveRoomClient{
  saved(roomId,me=this.activeRole(roomId)){return me==null?null:this.records()[roomId+':'+me]||null}
  clearRole(roomId){try{this.tabStorage?.removeItem('bv_live_active_'+roomId)}catch{}}
  remember(c){
-  try{const all=this.records();all[c.roomId+':'+c.me]={roomId:c.roomId,token:c.token,me:c.me,inviteToken:c.inviteToken,expiresAt:this.room?.expiresAt};
+  try{const all=this.records();all[c.roomId+':'+c.me]={roomId:c.roomId,token:c.token,me:c.me,inviteToken:c.inviteToken,expiresAt:this.room?.expiresAt,modelName:this.room?.model?.name,builders:this.room?.builders,closed:!!this.room?.closed,updatedAt:Date.now()};
    this.tabStorage?.setItem('bv_live_active_'+c.roomId,JSON.stringify(c.me));
-   const recent=Object.entries(all).filter(([,v])=>!v.expiresAt||v.expiresAt>Date.now()).slice(-12);this.storage?.setItem(STORE,JSON.stringify(Object.fromEntries(recent)));return true;
+   const recent=Object.entries(all).slice(-50);this.storage?.setItem(STORE,JSON.stringify(Object.fromEntries(recent)));return true;
   }catch{this.onError(new RoomError('storage','Adgangen kunne ikke gemmes på denne enhed. Hold siden åben.'));return false}
  }
  forget(roomId,me=this.activeRole(roomId)){try{const all=this.records();delete all[roomId+':'+me];this.storage?.setItem(STORE,JSON.stringify(all));if(this.activeRole(roomId)===me)this.clearRole(roomId)}catch{}}
@@ -40,7 +40,7 @@ class LiveRoomClient{
   if(!room||room.v!==1||!ROOM.test(room.roomId||'')||!room.model||!Array.isArray(room.builders)||!Number.isInteger(room.revision)||!Number.isInteger(room.attached)||!Array.isArray(room.ready))throw new RoomError('bad_snapshot','Byggerummet svarede ikke som forventet. Prøv at åbne linket igen.');
   if(this.credentials&&room.roomId!==this.credentials.roomId)throw new RoomError('wrong_room','Byggerummet passer ikke til denne enhed.');
   if(this.room&&room.roomId===this.room.roomId&&room.revision<this.room.revision)return this.room;
-  this.room=room;this.onRoom(room);
+  this.room=room;if(this.credentials)this.remember(this.credentials);this.onRoom(room);
   if(room.closed){this.setStatus('closed');this.stopTransport()}
   else if(room.expiresAt<=Date.now()){this.setStatus('expired');this.stopTransport()}
   return room;

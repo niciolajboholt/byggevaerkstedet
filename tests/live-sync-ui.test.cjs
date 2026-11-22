@@ -93,3 +93,26 @@ test('undo confirmation cannot undo a newer piece attached by another device',as
  a.click('confirmAccept');await a.until(()=>/ændret|opdateret/.test(a.doc.getElementById('liveRoomPanel').textContent));
  assert.equal(backend.state.attached,2);assert.deepEqual([...a.errors,...b.errors],[]);a.close();b.close();
 });
+
+test('room list restores a room from home in a new tab without the invitation link',async()=>{
+ const backend=server(),a=await host(backend);
+ await a.until(()=>!a.doc.getElementById('next').disabled);a.click('next');await a.until(()=>a.doc.getElementById('next').textContent==='Stykket er sat på');
+ const saved=a.storage();a.close();
+ const b=app(backend,'https://example.test/',saved);
+ await b.until(()=>b.doc.getElementById('liveRoomsOpen'));b.click('liveRoomsOpen');
+ assert.equal(b.doc.getElementById('liveRoomsDialog').open,true);
+ assert.match(b.doc.getElementById('liveRoomsList').textContent,/Stjernestav.*Jens og Alfred/);
+ assert.equal(b.doc.querySelectorAll('[data-room-open]').length,1);
+ b.choose('[data-room-open="0"]');await b.until(()=>b.doc.getElementById('buildPerson').textContent==='Jens bygger'&&b.doc.getElementById('next').textContent==='Stykket er sat på');
+ assert.deepEqual(b.errors,[]);b.close();
+});
+test('room list handles empty, expired and closed entries and removes only local access',async()=>{
+ const backend=server(),a=app(backend,'https://example.test/');await a.until(()=>a.doc.getElementById('liveRoomsOpen'));a.click('liveRoomsOpen');
+ assert.match(a.doc.getElementById('liveRoomsList').textContent,/ingen gemte byggerum/);a.click('liveRoomsClose');
+ const record=(id,extra)=>({roomId:id.repeat(32),me:0,token:'h'.repeat(32),inviteToken:'i'.repeat(32),modelName:'Test',builders:['Jens','Alfred'],...extra});
+ a.w.localStorage.setItem('bv_live_rooms_v1',JSON.stringify({['a'.repeat(32)+':0']:record('a',{expiresAt:Date.now()-1}),['b'.repeat(32)+':0']:record('b',{closed:true,expiresAt:Date.now()+10000})}));
+ a.click('liveRoomsOpen');assert.match(a.doc.getElementById('liveRoomsList').textContent,/Udløbet/);assert.match(a.doc.getElementById('liveRoomsList').textContent,/Afsluttet/);
+ assert.ok([...a.doc.querySelectorAll('[data-room-open]')].every(b=>b.disabled));
+ a.choose('[data-room-forget="0"]');assert.equal(a.doc.querySelectorAll('[data-room-open]').length,1);
+ assert.equal(backend.state,null);assert.deepEqual(a.errors,[]);a.close();
+});
