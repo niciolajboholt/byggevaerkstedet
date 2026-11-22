@@ -81,14 +81,13 @@ test('own drawing can be created, reopened and edited without losing catalogue d
  assert.equal(a.doc.getElementById('ownName').value,'Testmodel');
  assert.deepEqual(a.errors,[]);a.close();
 });
-test('three builders and one-screen-per-builder assignment preserve exact parts',async()=>{
+test('setup offers shared-iPad tasks and live sync without obsolete screen sharing',async()=>{
  const a=app();await a.settle();a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
  a.choose('[data-mode="together"]');a.choose('#teamCount [data-n="3"]');
- a.choose('#teamMe [data-me="1"]');a.click('teamStart');
- assert.equal(a.doc.querySelectorAll('#partTabs button').length,1);
- assert.equal(a.doc.querySelector('#partTabs button').textContent,'Alfred');
- assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
- a.click('overviewButton');assert.match(a.doc.getElementById('overviewLegend').textContent,/Jens.*Alfred.*Far/);
+ assert.equal(a.doc.querySelector('.device-options,#teamMe,#shareLinks,#meInfo'),null);
+ assert.ok(a.doc.getElementById('liveRoomCreate'));
+ a.click('teamStart');assert.match(a.doc.getElementById('buildPerson').textContent,/Jens/);
+ a.click('next');a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
  assert.deepEqual(a.errors,[]);a.close();
 });
 test('keyboard skip navigation focuses visible content without changing app route',async()=>{
@@ -114,13 +113,13 @@ test('smallest part can be assigned to either named builder and survives swappin
   assert.equal(parts[i].n,Math.min(...parts.map(p=>p.n)));
   assert.equal(a.doc.querySelector(`#teamSplit [data-smallest="${i}"]`).getAttribute('aria-pressed'),'true');
  }
- a.choose('#teamMe [data-me="1"]');a.click('swapBuilders');
+ a.click('swapBuilders');
  assert.equal(a.doc.getElementById('builderName0').value,'Alfred');
  assert.equal(a.doc.getElementById('builderName1').value,'Jens');
  const saved=JSON.parse(a.w.localStorage.getItem('bv_team'));
- assert.equal(saved.smallest,0);assert.equal(saved.me,0);assert.equal(saved.split,'small');
- assert.equal(a.doc.querySelector('#teamSplit [data-smallest="0"]').textContent,'Mindste del til Alfred');
- a.click('teamStart');assert.equal(a.doc.querySelector('#partTabs button').textContent,'Alfred');
+ assert.equal(saved.smallest,0);assert.equal(saved.me,null);assert.equal(saved.split,'small');
+ assert.equal(a.doc.querySelector('#teamSplit [data-smallest="0"]').textContent,'Mindre opgaver til Alfred');
+ a.click('teamStart');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
  assert.deepEqual(a.errors,[]);a.close();
 });
 test('smallest assignment preserves all bricks and physical assembly order for every motif and builder',async()=>{
@@ -182,7 +181,9 @@ test('shrinking drawing warns before removing bricks; undo restores dimensions a
 
 test('shared links override reversed local names and lock complementary row assignments',async()=>{
  const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.choose('[data-mode="together"]');
- const links=Array.from(a.doc.querySelectorAll('#shareLinks input'),el=>el.value);
+ // Previously issued links remain readable, but are no longer generated in setup.
+ const model=JSON.parse(a.w.eval('JSON.stringify(cur.p)'));
+ const links=[0,1].map(me=>'https://example.test/#m-motiver50-01?team='+encodeURIComponent(JSON.stringify({v:1,p:model,n:2,names:['Jens','Alfred'],split:'even',smallest:1,me})));
  const screens=links.map(url=>app({url,storage:{bv_team:JSON.stringify({n:2,names:['Alfred','Jens'],split:'even'})}}));
  const assigned=[];
  for(const b of screens){await b.settle();assert.equal(b.doc.getElementById('swapBuilders').disabled,true);b.click('teamStart');assigned.push(JSON.parse(b.w.eval('JSON.stringify(parts[active])')));assert.deepEqual(b.errors,[])}

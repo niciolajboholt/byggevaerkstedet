@@ -59,7 +59,6 @@
         <h2>Hvem bygger med?</h2>
         <div><label>Antal byggere</label><div class="chips" id="teamCount"></div></div><div class="builder-names-row"><div id="teamNames"></div><button type="button" id="swapBuilders" class="swap-builders" aria-label="Byt plads på bygger 1 og bygger 2"><i class="ic swap-icon" aria-hidden="true"></i><span>Byt plads</span></button></div>
         <div><label id="taskSplitLabel">Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div><p class="meta" id="splitInfo"></p>
-        <details class="device-options"><summary>Bruger I flere skærme?</summary><div><label>Hvem bruger denne skærm?</label><div class="chips" id="teamMe"></div></div><p class="meta" id="meInfo"></p><p class="meta">Kopiér hvert link til den rigtige skærm. Links fastholder navnene og deres dele. Brug nye links på alle skærme, hvis I ændrer fordelingen.</p><div id="shareLinks"></div></details>
         <button class="btn ghost hide" id="unlockTeam">Lav en ny fordeling</button>
         <button class="btn" id="teamStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
       </div>
@@ -669,23 +668,12 @@ function renderSetup(){
     Array.from({length:parts.length},(_,i)=>`<button data-s="small" data-smallest="${i}" class="${team.split==='small'&&smallestBuilder()===i?'on':''}" aria-pressed="${team.split==='small'&&smallestBuilder()===i}">Mindste del til ${esc(team.names[i]||`bygger ${i+1}`)}</button>`).join("");
   $("splitInfo").textContent=parts.map(p=>`${p.name}: ${p.n} brikker`).join(" · ")+(parts.length<team.n?" (figuren er for lille til flere dele)":"");
   if(team.me!=null&&team.me>=parts.length){team.me=null;saveTeam()}
-  $("teamMe").innerHTML=`<button data-me="" class="${team.me==null?"on":""}">Hele holdet</button>`+
-    Array.from({length:parts.length},(_,i)=>`<button data-me="${i}" class="${team.me===i?"on":""}">Kun ${esc(team.names[i]||`Bygger ${i+1}`)}</button>`).join("");
-  $("meInfo").textContent=team.me==null?"Alle deles om denne iPad og skifter mellem fanerne.":
-    `Denne skærm viser ${team.names[team.me]||"din"} del. Åbn byggerens link på hver skærm, så navnerækkefølge og fordeling er ens. Fremskridt gemmes kun på den enkelte enhed.`;
-  $("teamMe").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.me=b.dataset.me===""?null:+b.dataset.me;saveTeam();render()});
   $("teamCount").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.n=+b.dataset.n;saveTeam();render()});
   $("teamSplit").querySelectorAll("button").forEach(b=>b.onclick=()=>{team.split=b.dataset.s;if(b.dataset.smallest!=null)team.smallest=+b.dataset.smallest;saveTeam();render()});
   $("teamNames").querySelectorAll("input").forEach(inp=>inp.onchange=()=>{team.names[+inp.dataset.i]=inp.value.trim();saveTeam();render()});
   $("teamNames").querySelectorAll("input").forEach(inp=>inp.maxLength=80);
   document.querySelectorAll("#teamCount button,#teamNames input,#teamSplit button,#swapBuilders").forEach(el=>el.disabled=sharedPlan);
   $("unlockTeam").classList.toggle("hide",!sharedPlan);
-  $("shareLinks").innerHTML=cur.own?'<p class="meta">Delingslinks er kun til katalogets motiver. Egne modeller findes kun på denne enhed; byg dem sammen på én skærm.</p>':parts.map((p,i)=>{
-    const plan={v:1,p:cur.p,n:team.n,names:Array.from({length:team.n},(_,j)=>team.names[j]||`Bygger ${j+1}`),split:team.split,smallest:smallestBuilder(),me:i};
-    const url=location.href.split("#")[0]+"#m-"+cur.id+"?team="+encodeURIComponent(JSON.stringify(plan));
-    return `<label>${esc(p.name)} · række ${p.r0+1}–${p.r1+1}<input readonly aria-label="Delingslink til ${esc(p.name)}" value="${esc(url)}"></label>`;
-  }).join("");
-  $("shareLinks").querySelectorAll("input").forEach(inp=>inp.onclick=()=>inp.select());
   setCanvasWidth();
   drawGrid($("big"),cur.p,{tiles:cur.tiles,bands:orderedParts(),gap:0.8,labels:true});
   $("stepBox").classList.add("hide");$("doneBox").classList.add("hide");

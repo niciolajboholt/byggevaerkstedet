@@ -24,7 +24,7 @@ function begin(restart=false){
 function name(i){return team.names[i]||`Bygger ${i+1}`}
 const unit=n=>n===1?'brik':'brikker';
 function renderSetupTasks(){
- // Keep the existing name editor and the older multi-screen links compatible.
+ // Reuse the name editor before applying the shared-iPad task settings.
  const selected=team.smallest;renderSetup();
  if(Number.isInteger(selected)&&selected>=0&&selected<team.n&&team.smallest!==selected){team.smallest=selected;saveTeam()}
  getPlan();
@@ -33,8 +33,6 @@ function renderSetupTasks(){
  Array.from({length:team.n},(_,i)=>`<button data-s="small" data-smallest="${i}" class="${team.split==='small'&&smallestBuilder()===i?'on':''}" aria-pressed="${team.split==='small'&&smallestBuilder()===i}">Mindre opgaver til ${esc(name(i))}</button>`).join('');
  $('teamSplit').querySelectorAll('button').forEach(b=>b.onclick=()=>{team.split=b.dataset.s;if(b.dataset.smallest!=null)team.smallest=+b.dataset.smallest;saveTeam();render()});
  $('splitInfo').textContent=plan.totals.map((n,i)=>`${name(i)}: ${n} brikker`).join(' · ')+(plan.assignmentNote?' · '+plan.assignmentNote:'');
- $('meInfo').textContent='På én fælles iPad skiftes I automatisk efter hver opgave. På flere skærme bygger I fortsat større dele; fremdrift synkroniseres ikke mellem skærmene endnu.';
- const all=$('teamMe').querySelector('[data-me=""]');if(all)all.textContent='Fælles iPad · på skift';
  drawGrid($('big'),cur.p,{tiles:cur.tiles});
  $('teamStart').textContent=getSaved()?'Fortsæt byggeriet':'Start byggeriet';
  $('teamStart').disabled=!!shareWarning;
