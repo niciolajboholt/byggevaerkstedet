@@ -9,7 +9,7 @@ function app(options={}){
  const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
  const d=new JSDOM(html,{url:options.url||'https://example.test/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){
   for(const [key,value] of Object.entries(options.storage||{}))w.localStorage.setItem(key,value);
-  w.fetch=options.catalogueFetch|| (async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'))}));
+  w.fetch=(url,init)=>String(url).endsWith('navne.json')?Promise.resolve({ok:true,json:async()=>options.names||JSON.parse(fs.readFileSync(new URL('../data/navne.json',`file://${__filename}`),'utf8'))}):(options.catalogueFetch|| (async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'))})))(url,init);
   w.confirm=()=>true;
   w.requestAnimationFrame=fn=>w.setTimeout(fn,0);w.scrollTo=()=>{};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
@@ -257,7 +257,7 @@ test('catalogue load failure can retry without touching saved user data',async()
 });
 test('renaming a motif through JSON preserves its favourite and saved solo step',async()=>{
  const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.click('guideFavorite');a.click('aloneStart');a.click('next');const storage=snapshotStorage(a);a.close();
- const data=JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));data.models.find(m=>m.id==='motiver50-01').name='Min stjernestav';
- const b=app({url:'https://example.test/#m-motiver50-01',storage,catalogueFetch:async()=>({ok:true,json:async()=>data})});await b.settle();
+ const data=JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));const names=JSON.parse(fs.readFileSync(new URL('../data/navne.json',`file://${__filename}`),'utf8'));names['motiver50-01']='Min stjernestav';
+ const b=app({url:'https://example.test/#m-motiver50-01',storage,names,catalogueFetch:async()=>({ok:true,json:async()=>data})});await b.settle();
  assert.equal(b.doc.getElementById('dName').textContent,'Min stjernestav');assert.equal(b.doc.getElementById('guideFavorite').getAttribute('aria-pressed'),'true');assert.equal(b.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 2/);assert.deepEqual(b.errors,[]);b.close();
 });

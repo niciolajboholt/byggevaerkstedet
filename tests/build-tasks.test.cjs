@@ -8,6 +8,7 @@ function catalogue(){
  const html=readFileSync(new URL('../index.html',`file://${__filename}`),'utf8');
  const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
  const catalogueData=JSON.parse(readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));
+const catalogueNames=JSON.parse(readFileSync(new URL('../data/navne.json',`file://${__filename}`),'utf8'));catalogueData.models.forEach(m=>m.name=catalogueNames[m.id]);
  const context=vm.createContext({catalogueData,localStorage:{getItem:()=>null}});
  vm.runInContext(script.slice(0,script.indexOf('// ---------- list ----------'))+'\nBUILDS.push(...catalogueData.models.map(enrich));CATS.push(...catalogueData.categories);catalogueReady=true;this.models=BUILDS;',context);
  return Array.from(context.models);

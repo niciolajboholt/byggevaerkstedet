@@ -30,7 +30,7 @@ function server(){
 function app(backend,url='https://example.test/#m-motiver50-01',storage={},tabStorage={}){
  const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
  const d=new JSDOM(html,{url,runScripts:'dangerously',virtualConsole:vc,beforeParse(w){
-  w.fetch=(url,options)=>String(url).endsWith('data/motiver.json')?Promise.resolve({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'))}):backend.fetch(url,options);w.WebSocket=backend.socketFor(w);w.scrollTo=()=>{};w.requestAnimationFrame=fn=>w.setTimeout(fn,0);
+  w.fetch=(url,options)=>(String(url).endsWith('data/motiver.json')||String(url).endsWith('data/navne.json'))?Promise.resolve({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../'+url,`file://${__filename}`),'utf8'))}):backend.fetch(url,options);w.WebSocket=backend.socketFor(w);w.scrollTo=()=>{};w.requestAnimationFrame=fn=>w.setTimeout(fn,0);
   for(const [k,v]of Object.entries(storage))w.localStorage.setItem(k,v);
   for(const [k,v]of Object.entries(tabStorage))w.sessionStorage.setItem(k,v);
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};

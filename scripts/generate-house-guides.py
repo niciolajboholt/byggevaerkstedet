@@ -74,7 +74,7 @@ def main():
     updated=set()
     for i,old in enumerate(catalogue['models']):
         if old['id'] in models:
-            catalogue['models'][i]={**old,**models[old['id']]}
+            catalogue['models'][i]={**old,**{k:v for k,v in models[old['id']].items() if k!='name'}}
             updated.add(old['id'])
     assert updated==set(models), 'Each existing shield must be replaced'
     path.write_text(json.dumps(catalogue,ensure_ascii=False,indent=2)+'\n')

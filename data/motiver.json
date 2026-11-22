@@ -24,7 +24,6 @@
   "models": [
     {
       "id": "tema62-tiny-sailboat",
-      "name": "Lille sejlbåd",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Rødt skrog med et trekantet hvidt sejl.",
@@ -42,7 +41,6 @@
     },
     {
       "id": "tema62-rowing-dinghy",
-      "name": "Robåd",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Lys træbåd med to brune årer og mørk ræling.",
@@ -58,7 +56,6 @@
     },
     {
       "id": "tema62-speedboat",
-      "name": "Speedbåd",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Spidst rødt skrog, hvid fartstribe og blå vindskærm.",
@@ -74,7 +71,6 @@
     },
     {
       "id": "tema62-fishing-boat",
-      "name": "Fiskekutter",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Grøn kutter med styrehus, mast og gul fiskestang.",
@@ -92,7 +88,6 @@
     },
     {
       "id": "tema62-harbor-tug",
-      "name": "Slæbebåd",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Rødt skrog med sort fenderkant, gult dæk og lille styrehus.",
@@ -112,7 +107,6 @@
     },
     {
       "id": "tema62-rescue-lifeboat",
-      "name": "Redningsbåd",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Orange redningsbåd med lukket kabine og gul ræling.",
@@ -131,7 +125,6 @@
     },
     {
       "id": "tema62-viking-longship",
-      "name": "Vikingeskib",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Buet træskrog med hævede stævne, stribet sejl og gule skjolde.",
@@ -152,7 +145,6 @@
     },
     {
       "id": "tema62-pirate-brig",
-      "name": "Piratskib",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Brunt skrog med to lyse sejl, sorte mærker og piratflag.",
@@ -174,7 +166,6 @@
     },
     {
       "id": "tema62-yellow-submarine",
-      "name": "Gul ubåd",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Afrundet ubåd med blå koøjer og gråt periskop.",
@@ -193,7 +184,6 @@
     },
     {
       "id": "tema62-container-ship",
-      "name": "Containerskib",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Blåt fragtskib med seks farvede containere og høj hvid bro.",
@@ -214,7 +204,6 @@
     },
     {
       "id": "tema62-car-ferry",
-      "name": "Bilfærge",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Færge med to biler på vogndækket og en høj hvid overbygning.",
@@ -236,7 +225,6 @@
     },
     {
       "id": "tema62-cruise-liner",
-      "name": "Krydstogtskib",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Trappede passagerdæk med mange vinduer og rød skorsten.",
@@ -258,7 +246,6 @@
     },
     {
       "id": "tema62-paddle-steamer",
-      "name": "Hjuldamper",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "To høje skorstene, hvide dæk og et stort orange skovlhjul.",
@@ -280,7 +267,6 @@
     },
     {
       "id": "tema62-aircraft-carrier",
-      "name": "Hangarskib",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Set oppefra med landingsbane, fly og forskudt kommandobro.",
@@ -301,7 +287,6 @@
     },
     {
       "id": "tema62-titanic",
-      "name": "Titanic",
       "cat": "Skibe",
       "collection": "temaer-62",
       "description": "Titanic i forenklet sideprofil med fire gule skorstene med sorte toppe, hvide passagerdæk og sort skrog over en rød vandlinje.",
@@ -322,7 +307,6 @@
     },
     {
       "id": "tema62-tulip",
-      "name": "Tulipan",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Rød blomsterkop med tre spidse kronblade og et bredt grønt blad.",
@@ -347,7 +331,6 @@
     },
     {
       "id": "tema62-daisy",
-      "name": "Marguerit",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Hvide kronblade omkring en gul midte.",
@@ -372,7 +355,6 @@
     },
     {
       "id": "tema62-poppy",
-      "name": "Valmue",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Brede røde kronblade og en mørk frømidte.",
@@ -397,7 +379,6 @@
     },
     {
       "id": "tema62-lavender",
-      "name": "Lavendel",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Høj lilla blomsterstand på en slank grøn stilk.",
@@ -425,7 +406,6 @@
     },
     {
       "id": "tema62-cornflower",
-      "name": "Kornblomst",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Takkede blå kronblade og en lilla midte.",
@@ -450,7 +430,6 @@
     },
     {
       "id": "tema62-daffodil",
-      "name": "Påskelilje",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Gule kronblade omkring en orange trompet.",
@@ -479,7 +458,6 @@
     },
     {
       "id": "tema62-lily",
-      "name": "Lilje",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Lange hvide kronblade med gul støvdrager på en høj stilk.",
@@ -509,7 +487,6 @@
     },
     {
       "id": "tema62-lotus",
-      "name": "Lotusblomst",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Lyserøde kronblade i lag over et bredt grønt flydeblad.",
@@ -529,7 +506,6 @@
     },
     {
       "id": "tema62-lily-of-valley",
-      "name": "Liljekonval",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Tre hængende hvide blomster på buede grønne stilke.",
@@ -558,7 +534,6 @@
     },
     {
       "id": "tema62-blooming-cactus",
-      "name": "Blomstrende kaktus",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Grøn kaktus med to arme og små lyserøde blomster.",
@@ -587,7 +562,6 @@
     },
     {
       "id": "tema62-sunflower",
-      "name": "Solsikke",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Gule kronblade omkring en stor brun midte med lyse frø.",
@@ -621,7 +595,6 @@
     },
     {
       "id": "tema62-rose",
-      "name": "Rose",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Røde og lyserøde kronblade i en spiral over grønne blade.",
@@ -654,7 +627,6 @@
     },
     {
       "id": "tema62-orchid",
-      "name": "Orkidé",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Fem brede lilla kronblade omkring en lyserød midte og en hvid læbe.",
@@ -688,7 +660,6 @@
     },
     {
       "id": "tema62-hibiscus",
-      "name": "Hibiscus",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Lyserøde kronblade, rød midte og en lang gul støvdrager.",
@@ -722,7 +693,6 @@
     },
     {
       "id": "tema62-dahlia",
-      "name": "Dahlia",
       "cat": "Blomster",
       "collection": "temaer-62",
       "description": "Lilla og lyserøde kronblade i tætte ringe omkring en gul midte.",
@@ -756,7 +726,6 @@
     },
     {
       "id": "tema62-toucan",
-      "name": "Tukan",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Stor gulorange næbprofil, lys kind og sort hale.",
@@ -776,7 +745,6 @@
     },
     {
       "id": "tema62-meerkat",
-      "name": "Surikat",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Oprejst surikat med mørke øjenfelter, små poter og lang hale.",
@@ -798,7 +766,6 @@
     },
     {
       "id": "tema62-pufferfish",
-      "name": "Kuglefisk",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Rund gul fisk med pigge, sort øje og lille lys mund.",
@@ -819,7 +786,6 @@
     },
     {
       "id": "tema62-axolotl",
-      "name": "Axolotl",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Lyserød krop med forgrenede lilla gæller, små fødder og buet hale.",
@@ -840,7 +806,6 @@
     },
     {
       "id": "tema62-sloth",
-      "name": "Dovendyr",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Hænger i en gren med lange arme og et lyst ansigt.",
@@ -861,7 +826,6 @@
     },
     {
       "id": "tema62-capybara",
-      "name": "Kapivar",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Bred brun krop med stump snude, små ører og korte ben.",
@@ -881,7 +845,6 @@
     },
     {
       "id": "tema62-tapir",
-      "name": "Malajtapir",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Sort tapir med hvid sadel og kort hængende snabel.",
@@ -901,7 +864,6 @@
     },
     {
       "id": "tema62-chameleon",
-      "name": "Kamæleon",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Grøn profil med rygkam, gribefødder og en oprullet hale.",
@@ -923,7 +885,6 @@
     },
     {
       "id": "tema62-lemur",
-      "name": "Ringhalet lemur",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Grå lemur med oprejst sort-hvid hale og lyse øjenfelter.",
@@ -946,7 +907,6 @@
     },
     {
       "id": "tema62-red-panda",
-      "name": "Rød panda",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Rød pels, lyse ansigtstegninger, mørke ben og stribet hale.",
@@ -975,7 +935,6 @@
     },
     {
       "id": "tema62-pangolin",
-      "name": "Skældyr",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Lang tilspidset hale, smal snude og lysebrune skæl.",
@@ -998,7 +957,6 @@
     },
     {
       "id": "tema62-okapi",
-      "name": "Okapi",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Brun krop med store ører, lang hals og stribede ben.",
@@ -1025,7 +983,6 @@
     },
     {
       "id": "tema62-mandrill",
-      "name": "Mandril",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Blå kinder, rød næse, hvid øjenbrynsstribe og gult skæg.",
@@ -1051,7 +1008,6 @@
     },
     {
       "id": "tema62-sea-turtle",
-      "name": "Havskildpadde",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Set oppefra med fire luffer og et mønstret grønt skjold.",
@@ -1076,7 +1032,6 @@
     },
     {
       "id": "tema62-blue-morpho-butterfly",
-      "name": "Blå morphosommerfugl",
       "cat": "Eksotiske dyr",
       "collection": "temaer-62",
       "description": "Brede blå vinger med mørke kanter, lysere felter og sort krop.",
@@ -1102,7 +1057,6 @@
     },
     {
       "id": "tema62-juventus",
-      "name": "Juventus",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Juventus-mærke med sort dobbelt J på hvidt felt.",
@@ -1121,7 +1075,6 @@
     },
     {
       "id": "tema62-real-madrid",
-      "name": "Real Madrid",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Real Madrid-mærke med kongekrone, guldring, blåt skråbånd og monogram.",
@@ -1148,7 +1101,6 @@
     },
     {
       "id": "tema62-barcelona",
-      "name": "FC Barcelona",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Barcelona-skjold med rødt kors, catalanske striber og bold over blå-røde striber.",
@@ -1174,7 +1126,6 @@
     },
     {
       "id": "tema62-liverpool",
-      "name": "Liverpool FC",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Liverpool-skjold med rød Liver bird, grøn port og grønt bundbånd.",
@@ -1201,7 +1152,6 @@
     },
     {
       "id": "tema62-manchester-united",
-      "name": "Manchester United",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Manchester United-mærke med røde navnebånd, gult skib og djævel med trefork.",
@@ -1227,7 +1177,6 @@
     },
     {
       "id": "tema62-arsenal",
-      "name": "Arsenal",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Arsenal-skjold med guldkant, rødt felt og tydelig gylden kanon med hjul.",
@@ -1253,7 +1202,6 @@
     },
     {
       "id": "tema62-dortmund",
-      "name": "Borussia Dortmund",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet gult Dortmund-rundmærke med sort rand og læselige BVB- og 09-bogstavformer.",
@@ -1280,7 +1228,6 @@
     },
     {
       "id": "tema62-bayern-muenchen",
-      "name": "Bayern München",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Bayern-rundmærke med rød navnering og blå-hvide bayerske ruder.",
@@ -1309,7 +1256,6 @@
     },
     {
       "id": "tema62-ac-milan",
-      "name": "AC Milan",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet AC Milan-oval med rød-sortstribet venstre felt, rødt kors og sorte bogstavdetaljer.",
@@ -1342,7 +1288,6 @@
     },
     {
       "id": "tema62-atletico-madrid",
-      "name": "Atlético Madrid",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Atlético-skjold med rød-hvide striber, syv hvide stjerner og bjørn ved et grønt træ.",
@@ -1371,7 +1316,6 @@
     },
     {
       "id": "tema62-ajax",
-      "name": "Ajax",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet klassisk Ajax-rundmærke med sort hjelmklædt helteprofil og røde sidebuer.",
@@ -1400,7 +1344,6 @@
     },
     {
       "id": "tema62-fc-porto",
-      "name": "FC Porto",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Porto-våben med grøn drage, gylden krone, blå-hvide striber og lille rødt midterskjold.",
@@ -1433,7 +1376,6 @@
     },
     {
       "id": "tema62-chelsea",
-      "name": "Chelsea FC",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Chelsea-rundmærke med blå oprejst løve, krum gylden bispestav og røde roser.",
@@ -1462,7 +1404,6 @@
     },
     {
       "id": "tema62-psg",
-      "name": "Paris Saint-Germain",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet PSG-rundmærke med rødt Eiffeltårn, gylden lilje og hvidt navnebånd.",
@@ -1491,7 +1432,6 @@
     },
     {
       "id": "tema62-inter",
-      "name": "Inter",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Inter-rundmærke med blå-sort ring og hvide sammenflettede I- og M-bogstaver.",
@@ -1520,7 +1460,6 @@
     },
     {
       "id": "tema62-manchester-city",
-      "name": "Manchester City",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Manchester City-rundmærke med lyseblå ring, gyldent tremastet skib og rød Lancashire-rose.",
@@ -1549,7 +1488,6 @@
     },
     {
       "id": "tema62-tottenham",
-      "name": "Tottenham Hotspur",
       "cat": "Klublogoer",
       "collection": "temaer-62",
       "description": "Forenklet Tottenham-mærke med mørkeblå hane i profil stående på en fodbold.",
@@ -1583,7 +1521,6 @@
     },
     {
       "id": "biler20-lille-bybil",
-      "name": "Lille bybil",
       "cat": "Køretøjer",
       "collection": "biler-og-logoer-20",
       "description": "Lille blå bil med lys rude, gule lygter og sorte hjul.",
@@ -1599,7 +1536,6 @@
     },
     {
       "id": "biler20-sportsvogn",
-      "name": "Sportsvogn",
       "cat": "Køretøjer",
       "collection": "biler-og-logoer-20",
       "description": "Lav rød sportsvogn med skrå forrude og brede hjul.",
@@ -1616,7 +1552,6 @@
     },
     {
       "id": "biler20-formelbil",
-      "name": "Formelbil",
       "cat": "Køretøjer",
       "collection": "biler-og-logoer-20",
       "description": "Formelbil set ovenfra med fire frie hjul og to spoilere.",
@@ -1638,7 +1573,6 @@
     },
     {
       "id": "biler20-politibil",
-      "name": "Politibil",
       "cat": "Køretøjer",
       "collection": "biler-og-logoer-20",
       "description": "Blå og hvid politibil med rødt og blåt blink.",
@@ -1657,7 +1591,6 @@
     },
     {
       "id": "biler20-brandbil",
-      "name": "Brandbil",
       "cat": "Køretøjer",
       "collection": "biler-og-logoer-20",
       "description": "Stor rød brandbil med grå stige og hvide rum langs siden.",
@@ -1678,7 +1611,6 @@
     },
     {
       "id": "biler20-monstertruck",
-      "name": "Monstertruck",
       "cat": "Køretøjer",
       "collection": "biler-og-logoer-20",
       "description": "Grøn monstertruck med højt chassis og store grå hjulnav.",
@@ -1699,7 +1631,6 @@
     },
     {
       "id": "biler20-volkswagen",
-      "name": "Volkswagen",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Blåt cirkelemblem med et hvidt V over et W; forenklet til hele brikker.",
@@ -1726,7 +1657,6 @@
     },
     {
       "id": "biler20-bmw",
-      "name": "BMW",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Sort ring med blå og hvide kvarterer; bogstaverne er udeladt i denne brikfortolkning.",
@@ -1753,7 +1683,6 @@
     },
     {
       "id": "biler20-mercedes-benz",
-      "name": "Mercedes-Benz",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Sort tretakket stjerne inde i en ring på hvid baggrund.",
@@ -1780,7 +1709,6 @@
     },
     {
       "id": "biler20-audi",
-      "name": "Audi",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Fire sorte ringe i en vandret kæde med hvide felter imellem.",
@@ -1799,7 +1727,6 @@
     },
     {
       "id": "biler20-tesla",
-      "name": "Tesla",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Rødt T med buet overkant og en tilspidset lodret stamme.",
@@ -1820,7 +1747,6 @@
     },
     {
       "id": "biler20-renault",
-      "name": "Renault",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "En sort, høj diamant med hvid midte, som en kompakt klassisk brikfortolkning.",
@@ -1843,7 +1769,6 @@
     },
     {
       "id": "biler20-mitsubishi",
-      "name": "Mitsubishi",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Tre røde romber samlet i et tredelt mærke.",
@@ -1863,7 +1788,6 @@
     },
     {
       "id": "biler20-chevrolet",
-      "name": "Chevrolet",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Et gyldent butterfly-mærke med et bredt tværbånd.",
@@ -1881,7 +1805,6 @@
     },
     {
       "id": "biler20-volvo",
-      "name": "Volvo",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Cirkel med pil mod øverste højre hjørne og blåt midterbånd; teksten er udeladt.",
@@ -1909,7 +1832,6 @@
     },
     {
       "id": "biler20-skoda",
-      "name": "Škoda",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Grøn vinget pil og cirkel på hvidt; forenklet efter Škodas officielle emblem.",
@@ -1936,7 +1858,6 @@
     },
     {
       "id": "biler20-ferrari",
-      "name": "Ferrari",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Gult skjold med en stejlende sort hest og italiensk trikolore. Små bogstaver er udeladt.",
@@ -1967,7 +1888,6 @@
     },
     {
       "id": "biler20-lamborghini",
-      "name": "Lamborghini",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Sort skjold med gylden kant og en gylden tyr. Bogstaverne er udeladt.",
@@ -1996,7 +1916,6 @@
     },
     {
       "id": "biler20-porsche",
-      "name": "Porsche",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Gyldent våbenskjold med røde og sorte felter, gevirer og en lille hest i midten. Tekst er udeladt.",
@@ -2027,7 +1946,6 @@
     },
     {
       "id": "biler20-mclaren",
-      "name": "McLaren",
       "cat": "Billogoer",
       "collection": "biler-og-logoer-20",
       "description": "Orange fartmærke som en buet pil. Ordmærket er udeladt.",
@@ -2047,7 +1965,6 @@
     },
     {
       "id": "halloween20-graeskarlygte",
-      "name": "Græskarlygte",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Orange græskar med mørke øjne og et skævt smil.",
@@ -2067,7 +1984,6 @@
     },
     {
       "id": "halloween20-lille-spoegelse",
-      "name": "Lille spøgelse",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et venligt hvidt spøgelse med tre flagrende flige.",
@@ -2086,7 +2002,6 @@
     },
     {
       "id": "halloween20-heksehat",
-      "name": "Heksehat",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Spids lilla hat med orange bånd og gyldent spænde.",
@@ -2105,7 +2020,6 @@
     },
     {
       "id": "halloween20-edderkop",
-      "name": "Edderkop",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Otte kantede ben og to gule øjne.",
@@ -2123,7 +2037,6 @@
     },
     {
       "id": "halloween20-slikmajs",
-      "name": "Slikmajs",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En trekantet halloween-slikbid i hvid, orange og gul.",
@@ -2142,7 +2055,6 @@
     },
     {
       "id": "halloween20-sort-kat",
-      "name": "Sort kat",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Sort kat med spidse ører, gule øjne og løftet hale.",
@@ -2164,7 +2076,6 @@
     },
     {
       "id": "halloween20-gravsten",
-      "name": "Gravsten",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Afrundet grå gravsten med et mørkt kors og græs ved foden.",
@@ -2184,7 +2095,6 @@
     },
     {
       "id": "halloween20-spoegelseslys",
-      "name": "Spøgelseslys",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et hvidt stearinlys med spøgelsesansigt og varm flamme.",
@@ -2207,7 +2117,6 @@
     },
     {
       "id": "halloween20-flyvende-kost",
-      "name": "Flyvende kost",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et skråt brunt skaft med en bred gylden kost.",
@@ -2231,7 +2140,6 @@
     },
     {
       "id": "halloween20-monsteroeje",
-      "name": "Monsterøje",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et stort hvidt øje med grøn iris og et lille lysglimt.",
@@ -2250,7 +2158,6 @@
     },
     {
       "id": "halloween20-slikpose",
-      "name": "Slikpose",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En orange pose med hank og et grinende græskaransigt.",
@@ -2270,7 +2177,6 @@
     },
     {
       "id": "halloween20-heksegryde",
-      "name": "Heksegryde",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Sort gryde med hanke og boblende grøn bryg.",
@@ -2290,7 +2196,6 @@
     },
     {
       "id": "halloween20-kranie",
-      "name": "Kranie",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Hvidt kranie med mørke øjenhuler og en række tænder.",
@@ -2310,7 +2215,6 @@
     },
     {
       "id": "halloween20-mumie",
-      "name": "Mumie",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En indpakket mumie med grå bandager og to mørke øjne.",
@@ -2337,7 +2241,6 @@
     },
     {
       "id": "halloween20-vampyr",
-      "name": "Vampyr",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En venlig vampyr med høj rød kappe og små hvide hugtænder.",
@@ -2364,7 +2267,6 @@
     },
     {
       "id": "halloween20-groent-monster",
-      "name": "Grønt monster",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et grønt monster med fladt hår, sidebolte og lilla jakke.",
@@ -2391,7 +2293,6 @@
     },
     {
       "id": "halloween20-heks",
-      "name": "Heks",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En lille heks med spids hat, brunt hår og lilla kjole.",
@@ -2420,7 +2321,6 @@
     },
     {
       "id": "halloween20-hjemsoegt-hus",
-      "name": "Hjemsøgt hus",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "To spidse tårne, lysende vinduer og en mørk dør.",
@@ -2447,7 +2347,6 @@
     },
     {
       "id": "halloween20-varulv",
-      "name": "Varulv",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Spidse ører, gulglødende øjne, lys snude og store poter.",
@@ -2474,7 +2373,6 @@
     },
     {
       "id": "halloween20-skelet",
-      "name": "Skelet",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et dansende hvidt skelet med synlige ribben og lange ben.",
@@ -2502,7 +2400,6 @@
     },
     {
       "id": "halloween20-flagermus",
-      "name": "Flagermus",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En lille sort flagermus med brede vinger og et gyldent blik.",
@@ -2520,7 +2417,6 @@
     },
     {
       "id": "halloween20-spindelvaev",
-      "name": "Spindelvæv",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et hvidt net med eger og forbundne tråde.",
@@ -2543,7 +2439,6 @@
     },
     {
       "id": "halloween20-knogle",
-      "name": "Knogle",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En hvid knogle med to runde ender.",
@@ -2563,7 +2458,6 @@
     },
     {
       "id": "halloween20-trylledrik",
-      "name": "Trylledrik",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En rund flaske med grøn bryg, hvidt lysglimt og brun prop.",
@@ -2586,7 +2480,6 @@
     },
     {
       "id": "halloween20-slikkepind",
-      "name": "Slikkepind",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En lilla halloween-slikkepind med lyserøde striber.",
@@ -2609,7 +2502,6 @@
     },
     {
       "id": "halloween20-heksestoevle",
-      "name": "Heksestøvle",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Lilla støvle med et lille spænde og en opadbøjet spids.",
@@ -2630,7 +2522,6 @@
     },
     {
       "id": "halloween20-maanesegl",
-      "name": "Månesegl",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En gul halvmåne med en åben mørk side.",
@@ -2651,7 +2542,6 @@
     },
     {
       "id": "halloween20-kiste",
-      "name": "Kiste",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En brun kiste med okkergul lågflade og mørkt kors.",
@@ -2672,7 +2562,6 @@
     },
     {
       "id": "halloween20-giftig-svamp",
-      "name": "Giftig svamp",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Lilla svampehat med lyse pletter og en lille stilk.",
@@ -2693,7 +2582,6 @@
     },
     {
       "id": "halloween20-spoegelsesballon",
-      "name": "Spøgelsesballon",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En hvid ballon med spøgelsesansigt og en snoet snor.",
@@ -2717,7 +2605,6 @@
     },
     {
       "id": "halloween20-lanterne",
-      "name": "Lanterne",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En sort lanterne med hank og varmt lys i midten.",
@@ -2739,7 +2626,6 @@
     },
     {
       "id": "halloween20-ravn-paa-gren",
-      "name": "Ravn på gren",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En sort ravn med lyst øje, gult næb og en brun gren.",
@@ -2762,7 +2648,6 @@
     },
     {
       "id": "halloween20-zombiehaand",
-      "name": "Zombiehånd",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En grøn hånd med fem fingre, der kommer op af jorden.",
@@ -2789,7 +2674,6 @@
     },
     {
       "id": "halloween20-besvaergelsesbog",
-      "name": "Besværgelsesbog",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En lilla tryllebog med gylden ramme, kranie og hvide sider.",
@@ -2812,7 +2696,6 @@
     },
     {
       "id": "halloween20-fugleskraemsel",
-      "name": "Fugleskræmsel",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et græskarhoved på en rød skjorte med stråhænder og blå bukser.",
@@ -2838,7 +2721,6 @@
     },
     {
       "id": "halloween20-graeskarkaret",
-      "name": "Græskarkaret",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En orange eventyrkaret med gul vinduesramme og to store hjul.",
@@ -2864,7 +2746,6 @@
     },
     {
       "id": "halloween20-spoegelsetrae",
-      "name": "Spøgelsestræ",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et bart brunt træ med krogede grene og et ansigt i stammen.",
@@ -2891,7 +2772,6 @@
     },
     {
       "id": "halloween20-doedningeskib",
-      "name": "Dødningeskib",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Et mørkt sørøverskib med kraniesejl og bølger under skroget.",
@@ -2918,7 +2798,6 @@
     },
     {
       "id": "halloween20-doedningsnoegle",
-      "name": "Dødningsnøgle",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "En lang brun nøgle med et hvidt kranie som nøglehoved.",
@@ -2941,7 +2820,6 @@
     },
     {
       "id": "halloween20-graeskartaarn",
-      "name": "Græskartårn",
       "cat": "Halloween",
       "collection": "halloween-40",
       "description": "Tre forskellige græskar stablet oven på hinanden.",
@@ -2970,7 +2848,6 @@
     },
     {
       "id": "dyr20-bi",
-      "name": "Bi",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Gule og sorte striber, hvide vinger og små ben.",
@@ -2988,7 +2865,6 @@
     },
     {
       "id": "dyr20-mariehoene",
-      "name": "Mariehøne",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Rød krop med sorte prikker, hoved og midterstribe.",
@@ -3007,7 +2883,6 @@
     },
     {
       "id": "dyr20-snegl",
-      "name": "Snegl",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Et rundt sneglehus med spiral og to følehorn.",
@@ -3025,7 +2900,6 @@
     },
     {
       "id": "dyr20-krabbe",
-      "name": "Krabbe",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Røde kløer, hævede øjne og ben ud til siderne.",
@@ -3043,7 +2917,6 @@
     },
     {
       "id": "dyr20-froe",
-      "name": "Frø",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Store øjne, bred mund og grønne bagben.",
@@ -3061,7 +2934,6 @@
     },
     {
       "id": "dyr20-spurv",
-      "name": "Spurv",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "En lille brun fugl med lys mave og orange næb.",
@@ -3080,7 +2952,6 @@
     },
     {
       "id": "dyr20-mus",
-      "name": "Mus",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Runde ører, lyserød næse og buet hale.",
@@ -3100,7 +2971,6 @@
     },
     {
       "id": "dyr20-raev",
-      "name": "Ræv",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Spidse ører, hvide kinder og sort snude.",
@@ -3122,7 +2992,6 @@
     },
     {
       "id": "dyr20-egern",
-      "name": "Egern",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "En stor buet hale og lys mave.",
@@ -3144,7 +3013,6 @@
     },
     {
       "id": "dyr20-pindsvin",
-      "name": "Pindsvin",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Pigget brun ryg og en lille lys snude.",
@@ -3162,7 +3030,6 @@
     },
     {
       "id": "dyr20-flamingo",
-      "name": "Flamingo",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Lyserød fugl med bøjet næb og ét bøjet ben.",
@@ -3188,7 +3055,6 @@
     },
     {
       "id": "dyr20-gris",
-      "name": "Gris",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Lyserøde ører, rund tryne og mørke klove.",
@@ -3209,7 +3075,6 @@
     },
     {
       "id": "dyr20-faar",
-      "name": "Får",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Hvid uld og et mørkt ansigt med lyse øjne.",
@@ -3229,7 +3094,6 @@
     },
     {
       "id": "dyr20-hest",
-      "name": "Hest",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Brun hest med manke, lang snude, hale og hove.",
@@ -3251,7 +3115,6 @@
     },
     {
       "id": "dyr20-elefant",
-      "name": "Elefant",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Stor grå elefant med øre, stødtand og nedhængende snabel.",
@@ -3275,7 +3138,6 @@
     },
     {
       "id": "dyr20-giraf",
-      "name": "Giraf",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Lang gul hals, brune pletter og små horn.",
@@ -3304,7 +3166,6 @@
     },
     {
       "id": "dyr20-loeve",
-      "name": "Løve",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "En stor brun manke omkring et gyldent løveansigt.",
@@ -3331,7 +3192,6 @@
     },
     {
       "id": "dyr20-tiger",
-      "name": "Tiger",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Orange pels med sorte striber, ører og hvid snude.",
@@ -3356,7 +3216,6 @@
     },
     {
       "id": "dyr20-krokodille",
-      "name": "Krokodille",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Lang grøn krop, takket ryg og en mund med hvide tænder.",
@@ -3377,7 +3236,6 @@
     },
     {
       "id": "dyr20-blaeksprutte",
-      "name": "Blæksprutte",
       "cat": "Dyr",
       "collection": "dyr-20",
       "description": "Et rundt hoved med store øjne og otte snoede arme.",
@@ -3402,7 +3260,6 @@
     },
     {
       "id": "motiver50-01",
-      "name": "Stjernestav",
       "cat": "Magi",
       "collection": "motiver-50",
       "collageNumber": 1,
@@ -3423,7 +3280,6 @@
     },
     {
       "id": "motiver50-02",
-      "name": "Flyvende nøgle",
       "cat": "Magi",
       "collection": "motiver-50",
       "collageNumber": 2,
@@ -3444,7 +3300,6 @@
     },
     {
       "id": "motiver50-03",
-      "name": "Eliksirflaske",
       "cat": "Magi",
       "collection": "motiver-50",
       "collageNumber": 3,
@@ -3468,7 +3323,6 @@
     },
     {
       "id": "motiver50-04",
-      "name": "Den gyldne tryllebog",
       "cat": "Magi",
       "collection": "motiver-50",
       "collageNumber": 4,
@@ -3493,7 +3347,6 @@
     },
     {
       "id": "motiver50-05",
-      "name": "Føniks",
       "cat": "Magi",
       "collection": "motiver-50",
       "collageNumber": 5,
@@ -3520,7 +3373,6 @@
     },
     {
       "id": "motiver50-06",
-      "name": "Diamant",
       "cat": "Minecraft",
       "collection": "motiver-50",
       "collageNumber": 6,
@@ -3540,7 +3392,6 @@
     },
     {
       "id": "motiver50-07",
-      "name": "Fakkel",
       "cat": "Minecraft",
       "collection": "motiver-50",
       "collageNumber": 7,
@@ -3563,7 +3414,6 @@
     },
     {
       "id": "motiver50-08",
-      "name": "Blokkiste",
       "cat": "Minecraft",
       "collection": "motiver-50",
       "collageNumber": 8,
@@ -3582,7 +3432,6 @@
     },
     {
       "id": "motiver50-09",
-      "name": "Lyserød axolotl",
       "cat": "Minecraft",
       "collection": "motiver-50",
       "collageNumber": 9,
@@ -3604,7 +3453,6 @@
     },
     {
       "id": "motiver50-10",
-      "name": "Blokskelet",
       "cat": "Minecraft",
       "collection": "motiver-50",
       "collageNumber": 10,
@@ -3633,7 +3481,6 @@
     },
     {
       "id": "motiver50-11",
-      "name": "Lilla fangebold",
       "cat": "Pokémon",
       "collection": "motiver-50",
       "collageNumber": 11,
@@ -3651,7 +3498,6 @@
     },
     {
       "id": "motiver50-12",
-      "name": "Kuglerund sanger",
       "cat": "Pokémon",
       "collection": "motiver-50",
       "collageNumber": 12,
@@ -3671,7 +3517,6 @@
     },
     {
       "id": "motiver50-13",
-      "name": "And med hovedpine",
       "cat": "Pokémon",
       "collection": "motiver-50",
       "collageNumber": 13,
@@ -3698,7 +3543,6 @@
     },
     {
       "id": "motiver50-14",
-      "name": "Den sovende kæmpe",
       "cat": "Pokémon",
       "collection": "motiver-50",
       "collageNumber": 14,
@@ -3728,7 +3572,6 @@
     },
     {
       "id": "motiver50-15",
-      "name": "Stenven",
       "cat": "Pokémon",
       "collection": "motiver-50",
       "collageNumber": 15,
@@ -3750,7 +3593,6 @@
     },
     {
       "id": "motiver50-16",
-      "name": "Guldmønt",
       "cat": "Platformspil",
       "collection": "motiver-50",
       "collageNumber": 16,
@@ -3769,7 +3611,6 @@
     },
     {
       "id": "motiver50-17",
-      "name": "Kraftstjerne",
       "cat": "Platformspil",
       "collection": "motiver-50",
       "collageNumber": 17,
@@ -3790,7 +3631,6 @@
     },
     {
       "id": "motiver50-18",
-      "name": "Det runde spøgelse",
       "cat": "Platformspil",
       "collection": "motiver-50",
       "collageNumber": 18,
@@ -3810,7 +3650,6 @@
     },
     {
       "id": "motiver50-19",
-      "name": "Rød skildpaddeskal",
       "cat": "Platformspil",
       "collection": "motiver-50",
       "collageNumber": 19,
@@ -3829,7 +3668,6 @@
     },
     {
       "id": "motiver50-20",
-      "name": "Plante i grønt rør",
       "cat": "Platformspil",
       "collection": "motiver-50",
       "collageNumber": 20,
@@ -3858,7 +3696,6 @@
     },
     {
       "id": "motiver50-21",
-      "name": "Lille ælling",
       "cat": "Dyr",
       "collection": "motiver-50",
       "collageNumber": 21,
@@ -3877,7 +3714,6 @@
     },
     {
       "id": "motiver50-22",
-      "name": "Kanin",
       "cat": "Dyr",
       "collection": "motiver-50",
       "collageNumber": 22,
@@ -3899,7 +3735,6 @@
     },
     {
       "id": "motiver50-23",
-      "name": "Panda",
       "cat": "Dyr",
       "collection": "motiver-50",
       "collageNumber": 23,
@@ -3923,7 +3758,6 @@
     },
     {
       "id": "motiver50-24",
-      "name": "Havskildpadde",
       "cat": "Dyr",
       "collection": "motiver-50",
       "collageNumber": 24,
@@ -3946,7 +3780,6 @@
     },
     {
       "id": "motiver50-25",
-      "name": "Søhest",
       "cat": "Dyr",
       "collection": "motiver-50",
       "collageNumber": 25,
@@ -3971,7 +3804,6 @@
     },
     {
       "id": "motiver50-26",
-      "name": "Flagermus",
       "cat": "Fantasi",
       "collection": "motiver-50",
       "collageNumber": 26,
@@ -3989,7 +3821,6 @@
     },
     {
       "id": "motiver50-27",
-      "name": "Venlig trold",
       "cat": "Fantasi",
       "collection": "motiver-50",
       "collageNumber": 27,
@@ -4010,7 +3841,6 @@
     },
     {
       "id": "motiver50-28",
-      "name": "Enhjørning",
       "cat": "Fantasi",
       "collection": "motiver-50",
       "collageNumber": 28,
@@ -4037,7 +3867,6 @@
     },
     {
       "id": "motiver50-29",
-      "name": "Ilddrage",
       "cat": "Fantasi",
       "collection": "motiver-50",
       "collageNumber": 29,
@@ -4065,7 +3894,6 @@
     },
     {
       "id": "motiver50-30",
-      "name": "Havmonster",
       "cat": "Fantasi",
       "collection": "motiver-50",
       "collageNumber": 30,
@@ -4091,7 +3919,6 @@
     },
     {
       "id": "motiver50-31",
-      "name": "Mini-racer",
       "cat": "Køretøjer",
       "collection": "motiver-50",
       "collageNumber": 31,
@@ -4108,7 +3935,6 @@
     },
     {
       "id": "motiver50-32",
-      "name": "Helikopter",
       "cat": "Køretøjer",
       "collection": "motiver-50",
       "collageNumber": 32,
@@ -4129,7 +3955,6 @@
     },
     {
       "id": "motiver50-33",
-      "name": "Gravemaskine",
       "cat": "Køretøjer",
       "collection": "motiver-50",
       "collageNumber": 33,
@@ -4151,7 +3976,6 @@
     },
     {
       "id": "motiver50-34",
-      "name": "Brandbil",
       "cat": "Køretøjer",
       "collection": "motiver-50",
       "collageNumber": 34,
@@ -4173,7 +3997,6 @@
     },
     {
       "id": "motiver50-35",
-      "name": "Damplokomotiv",
       "cat": "Køretøjer",
       "collection": "motiver-50",
       "collageNumber": 35,
@@ -4197,7 +4020,6 @@
     },
     {
       "id": "motiver50-36",
-      "name": "UFO",
       "cat": "Rum og robotter",
       "collection": "motiver-50",
       "collageNumber": 36,
@@ -4216,7 +4038,6 @@
     },
     {
       "id": "motiver50-37",
-      "name": "Minirobot",
       "cat": "Rum og robotter",
       "collection": "motiver-50",
       "collageNumber": 37,
@@ -4238,7 +4059,6 @@
     },
     {
       "id": "motiver50-38",
-      "name": "Rumhjelm",
       "cat": "Rum og robotter",
       "collection": "motiver-50",
       "collageNumber": 38,
@@ -4257,7 +4077,6 @@
     },
     {
       "id": "motiver50-39",
-      "name": "Astronaut",
       "cat": "Rum og robotter",
       "collection": "motiver-50",
       "collageNumber": 39,
@@ -4285,7 +4104,6 @@
     },
     {
       "id": "motiver50-40",
-      "name": "Rumstation",
       "cat": "Rum og robotter",
       "collection": "motiver-50",
       "collageNumber": 40,
@@ -4310,7 +4128,6 @@
     },
     {
       "id": "motiver50-41",
-      "name": "Kaktus",
       "cat": "Natur og eventyr",
       "collection": "motiver-50",
       "collageNumber": 41,
@@ -4331,7 +4148,6 @@
     },
     {
       "id": "motiver50-42",
-      "name": "Vulkan",
       "cat": "Natur og eventyr",
       "collection": "motiver-50",
       "collageNumber": 42,
@@ -4352,7 +4168,6 @@
     },
     {
       "id": "motiver50-43",
-      "name": "Planet med ring",
       "cat": "Natur og eventyr",
       "collection": "motiver-50",
       "collageNumber": 43,
@@ -4372,7 +4187,6 @@
     },
     {
       "id": "motiver50-44",
-      "name": "Piratskib",
       "cat": "Natur og eventyr",
       "collection": "motiver-50",
       "collageNumber": 44,
@@ -4399,7 +4213,6 @@
     },
     {
       "id": "motiver50-45",
-      "name": "Skattekiste",
       "cat": "Natur og eventyr",
       "collection": "motiver-50",
       "collageNumber": 45,
@@ -4422,7 +4235,6 @@
     },
     {
       "id": "motiver50-46",
-      "name": "Fodbold",
       "cat": "Leg og hygge",
       "collection": "motiver-50",
       "collageNumber": 46,
@@ -4442,7 +4254,6 @@
     },
     {
       "id": "motiver50-47",
-      "name": "Padelbat",
       "cat": "Leg og hygge",
       "collection": "motiver-50",
       "collageNumber": 47,
@@ -4466,7 +4277,6 @@
     },
     {
       "id": "motiver50-48",
-      "name": "Spilcontroller",
       "cat": "Leg og hygge",
       "collection": "motiver-50",
       "collageNumber": 48,
@@ -4485,7 +4295,6 @@
     },
     {
       "id": "motiver50-49",
-      "name": "Elguitar",
       "cat": "Leg og hygge",
       "collection": "motiver-50",
       "collageNumber": 49,
@@ -4509,7 +4318,6 @@
     },
     {
       "id": "motiver50-50",
-      "name": "Julegave",
       "cat": "Leg og hygge",
       "collection": "motiver-50",
       "collageNumber": 50,
@@ -4529,7 +4337,6 @@
     },
     {
       "id": "loeveskjold",
-      "name": "Løvens våbenskjold",
       "cat": "Magi",
       "description": "Rød/gul firedeling med en hel oprejst løve, løftede poter og buet hale. Skjoldet er forenklet efter billedreferencen og bygget uden hjelm og ydre ornamenter for at holde sig under 250 brikker.",
       "tip": "Byg den gyldne skjoldkant og den firedelte baggrund række for række. Okkerguld er løven, og sort adskiller den fra de gule felter. Slut med skjoldets spids.",
@@ -4557,7 +4364,6 @@
     },
     {
       "id": "slangeskjold",
-      "name": "Slangens kollegieskjold",
       "cat": "Magi",
       "description": "Et grønt skjold med sølvgrå kant og en snoet sølvgrå slange. Kompakt Plus-Plus-fortolkning uden tekst.",
       "tip": "Byg den sølvgrå kant omkring det grønne felt. Slangen slynger sig som et S. Hvid og sort markerer hovedet og øjet.",
@@ -4585,7 +4391,6 @@
     },
     {
       "id": "oerneskjold",
-      "name": "Ørnens kollegieskjold",
       "cat": "Magi",
       "description": "Et blåt skjold med bronze repræsenteret af brunt og en ørn med udbredte vinger. Kompakt Plus-Plus-fortolkning uden tekst.",
       "tip": "Byg den brune kant og de brede ørnevinger. Bevar de blå mellemrum mellem fjerene. Den gule brik i hovedet er næbbet.",
@@ -4613,7 +4418,6 @@
     },
     {
       "id": "graevlingeskjold",
-      "name": "Grævlingens kollegieskjold",
       "cat": "Magi",
       "description": "Et gult skjold med sort kant og et grævlingehoved med sorte og hvide striber. Kompakt Plus-Plus-fortolkning uden tekst.",
       "tip": "Byg den sorte kant omkring den gule baggrund. Hvide striber går ned fra ørerne. Slut med snuden og skjoldets spids.",
@@ -4641,7 +4445,6 @@
     },
     {
       "id": "lynmus",
-      "name": "Den gule lynmus",
       "cat": "Pokémon",
       "description": "En gul elektrisk mus med lange sortspidsede ører, røde kinder, brune fødder og en kantet lynhale.",
       "tip": "Ørerne bygges som to små dele og forbindes i hovedet. Halen sidder til højre. De røde felter er kinder.",
@@ -4667,7 +4470,6 @@
     },
     {
       "id": "ildfirben",
-      "name": "Det orange ildfirben",
       "cat": "Pokémon",
       "description": "Et venligt orange firben med stor snude, lys mave og en hale med gul og rød flamme.",
       "tip": "Hovedet vender mod venstre. Den lyse mave ligger midt på kroppen. Byg flammen som en lille del, der forbindes med halen.",
@@ -4693,7 +4495,6 @@
     },
     {
       "id": "vand-skildpadde",
-      "name": "Den blå vandskildpadde",
       "cat": "Pokémon",
       "description": "En blå skildpadde med stort hoved, brunt skjold med lys kant, lys mave og en lille krøllet hale.",
       "tip": "Byg det blå hoved først. Brun og hudfarve danner skjold og mave; blå felter i siderne er arme og hale.",
@@ -4717,7 +4518,6 @@
     },
     {
       "id": "froevaesen",
-      "name": "Det grønne frøvæsen",
       "cat": "Pokémon",
       "description": "Et grønt firbenet væsen med stor frøknop på ryggen, spidse ører, røde øjne og mørkegrønne pletter.",
       "tip": "Start med frøknoppen. Det brede grønne hoved vender mod venstre, og kroppen ligger under knoppen. De korte ben skal have tomme pladser imellem.",
@@ -4740,7 +4540,6 @@
     },
     {
       "id": "roed-hvid-fangebold",
-      "name": "Den røde og hvide fangebold",
       "cat": "Pokémon",
       "description": "En rund bold med rød overside, hvid underside og sort midterbånd med en hvid knap.",
       "tip": "Byg den røde halvdel først. Det sorte bånd går på tværs af midten, og den hvide brik midt i båndet er knappen.",
@@ -4760,7 +4559,6 @@
     },
     {
       "id": "brun-raev",
-      "name": "Den brune ven med store ører",
       "cat": "Pokémon",
       "description": "Et lille brunt rævelignende væsen med store mørke ører, lys halskrave og en busket hale med lys spids.",
       "tip": "Ørerne samles i hovedet. Den lyse krave omkranser halsen. Halen sidder til højre og forbindes med kroppen.",
@@ -4785,7 +4583,6 @@
     },
     {
       "id": "groent-blokmonster",
-      "name": "Det grønne blokmonster",
       "cat": "Minecraft",
       "description": "Et grønt blokmonster med firkantet hoved, mørke firkantede øjne, kantet mund og fire korte fødder.",
       "tip": "Hovedet er et grønt kvadrat med sort ansigt. Fortsæt med den smallere krop og slut med to adskilte fodgrupper.",
@@ -4809,7 +4606,6 @@
     },
     {
       "id": "blokbygger",
-      "name": "Blokbyggeren i blå bukser",
       "cat": "Minecraft",
       "description": "En firkantet eventyrer med brunt hår, mørkt skæg, lyseblå trøje og mørkeblå bukser.",
       "tip": "Byg det firkantede hoved først. Armene hænger langs den lyseblå trøje. Lad en tom kolonne skille de to ben nederst.",
@@ -4836,7 +4632,6 @@
     },
     {
       "id": "blokgris",
-      "name": "Den lyserøde blokgris",
       "cat": "Minecraft",
       "description": "En lyserød gris med firkantet krop, stort kantet hoved, mørke øjne og en bred snude.",
       "tip": "Det store hoved er til venstre og kroppen til højre. Den mørkere snude markeres med lilla, og de sorte felter nederst er klove.",
@@ -4856,7 +4651,6 @@
     },
     {
       "id": "diamantsvaerd",
-      "name": "Det lyseblå diamantsværd",
       "cat": "Minecraft",
       "description": "Et kantet lyseblåt sværd med mørkeblå kant, bred parerstang og brunt håndtag, vist på skrå.",
       "tip": "Start med spidsen øverst til højre. To brikker ved diagonale skift holder klingen sammen. Den brede blå tværdel er parerstangen.",
@@ -4880,7 +4674,6 @@
     },
     {
       "id": "diamanthakke",
-      "name": "Den lyseblå diamanthakke",
       "cat": "Minecraft",
       "description": "En hakke med buet lyseblåt hoved, mørkeblå kant og et langt brunt skaft på skrå.",
       "tip": "Byg hakkehovedet på tværs øverst. Skaftet forbindes under midten og fortsætter skråt ned mod venstre.",
@@ -4901,7 +4694,6 @@
     },
     {
       "id": "graesblok",
-      "name": "Græsblokken",
       "cat": "Minecraft",
       "description": "En firkantet jordblok med grøn græstop og brun jord med lyse stenpletter.",
       "tip": "Start med det grønne græs øverst. Fortsæt med den brune jord. De lyse og grå felter giver jorden et plettet blokmønster.",
@@ -4919,7 +4711,6 @@
     },
     {
       "id": "troldmand-med-briller",
-      "name": "Troldmanden med runde briller",
       "cat": "Magi",
       "description": "En ung troldmand med sort hår, runde sorte briller, rødt og gult halstørklæde, sort kappe og tryllestav.",
       "tip": "Start med håret. Brillernes sorte ringe har hudfarvede midterfelter. Den brune stav sidder i hånden til højre.",
@@ -4946,7 +4737,6 @@
     },
     {
       "id": "troldkvinde-med-boelget-haar",
-      "name": "Troldkvinden med bølget hår",
       "cat": "Magi",
       "description": "En kvik troldkvinde med stort brunt hår, sort kappe, rødt og gult halstørklæde og en bog under armen.",
       "tip": "Byg hårets brede brune ramme omkring ansigtet. Det blå felt til venstre er en bog med hvide sider.",
@@ -4973,7 +4763,6 @@
     },
     {
       "id": "roedhaaret-troldmand",
-      "name": "Den rødhårede troldmand",
       "cat": "Magi",
       "description": "En venlig troldmand med orange hår, fregner, grå trøje, sort kappe og rødt og gult halstørklæde.",
       "tip": "De orange brikker øverst er hår. To orange felter i ansigtet markerer fregner. Byg kappen omkring den grå trøje.",
@@ -4999,7 +4788,6 @@
     },
     {
       "id": "sneugle",
-      "name": "Den hvide postugle",
       "cat": "Magi",
       "description": "En hvid sneugle med store gule øjne, mørke pupiller, lille orange næb og grå fjertegninger.",
       "tip": "Byg hovedet først. De sorte brikker er pupiller inde i gule øjne. Fortsæt med de hvide vinger og slut med orange kløer.",
@@ -5022,7 +4810,6 @@
     },
     {
       "id": "talende-hat",
-      "name": "Den talende spidshat",
       "cat": "Magi",
       "description": "En gammel brun troldmandshat med bøjet spids, bred skygge og mørke folder, der danner et ansigt.",
       "tip": "Den bøjede spids vender mod højre. De sorte felter er øjne og mund. Nederste række danner hattens brede skygge.",
@@ -5042,7 +4829,6 @@
     },
     {
       "id": "gylden-vingebold",
-      "name": "Den gyldne vingebold",
       "cat": "Magi",
       "description": "En lille gylden bold med to lange hvide vinger og orange skygger.",
       "tip": "Byg vingespidserne som to små dele, der samles omkring den gule bold i midten. Orange felter giver bolden form.",
@@ -5058,7 +4844,6 @@
     },
     {
       "id": "troldmandsborg",
-      "name": "Borgen med de spidse tårne",
       "cat": "Magi",
       "description": "En grå troldmandsborg med tre tårne, blå spidse tage, gyldne vinduer og en stor brun port.",
       "tip": "Start tagene som tre små dele. De forbindes af borgmuren længere nede. Blå brikker er tage, gule er oplyste vinduer, og brun er porten.",
@@ -5084,7 +4869,6 @@
     },
     {
       "id": "flyvende-kost",
-      "name": "Den flyvende kost",
       "cat": "Magi",
       "description": "En flyvekost med langt brunt skaft og en bred gylden børste, vist på skrå.",
       "tip": "Skaftet løber skråt ned mod venstre. Ved diagonale skift bruges to brikker ved siden af hinanden, så kosten hænger sammen. Gul og orange danner børsten.",
@@ -5108,7 +4892,6 @@
     },
     {
       "id": "roed-kasket",
-      "name": "Helten med rød kasket",
       "cat": "Figurer",
       "description": "En kompakt helt med rød kasket, mørkt overskæg, blå smækbukser og hvide handsker.",
       "tip": "Start med kasketten. Hold de tomme pladser fri til armene og mellem benene. De to gule brikker er smækknapper.",
@@ -5134,7 +4917,6 @@
     },
     {
       "id": "groen-kasket",
-      "name": "Makkeren med grøn kasket",
       "cat": "Figurer",
       "description": "En høj, slank makker med grøn kasket, mørkt overskæg og blå smækbukser.",
       "tip": "Byg kasket og ansigt først. Fortsæt med grønne ærmer, blå smækbukser og de lange ben. De hvide felter er handsker.",
@@ -5162,7 +4944,6 @@
     },
     {
       "id": "lyseroed-prinsesse",
-      "name": "Prinsessen med gyldent hår",
       "cat": "Figurer",
       "description": "En prinsesse med gyldent hår, takket krone, lyserød kjole og blåt brystsmykke.",
       "tip": "Kronens tre spidser samles af rækken nedenunder. Byg håret på begge sider af ansigtet og lad nederdelen vokse udad.",
@@ -5191,7 +4972,6 @@
     },
     {
       "id": "groen-dinosaur",
-      "name": "Den grønne ven med store sko",
       "cat": "Figurer",
       "description": "En venlig grøn dinosaur i profil med stor snude, hvid mave, rødt rygfelt og orange sko.",
       "tip": "Start med øjnene og den store snude. Det røde felt ligger på ryggen til venstre, den hvide mave til højre. Slut med orange sko.",
@@ -5218,7 +4998,6 @@
     },
     {
       "id": "pigget-skildpaddekonge",
-      "name": "Kongen med det piggede skjold",
       "cat": "Figurer",
       "description": "En kraftig fantasikonge med grønt pigskjold, gulorange krop, rødt hår og lyse horn.",
       "tip": "Byg hornene og det røde hår øverst. Skjoldet er grønt med hvide pigge til venstre; snuden vender mod højre. Sorte felter markerer armbånd.",
@@ -5246,7 +5025,6 @@
     },
     {
       "id": "svampehat",
-      "name": "Den lille ven med svampehat",
       "cat": "Figurer",
       "description": "En lille figur med stor hvid hat med røde pletter, blå vest og brune sko.",
       "tip": "Byg den brede svampehat først. De røde felter er hattens pletter. Ansigtet og kroppen er smallere og skal være centreret under hatten.",
@@ -5273,7 +5051,6 @@
     },
     {
       "id": "hjerte",
-      "name": "Hjerte",
       "cat": "Figurer",
       "p": [
         ".RR...RR.",
@@ -5288,7 +5065,6 @@
     },
     {
       "id": "regnbue",
-      "name": "Regnbue",
       "cat": "Natur",
       "p": [
         "....RRRRRR....",
@@ -5302,7 +5078,6 @@
     },
     {
       "id": "sol",
-      "name": "Glad sol",
       "cat": "Natur",
       "p": [
         ".....O.....",
@@ -5320,7 +5095,6 @@
     },
     {
       "id": "trae",
-      "name": "Træ",
       "cat": "Natur",
       "p": [
         "....G....",
@@ -5339,7 +5113,6 @@
     },
     {
       "id": "blomst",
-      "name": "Blomst",
       "cat": "Natur",
       "p": [
         "..p...p..",
@@ -5358,7 +5131,6 @@
     },
     {
       "id": "stjerne",
-      "name": "Stjerne",
       "cat": "Figurer",
       "p": [
         ".....Y.....",
@@ -5376,7 +5148,6 @@
     },
     {
       "id": "lyn",
-      "name": "Lyn",
       "cat": "Natur",
       "p": [
         "...YYYY",
@@ -5394,7 +5165,6 @@
     },
     {
       "id": "svamp",
-      "name": "Fluesvamp",
       "cat": "Natur",
       "p": [
         "...RRRRR...",
@@ -5411,7 +5181,6 @@
     },
     {
       "id": "hus",
-      "name": "Hus",
       "cat": "Figurer",
       "p": [
         ".....R.....",
@@ -5430,7 +5199,6 @@
     },
     {
       "id": "krone",
-      "name": "Krone",
       "cat": "Figurer",
       "p": [
         "Y....Y....Y",
@@ -5443,7 +5211,6 @@
     },
     {
       "id": "spoegelse",
-      "name": "Lille spøgelse",
       "cat": "Figurer",
       "p": [
         "...WWWW...",
@@ -5461,7 +5228,6 @@
     },
     {
       "id": "robot",
-      "name": "Robot",
       "cat": "Figurer",
       "p": [
         "......Y......",
@@ -5484,7 +5250,6 @@
     },
     {
       "id": "fisk",
-      "name": "Guldfisk",
       "cat": "Dyr",
       "p": [
         "....OOO.....",
@@ -5499,7 +5264,6 @@
     },
     {
       "id": "kat",
-      "name": "Kat",
       "cat": "Dyr",
       "p": [
         ".S.......S.",
@@ -5517,7 +5281,6 @@
     },
     {
       "id": "hund",
-      "name": "Hund",
       "cat": "Dyr",
       "p": [
         ".NN......NN.",
@@ -5535,7 +5298,6 @@
     },
     {
       "id": "ugle",
-      "name": "Ugle",
       "cat": "Dyr",
       "p": [
         ".N.......N.",
@@ -5554,7 +5316,6 @@
     },
     {
       "id": "sommerfugl",
-      "name": "Sommerfugl",
       "cat": "Dyr",
       "p": [
         "....K...K....",
@@ -5572,7 +5333,6 @@
     },
     {
       "id": "pingvin",
-      "name": "Pingvin",
       "cat": "Dyr",
       "p": [
         "...KKKKK...",
@@ -5592,7 +5352,6 @@
     },
     {
       "id": "dino",
-      "name": "Dinosaur",
       "cat": "Dyr",
       "p": [
         ".........GGGGG..",
@@ -5612,7 +5371,6 @@
     },
     {
       "id": "raket",
-      "name": "Raket",
       "cat": "Køretøjer",
       "p": [
         "....R....",
@@ -5634,7 +5392,6 @@
     },
     {
       "id": "bil",
-      "name": "Rød bil",
       "cat": "Køretøjer",
       "p": [
         "....RRRRR.....",
@@ -5649,7 +5406,6 @@
     },
     {
       "id": "fly",
-      "name": "Fly",
       "cat": "Køretøjer",
       "p": [
         ".B.............",
@@ -5665,7 +5421,6 @@
     },
     {
       "id": "baad",
-      "name": "Sejlbåd",
       "cat": "Køretøjer",
       "p": [
         "......R......",
@@ -5683,7 +5438,6 @@
     },
     {
       "id": "is",
-      "name": "Isvaffel",
       "cat": "Mad",
       "p": [
         "....R....",
@@ -5704,7 +5458,6 @@
     },
     {
       "id": "jordbaer",
-      "name": "Jordbær",
       "cat": "Mad",
       "p": [
         "...g.g...",
@@ -5722,7 +5475,6 @@
     },
     {
       "id": "juletrae",
-      "name": "Juletræ",
       "cat": "Jul",
       "p": [
         ".....Y.....",
@@ -5743,7 +5495,6 @@
     },
     {
       "id": "snemand",
-      "name": "Snemand",
       "cat": "Jul",
       "p": [
         "...KKKKK...",
@@ -5765,7 +5516,6 @@
     },
     {
       "id": "nissehue",
-      "name": "Nissehue",
       "cat": "Jul",
       "p": [
         "........WW",

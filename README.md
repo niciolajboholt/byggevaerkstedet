@@ -4,7 +4,7 @@ Plus-plus building guides for Jens and Alfred. A single static page (`index.html
 original models, row-by-row instructions, and a 2D builder whose models are stored
 in the browser (localStorage) on each device.
 
-Hosted as a static site. All motif names, categories, descriptions and patterns are loaded from **`data/motiver.json`**. Edit that file to change the catalogue; `index.html` contains the application UI and code.
+Hosted as a static site. Motif names are loaded from **`data/navne.json`** (one name per line). Categories, descriptions and patterns are loaded from **`data/motiver.json`**. `index.html` contains the application UI and code.
 
 ## Seks figurvejledninger
 
@@ -151,12 +151,18 @@ Se `docs/ux-fixes-2026-11-21.md` for browserkontrol og begrænsninger.
 
 Den godkendte samling indeholder 15 skibe (inklusive Titanic med fire skorstene), 15 blomster, 15 eksotiske dyr og 17 internationale klublogoer. Ajax, FC Porto, Manchester City og Tottenham er alle med. Mønstre og brikantal bevares i `data/approved-themes-62.json`. De fire kategorier findes på forsiden og under Filtre.
 
-## Ret navne og kategorier
+## Ret navne nemt
 
-Åbn `data/motiver.json` på GitHub og vælg blyanten. Find motivet og ret `name`, `cat`, `description` eller `tip`. Gem med Commit changes. Appen henter filen igen ved genindlæsning, så navneændringer ikke kræver ændringer i appkoden.
+Åbn **[data/navne.json](data/navne.json)** på GitHub og vælg blyanten. Filen indeholder kun 250 navne, ét pr. linje, sorteret efter navn. Ret teksten til højre og gem med Commit changes:
 
-Behold `id` uændret: links, favoritter og gemt fremdrift bruger dette felt. Behold også `p`, hvis det kun er navnet, der skal ændres; ændrede brikmønstre får med vilje deres eget fremskridt. `categories` styrer rækkefølgen af temaerne. En ny kategori i et motivs `cat` kommer også automatisk med.
+```json
+"tema62-titanic": "Titanic"
+```
 
-`data/approved-*.json` er historiske gennemgangsdata til kontrol af mønstre og brikantal. De er ikke indlæsningskilder og skal ikke rettes ved almindelige navneændringer.
+Behold nøglen til venstre (motivets ID), anførselstegn og kommaer. Appen kobler automatisk navnene til tegningerne. Favoritter, links og fremskridt bevares ved navneændringer. Opdatér siden efter udgivelsen for at hente de nye navne.
 
-`catalogue.js` indlæser og validerer JSON-filen med genvalidering af browserens cache. Appen viser indlæsningsstatus og en Prøv igen-knap ved netværksfejl eller en ugyldig fil. Brugerens lokale data slettes ikke.
+`data/motiver.json` indeholder kategorier, beskrivelser og brikmønstre uden en ekstra kopi af navnene. Her kan `cat`, `description`, `tip` og `p` redigeres. `categories` styrer rækkefølgen af temaerne, og nye kategorier i `cat` kommer automatisk med. Et nyt motiv skal have samme nye ID i begge filer.
+
+`data/approved-*.json` er historiske gennemgangsdata til kontrol af mønstre og brikantal; de skal ikke rettes ved almindelige navneændringer.
+
+`catalogue.js` indlæser og validerer de to filer parallelt og genvaliderer browserens cache. Ved en ugyldig eller manglende fil viser appen en fejlbesked med Prøv igen. Brugerens gemte data slettes ikke.
