@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const {JSDOM,VirtualConsole}=require('jsdom');
-const html=fs.readFileSync(new URL('../index.html',`file://${__filename}`),'utf8');
+const html=fs.readFileSync(new URL('../index.html',`file://${__filename}`),'utf8').replace(/<script src="([^"]+)"><\/script>/g,(_,src)=>'<script>'+fs.readFileSync(new URL('../'+src,`file://${__filename}`),'utf8')+'</script>');
 const snapshotStorage=a=>Object.fromEntries(Array.from({length:a.w.localStorage.length},(_,i)=>{const key=a.w.localStorage.key(i);return [key,a.w.localStorage.getItem(key)]}));
 function app(options={}){
  const errors=[];
@@ -33,18 +33,21 @@ test('motif preview shows whole model and materials before starting; alone guide
  a.click('overviewClose');assert.equal(a.doc.getElementById('overviewDialog').open,false);
  assert.deepEqual(a.errors,[]);a.close();
 });
-test('cooperative guide keeps each builders progress and enables assembly',async()=>{
+test('shared iPad alternates builders only after a task is built and attached',async()=>{
  const a=app();await a.settle();a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
  a.choose('[data-mode="together"]');a.click('teamStart');
- assert.equal(a.doc.querySelectorAll('#partTabs button').length,2);
- a.click('next');const first=a.doc.getElementById('rowTitle').textContent;
- assert.equal(a.doc.getElementById('progressBar').getAttribute('aria-valuenow'),'50');
- a.choose('#partTabs [data-i="1"]');a.choose('#partTabs [data-i="0"]');
- assert.equal(a.doc.getElementById('rowTitle').textContent,first);
- for(let i=0;i<10;i++)if(!a.doc.getElementById('next').disabled)a.click('next');
- a.choose('#partTabs [data-i="1"]');
- for(let i=0;i<10;i++)if(!a.doc.getElementById('next').disabled)a.click('next');
- a.choose('#partTabs [data-i="asm"]');assert.equal(a.doc.getElementById('assembleBox').classList.contains('hide'),false);
+ assert.equal(a.doc.querySelectorAll('#partTabs .task-builder').length,2);
+ assert.match(a.doc.getElementById('buildPerson').textContent,/Jens/);
+ a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Jens/);
+ assert.equal(a.doc.getElementById('next').textContent,'Stykket er sat på');
+ assert.equal(a.doc.getElementById('progressBar').getAttribute('aria-valuenow'),'0');
+ a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
+ assert.ok(+a.doc.getElementById('progressBar').getAttribute('aria-valuenow')>0);
+ a.click('prev');assert.match(a.doc.getElementById('buildPerson').textContent,/Jens/);
+ assert.equal(a.doc.getElementById('next').textContent,'Stykket er sat på');
+ for(let i=0;i<100&&!a.doc.getElementById('next').disabled;i++)a.click('next');
+ assert.equal(a.doc.getElementById('doneBox').classList.contains('hide'),false);
+ assert.equal(a.doc.getElementById('progressBar').getAttribute('aria-valuenow'),'100');
  assert.deepEqual(a.errors,[]);a.close();
 });
 test('appearance selection preserves guide progress and is saved for the device',async()=>{
@@ -95,12 +98,13 @@ test('keyboard skip navigation focuses visible content without changing app rout
  assert.equal(a.doc.getElementById('detailBack').getAttribute('aria-label'),'Tilbage til forberedelse');
  a.click('skipLink');assert.equal(a.doc.activeElement.id,'detailView');assert.deepEqual(a.errors,[]);a.close();
 });
-test('one-row own model cannot select a non-existent dedicated builder',async()=>{
+test('one-row own model still gives both builders a task and retains all bricks',async()=>{
  const a=app();await a.settle();a.choose('[data-nav="byg"]');await a.settle();a.w.eval('grid[1][1]="R";grid[1][2]="Y"');a.click('save');await a.settle();
- a.w.eval('team.me=1');a.choose('[data-mode="together"]');
- assert.equal(a.doc.querySelectorAll('#teamMe [data-me="1"]').length,0);
- a.click('teamStart');assert.equal(a.doc.querySelectorAll('#partTabs button').length,1);
- a.click('next');assert.deepEqual(a.errors,[]);a.close();
+ a.choose('[data-mode="together"]');a.click('teamStart');
+ assert.match(a.doc.getElementById('buildPerson').textContent,/Jens/);
+ a.click('next');a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
+ a.click('next');a.click('next');assert.equal(a.doc.getElementById('progressBar').getAttribute('aria-valuenow'),'100');
+ assert.deepEqual(a.errors,[]);a.close();
 });
 test('smallest part can be assigned to either named builder and survives swapping places',async()=>{
  const a=app();await a.settle();a.choose('[data-id="motiver50-02"] .model-link');await a.settle();a.choose('[data-mode="together"]');
@@ -145,14 +149,15 @@ test('solo resumes after leaving and reloading; restart is explicit and cancella
  assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
 });
 
-test('all builders resume their own rows; changing distribution starts a separate build',async()=>{
+test('shared tasks resume at placement after reload and changing distribution keeps separate progress',async()=>{
  const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.choose('[data-mode="together"]');a.click('teamStart');
- a.click('next');a.choose('#partTabs [data-i="1"]');a.click('next');a.click('next');
+ a.click('next');a.click('next');a.click('next');
  const b=app({url:a.w.location.href,storage:snapshotStorage(a)});await b.settle();b.click('teamStart');
- assert.match(b.doc.getElementById('rowTitle').textContent,/Alfred: række 3/);
- b.choose('#partTabs [data-i="0"]');assert.match(b.doc.getElementById('rowTitle').textContent,/Jens: række 2/);
+ assert.match(b.doc.getElementById('buildPerson').textContent,/Alfred/);
+ assert.equal(b.doc.getElementById('next').textContent,'Stykket er sat på');
  b.click('detailBack');b.choose('#teamSplit [data-smallest="0"]');assert.equal(b.doc.getElementById('teamStart').textContent,'Start byggeriet');
- b.choose('#teamSplit [data-s="even"]');b.click('teamStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Jens: række 2/);
+ b.choose('#teamSplit [data-s="even"]');b.click('teamStart');assert.match(b.doc.getElementById('buildPerson').textContent,/Alfred/);
+ assert.equal(b.doc.getElementById('next').textContent,'Stykket er sat på');
  assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
 });
 
@@ -204,5 +209,15 @@ test('keyboard drawing supports movement, placement, deletion, undo and saving',
  key('ArrowRight');key('ArrowDown');key(' ');assert.match(a.doc.getElementById('padStatus').textContent,/Række 2, kolonne 2: Rød/);
  key('Delete');assert.match(a.doc.getElementById('padStatus').textContent,/kolonne 2: tom/);a.click('undo');
  assert.equal(a.w.eval('grid[1][1]'),'R');a.click('save');await a.settle();assert.match(a.doc.getElementById('total').textContent,/1 brikker/);
+ assert.deepEqual(a.errors,[]);a.close();
+});
+
+ test('smaller tasks remain assignable to the second builder on a one-row own model',async()=>{
+ const a=app({url:'https://example.test/#m-own-small',storage:{bv_own:JSON.stringify([{id:'own-small',name:'Lille',p:['RRRR']}])}});await a.settle();
+ a.choose('[data-mode="together"]');a.choose('#teamSplit [data-smallest="1"]');
+ assert.equal(JSON.parse(a.w.localStorage.getItem('bv_team')).smallest,1);
+ assert.match(a.doc.getElementById('splitInfo').textContent,/Alfred: 1 brikker/);
+ a.click('teamStart');a.click('next');a.click('next');assert.match(a.doc.getElementById('buildPerson').textContent,/Alfred/);
+ assert.match(a.doc.getElementById('rowTitle').textContent,/1 brikker/);
  assert.deepEqual(a.errors,[]);a.close();
 });

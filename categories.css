@@ -1,0 +1,22 @@
+/* Keep six themes compact enough that the catalogue remains within easy reach. */
+#themeTiles.category-explorer{display:block;margin:0 0 24px}
+.category-explorer-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.category-explorer-heading h2{font-size:18px;margin:0}
+.all-themes-button{display:flex;align-items:center;gap:5px;background:transparent;border:0;padding:4px 0 4px 10px;font-size:14px;font-weight:800;min-height:44px;color:var(--ink)}
+.all-themes-button .ic{width:17px;height:17px}
+.featured-categories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#themeTiles .compact-theme{width:100%;min-height:84px;padding:9px 12px;gap:10px;border-radius:18px;justify-content:flex-start;text-align:left}
+#themeTiles .compact-theme canvas{width:62px;height:62px;flex-shrink:0}
+#themeTiles .compact-theme .theme-copy{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0}
+#themeTiles .compact-theme .theme-name{display:block;font:900 17px/1.2 var(--heading);overflow-wrap:anywhere}
+#themeTiles .compact-theme .theme-count{display:block;font:600 11px/1.5 var(--body);color:var(--ink);opacity:.75}
+#themeTiles .compact-theme>.ic{width:17px;height:17px;margin-left:auto}
+.theme-0{background:#dcecfb}.theme-1{background:#f9e3ee}.theme-2{background:#e4e9fb}.theme-3{background:#f7e7d1}.theme-4{background:#fff0b4}.theme-5{background:#def0dc}
+.all-themes-dialog{width:min(580px,calc(100% - 32px));max-height:85dvh;overflow:auto}
+.all-themes-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.all-themes-list button{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;min-height:66px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-weight:800;text-align:left;overflow-wrap:anywhere}
+.all-themes-list button[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.all-themes-list .theme-count{font-size:12px;font-weight:600;opacity:.8}
+[data-theme=parent] #themeTiles .compact-theme{background:var(--soft);border:1px solid var(--line)}
+@media(max-width:760px){.featured-categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#themeTiles .compact-theme{min-height:70px;padding:7px 9px;gap:7px;border-radius:15px}#themeTiles .compact-theme canvas{width:42px;height:42px}#themeTiles .compact-theme .theme-name{font-size:15px}#themeTiles .compact-theme .theme-count{font-size:10px}#themeTiles .compact-theme>.ic{width:14px;height:14px}.category-explorer-heading h2{font-size:17px}}
+@media(max-width:370px){#themeTiles .compact-theme canvas{width:34px;height:34px}#themeTiles .compact-theme .theme-name{font-size:14px}#themeTiles .compact-theme>.ic{display:none}}

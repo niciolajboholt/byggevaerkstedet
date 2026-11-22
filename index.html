@@ -14,6 +14,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="categories.css">
+<link rel="stylesheet" href="cooperative.css">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#listView">Spring til indhold</a>
@@ -42,7 +44,8 @@
     <section class="model-column">
       <p id="dDescription" class="sub hide"></p>
       <div id="partTabs" class="ptabs hide" aria-label="Vælg bygger"></div>
-      <div class="build-heading hide" id="buildHeading"><div><h2 id="buildPerson"></h2><p id="rowTitle" aria-live="polite"></p><div class="progress" role="progressbar" aria-label="Byggefremskridt" aria-valuemin="0" aria-valuemax="100" id="progressBar"><div id="prog"></div></div></div><button id="overviewButton" class="overview-button"><span>Hele figuren</span><canvas id="overviewCanvas" width="88" height="88" aria-hidden="true"></canvas></button></div>
+      <div class="build-heading hide" id="buildHeading"><div><h2 id="buildPerson" tabindex="-1"></h2><p id="rowTitle" aria-live="polite"></p><div class="progress" role="progressbar" aria-label="Byggefremskridt" aria-valuemin="0" aria-valuemax="100" id="progressBar"><div id="prog"></div></div></div><button id="overviewButton" class="overview-button"><span>Hele figuren</span><canvas id="overviewCanvas" width="88" height="88" aria-hidden="true"></canvas></button></div>
+      <p id="taskInstruction" class="task-instruction hide" role="status"></p>
       <div id="zoomControls" class="model-zoom hide"><label for="modelZoom">Forstør tegningen</label><select id="modelZoom"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select></div>
       <div id="modelViewport" class="model-viewport"><canvas id="big" role="img" aria-label="Byggetegning"></canvas></div>
       <div id="partDone" class="partdone hide" role="status"></div>
@@ -54,7 +57,7 @@
       <div id="teamSetup" class="team hide">
         <h2>Hvem bygger med?</h2>
         <div><label>Antal byggere</label><div class="chips" id="teamCount"></div></div><div class="builder-names-row"><div id="teamNames"></div><button type="button" id="swapBuilders" class="swap-builders" aria-label="Byt plads på bygger 1 og bygger 2"><i class="ic swap-icon" aria-hidden="true"></i><span>Byt plads</span></button></div>
-        <div><label>Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div><p class="meta" id="splitInfo"></p>
+        <div><label id="taskSplitLabel">Hvordan skal figuren deles?</label><div class="chips" id="teamSplit"></div></div><p class="meta" id="splitInfo"></p>
         <details class="device-options"><summary>Bruger I flere skærme?</summary><div><label>Hvem bruger denne skærm?</label><div class="chips" id="teamMe"></div></div><p class="meta" id="meInfo"></p><p class="meta">Kopiér hvert link til den rigtige skærm. Links fastholder navnene og deres dele. Brug nye links på alle skærme, hvis I ændrer fordelingen.</p><div id="shareLinks"></div></details>
         <button class="btn ghost hide" id="unlockTeam">Lav en ny fordeling</button>
         <button class="btn" id="teamStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
@@ -97,6 +100,9 @@
 <dialog id="filterDialog"><div class="dialog-heading"><h2>Find dit byggeri</h2><button class="icon-button" id="filterClose" aria-label="Luk filtre"><i class="ic close-icon" aria-hidden="true"></i></button></div><label class="field-label" for="diff">Sværhedsgrad</label><select id="diff"><option value="">Alle sværhedsgrader</option><option>Let</option><option>Mellem</option><option>Svær</option></select><p class="meta">Sværhedsgraden følger antallet af brikker.</p><label class="field-label" for="pieceLimit">Antal brikker</label><select id="pieceLimit"><option value="250">Op til 250 brikker</option><option value="60">Op til 60 brikker</option><option value="120">Op til 120 brikker</option></select><h3>Tema</h3><div class="tabs" id="tabs"></div><button class="btn" id="filterApply">Vis motiver</button></dialog>
 <dialog id="overviewDialog"><div class="dialog-heading"><h2 id="overviewTitle">Hele figuren</h2><button class="icon-button" id="overviewClose" aria-label="Luk overblik"><i class="ic close-icon" aria-hidden="true"></i></button></div><canvas id="fullCanvas" role="img" aria-label="Hele figuren med byggernes dele"></canvas><p id="overviewLegend" class="meta"></p></dialog>
 <dialog id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmText"><h2 id="confirmTitle">Er du sikker?</h2><p id="confirmText"></p><div class="row"><button class="btn ghost" id="confirmCancel" autofocus>Annuller</button><button class="btn" id="confirmAccept">Fortsæt</button></div></dialog>
+<script src="build-tasks.js"></script>
+<script src="cooperative.js"></script>
+<script src="categories.js"></script>
 <script>
 
 const COLORS = {
@@ -374,6 +380,17 @@ function drawGrid(cv,p,opts={}){
   // vertical offset per band (assembly animation): bands slide together as gap -> 0
   const dyOf=k=>{if(!bands)return 0;const i=bands.findIndex(bd=>k.row>=bd.r0&&k.row<=bd.r1);return i<0?0:(i-(bands.length-1)/2)*opts.gap*cell};
   const draw=(k,ghost)=>drawBrick(ctx,ox,oy+dyOf(k),u,k,ghost);
+  if(opts.taskView){
+    const placed=new Set(opts.taskView.attached||[]),current=new Set(opts.taskView.current||[]);
+    tiles.forEach(k=>draw(k,!placed.has(`${k.x},${k.y}`)&&!current.has(`${k.x},${k.y}`)));
+    const highlighted=tiles.filter(k=>current.has(`${k.x},${k.y}`));
+    if(highlighted.length){
+      const xs=highlighted.map(k=>k.x),ys=highlighted.map(k=>k.y),x0=Math.min(...xs),y0=Math.min(...ys),x1=Math.max(...xs),y1=Math.max(...ys);
+      ctx.strokeStyle=opts.taskView.color||"#ff8a1f";ctx.lineWidth=Math.max(3,u*.5);ctx.setLineDash([u*1.2,u*.6]);
+      ctx.beginPath();ctx.roundRect(ox+x0*cell-u*1.5,oy+y0*cell-u*1.5,(x1-x0+1)*cell+u*3,(y1-y0+1)*cell+u*3,8);ctx.stroke();ctx.setLineDash([]);
+    }
+    return {cell,ox,oy,w,h};
+  }
   tiles.forEach(k=>{
     if(f&&(k.row<f.r0||k.row>f.r1)){ctx.globalAlpha=.16;draw(k);ctx.globalAlpha=1;return}
     if(step!=null&&step<h&&k.row>step)draw(k,true);
@@ -438,8 +455,7 @@ function renderList(){
   });
   g.querySelectorAll("[data-like]").forEach(h=>h.onclick=()=>{toggleFavorite(h.dataset.like);renderList()});
   if($("emptyAction"))$("emptyAction").onclick=()=>tab==="Egne"?go("byg"):resetFilters();
-  $("themeTiles").classList.toggle("hide",tab!=="Alle"||!!q||!!d||limit<250);
-  requestAnimationFrame(()=>{drawGrid($("animalArt"),BUILDS.find(b=>b.name==="Panda").p);drawGrid($("magicArt"),BUILDS.find(b=>b.id==="motiver50-01").p)});
+  categoryExplorer.refresh({visible:tab==="Alle"&&!q&&!d&&limit===250,activeCategory:tab});
 }
 function toggleFavorite(id){likes.has(id)?likes.delete(id):likes.add(id);store.set("bv_likes",[...likes])}
 function resetFilters(){tab="Alle";$("q").value="";$("diff").value="";$("pieceLimit").value="250";renderTabs();renderList()}
@@ -455,7 +471,7 @@ let mode=store.get("bv_mode","alone"), team=store.get("bv_team",{n:2,names:["Jen
 let phase="setup", parts=[], active=0, asmGap=0, asmTimer=null;
 // Geometry and the complete assignment identify a resumable build; the device's
 // selected person is deliberately excluded so switching screens keeps each part.
-function progressKey(){return JSON.stringify([cur.id,cur.p,mode,mode==="together"?[team.n,team.names.slice(0,team.n),team.split,team.split==="small"?smallestBuilder():null]:null])}
+function progressKey(){if(globalThis.CoopUI?.enabled())return CoopUI.progressKey();return JSON.stringify([cur.id,cur.p,mode,mode==="together"?[team.n,team.names.slice(0,team.n),team.split,team.split==="small"?smallestBuilder():null]:null])}
 function progressRecords(){const records=store.get("bv_progress",{});return records&&typeof records==="object"&&!Array.isArray(records)?records:{}}
 function savedProgress(){return progressRecords()[progressKey()]}
 let progressSaved=true;
@@ -467,6 +483,7 @@ function saveProgress(){
   progressSaved=store.set("bv_progress",records);
 }
 function beginBuild(restart=false){
+  if(globalThis.CoopUI?.enabled())return CoopUI.begin(restart);
   if(shareWarning)return;
   const saved=restart?null:savedProgress();
   if(restart){const records=progressRecords();delete records[progressKey()];store.set("bv_progress",records)}
@@ -566,6 +583,10 @@ function buildParts(){
 }
 function render(){
   if(!cur)return;
+  document.body.classList.remove("task-building");
+  $("taskInstruction").classList.add("hide");$("buildPerson").style.color="";
+  if(globalThis.CoopUI?.enabled())return CoopUI.render();
+  $("taskSplitLabel").textContent="Hvordan skal figuren deles?";
   saveProgress();
   const activeBuild=started&&(mode!=="together"||phase!=="setup");
   document.body.classList.toggle("building",activeBuild);
@@ -731,11 +752,13 @@ $("restartBuild").onclick=async()=>{if(await confirmAction("Start dette byggeri 
 $("unlockTeam").onclick=async()=>{if(await confirmAction("Lav en ny fordeling? Send nye links til alle byggere, hvis du ændrer navne eller dele.")){sharedPlan=false;window.history.replaceState(null,"",location.href.split("#")[0]+"#m-"+cur.id);render()}};
 document.querySelectorAll("#modeBar button").forEach(b=>b.onclick=()=>{started=false;mode=b.dataset.mode;store.set("bv_mode",mode);phase="setup";clearInterval(asmTimer);render()});
 $("modelZoom").onchange=render;
-$("next").onclick=()=>{
+$("next").onclick=event=>{
+  if(globalThis.CoopUI?.enabled())return CoopUI.next(event);
   if(mode==="together"&&phase==="build"){const p=parts[active];p.step++;if(p.step>=p.r1-p.r0+1)p.done=true;render();return}
   step++;render();
 };
 $("prev").onclick=()=>{
+  if(globalThis.CoopUI?.enabled())return CoopUI.previous();
   if(mode==="together"&&phase==="build"){const p=parts[active];if(p.step>0){p.step--;p.done=false}render();return}
   if(showAll){showAll=false;render();return}if(step>0){step--;render()}
 };
@@ -868,6 +891,7 @@ function drawRowPieces(row){
   cv.setAttribute("aria-label",tiles.length+" brikker i rækken. Se farver og tomme pladser i tekstlisten nedenfor.");
 }
 function openOverview(){
+  if(globalThis.CoopUI?.enabled())return CoopUI.overview();
   $("overviewTitle").textContent=cur.name;
   $("overviewDialog").showModal();
   drawGrid($("fullCanvas"),cur.p,mode==="together"?{tiles:cur.tiles,bands:orderedParts(),gap:.65,labels:true}:{tiles:cur.tiles});
@@ -886,6 +910,7 @@ $("diff").onchange=renderList;
 document.querySelectorAll("[data-category]").forEach(b=>b.onclick=()=>{tab=b.dataset.category;renderTabs();renderList()});
 document.querySelectorAll("button[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));
 applyTheme(store.get("bv_appearance","child"));
+const categoryExplorer=CategoriesExplorer.create({container:$("themeTiles"),getBuilds:allBuilds,getCategories:()=>CATS,draw:drawGrid,onSelect:c=>{tab=c;renderTabs();renderList()}});
 renderTabs();route();
 </script>
 </body>
