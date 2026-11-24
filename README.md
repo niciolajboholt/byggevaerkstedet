@@ -178,3 +178,13 @@ Delingslinks med `?level=easy`, `?level=medium` eller `?level=hard` fastholder u
 De nye mønstre er skabt ud fra originalernes silhuetter og farver med deterministisk skalering, forenkling og bevarelse af små farvedetaljer. De er visuelt gennemgået på sammenligningsplancher og kontrolleret for brikantal, overlap, sammenhæng og opgavefordeling. De er ikke fysisk prøvebygget. Fire ældre originaler (sol, blomst, sommerfugl og dinosaur) har fået små forbindelser, fordi de tidligere havde løse dele. De øvrige 246 originalmønstre er bevaret præcist.
 
 Generator: `python scripts/generate-difficulty-variants.py --review-dir /tmp/variant-review`. `--check` kontrollerer, at de lagrede udgaver svarer til generatoren. Ved ændring af et originalt mønster skal de tre udgaver regenereres; ved en navneændring er det fortsat nok at rette `data/navne.json`.
+
+## Undersøg motivet i 3D
+
+Knappen **Se motivet i 3D** åbner en drejelig visning af det valgte motiv og den valgte sværhedsgrad. Hver brik bruger den samme sammenhængende ni-felts Plus-Plus-kontur og retning som 2D-vejledningen, med en lille plasttykkelse og afrundede kanter. Motiverne forbliver flade mosaikker; de er ikke ombygget til rumlige skibe, dyr eller bygninger.
+
+Træk med én finger for at dreje og knib med to for at zoome. Knapperne Forfra, Skråt og zoom gør de samme funktioner tilgængelige uden berøringsbevægelser. Luk eller Escape vender tilbage til det samme byggetrin. Scenen lukkes også ved navigation eller baggrundslægning. Ved manglende WebGL2, afbrudt indlæsning eller tabt grafikforbindelse vises den almindelige fronttegning med mulighed for at prøve igen.
+
+Three.js 0.187.0 og OrbitControls ligger i den lokale, færdigbyggede `vendor/three-viewer.js`, som først indlæses ved åbning af 3D-vinduet. Ingen ekstern CDN bruges. Der tegnes ved ændringer og ikke i en permanent animationsløkke; pixelratio begrænses til 2. Grafikressourcer, controls, observationslyttere og WebGL-kontekst frigives ved lukning.
+
+Kildekode: `three/renderer.js`, `three/brick-geometry.cjs` og `model-3d.js`. Genbyg med `npm ci --ignore-scripts` og `npm run build:3d`; den færdige bundle skal committes sammen med kilden. MIT-licensen for Three.js findes i `vendor/three.LICENSE`.

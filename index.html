@@ -104,6 +104,7 @@
 <script src="catalogue.js"></script>
 <script src="build-tasks.js"></script>
 <script src="cooperative.js"></script>
+<script src="model-3d.js"></script>
 <script src="categories.js"></script>
 <script src="vendor/qrcode-generator.js"></script>
 <script src="live-sync-client.js"></script>
@@ -741,6 +742,7 @@ $("diff").onchange=renderList;
 document.querySelectorAll("[data-category]").forEach(b=>b.onclick=()=>{tab=b.dataset.category;renderTabs();renderList()});
 document.querySelectorAll("button[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));
 applyTheme(store.get("bv_appearance","child"));
+Model3D.init({getModel:()=>cur,tiles:model=>model.tiles||tile(model.p),palette:COLORS,draw:drawGrid});
 LiveSyncUI.init();
 LiveSyncUI.setQRRenderer((container,url)=>{
   const qr=qrcode(0,'M');qr.addData(url);qr.make();

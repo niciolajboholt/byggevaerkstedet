@@ -337,3 +337,12 @@ test('unknown difficulty links keep the original pattern usable',async()=>{
  assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1 af 10/);
  assert.deepEqual(a.errors,[]);a.close();
 });
+
+test('3D inspection uses the selected variant and does not change a solo build step or progress',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01?level=medium'});await a.settle();a.click('aloneStart');a.click('next');
+ const title=a.doc.getElementById('rowTitle').textContent,progress=a.w.localStorage.getItem('bv_progress'),hash=a.w.location.hash;let data,disposed=0;
+ a.w.Brick3DRenderer={createViewer:()=>({update:d=>data=d,reset:()=>{},zoom:()=>{},dispose:()=>disposed++})};
+ a.click('model3DOpen');await a.settle();assert.ok(a.doc.getElementById('model3DDialog').open);
+ assert.equal(data.tiles.length,a.w.eval('cur.total'));assert.equal(data.name,'Stjernestav');
+ a.click('model3DFront');a.click('model3DClose');assert.equal(disposed,1);assert.equal(a.doc.getElementById('rowTitle').textContent,title);assert.equal(a.w.localStorage.getItem('bv_progress'),progress);assert.equal(a.w.location.hash,hash);assert.deepEqual(a.errors,[]);a.close();
+});
