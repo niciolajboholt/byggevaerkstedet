@@ -30,7 +30,7 @@ function init(options){
  }
  async function show(){
   model=options.getModel();if(!model)return;const operation=++generation;dispose();
-  get('model3DTitle').textContent=model.name+' · 3D';get('model3DStatus').textContent='Henter 3D-visning…';get('model3DStatus').setAttribute('role','status');
+  get('model3DTitle').textContent=model.name+' · 3D';get('model3DStatus').textContent='Henter 3D-visning…';get('model3DStatus').setAttribute('role','status');delete get('model3DStatus').dataset.failure;
   get('model3DFallback').classList.add('hide');get('model3DStage').classList.remove('hide');controls(false);
   if(!dialog.open)dialog.showModal();get('model3DClose').focus();
   try{
@@ -38,7 +38,7 @@ function init(options){
    viewer=renderer.createViewer(get('model3DStage'),{onContextLost:()=>fallback(operation)});
    viewer.update({tiles:options.tiles(model),palette:options.palette,name:model.name});viewer.reset('angle');controls(true);
    get('model3DStage').setAttribute('aria-label',model.name+' bygget af hele Plus-Plus-brikker i 3D');get('model3DStatus').textContent='Drej modellen, og undersøg brikkernes form og tykkelse.';
-  }catch{fallback(operation)}
+  }catch(error){if(operation===generation)get('model3DStatus').dataset.failure=String(error?.message||'unknown');fallback(operation)}
  }
  function close(){++generation;dispose();if(dialog.open)dialog.close()}
  openButton.onclick=show;get('model3DRetry').onclick=show;get('model3DClose').onclick=close;
