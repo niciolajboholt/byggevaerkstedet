@@ -166,3 +166,15 @@ Behold nøglen til venstre (motivets ID), anførselstegn og kommaer. Appen koble
 `data/approved-*.json` er historiske gennemgangsdata til kontrol af mønstre og brikantal; de skal ikke rettes ved almindelige navneændringer.
 
 `catalogue.js` indlæser og validerer de to filer parallelt og genvaliderer browserens cache. Ved en ugyldig eller manglende fil viser appen en fejlbesked med Prøv igen. Brugerens gemte data slettes ikke.
+
+## Tre sværhedsgrader pr. motiv
+
+Alle 250 katalogmotiver har `variants.easy.p`, `variants.medium.p` og `variants.hard.p` i `data/motiver.json`: 750 byggevejledninger i alt. Let bruger 1–59 brikker, Mellem 60–84 og Svær 85–250 (op til 300 for Klublogoer). Navnefilen indeholder stadig kun 250 navne, da udgaverne deler navn og stabilt motiv-ID.
+
+Vælg udgaven under Vælg sværhedsgrad før byggeriet. Kort og søgefiltre viser fortsat ét kort pr. motiv; et sværhedsfilter viser den tilsvarende udgave. Et rent brikloft beholder den oprindelige udgave, hvis den passer, ellers den største udgave under loftet.
+
+Delingslinks med `?level=easy`, `?level=medium` eller `?level=hard` fastholder udgaven. Links uden level åbner det oprindelige motiv. Favoritter er fælles for udgaverne; gemt fremdrift bruger både ID og brikmønster, så de tre udgaver har separate fremskridt. Et live byggerum fastholder altid det mønster, det blev oprettet med.
+
+De nye mønstre er skabt ud fra originalernes silhuetter og farver med deterministisk skalering, forenkling og bevarelse af små farvedetaljer. De er visuelt gennemgået på sammenligningsplancher og kontrolleret for brikantal, overlap, sammenhæng og opgavefordeling. De er ikke fysisk prøvebygget. Fire ældre originaler (sol, blomst, sommerfugl og dinosaur) har fået små forbindelser, fordi de tidligere havde løse dele. De øvrige 246 originalmønstre er bevaret præcist.
+
+Generator: `python scripts/generate-difficulty-variants.py --review-dir /tmp/variant-review`. `--check` kontrollerer, at de lagrede udgaver svarer til generatoren. Ved ændring af et originalt mønster skal de tre udgaver regenereres; ved en navneændring er det fortsat nok at rette `data/navne.json`.

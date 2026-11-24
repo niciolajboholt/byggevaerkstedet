@@ -28,3 +28,5 @@ dialog{border:1px solid var(--line);background:var(--bg);color:var(--ink);border
 }
 
 .catalogue-status{max-width:680px;margin:24px auto;padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--soft);color:var(--ink)}.catalogue-status p{margin-bottom:12px}header[inert],main[inert],nav[inert],footer[inert]{opacity:.4;pointer-events:none}
+
+.variant-setup{margin:24px 0}.variant-setup h3{margin-bottom:12px}.variant-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.variant-options button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:72px;padding:10px 6px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-weight:800}.variant-options button small{font-size:12px;font-weight:600}.variant-options button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}

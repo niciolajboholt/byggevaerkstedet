@@ -66,7 +66,10 @@ test('search, favourites, categories and piece limit combine correctly',async()=
  assert.equal(a.doc.querySelectorAll('#grid .card').length,1);
  a.click('filterOpen');assert.ok(a.doc.getElementById('filterDialog').open);
  a.doc.getElementById('diff').value='Svær';a.doc.getElementById('diff').dispatchEvent(new a.w.Event('change'));
- assert.equal(a.doc.querySelectorAll('#grid .card').length,0);
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,1);
+ a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
+ assert.match(a.w.location.hash,/level=hard/);assert.match(a.doc.getElementById('dMeta').textContent,/Svær/);
+ a.click('detailBack');await a.settle();
  a.click('filterApply');a.click('resetFilters');
  assert.ok(a.doc.querySelectorAll('#grid .card').length>100);
  assert.deepEqual(a.errors,[]);a.close();
@@ -77,6 +80,7 @@ test('own drawing can be created, reopened and edited without losing catalogue d
  a.w.eval('grid[1][1]="R";grid[1][2]="Y"');
  a.doc.getElementById('ownName').value='Testmodel';a.click('save');await a.settle();
  assert.equal(a.doc.getElementById('dName').textContent,'Testmodel');
+ assert.ok(a.doc.getElementById('variantSetup').classList.contains('hide'));
  assert.match(a.doc.getElementById('total').textContent,/2 brikker/);
  a.click('editOwn');await a.settle();
  assert.equal(a.doc.getElementById('ownName').value,'Testmodel');
@@ -242,7 +246,8 @@ test('four new categories expose all 62 approved motifs and large crests remain 
  }
  a.choose('.featured-categories [data-theme-category="Klublogoer"]');
  a.doc.getElementById('pieceLimit').value='250';a.doc.getElementById('pieceLimit').dispatchEvent(new a.w.Event('change'));
- assert.equal(a.doc.querySelectorAll('#grid .card').length,8);
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,17);
+ assert.ok(Array.from(a.doc.querySelectorAll('#grid .card .meta')).every(el=>+el.textContent.match(/(\d+) brikker/)[1]<=250));
  a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
  a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1/);
  assert.deepEqual(a.errors,[]);a.close();
@@ -260,4 +265,75 @@ test('renaming a motif through JSON preserves its favourite and saved solo step'
  const data=JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));const names=JSON.parse(fs.readFileSync(new URL('../data/navne.json',`file://${__filename}`),'utf8'));names['motiver50-01']='Min stjernestav';
  const b=app({url:'https://example.test/#m-motiver50-01',storage,names,catalogueFetch:async()=>({ok:true,json:async()=>data})});await b.settle();
  assert.equal(b.doc.getElementById('dName').textContent,'Min stjernestav');assert.equal(b.doc.getElementById('guideFavorite').getAttribute('aria-pressed'),'true');assert.equal(b.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 2/);assert.deepEqual(b.errors,[]);b.close();
+});
+
+
+test('three difficulty choices retain one motif identity and separate solo progress by geometry',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();
+ const original=JSON.parse(a.w.eval('JSON.stringify(cur.p)'));
+ const selected=()=>a.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level;
+ assert.equal(a.doc.querySelectorAll('#variantOptions button').length,3);
+ assert.deepEqual(Array.from(a.doc.querySelectorAll('#variantOptions button span'),b=>b.textContent),['Let','Mellem','Svær']);
+ const originalLevel=selected();assert.deepEqual(JSON.parse(a.w.eval('JSON.stringify(cur.variants[cur.variantLevel||"'+originalLevel+'"].p)')),original);
+ a.click('guideFavorite');a.click('aloneStart');a.click('next');a.click('detailBack');
+ a.choose('#variantOptions [data-level="hard"]');await a.settle();
+ assert.equal(selected(),'hard');assert.match(a.w.location.hash,/level=hard/);
+ assert.equal(a.doc.getElementById('guideFavorite').getAttribute('aria-pressed'),'true');
+ assert.equal(a.doc.getElementById('aloneStart').textContent,'Start byggeriet');
+ assert.equal(a.w.eval('cur.total'),a.w.eval('pieces(cur.variants.hard.p).n'));
+ a.click('aloneStart');assert.ok(a.doc.getElementById('variantSetup').classList.contains('hide'));
+ a.click('next');a.click('next');a.click('detailBack');
+ a.choose('#variantOptions [data-level="'+originalLevel+'"]');await a.settle();
+ assert.equal(a.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');a.click('aloneStart');
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Række 2 af 10/);
+ const b=app({url:'https://example.test/#m-motiver50-01?level=hard',storage:snapshotStorage(a)});await b.settle();
+ assert.equal(b.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level,'hard');
+ b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 3/);
+ assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
+});
+
+test('difficulty and piece filters choose one matching version of each motif',async()=>{
+ const a=app();await a.settle();
+ for(const [label,key] of [['Let','easy'],['Mellem','medium'],['Svær','hard']]){
+  a.doc.getElementById('diff').value=label;a.doc.getElementById('diff').dispatchEvent(new a.w.Event('change'));
+  assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+  a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
+  assert.match(a.w.location.hash,new RegExp('level='+key));
+  assert.equal(a.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level,key);
+  assert.match(a.doc.getElementById('total').textContent,new RegExp(a.w.eval('cur.total')+' brikker'));
+  a.click('detailBack');await a.settle();
+ }
+ a.click('resetFilters');a.doc.getElementById('pieceLimit').value='60';a.doc.getElementById('pieceLimit').dispatchEvent(new a.w.Event('change'));
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+ assert.ok(Array.from(a.doc.querySelectorAll('#grid .card .meta')).every(el=>+el.textContent.match(/(\d+) brikker/)[1]<=60));
+ a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();assert.ok(a.w.eval('cur.total')<=60);
+ assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('selected variants build shared tasks, resume them and preserve legacy shared link geometry',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01?level=medium'});await a.settle();
+ const pattern=JSON.parse(a.w.eval('JSON.stringify(cur.p)'));
+ a.choose('[data-mode="together"]');a.click('teamStart');a.click('next');a.click('next');a.click('next');
+ assert.ok(a.doc.getElementById('introBox').classList.contains('hide'));
+ assert.equal(a.w.eval('CoopUI.enabled()'),true);
+ const b=app({url:a.w.location.href,storage:snapshotStorage(a)});await b.settle();b.click('teamStart');
+ assert.equal(b.doc.getElementById('next').textContent,'Stykket er sat på');
+ assert.deepEqual(JSON.parse(b.w.eval('JSON.stringify(cur.p)')),pattern);
+ const plan={v:1,p:pattern,n:2,names:['Jens %','Alfred'],split:'even',smallest:1,me:0};
+ const c=app({url:'https://example.test/#m-motiver50-01?level=medium&team='+encodeURIComponent(JSON.stringify(plan))});await c.settle();
+ assert.ok(c.doc.getElementById('variantSetup').classList.contains('hide'));assert.equal(c.doc.getElementById('teamStart').disabled,false);
+ assert.equal(c.doc.getElementById('builderName0').value,'Jens %');
+ c.click('unlockTeam');c.click('confirmAccept');await c.settle();
+ assert.equal(c.w.location.hash,'#m-motiver50-01?level=medium');
+ assert.equal(c.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level,'medium');
+ assert.deepEqual(a.errors.concat(b.errors,c.errors),[]);a.close();b.close();c.close();
+});
+
+
+test('unknown difficulty links keep the original pattern usable',async()=>{
+ const a=app({url:'https://example.test/#m-motiver50-01?level=toString'});await a.settle();
+ assert.equal(a.doc.getElementById('dName').textContent,'Stjernestav');
+ assert.equal(a.w.eval('cur.total'),30);a.click('aloneStart');
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1 af 10/);
+ assert.deepEqual(a.errors,[]);a.close();
 });

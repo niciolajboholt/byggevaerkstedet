@@ -54,7 +54,7 @@
       <div class="done hide" id="doneBox" role="status">Færdig! Flot bygget!</div>
     </section>
     <section class="guide-column">
-      <div id="introBox"><h2>Gør klar til at bygge</h2><p class="sub">Find brikkerne frem, og vælg hvordan I vil bygge.</p></div>
+      <div id="introBox"><h2>Gør klar til at bygge</h2><p class="sub">Find brikkerne frem, og vælg hvordan I vil bygge.</p><section id="variantSetup" class="variant-setup hide" aria-labelledby="variantHeading"><h3 id="variantHeading">Vælg sværhedsgrad</h3><div id="variantOptions" class="variant-options" role="group" aria-label="Sværhedsgrad"></div></section></div>
       <div class="mode" id="modeBar"><button data-mode="alone" class="on"><i class="ic user-icon" aria-hidden="true"></i>Byg alene</button><button data-mode="together"><i class="ic users-icon" aria-hidden="true"></i>Byg sammen</button></div>
       <div id="teamSetup" class="team hide">
         <h2>Hvem bygger med?</h2>
@@ -98,7 +98,7 @@
 
 <footer><span>Skabt til Jens & Alfred</span><span>Hele Plus-Plus-brikker · højst 250 brikker · klublogoer op til 300</span></footer>
 <nav class="bottom-nav" aria-label="Hovednavigation"><button data-nav="" class="on"><i class="ic squares" aria-hidden="true"></i>Motiver</button><button data-nav="mine"><i class="ic heart-icon" aria-hidden="true"></i>Mine</button><button data-nav="byg"><i class="ic plus-icon" aria-hidden="true"></i>Byg selv</button></nav>
-<dialog id="filterDialog"><div class="dialog-heading"><h2>Find dit byggeri</h2><button class="icon-button" id="filterClose" aria-label="Luk filtre"><i class="ic close-icon" aria-hidden="true"></i></button></div><label class="field-label" for="diff">Sværhedsgrad</label><select id="diff"><option value="">Alle sværhedsgrader</option><option>Let</option><option>Mellem</option><option>Svær</option></select><p class="meta">Sværhedsgraden følger antallet af brikker.</p><label class="field-label" for="pieceLimit">Antal brikker</label><select id="pieceLimit"><option value="300">Alle antal</option><option value="250">Op til 250 brikker</option><option value="60">Op til 60 brikker</option><option value="120">Op til 120 brikker</option></select><h3>Tema</h3><div class="tabs" id="tabs"></div><button class="btn" id="filterApply">Vis motiver</button></dialog>
+<dialog id="filterDialog"><div class="dialog-heading"><h2>Find dit byggeri</h2><button class="icon-button" id="filterClose" aria-label="Luk filtre"><i class="ic close-icon" aria-hidden="true"></i></button></div><label class="field-label" for="diff">Sværhedsgrad</label><select id="diff"><option value="">Alle sværhedsgrader</option><option>Let</option><option>Mellem</option><option>Svær</option></select><p class="meta">Hvert motiv findes i tre sværhedsgrader med forskelligt antal brikker.</p><label class="field-label" for="pieceLimit">Antal brikker</label><select id="pieceLimit"><option value="300">Alle antal</option><option value="250">Op til 250 brikker</option><option value="60">Op til 60 brikker</option><option value="120">Op til 120 brikker</option></select><h3>Tema</h3><div class="tabs" id="tabs"></div><button class="btn" id="filterApply">Vis motiver</button></dialog>
 <dialog id="overviewDialog"><div class="dialog-heading"><h2 id="overviewTitle">Hele figuren</h2><button class="icon-button" id="overviewClose" aria-label="Luk overblik"><i class="ic close-icon" aria-hidden="true"></i></button></div><canvas id="fullCanvas" role="img" aria-label="Hele figuren med byggernes dele"></canvas><p id="overviewLegend" class="meta"></p></dialog>
 <dialog id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmText"><h2 id="confirmTitle">Er du sikker?</h2><p id="confirmText"></p><div class="row"><button class="btn ghost" id="confirmCancel" autofocus>Annuller</button><button class="btn" id="confirmAccept">Fortsæt</button></div></dialog>
 <script src="catalogue.js"></script>
@@ -145,6 +145,34 @@ function pieces(p){const c={};const t=tile(p);t.forEach(k=>c[k.c]=(c[k.c]||0)+1)
 function diff(n){return n<60?"Let":n<85?"Mellem":"Svær"}
 function enrich(b){const {c,n,t}=pieces(b.p);b.counts=c;b.total=n;b.tiles=t;b.level=diff(n);b.w=Math.max(...b.p.map(r=>r.length));return b}
 // Catalogue entries are enriched once the JSON file has loaded.
+const VARIANT_LEVELS={easy:"Let",medium:"Mellem",hard:"Svær"};
+function modelVariant(model,level){
+  if(model.own||!Object.hasOwn(VARIANT_LEVELS,level)||!model.variants?.[level])return model;
+  return {...enrich({...model,p:model.variants[level].p,variantLevel:level}),level:VARIANT_LEVELS[level]};
+}
+function variantRoute(model){return "m-"+model.id+(model.variantLevel?"?level="+model.variantLevel:"")}
+function listVariant(model,difficulty,limit){
+  if(model.own||!model.variants)return model;
+  const level=Object.keys(VARIANT_LEVELS).find(key=>VARIANT_LEVELS[key]===difficulty);
+  if(level)return modelVariant(model,level);
+  // Keep the familiar original whenever it fits; otherwise show the largest
+  // available version within the chosen limit, with a single card per motif.
+  if(model.total<=limit)return model;
+  return Object.keys(VARIANT_LEVELS).map(key=>modelVariant(model,key)).filter(b=>b.total<=limit).sort((a,b)=>b.total-a.total)[0]||model;
+}
+function renderVariants(){
+  const visible=!!cur?.variants&&!cur.own&&!started&&!sharedPlan&&!globalThis.LiveSyncUI?.active();
+  $("variantSetup").classList.toggle("hide",!visible);
+  if(!visible)return;
+  $("variantOptions").innerHTML=Object.entries(VARIANT_LEVELS).map(([key,label])=>{
+    const selected=cur.variantLevel?cur.variantLevel===key:JSON.stringify(cur.p)===JSON.stringify(cur.variants[key].p);
+    return `<button type="button" data-level="${key}" aria-pressed="${selected}"><span>${label}</span><small>${pieces(cur.variants[key].p).n} brikker</small></button>`;
+  }).join("");
+  $("variantOptions").querySelectorAll("button").forEach(button=>button.onclick=()=>{
+    if(started||sharedPlan||globalThis.LiveSyncUI?.active())return;
+    go(variantRoute({...cur,variantLevel:button.dataset.level}));
+  });
+}
 function allBuilds(){return BUILDS.concat(own.map(o=>enrich({...o,cat:"Egne",own:true})))}
 
 // ---------- drawing ----------
@@ -232,7 +260,7 @@ function renderTabs(){
 function renderList(){
   if(!catalogueReady)return;
   const q=$("q").value.trim().toLowerCase(), d=$("diff").value, limit=+$("pieceLimit").value;
-  let items=allBuilds().filter(b=>{
+  let items=allBuilds().map(b=>listVariant(b,d,limit)).filter(b=>{
     if(tab==="Likede"&&!likes.has(b.id))return false;
     if(tab==="50 nye"&&b.collection!=="motiver-50")return false;
     if(!["Alle","Likede","50 nye"].includes(tab)&&b.cat!==tab)return false;
@@ -253,7 +281,7 @@ function renderList(){
   g.querySelectorAll(".card[data-id]").forEach(el=>{
     const b=items.find(x=>x.id===el.dataset.id);
     requestAnimationFrame(()=>drawGrid(el.querySelector("canvas"),b.p));
-    el.querySelector(".model-link").onclick=()=>go("m-"+b.id);
+    el.querySelector(".model-link").onclick=()=>go(variantRoute(b));
   });
   g.querySelectorAll("[data-like]").forEach(h=>h.onclick=()=>{toggleFavorite(h.dataset.like);renderList()});
   if($("emptyAction"))$("emptyAction").onclick=()=>tab==="Egne"?go("byg"):resetFilters();
@@ -306,15 +334,17 @@ function readTeamLink(encoded){
   sharedPlan=false;shareWarning="";
   if(!encoded)return;
   try{
-    const plan=JSON.parse(decodeURIComponent(encoded));
+    const plan=JSON.parse(encoded);
     if(plan.v!==1||JSON.stringify(plan.p)!==JSON.stringify(cur.p)||![2,3].includes(plan.n)||!Array.isArray(plan.names)||plan.names.length!==plan.n||!plan.names.every(n=>typeof n==="string"&&n.length<=80)||!["even","small"].includes(plan.split)||!Number.isInteger(plan.smallest)||plan.smallest<0||plan.smallest>=plan.n||!Number.isInteger(plan.me)||plan.me<0||plan.me>=plan.n)throw Error("Invalid plan");
     team={n:plan.n,names:plan.names,split:plan.split,smallest:plan.smallest,me:plan.me};
     mode="together";sharedPlan=true;
   }catch{shareWarning="Dette delingslink passer ikke til motivet eller er beskadiget. Bed om et nyt link, før I bygger sammen."}
 }
 function openBuild(id){
-  const [modelId,encoded]=id.split("?team=");id=modelId;
-  cur=allBuilds().find(b=>b.id===id); if(!cur){go("");return}
+  const [modelId,query=""]=id.split("?");
+  const params=new URLSearchParams(query),encoded=params.get("team");
+  const base=allBuilds().find(b=>b.id===modelId); if(!base){go("");return}
+  cur=modelVariant(base,params.get("level"));
   readTeamLink(encoded);
   if(!encoded){team.me=null;saveTeam()}
   step=0;showAll=false;started=false;phase="setup";parts=[];active=0;clearInterval(asmTimer);
@@ -386,6 +416,7 @@ function buildParts(){
     return {...c,name:team.names[i]||`Bygger ${i+1}`,color:TEAM_COLORS[i],step:0,done:false,counts,n}});
 }
 function render(){
+  renderVariants();
   if(globalThis.LiveSyncUI?.active())return LiveSyncUI.render();
   if(!cur)return;
   document.body.classList.remove("task-building");
@@ -543,7 +574,7 @@ $("assembleGo").onclick=()=>{
 };
 $("teamStart").onclick=()=>beginBuild();
 $("restartBuild").onclick=async()=>{if(await confirmAction("Start dette byggeri forfra? Det gemte fremskridt for denne opsætning slettes."))beginBuild(true)};
-$("unlockTeam").onclick=async()=>{if(await confirmAction("Lav en ny fordeling? Send nye links til alle byggere, hvis du ændrer navne eller dele.")){sharedPlan=false;window.history.replaceState(null,"",location.href.split("#")[0]+"#m-"+cur.id);render()}};
+$("unlockTeam").onclick=async()=>{if(await confirmAction("Lav en ny fordeling? Send nye links til alle byggere, hvis du ændrer navne eller dele.")){sharedPlan=false;window.history.replaceState(null,"",location.href.split("#")[0]+"#"+variantRoute(cur));render()}};
 document.querySelectorAll("#modeBar button").forEach(b=>b.onclick=()=>{started=false;mode=b.dataset.mode;store.set("bv_mode",mode);phase="setup";clearInterval(asmTimer);render()});
 $("modelZoom").onchange=render;
 $("next").onclick=event=>{

@@ -124,3 +124,25 @@ test('a club crest above 250 bricks can create a live room and take turns',async
  assert.equal(backend.state.model.name,'Manchester City');assert.equal(backend.state.model.p.join('').replace(/\./g,'').length,277);
  a.click('next');await a.until(()=>a.doc.getElementById('next').textContent==='Stykket er sat på');assert.deepEqual(a.errors,[]);a.close();
 });
+
+test('selected difficulty is the immutable room pattern for every device and reload',async()=>{
+ const backend=server(),a=app(backend,'https://example.test/#m-motiver50-01?level=hard');
+ await a.until(()=>a.doc.querySelector('#variantOptions [aria-pressed="true"]'));
+ assert.equal(a.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level,'hard');
+ const pattern=JSON.parse(a.w.eval('JSON.stringify(cur.p)'));
+ const count=a.w.eval('cur.total'),oldButton=a.doc.querySelector('#variantOptions [data-level="easy"]');
+ a.choose('[data-mode="together"]');a.click('liveRoomCreate');
+ // A stale setup control cannot change geometry during creation or live play.
+ oldButton.click();await a.until(()=>a.doc.getElementById('liveInviteLink'));
+ assert.deepEqual(backend.state.model.p,pattern);assert.equal(backend.state.model.id,'motiver50-01');
+ assert.equal(backend.state.model.p.join('').replace(/\./g,'').length,count);
+ const url=a.doc.getElementById('liveInviteLink').value,b=app(backend,url);
+ await b.until(()=>b.doc.querySelector('[data-live-join="1"]'));b.choose('[data-live-join="1"]');
+ await b.until(()=>b.doc.getElementById('buildPerson').textContent==='Alfred bygger');
+ assert.deepEqual(JSON.parse(b.w.eval('JSON.stringify(cur.p)')),pattern);
+ assert.equal(b.doc.getElementById('introBox').classList.contains('hide'),true);
+ const stored=a.storage();a.close();const resumed=app(backend,url,stored);
+ await resumed.until(()=>resumed.doc.getElementById('buildPerson').textContent==='Jens bygger');
+ assert.deepEqual(JSON.parse(resumed.w.eval('JSON.stringify(cur.p)')),pattern);
+ assert.deepEqual(b.errors.concat(resumed.errors),[]);b.close();resumed.close();
+});
