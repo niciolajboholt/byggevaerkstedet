@@ -6,7 +6,7 @@ function loadBundle(){
  if(root.Brick3DRenderer?.createViewer)return Promise.resolve(root.Brick3DRenderer);
  if(bundlePromise)return bundlePromise;
  bundlePromise=new Promise((resolve,reject)=>{
-  const script=document.createElement('script');script.src=new URL('vendor/three-viewer.js',document.baseURI).href;script.async=true;
+  const script=document.createElement('script');script.src=new URL('vendor/three-viewer.js?v=0.187.0-1',document.baseURI).href;script.async=true;
   let settled=false;const finish=(error)=>{if(settled)return;settled=true;clearTimeout(timer);script.onload=script.onerror=null;if(error){script.remove();bundlePromise=null;reject(error)}else resolve(root.Brick3DRenderer)};
   const timer=setTimeout(()=>finish(Error('3D load timed out')),20000);
   script.onload=()=>finish(root.Brick3DRenderer?.createViewer?null:Error('3D renderer unavailable'));script.onerror=()=>finish(Error('3D load failed'));document.head.append(script);
@@ -35,7 +35,7 @@ function init(options){
   if(!dialog.open)dialog.showModal();get('model3DClose').focus();
   try{
    const renderer=await (options.load||loadBundle)();if(operation!==generation||!dialog.open)return;
-   viewer=renderer.createViewer(get('model3DStage'),{onContextLost:()=>fallback(operation)});
+   viewer=renderer.createViewer(get('model3DStage'),{onContextLost:()=>{get('model3DStatus').dataset.failure='context-lost';fallback(operation)}});
    viewer.update({tiles:options.tiles(model),palette:options.palette,name:model.name});viewer.reset('angle');controls(true);
    get('model3DStage').setAttribute('aria-label',model.name+' bygget af hele Plus-Plus-brikker i 3D');get('model3DStatus').textContent='Drej modellen, og undersøg brikkernes form og tykkelse.';
   }catch(error){if(operation===generation)get('model3DStatus').dataset.failure=String(error?.message||'unknown');fallback(operation)}
