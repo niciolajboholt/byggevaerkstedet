@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { SVGRenderer } from 'three/addons/renderers/SVGRenderer.js';
 import geometry from './brick-geometry.cjs';
 
 const { brickOutline, tilePosition, modelBounds } = geometry;
@@ -8,33 +9,40 @@ const DEPTH = .55;
 export function createViewer(container, options = {}) {
   if (!container || typeof container.appendChild !== 'function') throw new TypeError('A viewer container is required');
   const canvas = document.createElement('canvas');
-  const context = canvas.getContext('webgl2', { alpha: true, antialias: true });
-  if (!context) throw new Error('WebGL2 is unavailable');
-  let renderer;
+  let context = null, renderer, useSVG = false;
   try {
+    context = canvas.getContext('webgl2', { alpha: true, antialias: true });
+    if (!context) throw new Error('WebGL2 is unavailable');
     renderer = new THREE.WebGLRenderer({ canvas, context, alpha: true, antialias: true });
-  } catch (error) {
-    context.getExtension('WEBGL_lose_context')?.loseContext();
-    throw error;
+  } catch {
+    context?.getExtension?.('WEBGL_lose_context')?.loseContext();
+    renderer = new SVGRenderer();
+    // The CPU projector uses the same camera, extruded meshes and controls.
+    useSVG = true;
+    renderer.setPrecision(3);
+    renderer.overdraw = .15;
   }
-  renderer.setPixelRatio(Math.min(globalThis.devicePixelRatio || 1, 2));
+  const surface = renderer.domElement;
+  renderer.setPixelRatio?.(Math.min(globalThis.devicePixelRatio || 1, 2));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;
-  canvas.style.cssText = 'display:block;width:100%;height:100%;touch-action:none;';
-  canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', '3D-model af Plus-Plus-brikker');
-  container.appendChild(canvas);
+  surface.style.cssText = 'display:block;width:100%;height:100%;touch-action:none;';
+  surface.setAttribute('role', 'img');
+  surface.setAttribute('aria-label', '3D-model af Plus-Plus-brikker');
+  container.appendChild(surface);
 
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, .01, 1000);
   const model = new THREE.Group();
   scene.add(model);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xa5a9b0, 2.3));
-  const key = new THREE.DirectionalLight(0xffffff, 2.1);
+  // SVGRenderer supports ambient and directional light, but not hemisphere
+  // light. Its ambient calculation reads color rather than intensity.
+  scene.add(useSVG ? new THREE.AmbientLight(new THREE.Color().setRGB(.55,.55,.55)) : new THREE.HemisphereLight(0xffffff, 0xa5a9b0, 2.3));
+  const key = new THREE.DirectionalLight(0xffffff, useSVG ? .45 : 2.1);
   key.position.set(-25, 40, 65);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0xffffff, .6);
+  const fill = new THREE.DirectionalLight(0xffffff, useSVG ? .08 : .6);
   fill.position.set(30, -10, 20);
   scene.add(fill);
 
@@ -44,7 +52,7 @@ export function createViewer(container, options = {}) {
     const shape = new THREE.Shape(outline.map(([x, y]) => new THREE.Vector2(x, -y)));
     const solid = new THREE.ExtrudeGeometry(shape, {
       depth: DEPTH - .04, steps: 1, bevelEnabled: true,
-      bevelThickness: .02, bevelSize: .02, bevelSegments: 2, curveSegments: 1
+      bevelThickness: .02, bevelSize: .02, bevelSegments: useSVG ? 1 : 2, curveSegments: 1
     });
     solid.translate(0, 0, -DEPTH / 2 + .02);
     solid.computeVertexNormals();
@@ -52,7 +60,7 @@ export function createViewer(container, options = {}) {
   }));
   const materials = new Map();
   let disposed = false, lost = false, bounds = null, width = 1, height = 1;
-  const controls = new OrbitControls(camera, canvas);
+  const controls = new OrbitControls(camera, surface);
   controls.enableDamping = false;
   controls.enablePan = false;
   controls.minZoom = .55;
@@ -63,7 +71,11 @@ export function createViewer(container, options = {}) {
   controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
 
   function render() {
-    if (!disposed && !lost && width > 0 && height > 0) renderer.render(scene, camera);
+    if (!disposed && !lost && width > 0 && height > 0) {
+      renderer.render(scene, camera);
+      // SVGRenderer.clear sets an opaque background on every render.
+      if (useSVG) surface.style.backgroundColor = 'transparent';
+    }
   }
   controls.addEventListener('change', render);
 
@@ -105,7 +117,7 @@ export function createViewer(container, options = {}) {
     if (disposed) return;
     const rect = container.getBoundingClientRect();
     width = Math.max(1, Math.round(rect.width)); height = Math.max(1, Math.round(rect.height));
-    renderer.setPixelRatio(Math.min(globalThis.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio?.(Math.min(globalThis.devicePixelRatio || 1, 2));
     renderer.setSize(width, height, false);
     fit();
     render();
@@ -119,7 +131,7 @@ export function createViewer(container, options = {}) {
     lost = true;
     options.onContextLost?.();
   }
-  canvas.addEventListener('webglcontextlost', contextLost);
+  if (!useSVG) surface.addEventListener('webglcontextlost', contextLost);
 
   function update({ tiles = [], palette = {}, name = '' } = {}) {
     if (disposed) return;
@@ -143,7 +155,7 @@ export function createViewer(container, options = {}) {
       mesh.position.set(x, -y, 0);
       model.add(mesh);
     }
-    canvas.setAttribute('aria-label', `${name || 'Plus-Plus-model'} i 3D, ${tiles.length} brikker`);
+    surface.setAttribute('aria-label', `${name || 'Plus-Plus-model'} i 3D, ${tiles.length} brikker`);
     resize();
     reset();
   }
@@ -159,7 +171,7 @@ export function createViewer(container, options = {}) {
     disposed = true;
     observer?.disconnect();
     if (!observer) globalThis.removeEventListener('resize', resize);
-    canvas.removeEventListener('webglcontextlost', contextLost);
+    surface.removeEventListener('webglcontextlost', contextLost);
     controls.removeEventListener('change', render);
     controls.dispose();
     model.clear();
@@ -167,10 +179,10 @@ export function createViewer(container, options = {}) {
     for (const material of materials.values()) material.dispose();
     geometries.clear(); materials.clear();
     scene.clear();
-    renderer.renderLists.dispose();
-    renderer.dispose();
-    renderer.forceContextLoss();
-    canvas.remove();
+    renderer.renderLists?.dispose();
+    renderer.dispose?.();
+    renderer.forceContextLoss?.();
+    surface.remove();
   }
   resize();
   reset();

@@ -6,7 +6,7 @@ function loadBundle(){
  if(root.Brick3DRenderer?.createViewer)return Promise.resolve(root.Brick3DRenderer);
  if(bundlePromise)return bundlePromise;
  bundlePromise=new Promise((resolve,reject)=>{
-  const script=document.createElement('script');script.src=new URL('vendor/three-viewer.js?v=0.187.0-1',document.baseURI).href;script.async=true;
+  const script=document.createElement('script');script.src=new URL('vendor/three-viewer.js?v=0.187.0-2',document.baseURI).href;script.async=true;
   let settled=false;const finish=(error)=>{if(settled)return;settled=true;clearTimeout(timer);script.onload=script.onerror=null;if(error){script.remove();bundlePromise=null;reject(error)}else resolve(root.Brick3DRenderer)};
   const timer=setTimeout(()=>finish(Error('3D load timed out')),20000);
   script.onload=()=>finish(root.Brick3DRenderer?.createViewer?null:Error('3D renderer unavailable'));script.onerror=()=>finish(Error('3D load failed'));document.head.append(script);

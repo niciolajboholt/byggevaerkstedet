@@ -183,7 +183,7 @@ Generator: `python scripts/generate-difficulty-variants.py --review-dir /tmp/var
 
 Knappen **Se motivet i 3D** åbner en drejelig visning af det valgte motiv og den valgte sværhedsgrad. Hver brik bruger den samme sammenhængende ni-felts Plus-Plus-kontur og retning som 2D-vejledningen, med en lille plasttykkelse og afrundede kanter. Motiverne forbliver flade mosaikker; de er ikke ombygget til rumlige skibe, dyr eller bygninger.
 
-Træk med én finger for at dreje og knib med to for at zoome. Knapperne Forfra, Skråt og zoom gør de samme funktioner tilgængelige uden berøringsbevægelser. Luk eller Escape vender tilbage til det samme byggetrin. Scenen lukkes også ved navigation eller baggrundslægning. Ved manglende WebGL2, afbrudt indlæsning eller tabt grafikforbindelse vises den almindelige fronttegning med mulighed for at prøve igen.
+Træk med én finger for at dreje og knib med to for at zoome. Knapperne Forfra, Skråt og zoom gør de samme funktioner tilgængelige uden berøringsbevægelser. Luk eller Escape vender tilbage til det samme byggetrin. Scenen lukkes også ved navigation eller baggrundslægning. Uden WebGL2 bruges Three.js’ SVGRenderer som softwarebaseret 3D-visning med de samme brikker og betjening. Ved afbrudt indlæsning eller tabt grafikforbindelse vises den almindelige fronttegning med mulighed for at prøve igen.
 
 Three.js 0.187.0 og OrbitControls ligger i den lokale, færdigbyggede `vendor/three-viewer.js`, som først indlæses ved åbning af 3D-vinduet. Ingen ekstern CDN bruges. Der tegnes ved ændringer og ikke i en permanent animationsløkke; pixelratio begrænses til 2. Grafikressourcer, controls, observationslyttere og WebGL-kontekst frigives ved lukning.
 
