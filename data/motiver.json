@@ -19,7 +19,8 @@
     "Skibe",
     "Blomster",
     "Eksotiske dyr",
-    "Klublogoer"
+    "Klublogoer",
+    "Messi og CR7"
   ],
   "models": [
     {
@@ -18244,6 +18245,1566 @@
             "WWWWWWWWWWWWWWW",
             "WWWWWWWWWWWWWWW",
             "WWWWWWWWWWWWWWW"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-argentina-spiller",
+      "description": "Mørkt hår, skæg og Argentinas striber; bolden møder støvlen.",
+      "p": [
+        "...KKKK.....",
+        "..KKKKKK....",
+        "..KTTTTK....",
+        "..TKTTKT....",
+        "...TNTT.....",
+        "...NNNN.....",
+        "....TT......",
+        ".bbWbbWbb...",
+        "TbbWbbWbbT..",
+        "TbbWbbWbbT..",
+        "TbbWbbWbbT..",
+        ".bbWbbWbb...",
+        ".KKKKKKKK...",
+        "..KK..KK....",
+        "..TT..TT....",
+        "..TT..TT....",
+        "..WW..WW....",
+        ".KKK..KKKWW.",
+        ".........WKW",
+        ".........WWW"
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..KKK...",
+            ".KTTK...",
+            ".TKTK...",
+            "..TNT...",
+            "..TT....",
+            "bbWbWb..",
+            "TbWbWbT.",
+            "TbWbWb..",
+            ".KKKKK..",
+            ".KK.K...",
+            ".TT.T...",
+            ".WW.W...",
+            ".K..KKKW",
+            "......WW"
+          ]
+        },
+        "medium": {
+          "p": [
+            "...KKKK.....",
+            "..KTTTTK....",
+            "..TKTTKT....",
+            "...TNTT.....",
+            "....TT......",
+            ".bbWbbWbb...",
+            "TbbWbbWbbT..",
+            "TbbWbbWbbT..",
+            ".KKKKKKKK...",
+            "..KK..KK....",
+            "..TT..TT....",
+            "..WW..WW....",
+            ".KKK..KKKWK.",
+            ".........WWW"
+          ]
+        },
+        "hard": {
+          "p": [
+            "...KKKK.....",
+            "..KKKKKK....",
+            "..KTTTTK....",
+            "..TKTTKT....",
+            "...TNTT.....",
+            "...NNNN.....",
+            "....TT......",
+            ".bbWbbWbb...",
+            "TbbWbbWbbT..",
+            "TbbWbbWbbT..",
+            "TbbWbbWbbT..",
+            ".bbWbbWbb...",
+            ".KKKKKKKK...",
+            "..KK..KK....",
+            "..TT..TT....",
+            "..TT..TT....",
+            "..WW..WW....",
+            ".KKK..KKKWW.",
+            ".........WKW",
+            ".........WWW"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-argentina-troeje-10",
+      "description": "Trøjeryg med stort, læsbart nummer 10.",
+      "p": [
+        "...TTT...",
+        "..bbTWW..",
+        ".bbWWbbW.",
+        "bbWWbbWWW",
+        "bbWWbbWWW",
+        "..KWKKK..",
+        "..KWKbK..",
+        "..KWKbK..",
+        "..KWKbK..",
+        "..KWKKK..",
+        "..WWbbW.."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "...TTT...",
+            "..bbTWW..",
+            ".bbWWbbW.",
+            "bbWWbbWWW",
+            "bbWWbbWWW",
+            "..KWKbK..",
+            "..KWKbK..",
+            "..KWKbK..",
+            "..KWKKK..",
+            "..WWbbW.."
+          ]
+        },
+        "medium": {
+          "p": [
+            "...TTT...",
+            "..bbTWW..",
+            ".bbWWbbW.",
+            "bbWWbbWWW",
+            "bbWWbbWWW",
+            "..KWKKK..",
+            "..KWKbK..",
+            "..KWKbK..",
+            "..KWKbK..",
+            "..KWKKK..",
+            "..WWbbW.."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....TTTTT....",
+            "...bbTTTWW...",
+            "...bbbTWWW...",
+            ".bbbWWWbbbWW.",
+            "bbbWWWbbbWWWW",
+            "bbbWWWbbbWWWW",
+            "bbbWWWbbbWWWW",
+            "...KWWKKKK...",
+            "...KWWKbbK...",
+            "...KWWKbbK...",
+            "...KWWKbbK...",
+            "...KWWKbbK...",
+            "...KWWKKKK...",
+            "...KWWKKKK...",
+            "...WWWbbbW..."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-barcelona-troeje-10",
+      "description": "Trøjeryg med stort, læsbart nummer 10.",
+      "p": [
+        "....TTTT....",
+        "...RBTTRB...",
+        "..RRBBRRBB..",
+        ".BRRBBRRBBR.",
+        "BBRRBBRRBBRR",
+        "BBRRBBRRBBRR",
+        "..RRYBYYYB..",
+        "..RRYBYRYB..",
+        "..RRYBYRYB..",
+        "..RRYBYRYB..",
+        "..RRYBYYYB..",
+        "..RRBBRRBB..",
+        "..RRBBRRBB..",
+        "..RRBBRRBB.."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..TT..",
+            ".RBRB.",
+            "BRBRBR",
+            "BRBRBR",
+            ".RYYY.",
+            ".RYRY.",
+            ".RYYY.",
+            ".RBRB.",
+            ".RBRB."
+          ]
+        },
+        "medium": {
+          "p": [
+            "....TTTT....",
+            "..RRBBRRBB..",
+            ".BRRBBRRBBR.",
+            "BBRRBBRRBBRR",
+            "..RRYBYYYB..",
+            "..RRYBYRYB..",
+            "..RRYBYRYB..",
+            "..RRYBYYYB..",
+            "..RRBBRRBB..",
+            "..RRBBRRBB.."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....TTTT....",
+            "...RBTTRB...",
+            "..RRBBRRBB..",
+            ".BRRBBRRBBR.",
+            "BBRRBBRRBBRR",
+            "BBRRBBRRBBRR",
+            "..RRYBYYYB..",
+            "..RRYBYRYB..",
+            "..RRYBYRYB..",
+            "..RRYBYRYB..",
+            "..RRYBYYYB..",
+            "..RRBBRRBB..",
+            "..RRBBRRBB..",
+            "..RRBBRRBB.."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-miami-troeje-10",
+      "description": "Trøjeryg med stort, læsbart nummer 10.",
+      "p": [
+        "..TT....",
+        ".ppppp..",
+        "pppppppp",
+        "pppppppp",
+        ".pK.KKK.",
+        ".pK.KpK.",
+        ".pK.KKK.",
+        ".pppppp."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..TT....",
+            ".ppppp..",
+            "pppppppp",
+            "pppppppp",
+            ".pK.KKK.",
+            ".pK.KpK.",
+            ".pK.KKK.",
+            ".pppppp."
+          ]
+        },
+        "medium": {
+          "p": [
+            "..TT....",
+            ".pTTpp..",
+            ".ppppp..",
+            "pppppppp",
+            "pppppppp",
+            "pppppppp",
+            ".pK.KKK.",
+            ".pK.KpK.",
+            ".pK.KpK.",
+            ".pK.KKK.",
+            ".pppppp.",
+            ".pppppp."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....TTT.......",
+            "...TTTT.......",
+            "..pppppppp....",
+            ".pppppppppp...",
+            "pppppppppppppp",
+            "pppppppppppppp",
+            "pppppppppppppp",
+            "..ppK..KKKKK..",
+            "..ppK..KKKKK..",
+            "..ppK..KKppK..",
+            "..ppK..KKpKK..",
+            "..ppK..KKKKK..",
+            "..pppppppppp..",
+            "..pppppppppp.."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-venstrefodsdribling",
+      "description": "Spilleren læner sig ind over driblingen med venstre ben strakt mod bolden.",
+      "p": [
+        ".........KKKK....",
+        "........KKKKKK...",
+        "........KTTTTK...",
+        "........TKTTKT...",
+        ".........TNTT....",
+        ".........NNNN....",
+        "..........TT.....",
+        ".......bbWbbW....",
+        ".....TTbbWbbWTT..",
+        "...TTT.bbWbbW.TTT",
+        ".......bbWbbW....",
+        ".......KKKKKK....",
+        "......KKK.KKK....",
+        ".....TTT...KK....",
+        "....TTT....TT....",
+        "...WWW.....TT....",
+        "..KKK......WW....",
+        ".KK........KKK...",
+        "WWW..............",
+        "WKW..............",
+        "WWW.............."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "......KKK...",
+            "......KTTK..",
+            "......KTKT..",
+            "......TNT...",
+            ".......TT...",
+            ".....bWbW...",
+            "..TTTbWbWTTT",
+            ".....bWbW...",
+            ".....KKKK...",
+            "....TT..K...",
+            "...TT...T...",
+            ".KKW....W...",
+            ".K......KK..",
+            "WK..........",
+            "WW.........."
+          ]
+        },
+        "medium": {
+          "p": [
+            ".......KKK...",
+            "......KKKKK..",
+            "......TKTKT..",
+            ".......TTT...",
+            ".......NNN...",
+            ".......TT....",
+            "....TbbWbWT..",
+            "..TTTbbWbWTTT",
+            ".....bbWbW...",
+            ".....KKKKK...",
+            "....TKK.KK...",
+            "...TTT..TT...",
+            "..WWW...TT...",
+            ".KKK....WW...",
+            "WK.......K...",
+            "WK...........",
+            "WW..........."
+          ]
+        },
+        "hard": {
+          "p": [
+            ".........KKKK....",
+            "........KKKKKK...",
+            "........KTTTTK...",
+            "........TKTTKT...",
+            ".........TNTT....",
+            ".........NNNN....",
+            "..........TT.....",
+            ".......bbWbbW....",
+            ".....TTbbWbbWTT..",
+            "...TTT.bbWbbW.TTT",
+            ".......bbWbbW....",
+            ".......KKKKKK....",
+            "......KKK.KKK....",
+            ".....TTT...KK....",
+            "....TTT....TT....",
+            "...WWW.....TT....",
+            "..KKK......WW....",
+            ".KK........KKK...",
+            "WWW..............",
+            "WKW..............",
+            "WWW.............."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-jubel-fingre-op",
+      "description": "To løftede arme og to enkelte pegefingre er centrum i Messis kendte jubel.",
+      "p": [
+        "T...........T",
+        "TT.........TT",
+        "TT.........TT",
+        "TT...KKKK..TT",
+        "TT..KKKKKK.TT",
+        "TT..KTTTTK.TT",
+        ".TT.TKTTKT.TT",
+        "..TT.TNTT.TT.",
+        "...TTNNNNTT..",
+        "....bbWbbW...",
+        "....bbWbbW...",
+        "....bbWbbW...",
+        "....bbWbbW...",
+        "....KKKKKK...",
+        ".....KKKK....",
+        ".....T.TT....",
+        ".....T.TT....",
+        ".....W.WW....",
+        "....KK.KKK..."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "T.......T",
+            "T.......T",
+            "T..KKK..T",
+            "TT.KTTK.T",
+            ".TTKTKTTT",
+            "..TTNNTT.",
+            "...bWbW..",
+            "...bWbW..",
+            "...bWbW..",
+            "...KKKK..",
+            "...TKT...",
+            "...W.W...",
+            "...K.KK.."
+          ]
+        },
+        "medium": {
+          "p": [
+            "T...........T",
+            "TT.........TT",
+            "TT...KKKK..TT",
+            "TT..KKKKKK.TT",
+            ".TT.TKTTKT.TT",
+            "..TT.TNTT.TT.",
+            "...TTNNNNTT..",
+            "....bbWbbW...",
+            "....bbWbbW...",
+            "....bbWbbW...",
+            ".....KKKK....",
+            ".....T.TT....",
+            ".....W.WT....",
+            "....KK.KKK..."
+          ]
+        },
+        "hard": {
+          "p": [
+            "T...........T",
+            "TT.........TT",
+            "TT.........TT",
+            "TT...KKKK..TT",
+            "TT..KKKKKK.TT",
+            "TT..KTTTTK.TT",
+            ".TT.TKTTKT.TT",
+            "..TT.TNTT.TT.",
+            "...TTNNNNTT..",
+            "....bbWbbW...",
+            "....bbWbbW...",
+            "....bbWbbW...",
+            "....bbWbbW...",
+            "....KKKKKK...",
+            ".....KKKK....",
+            ".....T.TT....",
+            ".....T.TT....",
+            ".....W.WW....",
+            "....KK.KKK..."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-med-vm-pokal",
+      "description": "Guldpokal over hovedet, hænder på hver side og Argentinas stribede trøje.",
+      "p": [
+        "...YYYY...",
+        "..YYYYYY..",
+        "..YYYYYY..",
+        "...YYYY...",
+        "....YY....",
+        "...YYYY...",
+        "..YYYYYY..",
+        ".TTYYYYTT.",
+        "TT......TT",
+        "TT.KKKK.TT",
+        "TTKKKKKKTT",
+        ".TKTTTTKT.",
+        ".TTKTTKTT.",
+        "..TTNTTT..",
+        "...NNNN...",
+        ".bbWbbWbb.",
+        ".bbWbbWbb.",
+        ".bbWbbWbb.",
+        ".bbWbbWbb.",
+        "..KKKKKK..",
+        "..TT..TT..",
+        "..WW..WW..",
+        ".KKK..KKK."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..YYY..",
+            "..YYY..",
+            "..YYY..",
+            "..YYY..",
+            ".TYYYT.",
+            "T..K..T",
+            "TKKKKKT",
+            ".TKTKT.",
+            "..NNT..",
+            ".bWbWb.",
+            ".bWbWb.",
+            ".bKbKb.",
+            ".TT.TT.",
+            ".KW.WK."
+          ]
+        },
+        "medium": {
+          "p": [
+            "..YYYY..",
+            "..YYYY..",
+            "..YYYY..",
+            "...YY...",
+            "..YYYY..",
+            ".TYYYYT.",
+            "TT....TT",
+            "TTKKKKTT",
+            ".TKTTKT.",
+            ".TKTTKT.",
+            "..NNNN..",
+            ".bWbbWb.",
+            ".bWbbWb.",
+            ".bWbbWb.",
+            "..KKKK..",
+            "..T..T..",
+            ".KK..KK."
+          ]
+        },
+        "hard": {
+          "p": [
+            "...YYYY...",
+            "..YYYYYY..",
+            "..YYYYYY..",
+            "...YYYY...",
+            "....YY....",
+            "...YYYY...",
+            "..YYYYYY..",
+            ".TTYYYYTT.",
+            "TT......TT",
+            "TT.KKKK.TT",
+            "TTKKKKKKTT",
+            ".TKTTTTKT.",
+            ".TTKTTKTT.",
+            "..TTNTTT..",
+            "...NNNN...",
+            ".bbWbbWbb.",
+            ".bbWbbWbb.",
+            ".bbWbbWbb.",
+            ".bbWbbWbb.",
+            "..KKKKKK..",
+            "..TT..TT..",
+            "..WW..WW..",
+            ".KKK..KKK."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-skaeg-portraet",
+      "description": "Tæt portræt med mørkt sidestrøget hår, øjne, tæt skæg og lyseblå-hvide skuldre.",
+      "p": [
+        "....KKKKKKK...",
+        "..KKKKKKKKKK..",
+        ".KKKKKKKKKKKK.",
+        ".KKKKKKKKKKKK.",
+        ".KKTTTTTTTTKK.",
+        ".KTTTTTTTTTTK.",
+        "TTTKTTTTTKTTTT",
+        "TTTKTTTTTKTTTT",
+        ".TTTTTTTTTTTT.",
+        ".TNTTTTTTTTNT.",
+        "..NNTTTTTTNN..",
+        "..NNNTTTTNNN..",
+        "...NNNTTNNN...",
+        "....NNNNNN....",
+        ".....TTTT.....",
+        "...bbWWbbWW...",
+        "..bbbWWbbWWb.."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..KKKK..",
+            ".KKKKKK.",
+            ".KTTTTK.",
+            "TTTTTTTT",
+            "TKTTTKTT",
+            ".TTTTTT.",
+            ".NNTTNN.",
+            "..NNNN..",
+            "...TT...",
+            ".bbWbWb."
+          ]
+        },
+        "medium": {
+          "p": [
+            "...KKKKK..",
+            ".KKKKKKKK.",
+            ".KKKKKKKK.",
+            ".KTTTTTTK.",
+            "TTKTTTKTTT",
+            "TTTTTTTTTT",
+            ".TTTTTTTT.",
+            "..NTTTTN..",
+            "..NNTTNN..",
+            "...NNNN...",
+            "...TTTT...",
+            "..bbWbWb.."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....KKKKKKK...",
+            "..KKKKKKKKKK..",
+            ".KKKKKKKKKKKK.",
+            ".KKKKKKKKKKKK.",
+            ".KKTTTTTTTTKK.",
+            ".KTTTTTTTTTTK.",
+            "TTTKTTTTTKTTTT",
+            "TTTKTTTTTKTTTT",
+            ".TTTTTTTTTTTT.",
+            ".TNTTTTTTTTNT.",
+            "..NNTTTTTTNN..",
+            "..NNNTTTTNNN..",
+            "...NNNTTNNN...",
+            "....NNNNNN....",
+            ".....TTTT.....",
+            "...bbWWbbWW...",
+            "..bbbWWbbWWb.."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-m10-emblem",
+      "description": "Kompakt M10 i argentinske farver med en forbundet sort-hvid fodbold.",
+      "p": [
+        "b...b.W.bbb...",
+        "bbbbb.W.b.b...",
+        "b.b.b.W.b.b...",
+        "b...b.W.b.b...",
+        "b...b.W.bbb...",
+        "bbbbbWWWWbb...",
+        "........bbWWW.",
+        "..........WKWW",
+        "..........WWKW",
+        "...........WWW"
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "b...b.W.bbb...",
+            "bbbbb.W.b.b...",
+            "b.b.b.W.b.b...",
+            "b...b.W.b.b...",
+            "b...b.W.bbb...",
+            "bbbbbWWWWbb...",
+            "........bbWWW.",
+            "..........WKWW",
+            "..........WWKW",
+            "...........WWW"
+          ]
+        },
+        "medium": {
+          "p": [
+            "b...b.W.bbb...",
+            "bbbbb.W.b.b...",
+            "b.b.b.W.b.b...",
+            "b.b.b.W.b.b...",
+            "b...b.W.b.b...",
+            "b...b.W.bbb...",
+            "bbbbbWWWWbb...",
+            "........bbWWW.",
+            "..........WKWW",
+            "..........WKWW",
+            "..........WWKW",
+            "...........WWW"
+          ]
+        },
+        "hard": {
+          "p": [
+            "b.....b..W..bbbb.....",
+            "bb....b..W..bb.b.....",
+            "bbbbbbb..W..b..b.....",
+            "b..b..b..W..b..b.....",
+            "b.....b..W..b..b.....",
+            "b.....b..W..b..b.....",
+            "b.....b..W..bbbb.....",
+            "bb....bb.WW.bbbb.....",
+            "bbbbbbbbWWWWWbbb.....",
+            "............bbbWWWW..",
+            "...............WWWWW.",
+            "...............WWKWWW",
+            "...............WWWKWW",
+            "................WWWWW",
+            ".................WWWW"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-messi-gylden-venstrestoevle",
+      "description": "Gylden støvle med tåen mod venstre, knopper og et lyseblåt-hvidt bånd.",
+      "p": [
+        "..........YYY",
+        ".........YYYY",
+        ".........YYYY",
+        "........YYYYY",
+        ".......YYYYYY",
+        ".....YYYYYYYY",
+        "...YYYYYYYYYY",
+        ".YYYYYYYYYYYY",
+        "YYYYYYYbbbWWW",
+        "YYYYYYYbbbWWW",
+        ".YYYYYYYYYYY.",
+        "..Y.Y.Y.Y.Y.."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "........YY",
+            ".......YYY",
+            "......YYYY",
+            ".....YYYYY",
+            "...YYYYYYY",
+            ".YYYYYYYYY",
+            "YYYYYbbbWW",
+            "YYYYYYbYYW",
+            ".Y.YYYY.Y."
+          ]
+        },
+        "medium": {
+          "p": [
+            "..........YYY",
+            ".........YYYY",
+            ".........YYYY",
+            "........YYYYY",
+            ".......YYYYYY",
+            ".....YYYYYYYY",
+            ".YYYYYYYYYYYY",
+            "YYYYYYYbbbWWW",
+            "YYYYYYYbbbWWW",
+            ".YYYYYYYYYYY.",
+            "..Y.Y.Y.Y.Y.."
+          ]
+        },
+        "hard": {
+          "p": [
+            "..........YYY",
+            ".........YYYY",
+            ".........YYYY",
+            "........YYYYY",
+            ".......YYYYYY",
+            ".....YYYYYYYY",
+            "...YYYYYYYYYY",
+            ".YYYYYYYYYYYY",
+            "YYYYYYYbbbWWW",
+            "YYYYYYYbbbWWW",
+            ".YYYYYYYYYYY.",
+            "..Y.Y.Y.Y.Y.."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-portugal-spiller",
+      "description": "Hel figur med kort mørkt hår, rød-grøn Portugaldragt og en bold ved støvlen.",
+      "p": [
+        ".....KKKKK.......",
+        "....KKKKKK.......",
+        "....KTTTTT.......",
+        ".....TTTTT.......",
+        ".....TTTTT.......",
+        ".....TTTTT.......",
+        "......TTT........",
+        "..RRRRRRRRRRR....",
+        "..RRRRRYRRRRR....",
+        "TTTRRRRRWRRRR....",
+        "TTT.RRRRWRRRR....",
+        "....RRRRWRR.TT...",
+        "....RRRRRRR.TT...",
+        "....GGGGGGG......",
+        "....GGGGGGG......",
+        "....GGGGGGG......",
+        "....TTT.TTT......",
+        "....TTT.TTT......",
+        "....TTT.TTT......",
+        "....TTT.TTT......",
+        "....GGG.GGG...WW.",
+        "....GGG.GGG..WKKW",
+        "...KKKK.KKKKKWWWW",
+        "..............WW."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..KKK....",
+            "..KTT....",
+            "...TT....",
+            "...TT....",
+            ".RRYRRR..",
+            "TTRRWRR..",
+            "..RRRRT..",
+            "..GGGG...",
+            "..GGGG...",
+            "..TTTT...",
+            "..TTTT...",
+            "..GGGG.KW",
+            "..K..KKWW"
+          ]
+        },
+        "medium": {
+          "p": [
+            "....KKK.....",
+            "...KKKK.....",
+            "....TTT.....",
+            "....TTT.....",
+            "....TT......",
+            "..RRRRRRR...",
+            ".RRRRYRRR...",
+            "TT.RRRRRR...",
+            "...RRWRR....",
+            "...RRRRR....",
+            "...GGGGG....",
+            "...GGGGG....",
+            "...TT.TT....",
+            "...TT.TT....",
+            "...TT.TT....",
+            "...GG.GG..W.",
+            "...KK.KKKWKW",
+            "..........W."
+          ]
+        },
+        "hard": {
+          "p": [
+            ".....KKKKK.......",
+            "....KKKKKK.......",
+            "....KTTTTT.......",
+            ".....TTTTT.......",
+            ".....TTTTT.......",
+            ".....TTTTT.......",
+            "......TTT........",
+            "..RRRRRRRRRRR....",
+            "..RRRRRYRRRRR....",
+            "TTTRRRRRWRRRR....",
+            "TTT.RRRRWRRRR....",
+            "....RRRRWRR.TT...",
+            "....RRRRRRR.TT...",
+            "....GGGGGGG......",
+            "....GGGGGGG......",
+            "....GGGGGGG......",
+            "....TTT.TTT......",
+            "....TTT.TTT......",
+            "....TTT.TTT......",
+            "....TTT.TTT......",
+            "....GGG.GGG...WW.",
+            "....GGG.GGG..WKKW",
+            "...KKKK.KKKKKWWWW",
+            "..............WW."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-portugal-troeje",
+      "description": "Rød Portugaltrøje set bagfra med grønne kanter og et stort hvidt 7-tal.",
+      "p": [
+        "...RGGGR...",
+        "..RRRRRRR..",
+        "RRRRRRRRRRR",
+        "GGRRWWWWRGG",
+        "..RRRRRWR..",
+        "..RRRRWRR..",
+        "..RRRRWRR..",
+        "..RRRWRRR..",
+        "..RRRWRRR..",
+        "..GGGGGGG.."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "...RGGGR...",
+            "..RRRRRRR..",
+            "GGRRWWWWRGG",
+            "..RRRRRWR..",
+            "..RRRRWRR..",
+            "..RRRRWRR..",
+            "..RRRWRRR..",
+            "..GGGGGGG.."
+          ]
+        },
+        "medium": {
+          "p": [
+            "...RGGGR...",
+            "..RRRRRRR..",
+            "RRRRRRRRRRR",
+            "GGRRWWWWRGG",
+            "..RRRRRWR..",
+            "..RRRRWRR..",
+            "..RRRRWRR..",
+            "..RRRWRRR..",
+            "..RRRWRRR..",
+            "..GGGGGGG.."
+          ]
+        },
+        "hard": {
+          "p": [
+            "...RGGGGR...",
+            "..RRRRRRRR..",
+            "RRRRRRRRRRRR",
+            "GGRRWWWWWRGG",
+            "..RRRRRRWR..",
+            "..RRRRRWRR..",
+            "..RRRRRWRR..",
+            "..RRRWWRRR..",
+            "..RRRWWRRR..",
+            "..GGGGGGGG.."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-madrid-troeje",
+      "description": "Hvid trøje fra Ronaldos Madrid-karriere med gyldne kanter og mørkeblåt 7-tal.",
+      "p": [
+        "....WWYYYYYWW....",
+        "....WWWWWWWWW....",
+        "..WWWWWWWWWWWWW..",
+        "..WWWWWWWWWWWWW..",
+        "WWWWWWBBBBBWWWWWW",
+        "WWWWWWWWWWBWWWWWW",
+        "YYYYWWWWWBWWWYYYY",
+        "....WWWWBWWWW....",
+        "....WWWWBWWWW....",
+        "....WWWWBWWWW....",
+        "....WWWWBWWWW....",
+        "....WWWWWWWWW....",
+        "....WWWWWWWWW....",
+        "....YYYYYYYYY...."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..WWYWW..",
+            ".WWWWWWW.",
+            "WWWWBBWWW",
+            "YYWWWBWYY",
+            "..WWBWW..",
+            "..WWBWW..",
+            "..WWWWW..",
+            "..YYYYY.."
+          ]
+        },
+        "medium": {
+          "p": [
+            "...WYYYYW...",
+            "..WWWWWWWW..",
+            ".WWWWWWWWWW.",
+            "WWWWWBBBWWWW",
+            "YYYWWWBWWYYY",
+            "...WWBWWW...",
+            "...WWWWWW...",
+            "...WWWWWW...",
+            "...WWWWWW...",
+            "...YYYYYY..."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....WWYYYYYWW....",
+            "....WWWWWWWWW....",
+            "..WWWWWWWWWWWWW..",
+            "..WWWWWWWWWWWWW..",
+            "WWWWWWBBBBBWWWWWW",
+            "WWWWWWWWWWBWWWWWW",
+            "YYYYWWWWWBWWWYYYY",
+            "....WWWWBWWWW....",
+            "....WWWWBWWWW....",
+            "....WWWWBWWWW....",
+            "....WWWWBWWWW....",
+            "....WWWWWWWWW....",
+            "....WWWWWWWWW....",
+            "....YYYYYYYYY...."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-manchester-troeje",
+      "description": "Rød trøje fra Ronaldos Manchester-karriere med sorte kanter og hvidt 7-tal.",
+      "p": [
+        "....RRKKKKKRR....",
+        "....RRRRRRRRR....",
+        "..RRRRRRRRRRRRR..",
+        "..RRRRRRRRRRRRR..",
+        "RRRRRRWWWWWRRRRRR",
+        "RRRRRRRRRRWRRRRRR",
+        "KKKKRRRRRWRRRKKKK",
+        "....RRRRWRRRR....",
+        "....RRRRWRRRR....",
+        "....RRRRWRRRR....",
+        "....RRRRWRRRR....",
+        "....RRRRRRRRR....",
+        "....RRRRRRRRR....",
+        "....KKKKKKKKK...."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..RRKRR..",
+            ".RRRRRRR.",
+            "RRRRWWRRR",
+            "KKRRRWRKK",
+            "..RRWRR..",
+            "..RRWRR..",
+            "..RRRRR..",
+            "..KKKKK.."
+          ]
+        },
+        "medium": {
+          "p": [
+            "...RKKKKR...",
+            "..RRRRRRRR..",
+            ".RRRRRRRRRR.",
+            "RRRRRWWWRRRR",
+            "KKKRRRWRRKKK",
+            "...RRWRRR...",
+            "...RRRRRR...",
+            "...RRRRRR...",
+            "...RRRRRR...",
+            "...KKKKKK..."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....RRKKKKKRR....",
+            "....RRRRRRRRR....",
+            "..RRRRRRRRRRRRR..",
+            "..RRRRRRRRRRRRR..",
+            "RRRRRRWWWWWRRRRRR",
+            "RRRRRRRRRRWRRRRRR",
+            "KKKKRRRRRWRRRKKKK",
+            "....RRRRWRRRR....",
+            "....RRRRWRRRR....",
+            "....RRRRWRRRR....",
+            "....RRRRWRRRR....",
+            "....RRRRRRRRR....",
+            "....RRRRRRRRR....",
+            "....KKKKKKKKK...."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-siu-jubel",
+      "description": "Ronaldos karakteristiske jubel med løftede arme og benene bredt fra hinanden.",
+      "p": [
+        "..........KKKK..........",
+        "TT........KKKK........TT",
+        "TT........TTTT........TT",
+        "TTTTRRR...TTTT...RRRTTTT",
+        "TTTTRRRR..TTTT..RRRRTTTT",
+        ".....RRRR..TT..RRRR.....",
+        "......RRRRRRRRRRRR......",
+        ".......RRRRWRRRRR.......",
+        ".........RRWRRR.........",
+        ".........RRWRRR.........",
+        ".........RRRRRR.........",
+        ".........RRRRRR.........",
+        ".........GGGGGG.........",
+        ".........GGGGGG.........",
+        ".........GGGGGG.........",
+        ".........TTT.TTT........",
+        "........TTT...TTT.......",
+        ".......TTT.....TTT......",
+        "......TTT.......TTT.....",
+        ".....TTT.........TTT....",
+        ".....TT...........TT....",
+        "...KKKK...........KKKK..",
+        "...KKKK...........KKKK.."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            ".....KKK.....",
+            "T....TTT....T",
+            "TTRR.TTT.RRTT",
+            "...RR.T.RR...",
+            "....RRRRR....",
+            ".....RWR.....",
+            ".....RRR.....",
+            ".....GGG.....",
+            ".....GGG.....",
+            ".....T.TT....",
+            "....TT..TT...",
+            "...TT....TT..",
+            "...T......T..",
+            "..KK......KK."
+          ]
+        },
+        "medium": {
+          "p": [
+            ".......KK.......",
+            "T......TT......T",
+            "TTTRR..TT..RRTTT",
+            "...RRR.TT.RRR...",
+            "....RRRRRRRR....",
+            "......RWRR......",
+            "......RRRR......",
+            "......RRRR......",
+            "......GGGG......",
+            "......GGGG......",
+            "......TT.TT.....",
+            ".....TT...TT....",
+            "....TT.....TT...",
+            "...TT.......TK..",
+            "..KKK.......KKK."
+          ]
+        },
+        "hard": {
+          "p": [
+            "..........KKKK..........",
+            "TT........KKKK........TT",
+            "TT........TTTT........TT",
+            "TTTTRRR...TTTT...RRRTTTT",
+            "TTTTRRRR..TTTT..RRRRTTTT",
+            ".....RRRR..TT..RRRR.....",
+            "......RRRRRRRRRRRR......",
+            ".......RRRRWRRRRR.......",
+            ".........RRWRRR.........",
+            ".........RRWRRR.........",
+            ".........RRRRRR.........",
+            ".........RRRRRR.........",
+            ".........GGGGGG.........",
+            ".........GGGGGG.........",
+            ".........GGGGGG.........",
+            ".........TTT.TTT........",
+            "........TTT...TTT.......",
+            ".......TTT.....TTT......",
+            "......TTT.......TTT.....",
+            ".....TTT.........TTT....",
+            ".....TT...........TT....",
+            "...KKKK...........KKKK..",
+            "...KKKK...........KKKK.."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-saksespark",
+      "description": "Vandret spiller i hvid dragt udfører et saksespark; den høje støvle rører bolden.",
+      "p": [
+        "....................WKW",
+        "..................KKWWW",
+        "..................KKK..",
+        "..................WT...",
+        "..................WT...",
+        "..................WT...",
+        "...TTT...........WWT...",
+        "...TTT..........WWTT...",
+        ".....TT........WWTT....",
+        "......TT.....WWWTT.....",
+        "KKK....TTWWWWWWTT......",
+        "KKK....WWWBBWWWW.......",
+        ".TTTTTTWWWWWWWWTT......",
+        ".TTTTTTWWWWWWW..TT.....",
+        ".TTTT.TTWWWWWW...TT....",
+        ".....TT...........TT...",
+        "....TT.............TKKK",
+        "...TT...............KKK",
+        "...T...................",
+        ".TTT..................."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            ".............WK",
+            "............KK.",
+            "............T..",
+            "............T..",
+            "..TT.......WT..",
+            "...TT.....WT...",
+            "....TT..WWT....",
+            "KK...WWBWWT....",
+            ".TTTTWWWW.TT...",
+            ".TTTTWWWW..TT..",
+            "..TT........TKK",
+            "..T..........KK",
+            ".TT............"
+          ]
+        },
+        "medium": {
+          "p": [
+            "...............KW",
+            ".............KKWW",
+            ".............WT..",
+            ".............WT..",
+            ".............WT..",
+            "..TT........WWT..",
+            "...TT......WWT...",
+            "....TT....WWTT...",
+            "KK...TTWWWWTT....",
+            "KKT..WWWBWWW.....",
+            ".TTTTWWWWWWTT....",
+            ".TTTTTWWWW..TT...",
+            "...TT........TT..",
+            "..TT..........TKK",
+            "..T..............",
+            ".TT.............."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....................WKW",
+            "..................KKWWW",
+            "..................KKK..",
+            "..................WT...",
+            "..................WT...",
+            "..................WT...",
+            "...TTT...........WWT...",
+            "...TTT..........WWTT...",
+            ".....TT........WWTT....",
+            "......TT.....WWWTT.....",
+            "KKK....TTWWWWWWTT......",
+            "KKK....WWWBBWWWW.......",
+            ".TTTTTTWWWWWWWWTT......",
+            ".TTTTTTWWWWWWW..TT.....",
+            ".TTTT.TTWWWWWW...TT....",
+            ".....TT...........TT...",
+            "....TT.............TKKK",
+            "...TT...............KKK",
+            "...T...................",
+            ".TTT..................."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-ronaldo-portraet",
+      "description": "Nærbillede med kort mørkt hår, tydelige øjenbryn og glatbarberet hage.",
+      "p": [
+        "....KKKKKKKK....",
+        "..KKKKKKKKKKKK..",
+        "..KKKKKKKKKKKK..",
+        ".KKKKKKKKKKKKKK.",
+        ".KKKTTTTTTTKKKK.",
+        ".KKKTTTTTTTTTKK.",
+        "..TTTTTTTTTTTT..",
+        "TTTKKKKTTKKKKTTT",
+        "TTTTWKTTTTKWTTTT",
+        "TTTTTTTTTTTTTTTT",
+        "TTTTTTTTTTTTTTTT",
+        "TTTTTTTTTTTTTTTT",
+        "..TTTTTTTTTTTT..",
+        "..TTTTWWWWTTTT..",
+        "..TTTTTTTTTTTT..",
+        "..TTTTTTTTTTTT..",
+        "....TTTTTTTT....",
+        ".....TTTTTT.....",
+        ".....TTTTTT.....",
+        "....RRRRRRRR...."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "..KKKK..",
+            ".KKKKKK.",
+            ".KTTTTK.",
+            ".TKTTKT.",
+            "TTWTTWTT",
+            "TTTTTTTT",
+            ".TTWWTT.",
+            ".TTTTTT.",
+            "..TTTT..",
+            "..RTTR.."
+          ]
+        },
+        "medium": {
+          "p": [
+            ".KKKKKK.",
+            ".KKKKKK.",
+            "KKTTTTKK",
+            "TTKTTKTT",
+            "TTWTTWTT",
+            "TTTTTTTT",
+            ".TTWWTT.",
+            ".TTTTTT.",
+            "..TTTT..",
+            "..RTTR.."
+          ]
+        },
+        "hard": {
+          "p": [
+            "....KKKKKKKK....",
+            "..KKKKKKKKKKKK..",
+            "..KKKKKKKKKKKK..",
+            ".KKKKKKKKKKKKKK.",
+            ".KKKTTTTTTTKKKK.",
+            ".KKKTTTTTTTTTKK.",
+            "..TTTTTTTTTTTT..",
+            "TTTKKKKTTKKKKTTT",
+            "TTTTWKTTTTKWTTTT",
+            "TTTTTTTTTTTTTTTT",
+            "TTTTTTTTTTTTTTTT",
+            "TTTTTTTTTTTTTTTT",
+            "..TTTTTTTTTTTT..",
+            "..TTTTWWWWTTTT..",
+            "..TTTTTTTTTTTT..",
+            "..TTTTTTTTTTTT..",
+            "....TTTTTTTT....",
+            ".....TTTTTT.....",
+            ".....TTTTTT.....",
+            "....RRRRRRRR...."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-al-nassr-troeje",
+      "description": "Gul trøje med blå kanter og 7-tal, inspireret af Ronaldos Al-Nassr-karriere.",
+      "p": [
+        "...BBB...",
+        "..YYYYY..",
+        "YYYBBBYYY",
+        "BBYYYBYBB",
+        "..YYBYY..",
+        "..YYBYY..",
+        "..YYBYY..",
+        "..BBBBB.."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "...BBB...",
+            "..YYYYY..",
+            "YYYBBBYYY",
+            "BBYYYBYBB",
+            "..YYBYY..",
+            "..YYBYY..",
+            "..YYBYY..",
+            "..BBBBB.."
+          ]
+        },
+        "medium": {
+          "p": [
+            "...BBB...",
+            "..YBBBY..",
+            "..YYYYY..",
+            "YYYBBBYYY",
+            "YYYYYBYYY",
+            "BBYYYBYBB",
+            "..YYBYY..",
+            "..YYBYY..",
+            "..YYBYY..",
+            "..YYBYY..",
+            "..YYBYY..",
+            "..BBBBB.."
+          ]
+        },
+        "hard": {
+          "p": [
+            ".....BBBB.....",
+            "....YBBBBY....",
+            "...YYYYYYYY...",
+            "YYYYYBBBBYYYYY",
+            "YYYYYYYBBYYYYY",
+            "BBBYYYYYBYYBBB",
+            "...YYYBBYYY...",
+            "...YYYBBYYY...",
+            "...YYYBBYYY...",
+            "...YYYBBYYY...",
+            "...YYYBBYYY...",
+            "...BBBBBBBB..."
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-cr7-maerke",
+      "description": "Enkelt CR7-mærke i sorte og røde blokbogstaver på en gylden forbindelseslinje.",
+      "p": [
+        "KKKK.KKK..RRRR",
+        "K....K..K....R",
+        "K....K..K...RR",
+        "K....KKKK...R.",
+        "K....K.K...RR.",
+        "K....K.KK..R..",
+        "KKKK.K..K..R..",
+        "YYYYYYYYYYYYYY"
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "KKKK.KKK..RRRR",
+            "K....K..K....R",
+            "K....K..K...RR",
+            "K....KKKK...R.",
+            "K....K.K...RR.",
+            "K....K.KK..R..",
+            "KKKK.K..K..R..",
+            "YYYYYYYYYYYYYY"
+          ]
+        },
+        "medium": {
+          "p": [
+            "KKKK.KKK..RRRR",
+            "K....K..K....R",
+            "K....K..K...RR",
+            "K....KKKK...R.",
+            "K....KKKK..RR.",
+            "K....K.K...RR.",
+            "K....K.KK..R..",
+            "KKKK.K..K..R..",
+            "YYYYYYYYYYYYYY"
+          ]
+        },
+        "hard": {
+          "p": [
+            "KKKKKK..KKKKK...RRRRRR",
+            "KKKKKK..KKKK....RRRRRR",
+            "KK......K....K......RR",
+            "KK......K....K.....RRR",
+            "KK......K....K.....RRR",
+            "KK......KKKKKK.....R..",
+            "KK......KK.KK.....RR..",
+            "KK......K..KK....RRR..",
+            "KK......K..KKK...RR...",
+            "KK......K..KKK...RR...",
+            "KKKKKK..K....K...RR...",
+            "YYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYY"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fodbold20-gylden-stoevle",
+      "description": "Gylden fodboldstøvle med knopper og røde-grønne Portugal-detaljer.",
+      "p": [
+        "WWW........",
+        "YYY........",
+        "YYY........",
+        "YYYW.......",
+        "YYYYYY.....",
+        "..YYYWYYY..",
+        "..YYYYYYYYY",
+        "OOOOOOOOOOO",
+        ".R...G...R."
+      ],
+      "cat": "Messi og CR7",
+      "collection": "messi-cr7-20",
+      "tip": "Byg én række ad gangen. Brikkernes vandrette og lodrette retning skifter som vist på tegningen.",
+      "variants": {
+        "easy": {
+          "p": [
+            "WWW........",
+            "YYY........",
+            "YYY........",
+            "YYYW.......",
+            "YYYYYY.....",
+            "..YYYWYYY..",
+            "..YYYYYYYYY",
+            "OOOOOOOOOOO",
+            ".R...G...R."
+          ]
+        },
+        "medium": {
+          "p": [
+            "WWWW.........",
+            "YYYY.........",
+            "YYYY.........",
+            "YYYYW........",
+            "YYYYYYY......",
+            "..YYYYWYYYY..",
+            "..YYYYYYYYYYY",
+            "OOOOOOOOOOOOO",
+            ".R....G....R."
+          ]
+        },
+        "hard": {
+          "p": [
+            "WWWWW.............",
+            "WWWWW.............",
+            "YYYYY.............",
+            "YYYYY.............",
+            "YYYYY.............",
+            "YYYYYW............",
+            "YYYYYWW...........",
+            "YYYYYYYYYY........",
+            "...YYYYYWWYYYY....",
+            "...YYYYYWWYYYYY...",
+            "...YYYYYYYYYYYYYYY",
+            "...YYYYYYYYYYYYYYY",
+            "OOOOOOOOOOOOOOOOOO",
+            ".OR.....GG.....RO.",
+            "..R.....GG.....R.."
           ]
         }
       }
