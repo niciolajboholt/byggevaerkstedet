@@ -197,4 +197,10 @@ Kildekode: `three/renderer.js`, `three/brick-geometry.cjs` og `model-3d.js`. Gen
 
 `assembly-steps.js` splits each row into contiguous pieces and defers a piece until it touches the existing assembly. The solo guide highlights only that piece and labels both its step and source row. All 810 catalogue variants are checked for connected pieces, attachable prefixes, original orientation and complete coverage. Disconnected custom drawings explicitly start separate sections.
 
-Solo progress uses `connected-solo-v1` so an earlier row index cannot skip pieces in the new order. Earlier records remain untouched and setup explains why the revised guide starts from step one. Shared-iPad and live-room task protocols remain compatible with their existing plans.
+Solo progress uses `connected-solo-v1` so an earlier row index cannot skip pieces in the new order. Earlier records remain untouched and setup explains why the revised guide starts from step one. Shared-iPad and new live rooms use the same connected pieces with alternating assignments and optional smaller tasks.
+
+### Connected cooperative plans (version 2)
+
+Both shared-iPad and new live rooms use the connected row-piece planner. When a smaller task splits a row, the first slice includes an attachment point; later slices remain connected. Owners alternate after each attachment. A live participant can prepare a future piece but must wait until its prerequisites are attached.
+
+New live rooms persist `planVersion: 2`. Existing rooms without this field retain version 1 task IDs, authorization and ledgers on the server; the updated UI pauses their old guide and offers **Start rum med den nye vejledning**, preserving the old room and requiring a new invitation link. Shared-iPad progress has a separate versioned key and explains old saved progress before starting the connected guide. Custom drawings with disconnected components explicitly start separate sections.
