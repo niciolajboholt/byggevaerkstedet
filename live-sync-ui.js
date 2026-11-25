@@ -92,7 +92,8 @@ function render(){
   $id('rowTitle').textContent='Dette rum bruger den tidligere vejledning';
   $id('taskInstruction').textContent='Opret et nyt rum til samme motiv for at få sammenhængende stykker. Det gamle rum og fremskridt bevares. Del det nye link med de andre byggere.';
   drawGrid($id('big'),cur.p,{tiles:cur.tiles});
-  const upgrade=document.createElement('button');upgrade.type='button';upgrade.className='btn';upgrade.id='upgradeRoom';upgrade.textContent='Start rum med den nye vejledning';upgrade.disabled=busy;upgrade.onclick=()=>{
+  const upgrade=document.createElement('button');upgrade.type='button';upgrade.className='btn';upgrade.id='upgradeRoom';upgrade.textContent='Start rum med den nye vejledning';upgrade.disabled=busy||me!==0;if(me!==0)upgrade.textContent='Værten skal starte rummet med den nye vejledning';upgrade.onclick=()=>{
+    if(me!==0||busy)return;
     team.n=room.builders.length;team.names=room.builders.slice();team.split=room.smallest==null?'even':'small';team.smallest=room.smallest;saveTeam();
     document.querySelectorAll('#teamNames input').forEach(el=>el.value=team.names[+el.dataset.i]||'');
     client.disconnect();isActive=false;started=false;beginCreate();
@@ -192,7 +193,7 @@ async function next(event){
  const operation=lifecycle;busy=true;notice='';render();try{await client.command(ready?'attach':'ready',task.id)}catch(e){if(operation===lifecycle)notice=friendly(e)}finally{if(operation===lifecycle){busy=false;render();$id('buildPerson').focus({preventScroll:true})}}
 }
 async function previous(){
- if(!room||busy||!room.attached)return;
+ if(!room||busy||!room.attached||plan?.v!==2)return;
  const operation=lifecycle,roomId=room.roomId,revision=room.revision,lastTaskId=plan.tasks[room.attached-1].id;
  if(!await confirmAction('Fortryd den seneste samling? Det sidste stykke skal lægges tilbage som klar på begge enheder.'))return;
  if(operation!==lifecycle||!isActive||room?.roomId!==roomId)return;
