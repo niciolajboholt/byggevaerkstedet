@@ -3,13 +3,14 @@
 'use strict';
 let plan=null,session=null,key=null,lastActionAt=-Infinity;
 const enabled=()=>mode==='together'&&!sharedPlan&&team.me==null;
-const progressKey=()=>JSON.stringify(['cooperative-tasks-v2',cur.id,cur.p,team.n,team.names.slice(0,team.n),team.split,team.split==='small'?smallestBuilder():null]);
+const progressKey=()=>JSON.stringify(['cooperative-connected-v3',cur.id,cur.p,team.n,team.names.slice(0,team.n),team.split,team.split==='small'?smallestBuilder():null]);
 function getPlan(){
  const next=BuildTasks.createPlan(cur.p,{builderCount:team.n,smallest:team.split==='small'?smallestBuilder():null});
  if(!plan||plan.id!==next.id)plan=next;
  return plan;
 }
 function getSaved(){return progressRecords()[progressKey()]}
+function hasLegacyProgress(){return !!progressRecords()[JSON.stringify(['cooperative-tasks-v2',cur.id,cur.p,team.n,team.names.slice(0,team.n),team.split,team.split==='small'?smallestBuilder():null])]}
 function save(){
  if(!started||!session)return;
  const records=progressRecords();records[progressKey()]={v:2,taskSession:session};progressSaved=store.set('bv_progress',records);
@@ -37,7 +38,7 @@ function renderSetupTasks(){
  $('teamStart').textContent=getSaved()?'Fortsæt byggeriet':'Start byggeriet';
  $('teamStart').disabled=!!shareWarning;
  $('restartBuild').classList.toggle('hide',!getSaved());
- $('resumeInfo').textContent=shareWarning||(!progressSaved?'Fremskridtet kunne ikke gemmes. Hold siden åben.':getSaved()?'Jeres opgaver og fremskridt er gemt på denne iPad.':'I bygger et lille stykke ad gangen og sætter det på den fælles model.');
+ $('resumeInfo').textContent=shareWarning||(!progressSaved?'Fremskridtet kunne ikke gemmes. Hold siden åben.':getSaved()?'Jeres opgaver og fremskridt er gemt på denne iPad.':hasLegacyProgress()?'Vejledningen har fået en ny byggerækkefølge, så stykkerne kan sættes fast. Start fra første opgave og genbrug de stykker, I har bygget.':'I bygger et lille stykke ad gangen og sætter det på den fælles model.');
 }
 function displayBase(){
  document.body.classList.toggle('building',started);
@@ -109,11 +110,11 @@ function render(){
   drawGrid($('big'),cur.p,{tiles:cur.tiles,taskView:viewState()});
   $('big').setAttribute('aria-label',`Sæt ${gen(name(task.owner))} stykke på den fremhævede plads i række ${task.row+1}. Grå brikker mangler endnu.`);
   const earlier=new Set(keys(attached)),joins=task.tiles.some(k=>[[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>earlier.has(`${k.x+dx},${k.y+dy}`)));
-  $('taskInstruction').textContent=task.directPlacement||!joins?'Læg brikkerne på de fremhævede pladser. De forbindes af denne eller de næste rækker. Grå brikker viser det, I mangler.':'Sæt stykket på den fremhævede plads. Grå brikker viser det, I mangler.';
+  $('taskInstruction').textContent=task.startsSection?(task.section===1?'Læg det første stykke på bordet. Det er starten på jeres model.':'Start denne adskilte del for sig. Motivet har dele, der ikke kan forbindes.'):'Sæt stykket fast på den fremhævede plads. Grå brikker kommer senere.';
   renderParts(task.counts,`${name(task.owner)} sætter på`);
  }else{
   taskPiece(task);taskMaterials(task);
-  $('taskInstruction').textContent=task.directPlacement?'Find brikkerne, og læg dem som vist med de tomme mellemrum. På næste trin ser I deres pladser på modellen.':'Byg dette lille stykke. På næste trin viser vi, hvor det skal sættes på den fælles model.';
+  $('taskInstruction').textContent=task.directPlacement?'Find brikkerne, og læg dem som vist med de tomme mellemrum. På næste trin ser I deres pladser på modellen.':'Byg dette sammenhængende stykke. På næste trin viser vi, hvor det skal sættes fast på den fælles model.';
   $('rowHint').textContent=task.directPlacement?'Bevar de tomme pladser mellem brikkerne. Senere rækker forbinder dem.':'Fra venstre mod højre · drej brikkerne som vist.';
   renderParts(task.counts,`${name(task.owner)} skal bruge nu`);
  }
