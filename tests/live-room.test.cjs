@@ -105,7 +105,7 @@ test('Worker origin, body bounds, unknown routes and admission checks are enforc
  r=await h.fetch('/rooms',requestOptions('POST',null,{padding:'x'.repeat(13000)}));assert.equal(r.status,413);
  r=await h.fetch('/rooms/not-a-room',requestOptions('GET','x'.repeat(32)));assert.equal(r.status,404);
  h.setAllowed(false);r=await h.fetch('/rooms',requestOptions('POST',null,input));assert.equal(r.status,429);
- r=await h.fetch('/health');assert.deepEqual(await r.json(),{ok:true,version:'1'});
+ r=await h.fetch('/health');assert.deepEqual(await r.json(),{ok:true,version:'1',planVersion:2});
 });
 test('Worker stale errors include current snapshot only to an authenticated participant',async()=>{
  const h=workerHarness(),created=await (await h.fetch('/rooms',requestOptions('POST',null,input))).json();
@@ -128,4 +128,14 @@ test('room envelope accepts 300 whole bricks and rejects 301',()=>{
  assert.equal(room.model.p.join('').replace(/\./g,'').length,300);
  assert.equal(Tasks.createPlan(room.model.p,{builderCount:2}).total,300);
  rejects(()=>Core.newRoom('a'.repeat(32),{...input,model:{...input.model,p:p.concat('R'.padEnd(20,'.'))}},credentials,at),400,'invalid_size');
+});
+
+test('new rooms pin the connected plan version; legacy rooms keep their exact task IDs',()=>{
+ const current=make();assert.equal(current.planVersion,2);assert.equal(Core.snapshot(current).planVersion,2);
+ const legacy=make(),old=Tasks.createPlan(legacy.model.p,{builderCount:legacy.builders.length,smallest:legacy.smallest,version:1});
+ delete legacy.planVersion;legacy.planId=old.id;
+ assert.equal(Core.snapshot(legacy).planVersion,1);
+ const ready=Core.command(legacy,actor(0),{id:'legacy-ready-01',expectedRevision:legacy.revision,action:'ready',taskId:old.tasks[0].id},at).room;
+ assert.ok(ready.ready.includes(old.tasks[0].id));assert.equal(ready.planId,old.id);
+ assert.notEqual(current.planId,old.id);
 });
