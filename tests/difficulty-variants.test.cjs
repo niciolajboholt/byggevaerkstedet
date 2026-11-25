@@ -8,8 +8,8 @@ const names=JSON.parse(fs.readFileSync(new URL('../data/navne.json',`file://${__
 const models=Catalogue.validate(raw,names).models;
 const H=[[-2,0],[-1,0],[0,0],[1,0],[2,0],[-1,-1],[-1,1],[1,-1],[1,1]];
 const ranges={easy:[1,59],medium:[60,84],hard:[85,300]};
-test('all 250 motifs contain exactly three progressively larger variants with their original preserved',()=>{
- assert.equal(models.length,250);assert.equal(Object.keys(names).length,250);
+test('all 270 motifs contain exactly three progressively larger variants with their original preserved',()=>{
+ assert.equal(models.length,270);assert.equal(Object.keys(names).length,270);
  for(const m of models){
   assert.deepEqual(Object.keys(m.variants).sort(),['easy','hard','medium']);
   const total=p=>p.join('').replace(/\./g,'').length;
