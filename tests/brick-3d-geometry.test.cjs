@@ -45,7 +45,7 @@ test('brick placement uses exact flat-instruction coordinates and orientation bo
   assert.throws(()=>tilePosition({x:NaN,y:0}));
 });
 
-test('all 750 variants preserve every source brick, colour, orientation, square, and overall bounds', () => {
+test('all 810 variants preserve every source brick, colour, orientation, square, and overall bounds', () => {
   let variants=0;
   for (const model of raw.models) for (const variant of Object.values(model.variants)) {
     variants++;
@@ -80,5 +80,5 @@ test('all 750 variants preserve every source brick, colour, orientation, square,
       maxX:Math.max(...all.map(p=>p[0]))+1,maxY:Math.max(...all.map(p=>p[1]))+1
     });
   }
-  assert.equal(variants,750);
+  assert.equal(variants,810);
 });
