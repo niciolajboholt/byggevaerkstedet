@@ -27,7 +27,7 @@ function showDetail(){
  document.querySelectorAll('.bottom-nav [data-nav]').forEach(b=>b.classList.remove('on'));
 }
 function adopt(r){
- const candidate=BuildTasks.createPlan(r.model.p,{builderCount:r.builders.length,smallest:r.smallest});
+ const candidate=BuildTasks.createPlan(r.model.p,{builderCount:r.builders.length,smallest:r.smallest,version:r.planVersion||1});
  if(candidate.id!==r.planId)throw new LiveRoomClient.RoomError('plan_mismatch','Appens opgaveplan er ændret. Genindlæs appen på begge enheder, og prøv igen.');
  room=r;plan=candidate;
  cur=enrich({...r.model,cat:r.model.cat||'Byg sammen'});mode='together';
@@ -86,6 +86,19 @@ function render(){
  $id('guideLabel').textContent='Byg sammen · live';$id('resumeInfo').textContent='Opgaver og fælles fremdrift gemmes i byggerummet. Adgangen til din bygger gemmes på denne enhed.';
  setCanvasWidth();$id('big').style.width=Math.min(parseFloat($id('big').style.width)||560,Math.max(160,window.innerHeight*.42))+'px';
  const task=plan.tasks.slice(room.attached).find(t=>t.owner===me),complete=room.attached>=plan.tasks.length,ready=!!task&&room.ready.includes(task.id),placeable=ready&&task.index===room.attached;
+ if(plan.v===1){
+  $id('buildControls').classList.add('hide');$id('stepBox').classList.add('hide');$id('partTabs').classList.add('hide');
+  $id('buildPerson').textContent='Ny sikker byggerækkefølge';
+  $id('rowTitle').textContent='Dette rum bruger den tidligere vejledning';
+  $id('taskInstruction').textContent='Opret et nyt rum til samme motiv for at få sammenhængende stykker. Det gamle rum og fremskridt bevares. Del det nye link med de andre byggere.';
+  drawGrid($id('big'),cur.p,{tiles:cur.tiles});
+  const upgrade=document.createElement('button');upgrade.type='button';upgrade.className='btn';upgrade.id='upgradeRoom';upgrade.textContent='Start rum med den nye vejledning';upgrade.disabled=busy;upgrade.onclick=()=>{
+    team.n=room.builders.length;team.names=room.builders.slice();team.split=room.smallest==null?'even':'small';team.smallest=room.smallest;saveTeam();
+    document.querySelectorAll('#teamNames input').forEach(el=>el.value=team.names[+el.dataset.i]||'');
+    client.disconnect();isActive=false;started=false;beginCreate();
+  };
+  panel().append(upgrade);return;
+ }
  const placed=plan.tasks.slice(0,room.attached),placedBricks=placed.reduce((n,t)=>n+t.n,0),pct=Math.round(placedBricks/plan.total*100);
  $id('prog').style.width=pct+'%';$id('progressBar').setAttribute('aria-valuenow',String(pct));
  $id('partTabs').innerHTML=room.builders.map((n,i)=>{const count=placed.filter(t=>t.owner===i).reduce((sum,t)=>sum+t.n,0),participant=room.participants?.find(p=>p.index===i),otherTask=plan.tasks.slice(room.attached).find(t=>t.owner===i),status=!participant?.claimed?'Ikke tilsluttet':otherTask&&room.ready.includes(otherTask.id)?'Stykke klar':participant.connected?'Bygger med':'Forbindelse afbrudt';return `<span class="task-builder ${i===me?'current':''}" style="--builder-color:${TEAM_COLORS[i]}">${escText(n)}${i===me?' · dig':''}<small>${count} / ${plan.totals[i]} brikker · ${escText(status)}</small></span>`}).join('');
@@ -115,7 +128,7 @@ function render(){
  if(ready){
   drawGrid($id('big'),cur.p,{tiles:cur.tiles,taskView:view});$id('big').setAttribute('aria-label',`Din plads i række ${task.row+1} er fremhævet. Grå brikker mangler endnu.`);
   const waiting=plan.tasks[room.attached];
-  $id('taskInstruction').textContent=placeable?(task.directPlacement?'Læg brikkerne på de fremhævede pladser. De forbindes af denne eller senere rækker. Bekræft, når de ligger rigtigt.':'Sæt dit stykke på den fremhævede plads. Bekræft først, når stykket er sat på modellen.'):`Dit stykke er klar. Vent på, at ${label(waiting.owner)} har sat række ${waiting.row+1} på. Vi giver besked her, når det er din tur.`;
+  $id('taskInstruction').textContent=placeable?(task.startsSection?(task.section===1?'Læg det første stykke på bordet. Det er starten på jeres model.':'Start denne adskilte del for sig. Motivet har dele, der ikke kan forbindes.'):'Sæt dit stykke fast på den fremhævede plads. Bekræft først, når stykket er sat på modellen.'):`Dit stykke er klar. Vent på, at ${label(waiting.owner)} har sat række ${waiting.row+1} på. Vi giver besked her, når det er din tur.`;
   renderParts(task.counts,placeable?'Dit stykke sættes på':'Dit stykke er klar');
  }else{
   const minX=Math.min(...task.tiles.map(t=>t.x)),maxX=Math.max(...task.tiles.map(t=>t.x)),row=Array(maxX-minX+1).fill('.');task.tiles.forEach(t=>row[t.x-minX]=t.c);
@@ -172,7 +185,7 @@ async function switchBuilder(){
  client.clearRole(currentInvite.roomId);client.disconnect();room=null;plan=null;isActive=false;await joinInvite(encodeURIComponent(JSON.stringify(currentInvite)));
 }
 async function next(event){
- if(!isActive||busy||!client?.credentials||!room)return;
+ if(!isActive||busy||!client?.credentials||!room||plan?.v!==2)return;
  if(event?.isTrusted){const now=performance.now();if(now-lastAction<350)return;lastAction=now}
  const me=client.credentials.me,task=plan.tasks.slice(room.attached).find(t=>t.owner===me);if(!task)return;
  const ready=room.ready.includes(task.id);if(ready&&task.index!==room.attached)return;
