@@ -27,9 +27,9 @@ test('motif preview shows whole model and materials before starting; alone guide
  assert.equal(a.doc.body.classList.contains('building'),false);
  assert.match(a.doc.getElementById('total').textContent,/30 brikker/);
  a.click('aloneStart');assert.ok(a.doc.body.classList.contains('building'));
- for(let i=0;i<10;i++)a.click('next');
+ for(let i=0;i<20&&!a.doc.getElementById('next').disabled;i++)a.click('next');
  assert.equal(a.doc.getElementById('doneBox').classList.contains('hide'),false);
- a.click('prev');assert.match(a.doc.getElementById('rowTitle').textContent,/Række 10 af 10/);
+ a.click('prev');assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 11 af 11/);
  a.click('overviewButton');assert.ok(a.doc.getElementById('overviewDialog').open);
  a.click('overviewClose');assert.equal(a.doc.getElementById('overviewDialog').open,false);
  assert.deepEqual(a.errors,[]);a.close();
@@ -57,7 +57,7 @@ test('appearance selection preserves guide progress and is saved for the device'
  assert.equal(a.doc.documentElement.dataset.theme,'parent');
  a.choose('[data-id="motiver50-01"] .model-link');await a.settle();a.click('aloneStart');a.click('next');
  a.choose('[data-theme="child"]');await a.settle();
- assert.match(a.doc.getElementById('rowTitle').textContent,/Række 2 af 10/);assert.deepEqual(a.errors,[]);a.close();
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 2 af 11/);assert.deepEqual(a.errors,[]);a.close();
 });
 test('search, favourites, categories and piece limit combine correctly',async()=>{
  const a=app();await a.settle();const q=a.doc.getElementById('q');q.value='01';q.dispatchEvent(new a.w.Event('input'));
@@ -143,13 +143,13 @@ test('solo resumes after leaving and reloading; restart is explicit and cancella
  for(let i=0;i<3;i++)a.click('next');
  a.click('detailBack');a.click('detailBack');await a.settle();a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
  assert.equal(a.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');a.click('aloneStart');
- assert.match(a.doc.getElementById('rowTitle').textContent,/Række 4 af 10/);
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 4 af 11/);
  const b=app({url:a.w.location.href,storage:snapshotStorage(a)});await b.settle();b.click('aloneStart');
- assert.match(b.doc.getElementById('rowTitle').textContent,/Række 4 af 10/);
+ assert.match(b.doc.getElementById('rowTitle').textContent,/Trin 4 af 11/);
  b.click('detailBack');b.click('restartBuild');b.click('confirmCancel');await b.settle();b.click('aloneStart');
- assert.match(b.doc.getElementById('rowTitle').textContent,/Række 4 af 10/);
+ assert.match(b.doc.getElementById('rowTitle').textContent,/Trin 4 af 11/);
  b.click('detailBack');b.click('restartBuild');b.click('confirmAccept');await b.settle();
- assert.match(b.doc.getElementById('rowTitle').textContent,/Række 1 af 10/);
+ assert.match(b.doc.getElementById('rowTitle').textContent,/Trin 1 af 11/);
  assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
 });
 
@@ -170,7 +170,7 @@ test('changed model geometry never resumes an incompatible row',async()=>{
  const a=app({url:'https://example.test/#m-own-test',storage:{bv_own:JSON.stringify([model])}});await a.settle();a.click('aloneStart');a.click('next');
  const storage=snapshotStorage(a);storage.bv_own=JSON.stringify([{...model,p:['RR','YY','BB']}]);
  const b=app({url:a.w.location.href,storage});await b.settle();
- assert.equal(b.doc.getElementById('aloneStart').textContent,'Start byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 1 af 3/);
+ assert.equal(b.doc.getElementById('aloneStart').textContent,'Start byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Trin 1 af 3/);
  a.close();b.close();
 });
 
@@ -249,7 +249,7 @@ test('four new categories expose all 62 approved motifs and large crests remain 
  assert.equal(a.doc.querySelectorAll('#grid .card').length,17);
  assert.ok(Array.from(a.doc.querySelectorAll('#grid .card .meta')).every(el=>+el.textContent.match(/(\d+) brikker/)[1]<=250));
  a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
- a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1/);
+ a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 1/);
  assert.deepEqual(a.errors,[]);a.close();
 });
 
@@ -264,7 +264,7 @@ test('renaming a motif through JSON preserves its favourite and saved solo step'
  const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.click('guideFavorite');a.click('aloneStart');a.click('next');const storage=snapshotStorage(a);a.close();
  const data=JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));const names=JSON.parse(fs.readFileSync(new URL('../data/navne.json',`file://${__filename}`),'utf8'));names['motiver50-01']='Min stjernestav';
  const b=app({url:'https://example.test/#m-motiver50-01',storage,names,catalogueFetch:async()=>({ok:true,json:async()=>data})});await b.settle();
- assert.equal(b.doc.getElementById('dName').textContent,'Min stjernestav');assert.equal(b.doc.getElementById('guideFavorite').getAttribute('aria-pressed'),'true');assert.equal(b.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 2/);assert.deepEqual(b.errors,[]);b.close();
+ assert.equal(b.doc.getElementById('dName').textContent,'Min stjernestav');assert.equal(b.doc.getElementById('guideFavorite').getAttribute('aria-pressed'),'true');assert.equal(b.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Trin 2/);assert.deepEqual(b.errors,[]);b.close();
 });
 
 
@@ -285,10 +285,10 @@ test('three difficulty choices retain one motif identity and separate solo progr
  a.click('next');a.click('next');a.click('detailBack');
  a.choose('#variantOptions [data-level="'+originalLevel+'"]');await a.settle();
  assert.equal(a.doc.getElementById('aloneStart').textContent,'Fortsæt byggeriet');a.click('aloneStart');
- assert.match(a.doc.getElementById('rowTitle').textContent,/Række 2 af 10/);
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 2 af 11/);
  const b=app({url:'https://example.test/#m-motiver50-01?level=hard',storage:snapshotStorage(a)});await b.settle();
  assert.equal(b.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level,'hard');
- b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Række 3/);
+ b.click('aloneStart');assert.match(b.doc.getElementById('rowTitle').textContent,/Trin 3/);
  assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
 });
 
@@ -334,7 +334,7 @@ test('unknown difficulty links keep the original pattern usable',async()=>{
  const a=app({url:'https://example.test/#m-motiver50-01?level=toString'});await a.settle();
  assert.equal(a.doc.getElementById('dName').textContent,'Stjernestav');
  assert.equal(a.w.eval('cur.total'),30);a.click('aloneStart');
- assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1 af 10/);
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 1 af 11/);
  assert.deepEqual(a.errors,[]);a.close();
 });
 
@@ -358,4 +358,25 @@ test('Messi og CR7 theme opens all twenty approved motifs and their exact base g
   assert.equal(a.doc.getElementById('model3DOpen').classList.contains('hide'),false);
  }
  assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('solo Formula car builds attachable pieces, defers wheel rows, and resumes the exact piece',async()=>{
+ const a=app({url:'https://example.test/#m-biler20-formelbil'});await a.settle();a.click('aloneStart');
+ assert.equal(a.doc.getElementById('stepTitle').textContent,'Dette stykke');
+ for(let i=0;i<16;i++)a.click('next');
+ assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 17 af 20 · række 9 · 2 brikker/);
+ assert.match(a.doc.getElementById('runs').textContent,/2 sort/);assert.doesNotMatch(a.doc.getElementById('runs').textContent,/tomme/);
+ assert.match(a.doc.getElementById('taskInstruction').textContent,/sæt det fast/);
+ const b=app({url:a.w.location.href,storage:snapshotStorage(a)});await b.settle();b.click('aloneStart');
+ assert.equal(b.doc.getElementById('rowTitle').textContent,a.doc.getElementById('rowTitle').textContent);
+ b.click('prev');assert.match(b.doc.getElementById('rowTitle').textContent,/Trin 16 af 20/);
+ assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
+});
+test('old row-only progress is kept but never mistaken for a connected step index',async()=>{
+ const raw=JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'));
+ const m=raw.models.find(m=>m.id==='biler20-formelbil'),key=JSON.stringify([m.id,m.p,'alone',null]),saved={step:8,active:0,phase:'setup',parts:[]};
+ const a=app({url:'https://example.test/#m-'+m.id,storage:{bv_progress:JSON.stringify({[key]:saved})}});await a.settle();
+ assert.equal(a.doc.getElementById('aloneStart').textContent,'Start byggeriet');assert.match(a.doc.getElementById('resumeInfo').textContent,/ny byggerækkefølge/);
+ a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 1 af 20/);
+ assert.deepEqual(JSON.parse(a.w.localStorage.getItem('bv_progress'))[key],saved);assert.deepEqual(a.errors,[]);a.close();
 });
