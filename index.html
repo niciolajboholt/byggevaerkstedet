@@ -64,7 +64,7 @@
         <button class="btn" id="teamStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
       </div>
       <div id="assembleBox" class="hide"><h2>Saml figuren</h2><p id="assembleText"></p><button class="btn" id="assembleGo">Vis samlingen</button></div>
-      <div id="stepBox" class="hide"><div class="step-heading"><h2>Denne række</h2><button class="text-button" id="all">Vis hele</button></div><canvas id="rowPieces" aria-label="Brikkerne i den aktuelle række" role="img"></canvas><p class="meta" id="rowHint">Fra venstre mod højre · drej brikkerne som vist.</p><div class="runs" id="runs"></div></div>
+      <div id="stepBox" class="hide"><div class="step-heading"><h2 id="stepTitle">Denne række</h2><button class="text-button" id="all">Vis hele</button></div><canvas id="rowPieces" aria-label="Brikkerne i den aktuelle række" role="img"></canvas><p class="meta" id="rowHint">Fra venstre mod højre · drej brikkerne som vist.</p><div class="runs" id="runs"></div></div>
       <div id="materials"><h2 id="partsTitle">Det skal du bruge</h2><div class="parts" id="parts"></div><p class="meta" id="total"></p></div>
       <p id="buildTip" class="meta hide"></p>
       <button class="btn start-button" id="aloneStart">Start byggeriet<i class="ic arrow-right" aria-hidden="true"></i></button>
@@ -103,6 +103,7 @@
 <dialog id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmText"><h2 id="confirmTitle">Er du sikker?</h2><p id="confirmText"></p><div class="row"><button class="btn ghost" id="confirmCancel" autofocus>Annuller</button><button class="btn" id="confirmAccept">Fortsæt</button></div></dialog>
 <script src="catalogue.js"></script>
 <script src="build-tasks.js"></script>
+<script src="assembly-steps.js?v=20261125-1"></script>
 <script src="cooperative.js"></script>
 <script src="model-3d.js?v=20261124-3"></script>
 <script src="categories.js?v=20261125-1"></script>
@@ -302,8 +303,9 @@ let mode=store.get("bv_mode","alone"), team=store.get("bv_team",{n:2,names:["Jen
 let phase="setup", parts=[], active=0, asmGap=0, asmTimer=null;
 // Geometry and the complete assignment identify a resumable build; the device's
 // selected person is deliberately excluded so switching screens keeps each part.
-function progressKey(){if(globalThis.CoopUI?.enabled())return CoopUI.progressKey();return JSON.stringify([cur.id,cur.p,mode,mode==="together"?[team.n,team.names.slice(0,team.n),team.split,team.split==="small"?smallestBuilder():null]:null])}
+function progressKey(){if(mode==="alone")return JSON.stringify(["connected-solo-v1",cur.id,cur.p]);if(globalThis.CoopUI?.enabled())return CoopUI.progressKey();return JSON.stringify([cur.id,cur.p,mode,mode==="together"?[team.n,team.names.slice(0,team.n),team.split,team.split==="small"?smallestBuilder():null]:null])}
 function progressRecords(){const records=store.get("bv_progress",{});return records&&typeof records==="object"&&!Array.isArray(records)?records:{}}
+function legacySoloProgress(){return mode==="alone"&&progressRecords()[JSON.stringify([cur.id,cur.p,"alone",null])]}
 function savedProgress(){return progressRecords()[progressKey()]}
 let progressSaved=true;
 function saveProgress(){
@@ -319,7 +321,7 @@ function beginBuild(restart=false){
   if(shareWarning)return;
   const saved=restart?null:savedProgress();
   if(restart){const records=progressRecords();delete records[progressKey()];store.set("bv_progress",records)}
-  step=Number.isInteger(saved?.step)?Math.max(0,Math.min(saved.step,cur.p.length)):0;
+  step=Number.isInteger(saved?.step)?Math.max(0,Math.min(saved.step,mode==="alone"?AssemblySteps.create(cur.p).steps.length:cur.p.length)):0;
   showAll=false;
   if(mode==="together"){
     buildParts();
@@ -423,6 +425,7 @@ function render(){
   document.body.classList.remove("task-building");
   $("taskInstruction").classList.add("hide");$("buildPerson").style.color="";
   if(globalThis.CoopUI?.enabled())return CoopUI.render();
+  $("stepTitle").textContent=mode==="alone"?"Dette stykke":"Denne række";
   $("taskSplitLabel").textContent="Hvordan skal figuren deles?";
   saveProgress();
   const activeBuild=started&&(mode!=="together"||phase!=="setup");
@@ -431,6 +434,7 @@ function render(){
   $("buildControls").classList.toggle("hide",!activeBuild||phase==="assemble");
   $("buildHeading").classList.toggle("hide",!activeBuild||phase==="assemble");
   $("introBox").classList.toggle("hide",activeBuild);
+  $("buildTip").classList.toggle("hide",activeBuild||!cur.tip);
   $("aloneStart").classList.toggle("hide",activeBuild||mode==="together");
   $("guideLabel").textContent=activeBuild?(mode==="together"?"Byg sammen":"Byg alene"):"Dit næste byggeri";
   document.querySelectorAll("#modeBar button").forEach(b=>{b.classList.toggle("on",b.dataset.mode===mode);b.setAttribute("aria-pressed",String(b.dataset.mode===mode))});
@@ -440,7 +444,7 @@ function render(){
   $("assembleBox").classList.toggle("hide",!(together&&phase==="assemble"));
   $("partDone").classList.add("hide");
   $("doneBox").classList.add("hide");
-  $("buildPerson").textContent=mode==="together"&&parts[active]?parts[active].name+" bygger sin del":"Byg række for række";
+  $("buildPerson").textContent=mode==="together"&&parts[active]?parts[active].name+" bygger sin del":"Byg trin for trin";
   if(!activeBuild){
     $("stepBox").classList.add("hide");
     if(together)renderSetup();
@@ -449,7 +453,7 @@ function render(){
     $("aloneStart").textContent=$("teamStart").textContent=saved?"Fortsæt byggeriet":"Start byggeriet";
     $("aloneStart").disabled=$("teamStart").disabled=!!shareWarning;
     $("restartBuild").classList.toggle("hide",!saved);
-    $("resumeInfo").textContent=shareWarning||(!progressSaved?"Fremskridtet kunne ikke gemmes. Hold siden åben, og frigør plads i browseren.":saved?"Dit fremskridt er gemt på denne enhed.":"Ny opsætning starter fra første række. Tidligere fremskridt bevares for den gamle opsætning.");
+    $("resumeInfo").textContent=shareWarning||(!progressSaved?"Fremskridtet kunne ikke gemmes. Hold siden åben, og frigør plads i browseren.":saved?"Dit fremskridt er gemt på denne enhed.":legacySoloProgress()?"Denne vejledning har fået en ny byggerækkefølge, så alle stykker kan sættes fast. Start fra første trin og genbrug de stykker, du allerede har bygget.":"Ny opsætning starter fra første trin. Tidligere fremskridt bevares for den gamle opsætning.");
     return;
   }
   $("restartBuild").classList.add("hide");$("resumeInfo").textContent=progressSaved?"":"Fremskridtet kunne ikke gemmes. Hold siden åben, og frigør plads i browseren.";
@@ -480,15 +484,35 @@ function stepUi(rowTitle,row,finished,firstDisabled,lastLabel,progress){
       `<div class="run"><span class="sw" style="background:${COLORS[ch][1]}"></span>${n} ${COLORS[ch][0].toLowerCase()}</div>`).join("");
   }
 }
+const assemblyCache=new WeakMap();
+function soloAssembly(){
+  if(!assemblyCache.has(cur))assemblyCache.set(cur,AssemblySteps.create(cur.p));
+  return assemblyCache.get(cur);
+}
 function renderAlone(){
-  const h=cur.p.length, finished=showAll||step>=h;
+  const plan=soloAssembly(),h=plan.steps.length,finished=step>=h,task=plan.steps[step];
+  const placed=plan.steps.slice(0,step).flatMap(s=>s.tiles.map(k=>`${k.x},${k.y}`));
   setCanvasWidth();
-  drawGrid($("big"),cur.p,finished?{tiles:cur.tiles}:{step,tiles:cur.tiles});
-  $("all").classList.remove("hide");$("all").textContent=showAll?"Trin for trin":"Vis hele";
-  stepUi(`Række ${step+1} af ${h} (oppefra)`,step,finished,!showAll&&step===0,step>=h-1?"Færdig ✓":"Næste række ▶",finished?100:Math.round((step+1)/h*100));
-  $("doneBox").classList.toggle("hide",!finished||showAll);
-  if(finished){$("rowTitle").textContent="Alle rækker er bygget";$("doneBox").textContent="Færdig! Flot bygget!"}
-  renderParts(cur.counts,"Det skal du bruge");
+  drawGrid($("big"),cur.p,finished?{tiles:cur.tiles}:{tiles:cur.tiles,taskView:{attached:placed,current:task.tiles.map(k=>`${k.x},${k.y}`)}});
+  $("big").setAttribute("aria-label",finished?"Den færdige model":`Trin ${step+1}: sæt det fremhævede stykke i række ${task.row+1} på modellen. Grå brikker mangler endnu.`);
+  $("all").classList.remove("hide");$("all").textContent="Hele figuren";
+  $("stepBox").classList.toggle("hide",finished);
+  $("taskInstruction").classList.toggle("hide",finished);
+  $("prev").disabled=step===0;$("next").disabled=finished;
+  $("next").textContent=step>=h-1?"Færdig":"Stykket er sat på";
+  const percent=finished?100:Math.round(placed.length/cur.total*100);
+  $("progressBar").setAttribute("aria-valuenow",String(percent));$("prog").style.width=percent+"%";
+  if(!finished){
+    $("rowTitle").textContent=`Trin ${step+1} af ${h} · række ${task.row+1} · ${task.n} ${task.n===1?"brik":"brikker"}`;
+    drawRowPieces(task.row,task.tiles);
+    $("rowPieces").setAttribute("aria-label",`${task.n} brikker til dette stykke. Retning og farver er vist nedenfor.`);
+    $("runs").innerHTML=Object.entries(task.counts).map(([c,n])=>`<div class="run"><span class="sw" style="background:${COLORS[c][1]}"></span>${n} ${COLORS[c][0].toLowerCase()}</div>`).join("");
+    $("rowHint").textContent="Fra venstre mod højre · drej brikkerne som vist.";
+    $("taskInstruction").textContent=task.startsSection?(task.section===1?"Byg det fremhævede stykke. Det er starten på din model.":"Dit eget motiv har adskilte dele. Start denne del for sig; den kan ikke sættes fast på den første."):"Byg det fremhævede stykke, og sæt det fast på de farvede brikker. Grå brikker kommer senere.";
+  }else{
+    $("rowTitle").textContent="Alle stykker er sat på";
+  }
+  $("doneBox").classList.toggle("hide",!finished);$("doneBox").textContent="Færdig! Flot bygget!";
 }
 function renderSetup(){
   buildParts();
@@ -713,9 +737,9 @@ function applyTheme(value){
   document.querySelector('meta[name="theme-color"]').content=value==="parent"?"#faf9f5":"#fffdf7";
   requestAnimationFrame(()=>{if(cur&&!$("detailView").classList.contains("hide"))render();else if(!$("listView").classList.contains("hide"))renderList()});
 }
-function drawRowPieces(row){
+function drawRowPieces(row,selectedTiles){
   const cv=$("rowPieces"),ctx=cv.getContext("2d"), css=cv.clientWidth||300,dpr=window.devicePixelRatio||1;
-  const tiles=cur.tiles.filter(k=>k.row===row), cols=Math.min(8,tiles.length||1),rows=Math.ceil(tiles.length/cols)||1;
+  const tiles=selectedTiles||cur.tiles.filter(k=>k.row===row), cols=Math.min(8,tiles.length||1),rows=Math.ceil(tiles.length/cols)||1;
   const h=Math.max(56,rows*45),u=Math.min(7,(css-8)/(cols*6));
   cv.width=css*dpr;cv.height=h*dpr;cv.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
   tiles.forEach((k,i)=>drawBrick(ctx,4+(i%cols)*(css/cols)+u*2,Math.floor(i/cols)*45+12,u,{...k,x:0,y:0},false));
