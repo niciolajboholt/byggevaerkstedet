@@ -238,7 +238,7 @@ test('ordinary model opening defaults to shared iPad despite a saved dedicated-s
 
 test('four new categories expose all 62 approved motifs and large crests remain visible by default',async()=>{
  const a=app();await a.settle();
- assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
  for(const [cat,n] of [['Skibe',15],['Blomster',15],['Eksotiske dyr',15],['Klublogoer',17]]){
   a.choose(`.featured-categories [data-theme-category="${cat}"]`);
   assert.equal(a.doc.querySelectorAll('#grid .card').length,n);
@@ -248,7 +248,7 @@ test('four new categories expose all 62 approved motifs and large crests remain 
  a.doc.getElementById('pieceLimit').value='250';a.doc.getElementById('pieceLimit').dispatchEvent(new a.w.Event('change'));
  assert.equal(a.doc.querySelectorAll('#grid .card').length,17);
  assert.ok(Array.from(a.doc.querySelectorAll('#grid .card .meta')).every(el=>+el.textContent.match(/(\d+) brikker/)[1]<=250));
- a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+ a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
  a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1/);
  assert.deepEqual(a.errors,[]);a.close();
 });
@@ -258,7 +258,7 @@ test('catalogue load failure can retry without touching saved user data',async()
  const storage={bv_likes:JSON.stringify(['motiver50-01'])};
  const a=app({storage,catalogueFetch:async()=>{if(!calls++)throw Error('offline');return {ok:true,json:async()=>data}}});await a.settle();
  assert.equal(a.doc.getElementById('catalogueStatus').getAttribute('role'),'alert');assert.equal(a.doc.getElementById('listView').inert,true);assert.equal(a.w.localStorage.getItem('bv_likes'),storage.bv_likes);
- a.click('catalogueRetry');await a.settle();assert.equal(a.doc.querySelectorAll('#grid .card').length,250);assert.equal(a.doc.getElementById('listView').inert,false);assert.deepEqual(a.errors,[]);a.close();
+ a.click('catalogueRetry');await a.settle();assert.equal(a.doc.querySelectorAll('#grid .card').length,270);assert.equal(a.doc.getElementById('listView').inert,false);assert.deepEqual(a.errors,[]);a.close();
 });
 test('renaming a motif through JSON preserves its favourite and saved solo step',async()=>{
  const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.click('guideFavorite');a.click('aloneStart');a.click('next');const storage=snapshotStorage(a);a.close();
@@ -296,7 +296,7 @@ test('difficulty and piece filters choose one matching version of each motif',as
  const a=app();await a.settle();
  for(const [label,key] of [['Let','easy'],['Mellem','medium'],['Svær','hard']]){
   a.doc.getElementById('diff').value=label;a.doc.getElementById('diff').dispatchEvent(new a.w.Event('change'));
-  assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+  assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
   a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
   assert.match(a.w.location.hash,new RegExp('level='+key));
   assert.equal(a.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level,key);
@@ -304,7 +304,7 @@ test('difficulty and piece filters choose one matching version of each motif',as
   a.click('detailBack');await a.settle();
  }
  a.click('resetFilters');a.doc.getElementById('pieceLimit').value='60';a.doc.getElementById('pieceLimit').dispatchEvent(new a.w.Event('change'));
- assert.equal(a.doc.querySelectorAll('#grid .card').length,250);
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
  assert.ok(Array.from(a.doc.querySelectorAll('#grid .card .meta')).every(el=>+el.textContent.match(/(\d+) brikker/)[1]<=60));
  a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();assert.ok(a.w.eval('cur.total')<=60);
  assert.deepEqual(a.errors,[]);a.close();
@@ -345,4 +345,17 @@ test('3D inspection uses the selected variant and does not change a solo build s
  a.click('model3DOpen');await a.settle();assert.ok(a.doc.getElementById('model3DDialog').open);
  assert.equal(data.tiles.length,a.w.eval('cur.total'));assert.equal(data.name,'Stjernestav');
  a.click('model3DFront');a.click('model3DClose');assert.equal(disposed,1);assert.equal(a.doc.getElementById('rowTitle').textContent,title);assert.equal(a.w.localStorage.getItem('bv_progress'),progress);assert.equal(a.w.location.hash,hash);assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('Messi og CR7 theme opens all twenty approved motifs and their exact base guide',async()=>{
+ const a=app();await a.settle();
+ const theme=a.doc.querySelector('.featured-categories [data-theme-category="Messi og CR7"]');
+ assert.ok(theme);assert.match(theme.textContent,/20 motiver/);theme.click();
+ const cards=a.doc.querySelectorAll('#grid .card');assert.equal(cards.length,20);
+ for(const card of cards){
+  card.querySelector('.model-link').click();await a.settle();
+  assert.equal(a.doc.querySelectorAll('#variantOptions button').length,3);
+  assert.equal(a.doc.getElementById('model3DOpen').classList.contains('hide'),false);
+ }
+ assert.deepEqual(a.errors,[]);a.close();
 });
