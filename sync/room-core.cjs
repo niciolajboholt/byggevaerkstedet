@@ -21,7 +21,7 @@ function validateCreate(input) {
 }
 function newRoom(roomId,input,credentials,now=Date.now()) {
   const clean=validateCreate(input),plan=BuildTasks.createPlan(clean.model.p,{builderCount:clean.builders.length,smallest:clean.smallest});
-  return {v:1,roomId,...clean,planId:plan.id,revision:0,attached:0,ready:[],participants:clean.builders.map((_,index)=>({index,tokenHash:index===0?credentials.hostHash:null})),inviteHash:credentials.inviteHash,createdAt:now,expiresAt:now+TTL,closed:false,ledger:[]};
+  return {v:1,roomId,...clean,planVersion:plan.v,planId:plan.id,revision:0,attached:0,ready:[],participants:clean.builders.map((_,index)=>({index,tokenHash:index===0?credentials.hostHash:null})),inviteHash:credentials.inviteHash,createdAt:now,expiresAt:now+TTL,closed:false,ledger:[]};
 }
 function ensureLive(room,now=Date.now()) {
   if(!room)fail(404,'not_found','Byggerummet findes ikke.');
@@ -35,7 +35,7 @@ function authenticate(room,hash,allowInvite=false,now=Date.now()) {
   return {invite:false,index:p.index,host:p.index===0};
 }
 function snapshot(room,connected=[]) {
-  return {v:1,roomId:room.roomId,model:room.model,builders:room.builders,smallest:room.smallest,planId:room.planId,revision:room.revision,attached:room.attached,ready:room.ready.slice(),participants:room.participants.map(p=>({index:p.index,claimed:!!p.tokenHash,connected:connected.includes(p.index)})),expiresAt:room.expiresAt,closed:room.closed};
+  return {v:1,roomId:room.roomId,model:room.model,builders:room.builders,smallest:room.smallest,planVersion:room.planVersion||1,planId:room.planId,revision:room.revision,attached:room.attached,ready:room.ready.slice(),participants:room.participants.map(p=>({index:p.index,claimed:!!p.tokenHash,connected:connected.includes(p.index)})),expiresAt:room.expiresAt,closed:room.closed};
 }
 function join(room,inviteHash,builder,tokenHash,now=Date.now()) {
   ensureLive(room,now);
@@ -54,7 +54,7 @@ function command(room,actor,cmd,now=Date.now()) {
   if(previous){if(previous.fingerprint!==fingerprint)fail(409,'command_reused','Handlingen er allerede brugt.');return {room,duplicate:true};}
   if(room.closed)fail(410,'closed','Byggerummet er lukket.');
   if(cmd.expectedRevision!==room.revision)fail(409,'revision_conflict','Byggeriet er blevet opdateret. Prøv igen.');
-  const plan=BuildTasks.createPlan(room.model.p,{builderCount:room.builders.length,smallest:room.smallest}),next=structuredClone(room);
+  const plan=BuildTasks.createPlan(room.model.p,{builderCount:room.builders.length,smallest:room.smallest,version:room.planVersion||1}),next=structuredClone(room);
   const global=plan.tasks[room.attached],own=plan.tasks.slice(room.attached).find(t=>t.owner===actor.index);
   if(cmd.action==='ready') {
     if(!own||cmd.taskId!==own.id)fail(409,'wrong_task','Byg din næste opgave først.');
