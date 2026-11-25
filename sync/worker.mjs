@@ -30,7 +30,7 @@ export default {
   if(request.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
   try{
    let response;
-   if(url.pathname==='/health'&&request.method==='GET')response=json({ok:true,version:'1'});
+   if(url.pathname==='/health'&&request.method==='GET')response=json({ok:true,version:'1',planVersion:2});
    else if(url.pathname==='/rooms'&&request.method==='POST'){
     const payload=validateCreate(await body(request));
     const ip=request.headers.get('CF-Connecting-IP')||'unknown';
