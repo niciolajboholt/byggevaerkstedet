@@ -153,7 +153,7 @@ Den godkendte samling indeholder 15 skibe (inklusive Titanic med fire skorstene)
 
 ## Ret navne nemt
 
-Åbn **[data/navne.json](data/navne.json)** på GitHub og vælg blyanten. Filen indeholder kun 250 navne, ét pr. linje, sorteret efter navn. Ret teksten til højre og gem med Commit changes:
+Åbn **[data/navne.json](data/navne.json)** på GitHub og vælg blyanten. Filen indeholder kun 270 navne, ét pr. linje, sorteret efter navn. Ret teksten til højre og gem med Commit changes:
 
 ```json
 "tema62-titanic": "Titanic"
@@ -169,7 +169,7 @@ Behold nøglen til venstre (motivets ID), anførselstegn og kommaer. Appen koble
 
 ## Tre sværhedsgrader pr. motiv
 
-Alle 250 katalogmotiver har `variants.easy.p`, `variants.medium.p` og `variants.hard.p` i `data/motiver.json`: 750 byggevejledninger i alt. Let bruger 1–59 brikker, Mellem 60–84 og Svær 85–250 (op til 300 for Klublogoer). Navnefilen indeholder stadig kun 250 navne, da udgaverne deler navn og stabilt motiv-ID.
+Alle 270 katalogmotiver har `variants.easy.p`, `variants.medium.p` og `variants.hard.p` i `data/motiver.json`: 810 byggevejledninger i alt. Let bruger 1–59 brikker, Mellem 60–84 og Svær 85–250 (op til 300 for Klublogoer). Navnefilen indeholder stadig kun 270 navne, da udgaverne deler navn og stabilt motiv-ID.
 
 Vælg udgaven under Vælg sværhedsgrad før byggeriet. Kort og søgefiltre viser fortsat ét kort pr. motiv; et sværhedsfilter viser den tilsvarende udgave. Et rent brikloft beholder den oprindelige udgave, hvis den passer, ellers den største udgave under loftet.
 
@@ -188,3 +188,7 @@ Træk med én finger for at dreje og knib med to for at zoome. Knapperne Forfra,
 Three.js 0.187.0 og OrbitControls ligger i den lokale, færdigbyggede `vendor/three-viewer.js`, som først indlæses ved åbning af 3D-vinduet. Ingen ekstern CDN bruges. Der tegnes ved ændringer og ikke i en permanent animationsløkke; pixelratio begrænses til 2. Grafikressourcer, controls, observationslyttere og WebGL-kontekst frigives ved lukning.
 
 Kildekode: `three/renderer.js`, `three/brick-geometry.cjs` og `model-3d.js`. Genbyg med `npm ci --ignore-scripts` og `npm run build:3d`; den færdige bundle skal committes sammen med kilden. MIT-licensen for Three.js findes i `vendor/three.LICENSE`.
+
+### Messi og CR7
+
+20 approved football motifs (10 Messi and 10 Cristiano Ronaldo) are grouped under **Messi og CR7**, including a featured theme tile. The selected original patterns are preserved exactly; every motif also supports the existing three difficulty levels, solo/cooperative guides and 3D inspection.
