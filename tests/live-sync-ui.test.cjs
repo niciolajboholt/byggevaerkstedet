@@ -5,7 +5,8 @@ const {JSDOM,VirtualConsole}=require('jsdom');
 const Core=require('../sync/room-core.cjs');
 const raw=fs.readFileSync(new URL('../index.html',`file://${__filename}`),'utf8');
 const html=raw.replace(/<script src="([^"]+)"><\/script>/g,(_,src)=>'<script>'+fs.readFileSync(new URL('../'+src,`file://${__filename}`),'utf8')+'</script>');
-function server(){
+function server({legacyFirst=false}={}){
+ let created=0;
  let state=null;const sockets=new Set();const roomId='a'.repeat(32),host='h'.repeat(32),invite='i'.repeat(32),guest='g'.repeat(32);
  const visible=()=>Core.snapshot(state,state.participants.filter(p=>p.tokenHash).map(p=>p.index));
  const broadcast=()=>{for(const s of sockets)if(s.readyState===1)s.onmessage?.({data:JSON.stringify({type:'snapshot',room:visible()})})};
@@ -13,7 +14,7 @@ function server(){
   const path=new URL(url).pathname,body=options.body?JSON.parse(options.body):null,token=(options.headers?.Authorization||'').replace('Bearer ','');
   try{
    let data;
-   if(path==='/rooms'){state=Core.newRoom(roomId,body,{hostHash:host,inviteHash:invite});data={roomId,token:host,inviteToken:invite,me:0,room:visible()}}
+   if(path==='/rooms'){state=Core.newRoom(roomId,body,{hostHash:host,inviteHash:invite});if(legacyFirst&&created++===0){delete state.planVersion;state.planId=require('../build-tasks.js').createPlan(state.model.p,{builderCount:state.builders.length,smallest:state.smallest,version:1}).id}data={roomId,token:host,inviteToken:invite,me:0,room:visible()}}
    else if(path.endsWith('/join')){state=Core.join(state,token,body.builder,guest);data={token:guest,me:body.builder,room:visible()};broadcast()}
    else if(path.endsWith('/commands')){const actor=Core.authenticate(state,token);state=Core.command(state,actor,body).room;data={room:visible()};broadcast()}
    else {Core.authenticate(state,token,true);data={room:visible()}}
@@ -145,4 +146,15 @@ test('selected difficulty is the immutable room pattern for every device and rel
  await resumed.until(()=>resumed.doc.getElementById('buildPerson').textContent==='Jens bygger');
  assert.deepEqual(JSON.parse(resumed.w.eval('JSON.stringify(cur.p)')),pattern);
  assert.deepEqual(b.errors.concat(resumed.errors),[]);b.close();resumed.close();
+});
+
+
+test('legacy live room offers a new connected room rather than reinterpreting saved row tasks',async()=>{
+ const backend=server({legacyFirst:true}),a=await host(backend);
+ await a.until(()=>a.doc.getElementById('upgradeRoom'));
+ assert.equal(a.doc.getElementById('buildControls').classList.contains('hide'),true);
+ assert.match(a.doc.getElementById('taskInstruction').textContent,/gamle rum og fremskridt bevares/);
+ const old=JSON.stringify(backend.state);a.click('next');await new Promise(r=>setTimeout(r,10));assert.equal(JSON.stringify(backend.state),old);
+ a.click('upgradeRoom');await a.until(()=>backend.state.planVersion===2&&!a.doc.getElementById('upgradeRoom')&&!a.doc.getElementById('buildControls').classList.contains('hide'));
+ assert.equal(a.doc.getElementById('buildControls').classList.contains('hide'),false);assert.deepEqual(a.errors,[]);a.close();
 });
