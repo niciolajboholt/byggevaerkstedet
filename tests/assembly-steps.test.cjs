@@ -34,3 +34,17 @@ test('own disconnected drawings explicitly start separate sections; no invented 
  assert.deepEqual(plan.steps.map(s=>s.startsSection),[true,true,false]);
  assert.throws(()=>Steps.create(['...']));
 });
+
+test('every variant and two/three-builder allocation uses connected pieces that attach on its turn',()=>{
+ const Tasks=require('../build-tasks.js');
+ for(const m of models)for(const v of Object.values(m.variants))for(const builders of [2,3])for(const smallest of [null,...Array.from({length:builders},(_,i)=>i)]){
+  const plan=Tasks.createPlan(v.p,{builderCount:builders,smallest}),seen=new Set();
+  assert.equal(plan.v,2);
+  for(const [i,step]of plan.tasks.entries()){
+   assert.equal(step.owner,i%builders);assert.equal(step.directPlacement,false);
+   if(i)assert.ok(step.tiles.some(t=>[[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>seen.has(`${t.x+dx},${t.y+dy}`))),m.id+' attachment');
+   step.tiles.forEach((t,j)=>{assert.ok(!seen.has(key(t)));if(j)assert.equal(t.x,step.tiles[j-1].x+1);seen.add(key(t))});
+  }
+  assert.equal(seen.size,v.p.join('').replace(/\./g,'').length);
+ }
+});
