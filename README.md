@@ -192,3 +192,9 @@ Kildekode: `three/renderer.js`, `three/brick-geometry.cjs` og `model-3d.js`. Gen
 ### Messi og CR7
 
 20 approved football motifs (10 Messi and 10 Cristiano Ronaldo) are grouped under **Messi og CR7**, including a featured theme tile. The selected original patterns are preserved exactly; every motif also supports the existing three difficulty levels, solo/cooperative guides and 3D inspection.
+
+### Connected solo assembly steps
+
+`assembly-steps.js` splits each row into contiguous pieces and defers a piece until it touches the existing assembly. The solo guide highlights only that piece and labels both its step and source row. All 810 catalogue variants are checked for connected pieces, attachable prefixes, original orientation and complete coverage. Disconnected custom drawings explicitly start separate sections.
+
+Solo progress uses `connected-solo-v1` so an earlier row index cannot skip pieces in the new order. Earlier records remain untouched and setup explains why the revised guide starts from step one. Shared-iPad and live-room task protocols remain compatible with their existing plans.
