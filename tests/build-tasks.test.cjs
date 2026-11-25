@@ -42,7 +42,7 @@ for(const builders of [2,3]) test(`all catalogue models: ${builders} builders ge
     });
     assert.equal(task.directPlacement,gapped);
     assert.deepEqual(task.counts,counts);
-    if(i)assert.ok(task.row>=plan.tasks[i-1].row,'assembly preserves absolute row order');
+    if(i)assert.ok(task.tiles.some(tile=>[[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>plan.tasks.slice(0,i).some(t=>t.tiles.some(k=>k.x===tile.x+dx&&k.y===tile.y+dy)))),'each piece attaches to the earlier assembly');
    });
    assert.equal(positions.size,model.total);
    if(smallest!==null&&plan.totals[smallest]>=Math.min(...plan.totals.filter((_,i)=>i!==smallest))){
@@ -52,12 +52,14 @@ for(const builders of [2,3]) test(`all catalogue models: ${builders} builders ge
  }
 });
 
-test('a gapped row keeps its absolute positions and explicitly instructs direct placement',()=>{
+test('gapped rows become connected pieces that attach without waiting for future rows',()=>{
  const p=BuildTasks.createPlan(['..R...BB.','..RRRRBB.'],{builderCount:2});
- assert.equal(p.tasks[0].directPlacement,true);
- assert.deepEqual(p.tasks[0].tiles.map(t=>t.x),[2,6,7]);
- assert.ok(p.tasks[0].instruction.includes('næste rækker'));
- assert.equal(p.tasks[1].directPlacement,false);
+ assert.equal(p.v,2);assert.ok(p.tasks.every(t=>!t.directPlacement));
+ assert.deepEqual(p.tasks.map(t=>t.tiles.map(k=>k.x)),[[2],[2,3,4,5,6,7],[6,7]]);
+ const old=BuildTasks.createPlan(['..R...BB.','..RRRRBB.'],{builderCount:2,version:1});
+ assert.equal(old.v,1);assert.equal(old.tasks[0].directPlacement,true);
+ assert.deepEqual(old.tasks[0].tiles.map(t=>t.x),[2,6,7]);
+ assert.notEqual(old.id,p.id);assert.equal(BuildTasks.restoreSession(p,BuildTasks.createSession(old)),null);
 });
 
 test('smaller tasks give the chosen builder fewer bricks and retain alternating turns',()=>{
