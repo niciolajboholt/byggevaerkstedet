@@ -64,7 +64,7 @@ test('leaving a live room restores ordinary catalogue and local guide controls',
  const backend=server(),a=await host(backend);a.click('detailBack');await a.until(()=>!a.doc.getElementById('listView').classList.contains('hide'));
  a.choose('[data-id="biler20-lille-bybil"] .model-link');await a.until(()=>a.doc.getElementById('dName').textContent==='Lille bybil');a.choose('[data-mode="alone"]');
  assert.equal(a.doc.getElementById('aloneStart').classList.contains('hide'),false);assert.equal(a.doc.getElementById('liveRoomPanel').classList.contains('hide'),true);
- a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Række 1/);assert.deepEqual(a.errors,[]);a.close();
+ a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 1/);assert.deepEqual(a.errors,[]);a.close();
 });
 test('failed room creation returns to usable setup with a clear error',async()=>{
  const backend=server(),a=app(backend);await a.until(()=>a.doc.getElementById('dName').textContent==='Stjernestav');a.choose('[data-mode="together"]');
