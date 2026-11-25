@@ -1,10 +1,10 @@
 /* Shared deterministic task plans. No DOM, storage or network dependencies. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.BuildTasks = factory();
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./assembly-steps.js'));
+  else root.BuildTasks = factory(root.AssemblySteps);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (AssemblySteps) {
   'use strict';
-  const VERSION = 1;
+  const VERSION = 2;
   function hash(value) {
     let a = 2166136261, b = 5381;
     for (let i = 0; i < value.length; i++) {
@@ -55,6 +55,15 @@
     }
     return tasks;
   }
+  function connectedTasks(pattern, builderCount, smallest, cap) {
+    const total=pattern.join('').replace(/\./g,'').length;
+    const rows=pattern.filter(r=>/[^.]/.test(r)).length;
+    const shortCap=rows<builderCount?Math.max(1,Math.ceil(total/builderCount)):Infinity;
+    return AssemblySteps.create(pattern,{capFor:i=>Math.min(shortCap,i%builderCount===smallest?cap:Infinity)}).steps.map((task,i)=>({
+      ...task,owner:i%builderCount,directPlacement:false,
+      instruction:task.startsSection?(task.section===1?'Byg det første stykke. Det er starten på modellen.':'Start denne adskilte del for sig. Motivet har dele, der ikke kan forbindes.'):'Byg stykket og sæt det fast på den viste plads i modellen.'
+    }));
+  }
   function totalsFor(tasks, n) {
     const totals = Array(n).fill(0);
     tasks.forEach(task => { totals[task.owner] += task.n; });
@@ -62,6 +71,9 @@
   }
   function createPlan(pattern, options) {
     options = options || {};
+    const version=options.version==null?VERSION:options.version;
+    if(![1,2].includes(version))throw new TypeError('Unknown task plan version');
+    const makeTasks=version===1?buildTasks:connectedTasks;
     const builderCount = options.builderCount == null ? 2 : options.builderCount;
     const smallest = options.smallest == null ? null : options.smallest;
     if (![2, 3].includes(builderCount)) throw new TypeError('Use two or three builders');
@@ -69,7 +81,7 @@
       throw new TypeError('Invalid smaller-task recipient');
     }
     const p = normalize(pattern), nonempty = p.filter(r => /[^.]/.test(r));
-    let tasks = buildTasks(p, builderCount, null, Infinity), totals = totalsFor(tasks, builderCount);
+    let tasks = makeTasks(p, builderCount, null, Infinity), totals = totalsFor(tasks, builderCount);
     let assignmentNote = '';
     if (smallest !== null) {
       const total = totals.reduce((a, b) => a + b, 0);
@@ -77,7 +89,7 @@
       let best = null;
       // Prefer useful multi-brick pieces; use one-brick turns only when geometry requires it.
       for (let cap = preferredCap; cap >= 1; cap--) {
-        const candidate = buildTasks(p, builderCount, smallest, cap);
+        const candidate = makeTasks(p, builderCount, smallest, cap);
         const amounts = totalsFor(candidate, builderCount);
         const peers = amounts.filter((_, i) => i !== smallest);
         const score = amounts[smallest] - Math.min(...peers);
@@ -92,26 +104,26 @@
       }
     }
     if (totals.some(n => n === 0)) assignmentNote = 'Figuren har for få opgaver til, at alle byggere får en tur.';
-    const signature = JSON.stringify({v: VERSION, pattern: p, builderCount, smallest});
-    const id = 'tasks-v' + VERSION + '-' + hash(signature);
+    const signature = JSON.stringify({v: version, pattern: p, builderCount, smallest});
+    const id = 'tasks-v' + version + '-' + hash(signature);
     tasks.forEach((task, i) => {
       task.id = id + '-' + String(i + 1).padStart(3, '0');
       task.index = i;
       task.dependencies = i ? [tasks[i - 1].id] : [];
     });
-    return {v: VERSION, id, planId: id, signature, builderCount, smallest, pattern: p,
+    return {v: version, id, planId: id, signature, builderCount, smallest, pattern: p,
       tasks, totals, total: totals.reduce((a, b) => a + b, 0), assignmentNote};
   }
   function signature(plan) { return plan.signature; }
   function createSession(plan) {
-    return {v: VERSION, planId: plan.id, signature: plan.signature, index: 0, stage: 'building'};
+    return {v: plan.v, planId: plan.id, signature: plan.signature, index: 0, stage: 'building'};
   }
   function restoreSession(plan, saved) {
-    if (!saved || saved.v !== VERSION || saved.planId !== plan.id || saved.signature !== plan.signature ||
+    if (!saved || saved.v !== plan.v || saved.planId !== plan.id || saved.signature !== plan.signature ||
         !Number.isInteger(saved.index) || saved.index < 0 || saved.index > plan.tasks.length ||
         !['building', 'ready', 'done'].includes(saved.stage) ||
         (saved.index === plan.tasks.length ? saved.stage !== 'done' : saved.stage === 'done')) return null;
-    return {v: VERSION, planId: plan.id, signature: plan.signature, index: saved.index, stage: saved.stage};
+    return {v: plan.v, planId: plan.id, signature: plan.signature, index: saved.index, stage: saved.stage};
   }
   function validState(plan, state) {
     const clean = restoreSession(plan, state);
