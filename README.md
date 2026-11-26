@@ -204,3 +204,9 @@ Solo progress uses `connected-solo-v1` so an earlier row index cannot skip piece
 Both shared-iPad and new live rooms use the connected row-piece planner. When a smaller task splits a row, the first slice includes an attachment point; later slices remain connected. Owners alternate after each attachment. A live participant can prepare a future piece but must wait until its prerequisites are attached.
 
 New live rooms persist `planVersion: 2`. Existing rooms without this field retain version 1 task IDs, authorization and ledgers on the server; the updated UI pauses their old guide and offers **Start rum med den nye vejledning**, preserving the old room and requiring a new invitation link. Shared-iPad progress has a separate versioned key and explains old saved progress before starting the connected guide. Custom drawings with disconnected components explicitly start separate sections.
+
+### 50 visual 3D prototypes
+
+The **3D-prototyper** category opens `#3d-prototyper`, a searchable gallery of the 50 approved concept images in five themes. Its separate `data/prototyper-3d.json` manifest deliberately contains no building patterns or verified piece counts: these are visual concepts, not validated construction guides. The existing 270 building motifs and 810 guides remain unchanged. Each card opens a larger view and the original numbered sheet.
+
+The five approved image sheets are served as local SVG image wrappers containing lossless WebP; decoded source pixels are identical to the approved PNGs. CSS viewports expose individual motifs without changing the approved artwork. Assets are loaded only when the gallery is opened, and names and groups are editable in the manifest.
