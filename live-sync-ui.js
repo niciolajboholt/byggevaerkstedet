@@ -27,7 +27,7 @@ function showDetail(){
  document.querySelectorAll('.bottom-nav [data-nav]').forEach(b=>b.classList.remove('on'));
 }
 function adopt(r){
- const candidate=BuildTasks.createPlan(r.model.p,{builderCount:r.builders.length,smallest:r.smallest,version:r.planVersion||1});
+ const candidate=BuildTasks.createPlan(r.model.kind==='spatial'?r.model.scene:r.model.p,{builderCount:r.builders.length,smallest:r.smallest,version:r.planVersion||1});
  if(candidate.id!==r.planId)throw new LiveRoomClient.RoomError('plan_mismatch','Appens opgaveplan er ændret. Genindlæs appen på begge enheder, og prøv igen.');
  room=r;plan=candidate;
  cur=enrich({...r.model,cat:r.model.cat||'Byg sammen'});mode='together';
@@ -61,7 +61,7 @@ function renderPanel(){
 }
 function joinMarkup(){
  const saved=ensureClient().savedRoles(room.roomId),savedIndices=new Set(saved.map(c=>c.me));
- return `<div class="live-join-layout"><canvas width="180" height="180" aria-label="${escText(room.model.name)}"></canvas><div><h2>Hvem er du?</h2><p>Hver enhed viser én byggers opgaver. I kan bygge jeres næste stykke samtidig.</p><div class="live-join-builders">`+
+ return `<div class="live-join-layout">${room.model.kind==='spatial'?'<span class="spatial-join-icon" aria-hidden="true">3D</span>':`<canvas width="180" height="180" aria-label="${escText(room.model.name)}"></canvas>`}<div><h2>Hvem er du?</h2><p>Hver enhed viser én byggers opgaver. I kan bygge jeres næste stykke samtidig.</p><div class="live-join-builders">`+
  room.builders.map((n,i)=>{const claimed=room.participants?.find(p=>p.index===i)?.claimed;
  return savedIndices.has(i)?`<button type="button" class="btn" data-live-resume="${i}" ${busy?'disabled':''}>Fortsæt som ${escText(n)}</button>`:claimed?`<span class="live-slot-taken">${escText(n)} · allerede tilsluttet</span>`:`<button type="button" class="btn" data-live-join="${i}" ${busy?'disabled':''}>Jeg er ${escText(n)}</button>`}).join('')+
  '</div><p class="meta">En bygger kan kun tilsluttes én ny enhed. En tidligere tilsluttet enhed kan fortsætte med sin gemte adgang.</p></div></div>';
@@ -73,6 +73,10 @@ function hideNormalSetup(live){
 }
 function render(){
  if(!isActive)return;
+ if(room?.model?.kind==='spatial'&&client?.credentials?.me!=null&&plan){
+  panel()?.classList.add('hide');
+  SpatialBuilds.renderLive({room,plan,me:client.credentials.me,busy:busy||client.pending,connected:connected(),statusText,inviteLink,next,previous,leave:()=>go('')});return;
+ }
  showDetail();const me=client?.credentials?.me,joined=me!=null&&room&&plan;
  started=!!joined;phase='build';showAll=false;
  document.body.classList.toggle('building',!!joined);document.body.classList.toggle('task-building',!!joined);document.body.classList.toggle('live-building',!!joined);
@@ -152,10 +156,10 @@ async function beginCreate(){
  // Save a name still being edited before creating the shared immutable plan.
  document.querySelectorAll('#teamNames input').forEach(el=>team.names[+el.dataset.i]=el.value.trim());saveTeam();
  const maxBricks=cur.cat==='Klublogoer'?300:250;
- if(cur.total>maxBricks||cur.w>24||cur.p.length>24){$id('resumeInfo').textContent=`Live byggeri understøtter højst ${maxBricks} brikker på 24 × 24 felter.`;return}
+ if(cur.total>maxBricks||(cur.kind!=='spatial'&&(cur.w>24||cur.p.length>24))){$id('resumeInfo').textContent=`Live byggeri understøtter højst ${maxBricks} brikker på 24 × 24 felter.`;return}
  const operation=++lifecycle;busy=true;loading=true;loadingInvite=null;notice='';isActive=true;ensureClient();render();
  try{
-  const data=await client.create({model:{id:cur.id,name:cur.name,p:cur.p},builders:Array.from({length:team.n},(_,i)=>team.names[i]||`Bygger ${i+1}`),smallest:team.split==='small'?smallestBuilder():null});
+  const data=await client.create({model:cur.kind==='spatial'?{id:cur.id,name:cur.name,kind:'spatial',scene:cur.scene}:{id:cur.id,name:cur.name,p:cur.p},builders:Array.from({length:team.n},(_,i)=>team.names[i]||`Bygger ${i+1}`),smallest:team.split==='small'?smallestBuilder():null});
   if(operation!==lifecycle||!isActive)return;invite={roomId:data.roomId,inviteToken:data.inviteToken};location.hash='live='+encodeURIComponent(JSON.stringify(invite));
  }catch(e){if(operation!==lifecycle||!isActive)return;notice=friendly(e);isActive=false;started=false;client.disconnect();panel().classList.add('hide');document.querySelector('#detailView .viewer').classList.remove('hide');rootRender();$id('resumeInfo').textContent=notice}
  finally{if(operation===lifecycle){busy=false;loading=false;if(isActive)render()}}
@@ -186,14 +190,14 @@ async function switchBuilder(){
  client.clearRole(currentInvite.roomId);client.disconnect();room=null;plan=null;isActive=false;await joinInvite(encodeURIComponent(JSON.stringify(currentInvite)));
 }
 async function next(event){
- if(!isActive||busy||!client?.credentials||!room||plan?.v!==2)return;
+ if(!isActive||busy||!client?.credentials||!room||![2,3].includes(plan?.v))return;
  if(event?.isTrusted){const now=performance.now();if(now-lastAction<350)return;lastAction=now}
  const me=client.credentials.me,task=plan.tasks.slice(room.attached).find(t=>t.owner===me);if(!task)return;
  const ready=room.ready.includes(task.id);if(ready&&task.index!==room.attached)return;
  const operation=lifecycle;busy=true;notice='';render();try{await client.command(ready?'attach':'ready',task.id)}catch(e){if(operation===lifecycle)notice=friendly(e)}finally{if(operation===lifecycle){busy=false;render();$id('buildPerson').focus({preventScroll:true})}}
 }
 async function previous(){
- if(!room||busy||!room.attached||plan?.v!==2)return;
+ if(!room||busy||!room.attached||![2,3].includes(plan?.v))return;
  const operation=lifecycle,roomId=room.roomId,revision=room.revision,lastTaskId=plan.tasks[room.attached-1].id;
  if(!await confirmAction('Fortryd den seneste samling? Det sidste stykke skal lægges tilbage som klar på begge enheder.'))return;
  if(operation!==lifecycle||!isActive||room?.roomId!==roomId)return;
