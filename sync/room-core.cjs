@@ -2,6 +2,24 @@
 const BuildTasks = require('../build-tasks.js');
 const TTL = 24 * 60 * 60 * 1000;
 const COLORS = /^[rAROYGgBbPpWKNTS.]+$/;
+const PIECE_COLOR = /^[rAROYGgBbPpWKNTS]$/;
+const MAX_CREATE_BYTES = 120000;
+const MAX_SPATIAL_PIECES = 250;
+const MAX_COORDINATE = 256;
+const planInput=model=>model.kind==='spatial'?model.scene:model.p;
+function spatialCore(){return require('../spatial-core.js')}
+function validateSpatialScene(scene) {
+  if(!scene||typeof scene!=='object'||Array.isArray(scene)||!Array.isArray(scene.pieces)||scene.pieces.length<1||scene.pieces.length>MAX_SPATIAL_PIECES) fail(400,'invalid_scene','Et rumligt motiv skal indeholde 1–250 hele brikker.');
+  const ids=new Set();
+  for(const piece of scene.pieces){
+    if(!piece||typeof piece!=='object'||typeof piece.id!=='string'||!piece.id.length||piece.id.length>120||ids.has(piece.id)||typeof piece.c!=='string'||!PIECE_COLOR.test(piece.c)||!Array.isArray(piece.position)||piece.position.length!==3||!piece.position.every(n=>Number.isFinite(n)&&Math.abs(n)<=MAX_COORDINATE)||!Array.isArray(piece.rotation)||piece.rotation.length!==3||!piece.rotation.every(n=>Number.isFinite(n)&&Math.abs(n)<=Math.PI*20&&Math.abs(n/(Math.PI/2)-Math.round(n/(Math.PI/2)))<1e-8))fail(400,'invalid_scene','Det rumlige motiv har ugyldige brikpositioner.');
+    ids.add(piece.id);
+  }
+  let serialized;try{serialized=JSON.stringify(scene)}catch{fail(400,'invalid_scene','Det rumlige motiv kan ikke læses.')}
+  if(new TextEncoder().encode(serialized).byteLength>MAX_CREATE_BYTES)fail(413,'too_large','Motivet er for stort.');
+  try{if(!spatialCore().validateScene(scene,{maxPieces:MAX_SPATIAL_PIECES,require3D:true}).valid)throw new Error('invalid scene')}catch{fail(400,'invalid_scene','Brikkerne skal være hele, uden overlap og samlet med rigtige samlinger.')}
+  return JSON.parse(serialized);
+}
 class RoomError extends Error {
   constructor(status, code, message) { super(message); this.status=status; this.code=code; }
 }
@@ -12,6 +30,11 @@ function validateCreate(input) {
   if (!model || typeof model.id!=='string' || !model.id.length || model.id.length>120 || typeof model.name!=='string' || !model.name.trim() || model.name.length>100) fail(400,'invalid_model','Motivet er ugyldigt.');
   if (!Array.isArray(builders) || ![2,3].includes(builders.length) || !builders.every(n=>typeof n==='string'&&n.trim().length>0&&n.length<=40)) fail(400,'invalid_builders','Vælg to eller tre byggere med korte navne.');
   if (smallest!==null && (!Number.isInteger(smallest)||smallest<0||smallest>=builders.length)) fail(400,'invalid_assignment','Ugyldig opgavefordeling.');
+  if(model.kind==='spatial'||model.scene!=null){
+    if(model.kind!=='spatial'||model.p!=null)fail(400,'invalid_scene','Et rumligt motiv skal have en entydig 3D-beskrivelse.');
+    const scene=validateSpatialScene(model.scene);
+    return {model:{id:model.id,name:model.name.trim(),kind:'spatial',scene},builders:builders.map(n=>n.trim()),smallest};
+  }
   const p=model.p;
   if (!Array.isArray(p)||!p.length||p.length>24||!p.every(r=>typeof r==='string'&&r.length>0&&r.length<=24&&COLORS.test(r))) fail(400,'invalid_pattern','Motivet må højst være 24×24 felter.');
   const w=Math.max(...p.map(r=>r.length)),pattern=p.map(r=>r.padEnd(w,'.'));
@@ -20,7 +43,7 @@ function validateCreate(input) {
   return {model:{id:model.id,name:model.name.trim(),p:pattern},builders:builders.map(n=>n.trim()),smallest};
 }
 function newRoom(roomId,input,credentials,now=Date.now()) {
-  const clean=validateCreate(input),plan=BuildTasks.createPlan(clean.model.p,{builderCount:clean.builders.length,smallest:clean.smallest});
+  const clean=validateCreate(input),plan=BuildTasks.createPlan(planInput(clean.model),{builderCount:clean.builders.length,smallest:clean.smallest});
   return {v:1,roomId,...clean,planVersion:plan.v,planId:plan.id,revision:0,attached:0,ready:[],participants:clean.builders.map((_,index)=>({index,tokenHash:index===0?credentials.hostHash:null})),inviteHash:credentials.inviteHash,createdAt:now,expiresAt:now+TTL,closed:false,ledger:[]};
 }
 function ensureLive(room,now=Date.now()) {
@@ -54,7 +77,7 @@ function command(room,actor,cmd,now=Date.now()) {
   if(previous){if(previous.fingerprint!==fingerprint)fail(409,'command_reused','Handlingen er allerede brugt.');return {room,duplicate:true};}
   if(room.closed)fail(410,'closed','Byggerummet er lukket.');
   if(cmd.expectedRevision!==room.revision)fail(409,'revision_conflict','Byggeriet er blevet opdateret. Prøv igen.');
-  const plan=BuildTasks.createPlan(room.model.p,{builderCount:room.builders.length,smallest:room.smallest,version:room.planVersion||1}),next=structuredClone(room);
+  const plan=BuildTasks.createPlan(planInput(room.model),{builderCount:room.builders.length,smallest:room.smallest,version:room.planVersion||1}),next=structuredClone(room);
   const global=plan.tasks[room.attached],own=plan.tasks.slice(room.attached).find(t=>t.owner===actor.index);
   if(cmd.action==='ready') {
     if(!own||cmd.taskId!==own.id)fail(409,'wrong_task','Byg din næste opgave først.');
@@ -78,4 +101,4 @@ function command(room,actor,cmd,now=Date.now()) {
   next.revision++;next.ledger.push({actor:actor.index,id:cmd.id,fingerprint});next.ledger=next.ledger.slice(-1024);
   return {room:next,duplicate:false};
 }
-module.exports={RoomError,TTL,validateCreate,newRoom,ensureLive,authenticate,snapshot,join,command};
+module.exports={RoomError,TTL,MAX_CREATE_BYTES,MAX_SPATIAL_PIECES,validateSpatialScene,validateCreate,newRoom,ensureLive,authenticate,snapshot,join,command};
