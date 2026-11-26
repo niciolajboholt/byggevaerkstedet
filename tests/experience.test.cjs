@@ -387,6 +387,7 @@ test('prototype category exposes fifty approved concepts, filters them and retur
  assert.equal(a.w.location.hash,'#3d-prototyper');assert.equal(a.doc.getElementById('prototypeView').classList.contains('hide'),false);
  assert.equal(a.doc.getElementById('listView').classList.contains('hide'),true);assert.equal(a.doc.querySelectorAll('.prototype-card').length,50);
  assert.match(a.doc.getElementById('prototypeCount').textContent,/50 af 50/);
+ assert.equal(a.doc.querySelector('.prototype-card img').style.top,'-50%');
  a.choose('[data-prototype-theme="Dyr"]');assert.equal(a.doc.querySelectorAll('.prototype-card').length,10);
  const q=a.doc.getElementById('prototypeSearch');q.value='pingvin';q.dispatchEvent(new a.w.Event('input'));assert.equal(a.doc.querySelectorAll('.prototype-card').length,1);
  a.choose('.prototype-card');assert.equal(a.doc.getElementById('prototypeDialog').open,true);assert.match(a.doc.getElementById('prototypeDialog').textContent,/Byggevejledningen er ikke klar/);
