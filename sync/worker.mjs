@@ -4,6 +4,7 @@ const {RoomError,validateCreate,newRoom,ensureLive,authenticate,snapshot,join,co
 const ROOM_ID=/^[a-f0-9]{32}$/;
 const TOKEN=/^[A-Za-z0-9_-]{32,100}$/;
 const MAX_BODY=12000;
+const MAX_CREATE_BODY=120000;
 const json=(body,status=200,headers={})=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...headers}});
 const token=()=>{const a=crypto.getRandomValues(new Uint8Array(24));return btoa(String.fromCharCode(...a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'')};
 const hash=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),b=>b.toString(16).padStart(2,'0')).join('');
@@ -16,7 +17,9 @@ async function body(request,max=MAX_BODY){
  let size=0;const chunks=[];
  while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>max){await reader.cancel();throw new RoomError(413,'too_large','Handlingen er for stor.')}chunks.push(value)}
  const merged=new Uint8Array(size);let offset=0;for(const chunk of chunks){merged.set(chunk,offset);offset+=chunk.byteLength}
- try{return JSON.parse(new TextDecoder().decode(merged))}catch{throw new RoomError(400,'invalid_json','Ugyldig JSON.')}
+ let parsed;try{parsed=JSON.parse(new TextDecoder().decode(merged))}catch{throw new RoomError(400,'invalid_json','Ugyldig JSON.')}
+ if(max===MAX_CREATE_BODY&&parsed?.model?.kind!=='spatial'&&size>MAX_BODY)throw new RoomError(413,'too_large','Handlingen er for stor.');
+ return parsed;
 }
 function unwrap(out){if(out.ok)return out.value;const e=new RoomError(out.status||500,out.code||'server_error',out.message||'Byggerummet kunne ikke opdateres.');if(out.room)e.room=out.room;throw e}
 function errorResponse(e,room=e.room){const known=e instanceof RoomError;return json({code:known?e.code:'server_error',message:known?e.message:'Byggerummet kunne ikke opdateres. Prøv igen.',...(room?{room}: {})},known?e.status:500)}
@@ -32,7 +35,8 @@ export default {
    let response;
    if(url.pathname==='/health'&&request.method==='GET')response=json({ok:true,version:'1',planVersion:2});
    else if(url.pathname==='/rooms'&&request.method==='POST'){
-    const payload=validateCreate(await body(request));
+    const input=await body(request,MAX_CREATE_BODY);
+    const payload=validateCreate(input);
     const ip=request.headers.get('CF-Connecting-IP')||'unknown';
     const admission=env.ADMISSION.getByName(await hash(ip));
     if(!await admission.allow())throw new RoomError(429,'rate_limited','Der er oprettet mange byggerier. Vent lidt og prøv igen.');
