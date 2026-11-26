@@ -9,7 +9,7 @@ function app(options={}){
  const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
  const d=new JSDOM(html,{url:options.url||'https://example.test/',runScripts:'dangerously',virtualConsole:vc,beforeParse(w){
   for(const [key,value] of Object.entries(options.storage||{}))w.localStorage.setItem(key,value);
-  w.fetch=(url,init)=>String(url).endsWith('navne.json')?Promise.resolve({ok:true,json:async()=>options.names||JSON.parse(fs.readFileSync(new URL('../data/navne.json',`file://${__filename}`),'utf8'))}):(options.catalogueFetch|| (async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'))})))(url,init);
+  w.fetch=(url,init)=>String(url).endsWith('prototyper-3d.json')?Promise.resolve({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../data/prototyper-3d.json',`file://${__filename}`),'utf8'))}):String(url).endsWith('navne.json')?Promise.resolve({ok:true,json:async()=>options.names||JSON.parse(fs.readFileSync(new URL('../data/navne.json',`file://${__filename}`),'utf8'))}):(options.catalogueFetch|| (async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL('../data/motiver.json',`file://${__filename}`),'utf8'))})))(url,init);
   w.confirm=()=>true;
   w.requestAnimationFrame=fn=>w.setTimeout(fn,0);w.scrollTo=()=>{};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
@@ -379,4 +379,18 @@ test('old row-only progress is kept but never mistaken for a connected step inde
  assert.equal(a.doc.getElementById('aloneStart').textContent,'Start byggeriet');assert.match(a.doc.getElementById('resumeInfo').textContent,/ny byggerækkefølge/);
  a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 1 af 20/);
  assert.deepEqual(JSON.parse(a.w.localStorage.getItem('bv_progress'))[key],saved);assert.deepEqual(a.errors,[]);a.close();
+});
+
+
+test('prototype category exposes fifty approved concepts, filters them and returns to the building catalogue',async()=>{
+ const a=app();await a.settle();a.choose('.featured-categories [data-theme-category="3D-prototyper"]');await a.settle();
+ assert.equal(a.w.location.hash,'#3d-prototyper');assert.equal(a.doc.getElementById('prototypeView').classList.contains('hide'),false);
+ assert.equal(a.doc.getElementById('listView').classList.contains('hide'),true);assert.equal(a.doc.querySelectorAll('.prototype-card').length,50);
+ assert.match(a.doc.getElementById('prototypeCount').textContent,/50 af 50/);
+ a.choose('[data-prototype-theme="Dyr"]');assert.equal(a.doc.querySelectorAll('.prototype-card').length,10);
+ const q=a.doc.getElementById('prototypeSearch');q.value='pingvin';q.dispatchEvent(new a.w.Event('input'));assert.equal(a.doc.querySelectorAll('.prototype-card').length,1);
+ a.choose('.prototype-card');assert.equal(a.doc.getElementById('prototypeDialog').open,true);assert.match(a.doc.getElementById('prototypeDialog').textContent,/Byggevejledningen er ikke klar/);
+ assert.equal(a.doc.querySelector('#prototypeDialog a').getAttribute('href'),'assets/3d-prototypes/board-1.svg');
+ a.doc.querySelector('#prototypeDialog button').click();a.click('prototypeBack');await a.settle();
+ assert.equal(a.doc.getElementById('prototypeView').classList.contains('hide'),true);assert.equal(a.doc.querySelectorAll('#grid .card').length,270);assert.deepEqual(a.errors,[]);a.close();
 });
