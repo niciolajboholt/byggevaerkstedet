@@ -17,7 +17,7 @@
   box.setAttribute('role','img');box.setAttribute('aria-label',`Billedprototype ${m.number}: ${m.name}`);
   const image=el('img');image.src=m.board;image.alt='';image.loading='lazy';image.decoding='async';
   // Present the approved sheet through a CSS viewport; source pixels stay unchanged.
-  image.style.width=(1024/m.crop.w*100)+'%';image.style.left=(-m.crop.x/m.crop.w*100)+'%';image.style.top=(-m.crop.y/m.crop.w*100)+'%';
+  image.style.width=(1024/m.crop.w*100)+'%';image.style.left=(-m.crop.x/m.crop.w*100)+'%';image.style.top=(-m.crop.y/m.crop.h*100)+'%';
   box.style.aspectRatio=m.crop.w+'/'+m.crop.h;box.append(image);return box;
  }
  function openModel(m,button){
