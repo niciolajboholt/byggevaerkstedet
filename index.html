@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="categories.css">
-<link rel="stylesheet" href="prototype-gallery.css?v=20261126-2">
+<link rel="stylesheet" href="spatial-builds.css?v=20261126-1">
 <link rel="stylesheet" href="cooperative.css">
 <link rel="stylesheet" href="live-sync.css">
 </head>
@@ -102,16 +102,17 @@
 <dialog id="filterDialog"><div class="dialog-heading"><h2>Find dit byggeri</h2><button class="icon-button" id="filterClose" aria-label="Luk filtre"><i class="ic close-icon" aria-hidden="true"></i></button></div><label class="field-label" for="diff">Sværhedsgrad</label><select id="diff"><option value="">Alle sværhedsgrader</option><option>Let</option><option>Mellem</option><option>Svær</option></select><p class="meta">Hvert motiv findes i tre sværhedsgrader med forskelligt antal brikker.</p><label class="field-label" for="pieceLimit">Antal brikker</label><select id="pieceLimit"><option value="300">Alle antal</option><option value="250">Op til 250 brikker</option><option value="60">Op til 60 brikker</option><option value="120">Op til 120 brikker</option></select><h3>Tema</h3><div class="tabs" id="tabs"></div><button class="btn" id="filterApply">Vis motiver</button></dialog>
 <dialog id="overviewDialog"><div class="dialog-heading"><h2 id="overviewTitle">Hele figuren</h2><button class="icon-button" id="overviewClose" aria-label="Luk overblik"><i class="ic close-icon" aria-hidden="true"></i></button></div><canvas id="fullCanvas" role="img" aria-label="Hele figuren med byggernes dele"></canvas><p id="overviewLegend" class="meta"></p></dialog>
 <dialog id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmText"><h2 id="confirmTitle">Er du sikker?</h2><p id="confirmText"></p><div class="row"><button class="btn ghost" id="confirmCancel" autofocus>Annuller</button><button class="btn" id="confirmAccept">Fortsæt</button></div></dialog>
-<script src="catalogue.js"></script>
+<script src="spatial-core.js?v=20261126-1"></script>
+<script src="catalogue.js?v=20261126-1"></script>
 <script src="assembly-steps.js?v=20261125-2"></script>
-<script src="build-tasks.js?v=20261125-2"></script>
+<script src="build-tasks.js?v=20261126-1"></script>
 <script src="cooperative.js?v=20261125-2"></script>
 <script src="model-3d.js?v=20261124-3"></script>
 <script src="categories.js?v=20261126-1"></script>
-<script src="prototype-gallery.js?v=20261126-2"></script>
+<script src="spatial-builds.js?v=20261126-1"></script>
 <script src="vendor/qrcode-generator.js"></script>
-<script src="live-sync-client.js"></script>
-<script src="live-sync-ui.js?v=20261125-2"></script>
+<script src="live-sync-client.js?v=20261126-1"></script>
+<script src="live-sync-ui.js?v=20261126-1"></script>
 <script>
 
 const COLORS = {
@@ -147,7 +148,7 @@ function tile(p){
 }
 function pieces(p){const c={};const t=tile(p);t.forEach(k=>c[k.c]=(c[k.c]||0)+1);return {c,n:t.length,t}}
 function diff(n){return n<60?"Let":n<85?"Mellem":"Svær"}
-function enrich(b){const {c,n,t}=pieces(b.p);b.counts=c;b.total=n;b.tiles=t;b.level=diff(n);b.w=Math.max(...b.p.map(r=>r.length));return b}
+function enrich(b){if(b.kind==="spatial"){const counts={};b.scene.pieces.forEach(p=>counts[p.c]=(counts[p.c]||0)+1);return {...b,counts,total:b.scene.pieces.length,level:diff(b.scene.pieces.length),tiles:[]}}const {c,n,t}=pieces(b.p);b.counts=c;b.total=n;b.tiles=t;b.level=diff(n);b.w=Math.max(...b.p.map(r=>r.length));return b}
 // Catalogue entries are enriched once the JSON file has loaded.
 const VARIANT_LEVELS={easy:"Let",medium:"Mellem",hard:"Svær"};
 function modelVariant(model,level){
@@ -270,7 +271,7 @@ function renderList(){
     if(!["Alle","Likede","50 nye"].includes(tab)&&b.cat!==tab)return false;
     if(d&&b.level!==d)return false;
     if((limit<300||!b.own)&&b.total>limit)return false;
-    if(q){const number=b.collageNumber?String(b.collageNumber).padStart(2,"0"):"";if(!(b.name+" "+b.cat+" "+b.level+" "+number).toLowerCase().includes(q))return false}
+    if(q){const number=b.collageNumber?String(b.collageNumber).padStart(2,"0"):"";if(!(b.name+" "+b.cat+" "+b.level+" "+number+" "+(b.spatialTheme||"")).toLowerCase().includes(q))return false}
     return true;
   });
   $("collectionTitle").textContent=tab==="Alle"?"Vælg et motiv":tab==="Likede"?"Dine favoritter":tab==="Egne"?"Jeres egne motiver":tab;
@@ -281,10 +282,10 @@ function renderList(){
   $("filterCount").textContent=[!!d,limit<300,!["Alle","Likede","Egne","50 nye"].includes(tab)].filter(Boolean).length;
   $("filterCount").classList.toggle("hide",!filtered);
   const g=$("grid");
-  g.innerHTML=items.map(b=>`<article class="card" data-id="${esc(b.id)}"><button class="heart" data-like="${esc(b.id)}" aria-label="${likes.has(b.id)?"Fjern favorit":"Gem favorit"}: ${esc(b.name)}" aria-pressed="${likes.has(b.id)}"><i class="ic heart-icon" aria-hidden="true"></i></button><button class="model-link" aria-label="Se vejledning: ${esc(b.name)}, ${b.total} brikker"><canvas aria-hidden="true"></canvas><div class="name">${esc(b.name)}</div><div class="meta"><span class="pill p-${b.level}">${b.level}</span><span>${b.total} brikker</span></div><span class="card-cta">Se vejledning</span></button></article>`).join("")||`<div class="empty"><h3>${tab==="Likede"?"Gem dine første favoritter":tab==="Egne"?"Hvad vil I finde på?":"Ingen motiver passer endnu"}</h3><p>${tab==="Likede"?"Tryk på hjertet ved et motiv, så finder du det her.":tab==="Egne"?"Tegn et motiv i Byg selv, og gem det her.":"Prøv et andet søgeord, eller nulstil filtrene."}</p><button class="btn ghost" id="emptyAction">${tab==="Egne"?"Byg selv":"Se alle motiver"}</button></div>`;
+  g.innerHTML=items.map(b=>`<article class="card" data-id="${esc(b.id)}"><button class="heart" data-like="${esc(b.id)}" aria-label="${likes.has(b.id)?"Fjern favorit":"Gem favorit"}: ${esc(b.name)}" aria-pressed="${likes.has(b.id)}"><i class="ic heart-icon" aria-hidden="true"></i></button><button class="model-link" aria-label="Se vejledning: ${esc(b.name)}, ${b.total} brikker">${b.kind==="spatial"?`<img class="spatial-thumbnail" src="${esc(b.preview)}" alt="" loading="lazy">`:`<canvas aria-hidden="true"></canvas>`}<div class="name">${esc(b.name)}</div><div class="meta"><span class="pill p-${b.level}">${b.level}</span><span>${b.total} brikker</span>${b.kind==="spatial"?`<span class="spatial-badge">3D</span>`:""}</div><span class="card-cta">Se vejledning</span></button></article>`).join("")||`<div class="empty"><h3>${tab==="Likede"?"Gem dine første favoritter":tab==="Egne"?"Hvad vil I finde på?":"Ingen motiver passer endnu"}</h3><p>${tab==="Likede"?"Tryk på hjertet ved et motiv, så finder du det her.":tab==="Egne"?"Tegn et motiv i Byg selv, og gem det her.":"Prøv et andet søgeord, eller nulstil filtrene."}</p><button class="btn ghost" id="emptyAction">${tab==="Egne"?"Byg selv":"Se alle motiver"}</button></div>`;
   g.querySelectorAll(".card[data-id]").forEach(el=>{
     const b=items.find(x=>x.id===el.dataset.id);
-    requestAnimationFrame(()=>drawGrid(el.querySelector("canvas"),b.p));
+    if(b.kind!=="spatial")requestAnimationFrame(()=>drawGrid(el.querySelector("canvas"),b.p));
     el.querySelector(".model-link").onclick=()=>go(variantRoute(b));
   });
   g.querySelectorAll("[data-like]").forEach(h=>h.onclick=()=>{toggleFavorite(h.dataset.like);renderList()});
@@ -349,6 +350,7 @@ function openBuild(id){
   const [modelId,query=""]=id.split("?");
   const params=new URLSearchParams(query),encoded=params.get("team");
   const base=allBuilds().find(b=>b.id===modelId); if(!base){go("");return}
+  if(base.kind==="spatial"){cur=base;SpatialBuilds.open(base);return}
   cur=modelVariant(base,params.get("level"));
   readTeamLink(encoded);
   if(!encoded){team.me=null;saveTeam()}
@@ -710,10 +712,12 @@ function go(h){ if(location.hash.slice(1)===h)route(); else location.hash=h; }
 function route(){
   if(!catalogueReady)return;
   const h=location.hash.slice(1);
-  PrototypeGallery.setVisible(h==="3d-prototyper");
+  SpatialBuilds.leave();
+  const spatialCategory=h==="3d-figurer"||h==="3d-prototyper";
+  if(spatialCategory){tab="3D-figurer";renderTabs()}
   if(h.startsWith('live=')){void LiveSyncUI.joinInvite(h.slice(5));return}
   globalThis.LiveSyncUI?.clearActive();
-  $("listView").classList.toggle("hide",!!h&&h!=="mine");
+  $("listView").classList.toggle("hide",!!h&&h!=="mine"&&!spatialCategory);
   if(h==="mine"){tab="Likede";renderTabs()}
   $("detailView").classList.toggle("hide",!h.startsWith("m-"));
   $("builderView").classList.toggle("hide",h!=="byg");
@@ -721,7 +725,7 @@ function route(){
   document.body.classList.remove("building");
   if(h.startsWith("m-"))requestAnimationFrame(()=>openBuild(h.slice(2)));
   else if(h==="byg")openBuilder();
-  else if(h==="3d-prototyper")PrototypeGallery.open();
+  else if(spatialCategory)renderList();
   else {editing=null;renderList()}
   window.scrollTo(0,0);
 }
@@ -731,7 +735,9 @@ window.addEventListener("hashchange",route);
 // Redraw on resize/rotation without resetting progress in the open guide.
 let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{
   const h=location.hash.slice(1);
-  PrototypeGallery.setVisible(h==="3d-prototyper");
+  SpatialBuilds.leave();
+  const spatialCategory=h==="3d-figurer"||h==="3d-prototyper";
+  if(spatialCategory){tab="3D-figurer";renderTabs()}
   if(h.startsWith("m-")&&cur)render(); else if(h==="byg")drawPad(); else renderList();
 },200)});
 function applyTheme(value){
@@ -778,8 +784,14 @@ LiveSyncUI.setQRRenderer((container,url)=>{
   container.innerHTML=qr.createSvgTag({cellSize:3,margin:4,scalable:true});
   const svg=container.querySelector('svg');svg?.setAttribute('role','img');svg?.setAttribute('aria-label','QR-kode til det fælles byggeri');
 });
-PrototypeGallery.init({navigate:go});
-const categoryExplorer=CategoriesExplorer.create({extraCategories:[{name:"3D-prototyper",count:50}],container:$("themeTiles"),getBuilds:allBuilds,getCategories:()=>CATS,draw:drawGrid,onSelect:c=>{if(c==="3D-prototyper"){go("3d-prototyper");return}tab=c;renderTabs();renderList()}});
+let spatialRendererPromise;
+function loadSpatialRenderer(){
+ if(globalThis.Spatial3D)return Promise.resolve(globalThis.Spatial3D);
+ if(!spatialRendererPromise)spatialRendererPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='vendor/spatial-viewer.js?v=20261126-1';script.onload=()=>globalThis.Spatial3D?resolve(globalThis.Spatial3D):reject(Error('3D library missing'));script.onerror=()=>{script.remove();spatialRendererPromise=null;reject(Error('3D unavailable'))};document.head.append(script)});
+ return spatialRendererPromise;
+}
+SpatialBuilds.init({palette:COLORS,loadRenderer:loadSpatialRenderer,navigate:go,toggleFavorite,isFavorite:id=>likes.has(id),confirm:confirmAction,createLive:async(model,settings)=>{cur=model;team.n=settings.builderCount;team.names=settings.names.map(n=>n.slice(0,40));team.smallest=settings.smallest;team.split=settings.smallest==null?'even':'small';saveTeam();await LiveSyncUI.beginCreate()}});
+const categoryExplorer=CategoriesExplorer.create({container:$("themeTiles"),getBuilds:allBuilds,getCategories:()=>CATS,draw:drawGrid,onSelect:c=>{tab=c;renderTabs();renderList()}});
 async function loadCatalogue(){
   $("catalogueRetry").disabled=true;$("catalogueRetry").classList.add("hide");$("catalogueStatus").setAttribute("role","status");$("catalogueMessage").textContent="Henter motiver…";
   try{
