@@ -11,9 +11,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 20,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -24,9 +24,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 522,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -37,9 +37,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 20,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -50,9 +50,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 522,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -63,9 +63,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 20,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -76,9 +76,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 522,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -89,9 +89,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 20,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -102,9 +102,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 522,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -115,9 +115,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 20,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -128,9 +128,9 @@
       "board": "assets/3d-prototypes/board-1.svg",
       "crop": {
         "x": 522,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -141,9 +141,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 20,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -154,9 +154,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 522,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -167,9 +167,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 20,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -180,9 +180,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 522,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -193,9 +193,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 20,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -206,9 +206,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 522,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -219,9 +219,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 20,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -232,9 +232,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 522,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -245,9 +245,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 20,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -258,9 +258,9 @@
       "board": "assets/3d-prototypes/board-2.svg",
       "crop": {
         "x": 522,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -271,9 +271,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 20,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -284,9 +284,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 522,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -297,9 +297,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 20,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -310,9 +310,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 522,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -323,9 +323,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 20,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -336,9 +336,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 522,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -349,9 +349,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 20,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -362,9 +362,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 522,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -375,9 +375,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 20,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -388,9 +388,9 @@
       "board": "assets/3d-prototypes/board-3.svg",
       "crop": {
         "x": 522,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -401,9 +401,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 20,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -414,9 +414,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 522,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -427,9 +427,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 20,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -440,9 +440,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 522,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -453,9 +453,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 20,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -466,9 +466,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 522,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -479,9 +479,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 20,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -492,9 +492,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 522,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -505,9 +505,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 20,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -518,9 +518,9 @@
       "board": "assets/3d-prototypes/board-4.svg",
       "crop": {
         "x": 522,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -531,9 +531,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 20,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -544,9 +544,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 522,
-        "y": 130,
+        "y": 120,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -557,9 +557,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 20,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -570,9 +570,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 522,
-        "y": 414,
+        "y": 404,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -583,9 +583,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 20,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -596,9 +596,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 522,
-        "y": 698,
+        "y": 688,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -609,9 +609,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 20,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -622,9 +622,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 522,
-        "y": 982,
+        "y": 972,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -635,9 +635,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 20,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     },
     {
@@ -648,9 +648,9 @@
       "board": "assets/3d-prototypes/board-5.svg",
       "crop": {
         "x": 522,
-        "y": 1266,
+        "y": 1256,
         "w": 480,
-        "h": 220
+        "h": 240
       }
     }
   ]
