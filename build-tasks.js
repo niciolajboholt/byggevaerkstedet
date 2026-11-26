@@ -1,8 +1,8 @@
 /* Shared deterministic task plans. No DOM, storage or network dependencies. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./assembly-steps.js'));
-  else root.BuildTasks = factory(root.AssemblySteps);
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (AssemblySteps) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./assembly-steps.js'),require('./spatial-core.js'));
+  else root.BuildTasks = factory(root.AssemblySteps,root.SpatialCore);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (AssemblySteps,SpatialCore) {
   'use strict';
   const VERSION = 2;
   function hash(value) {
@@ -70,6 +70,7 @@
     return totals;
   }
   function createPlan(pattern, options) {
+    if(pattern && !Array.isArray(pattern) && Array.isArray(pattern.pieces))return SpatialCore.createPlan(pattern,options);
     options = options || {};
     const version=options.version==null?VERSION:options.version;
     if(![1,2].includes(version))throw new TypeError('Unknown task plan version');
