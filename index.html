@@ -15,6 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="categories.css">
+<link rel="stylesheet" href="prototype-gallery.css?v=20261126-1">
 <link rel="stylesheet" href="cooperative.css">
 <link rel="stylesheet" href="live-sync.css">
 </head>
@@ -106,7 +107,8 @@
 <script src="build-tasks.js?v=20261125-2"></script>
 <script src="cooperative.js?v=20261125-2"></script>
 <script src="model-3d.js?v=20261124-3"></script>
-<script src="categories.js?v=20261125-1"></script>
+<script src="categories.js?v=20261126-1"></script>
+<script src="prototype-gallery.js?v=20261126-1"></script>
 <script src="vendor/qrcode-generator.js"></script>
 <script src="live-sync-client.js"></script>
 <script src="live-sync-ui.js?v=20261125-2"></script>
@@ -708,6 +710,7 @@ function go(h){ if(location.hash.slice(1)===h)route(); else location.hash=h; }
 function route(){
   if(!catalogueReady)return;
   const h=location.hash.slice(1);
+  PrototypeGallery.setVisible(h==="3d-prototyper");
   if(h.startsWith('live=')){void LiveSyncUI.joinInvite(h.slice(5));return}
   globalThis.LiveSyncUI?.clearActive();
   $("listView").classList.toggle("hide",!!h&&h!=="mine");
@@ -718,6 +721,7 @@ function route(){
   document.body.classList.remove("building");
   if(h.startsWith("m-"))requestAnimationFrame(()=>openBuild(h.slice(2)));
   else if(h==="byg")openBuilder();
+  else if(h==="3d-prototyper")PrototypeGallery.open();
   else {editing=null;renderList()}
   window.scrollTo(0,0);
 }
@@ -727,6 +731,7 @@ window.addEventListener("hashchange",route);
 // Redraw on resize/rotation without resetting progress in the open guide.
 let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{
   const h=location.hash.slice(1);
+  PrototypeGallery.setVisible(h==="3d-prototyper");
   if(h.startsWith("m-")&&cur)render(); else if(h==="byg")drawPad(); else renderList();
 },200)});
 function applyTheme(value){
@@ -773,7 +778,8 @@ LiveSyncUI.setQRRenderer((container,url)=>{
   container.innerHTML=qr.createSvgTag({cellSize:3,margin:4,scalable:true});
   const svg=container.querySelector('svg');svg?.setAttribute('role','img');svg?.setAttribute('aria-label','QR-kode til det fælles byggeri');
 });
-const categoryExplorer=CategoriesExplorer.create({container:$("themeTiles"),getBuilds:allBuilds,getCategories:()=>CATS,draw:drawGrid,onSelect:c=>{tab=c;renderTabs();renderList()}});
+PrototypeGallery.init({navigate:go});
+const categoryExplorer=CategoriesExplorer.create({extraCategories:[{name:"3D-prototyper",count:50}],container:$("themeTiles"),getBuilds:allBuilds,getCategories:()=>CATS,draw:drawGrid,onSelect:c=>{if(c==="3D-prototyper"){go("3d-prototyper");return}tab=c;renderTabs();renderList()}});
 async function loadCatalogue(){
   $("catalogueRetry").disabled=true;$("catalogueRetry").classList.add("hide");$("catalogueStatus").setAttribute("role","status");$("catalogueMessage").textContent="Henter motiver…";
   try{
