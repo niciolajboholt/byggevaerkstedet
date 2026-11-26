@@ -13,6 +13,7 @@
     const getCategories = options.getCategories;
     const select = options.onSelect;
     const draw = options.draw;
+    const extras = options.extraCategories || [];
     if (!container || !getBuilds || !getCategories || !select) throw new Error('Theme explorer needs a container and catalogue callbacks');
     container.classList.add('category-explorer');
     container.setAttribute('aria-label', 'Udforsk temaer');
@@ -48,6 +49,7 @@
     function renderDialog() {
       const { counts, categories } = catalogue();
       list.innerHTML = categories.map(c => '<button type="button" data-theme-category="' + escape(c) + '" aria-pressed="' + (c === activeCategory) + '"><span>' + escape(c) + '</span><span class="theme-count">' + countLabel(counts.get(c)) + '</span></button>').join('');
+      list.innerHTML += extras.map(e=>'<button type="button" data-theme-category="'+escape(e.name)+'"><span>'+escape(e.name)+'</span><span class="theme-count">'+e.count+' billedprototyper</span></button>').join('');
       for (const button of list.querySelectorAll('button')) button.onclick = () => choose(button.dataset.themeCategory);
     }
     opener.onclick = () => { selectedOnClose = false; renderDialog(); dialog.showModal(); closeButton.focus(); };
@@ -60,6 +62,7 @@
       if ('visible' in state) container.classList.toggle('hide', !state.visible);
       const { builds, counts } = catalogue();
       cards.innerHTML = FEATURED.filter(c => counts.has(c)).map((c, i) => '<button type="button" class="theme-tile compact-theme theme-' + i + '" data-theme-category="' + escape(c) + '" aria-pressed="' + (c === activeCategory) + '"><canvas width="112" height="112" aria-hidden="true"></canvas><span class="theme-copy"><span class="theme-name">' + escape(c) + '</span><span class="theme-count">' + countLabel(counts.get(c)) + '</span></span><i class="ic arrow-right" aria-hidden="true"></i></button>').join('');
+      cards.innerHTML += extras.map(e=>'<button type="button" class="theme-tile compact-theme theme-4" data-theme-category="'+escape(e.name)+'"><span class="prototype-tile-icon" aria-hidden="true">3D</span><span class="theme-copy"><span class="theme-name">'+escape(e.name)+'</span><span class="theme-count">'+e.count+' billedprototyper</span></span><i class="ic arrow-right" aria-hidden="true"></i></button>').join('');
       for (const button of cards.querySelectorAll('button')) {
         const category = button.dataset.themeCategory;
         const model = builds.find(b => b.cat === category && (category !== 'Magi' || b.id === 'motiver50-01')) || builds.find(b => b.cat === category);
