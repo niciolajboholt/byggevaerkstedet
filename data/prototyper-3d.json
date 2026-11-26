@@ -1,0 +1,657 @@
+{
+  "status": "visual-concept",
+  "buildValidated": false,
+  "maxPiecesTarget": 250,
+  "models": [
+    {
+      "id": "prototype3d-01",
+      "number": 1,
+      "name": "Pingvin",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 20,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-02",
+      "number": 2,
+      "name": "Skildpadde",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 522,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-03",
+      "number": 3,
+      "name": "Kylling",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 20,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-04",
+      "number": 4,
+      "name": "Tropisk fisk",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 522,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-05",
+      "number": 5,
+      "name": "Ugle",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 20,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-06",
+      "number": 6,
+      "name": "Ræv",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 522,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-07",
+      "number": 7,
+      "name": "Krokodille",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 20,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-08",
+      "number": 8,
+      "name": "Giraf",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 522,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-09",
+      "number": 9,
+      "name": "Elefant",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 20,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-10",
+      "number": 10,
+      "name": "Papegøje på pind",
+      "theme": "Dyr",
+      "board": "assets/3d-prototypes/board-1.svg",
+      "crop": {
+        "x": 522,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-11",
+      "number": 11,
+      "name": "Lille racerbil",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 20,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-12",
+      "number": 12,
+      "name": "Sejlbåd",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 522,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-13",
+      "number": 13,
+      "name": "Traktor",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 20,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-14",
+      "number": 14,
+      "name": "Damplokomotiv",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 522,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-15",
+      "number": 15,
+      "name": "Brandbil",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 20,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-16",
+      "number": 16,
+      "name": "Helikopter",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 522,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-17",
+      "number": 17,
+      "name": "Formelbil",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 20,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-18",
+      "number": 18,
+      "name": "Piratskib",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 522,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-19",
+      "number": 19,
+      "name": "Titanic i miniature",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 20,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-20",
+      "number": 20,
+      "name": "Rumraket med rampe",
+      "theme": "Køretøjer og skibe",
+      "board": "assets/3d-prototypes/board-2.svg",
+      "crop": {
+        "x": 522,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-21",
+      "number": 21,
+      "name": "Tulipan i potte",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 20,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-22",
+      "number": 22,
+      "name": "Svamp med stor hat",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 522,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-23",
+      "number": 23,
+      "name": "Kaktus i potte",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 20,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-24",
+      "number": 24,
+      "name": "Æbletræ",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 522,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-25",
+      "number": 25,
+      "name": "Solsikke i potte",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 20,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-26",
+      "number": 26,
+      "name": "Palme på en ø",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 522,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-27",
+      "number": 27,
+      "name": "Rose i vase",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 20,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-28",
+      "number": 28,
+      "name": "Lille blomsterbuket",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 522,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-29",
+      "number": 29,
+      "name": "Vulkan",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 20,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-30",
+      "number": 30,
+      "name": "Koralrev",
+      "theme": "Natur og blomster",
+      "board": "assets/3d-prototypes/board-3.svg",
+      "crop": {
+        "x": 522,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-31",
+      "number": 31,
+      "name": "Lille sommerhus",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 20,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-32",
+      "number": 32,
+      "name": "Telt med lejrbål",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 522,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-33",
+      "number": 33,
+      "name": "Fyrtårn",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 20,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-34",
+      "number": 34,
+      "name": "Borgtårn",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 522,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-35",
+      "number": 35,
+      "name": "Bro over en å",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 20,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-36",
+      "number": 36,
+      "name": "Lille togstation",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 522,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-37",
+      "number": 37,
+      "name": "Træhytte",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 20,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-38",
+      "number": 38,
+      "name": "Japansk pagode",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 522,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-39",
+      "number": 39,
+      "name": "Troldmandstårn",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 20,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-40",
+      "number": 40,
+      "name": "Mini-fodboldstadion",
+      "theme": "Små verdener",
+      "board": "assets/3d-prototypes/board-4.svg",
+      "crop": {
+        "x": 522,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-41",
+      "number": 41,
+      "name": "Lille robot",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 20,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-42",
+      "number": 42,
+      "name": "Spøgelse på fod",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 522,
+        "y": 130,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-43",
+      "number": 43,
+      "name": "Fodboldpokal",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 20,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-44",
+      "number": 44,
+      "name": "Støvle med bold",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 522,
+        "y": 414,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-45",
+      "number": 45,
+      "name": "Lille drage",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 20,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-46",
+      "number": 46,
+      "name": "Snemand med hat",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 522,
+        "y": 698,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-47",
+      "number": 47,
+      "name": "Tyrannosaurus",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 20,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-48",
+      "number": 48,
+      "name": "Troldmand med stav",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 522,
+        "y": 982,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-49",
+      "number": 49,
+      "name": "Messi med pokal",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 20,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    },
+    {
+      "id": "prototype3d-50",
+      "number": 50,
+      "name": "CR7 i Siu-positur",
+      "theme": "Figurer og fodbold",
+      "board": "assets/3d-prototypes/board-5.svg",
+      "crop": {
+        "x": 522,
+        "y": 1266,
+        "w": 480,
+        "h": 220
+      }
+    }
+  ]
+}
