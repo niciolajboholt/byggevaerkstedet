@@ -7,3 +7,5 @@
 .prototype-badge{margin:0 14px;padding:3px 8px;border-radius:99px;background:var(--soft);font-size:12px;font-weight:800}.prototype-picture{position:relative;overflow:hidden;width:100%;background:#fff;flex-shrink:0}.prototype-picture img{position:absolute;max-width:none;height:auto;pointer-events:none}.prototype-picture.large{border-radius:16px;margin:8px 0}
 .prototype-dialog{width:min(800px,calc(100% - 24px));max-height:90dvh;overflow:auto}.prototype-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:760px){.prototype-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.prototype-card strong{font-size:16px;padding:0 10px}.prototype-badge{margin:0 10px}.prototype-card{border-radius:16px}.prototype-filters .btn{font-size:13px}}
+
+#prototypeTitle:focus{outline:none}
