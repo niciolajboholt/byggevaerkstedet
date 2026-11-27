@@ -1,7 +1,7 @@
 /* Compact discovery themes. Catalogue data and filter state remain owned by the app. */
 (function (global) {
   'use strict';
-  const FEATURED = ['Dyr', 'Magi', 'Køretøjer', 'Billogoer', 'Pokémon', 'Minecraft', 'Skibe', 'Blomster', 'Eksotiske dyr', 'Klublogoer', 'Messi og CR7'];
+  const FEATURED = ['Dyr', 'Magi', 'Køretøjer', 'Billogoer', 'Pokémon', 'Minecraft', 'Skibe', 'Blomster', 'Eksotiske dyr', 'Klublogoer', 'Messi og CR7', '3D-figurer'];
   const SPECIAL = new Set(['Alle', '50 nye', 'Likede', 'Egne']);
   const countLabel = n => n + (n === 1 ? ' motiv' : ' motiver');
   const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -66,7 +66,8 @@
       for (const button of cards.querySelectorAll('button')) {
         const category = button.dataset.themeCategory;
         const model = builds.find(b => b.cat === category && (category !== 'Magi' || b.id === 'motiver50-01')) || builds.find(b => b.cat === category);
-        if (model && draw) draw(button.querySelector('canvas'), model.p);
+        if(model?.kind==='spatial'){const image=doc.createElement('img');image.src=model.preview;image.alt='';image.className='spatial-theme-preview';button.querySelector('canvas').replaceWith(image)}
+        else if (model && draw) draw(button.querySelector('canvas'), model.p);
         button.onclick = () => choose(category);
       }
       if (dialog.open) renderDialog();

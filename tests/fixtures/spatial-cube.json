@@ -1,0 +1,403 @@
+{
+  "id": "",
+  "name": "",
+  "version": 1,
+  "pieces": [
+    {
+      "id": "a",
+      "c": "R",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "grid": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        1.5707963267948966,
+        0.0,
+        0.0
+      ],
+      "axes": {
+        "long": "x",
+        "wide": "z"
+      }
+    },
+    {
+      "id": "b",
+      "c": "R",
+      "position": [
+        0,
+        0,
+        3
+      ],
+      "grid": [
+        0,
+        0,
+        1
+      ],
+      "rotation": [
+        1.5707963267948966,
+        0.0,
+        1.5707963267948966
+      ],
+      "axes": {
+        "long": "z",
+        "wide": "x"
+      }
+    },
+    {
+      "id": "c",
+      "c": "B",
+      "position": [
+        3,
+        0,
+        0
+      ],
+      "grid": [
+        1,
+        0,
+        0
+      ],
+      "rotation": [
+        1.5707963267948966,
+        0.0,
+        1.5707963267948966
+      ],
+      "axes": {
+        "long": "z",
+        "wide": "x"
+      }
+    },
+    {
+      "id": "d",
+      "c": "B",
+      "position": [
+        3,
+        0,
+        3
+      ],
+      "grid": [
+        1,
+        0,
+        1
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axes": {
+        "long": "x",
+        "wide": "y"
+      }
+    },
+    {
+      "id": "e",
+      "c": "Y",
+      "position": [
+        3,
+        3,
+        3
+      ],
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        1.5707963267948966
+      ],
+      "axes": {
+        "long": "y",
+        "wide": "x"
+      }
+    },
+    {
+      "id": "f",
+      "c": "G",
+      "position": [
+        0,
+        3,
+        3
+      ],
+      "grid": [
+        0,
+        1,
+        1
+      ],
+      "rotation": [
+        1.5707963267948966,
+        0.0,
+        0.0
+      ],
+      "axes": {
+        "long": "x",
+        "wide": "z"
+      }
+    },
+    {
+      "id": "g",
+      "c": "G",
+      "position": [
+        0,
+        3,
+        0
+      ],
+      "grid": [
+        0,
+        1,
+        0
+      ],
+      "rotation": [
+        1.5707963267948966,
+        0.0,
+        1.5707963267948966
+      ],
+      "axes": {
+        "long": "z",
+        "wide": "x"
+      }
+    },
+    {
+      "id": "h",
+      "c": "Y",
+      "position": [
+        3,
+        3,
+        0
+      ],
+      "grid": [
+        1,
+        1,
+        0
+      ],
+      "rotation": [
+        1.5707963267948966,
+        0.0,
+        0.0
+      ],
+      "axes": {
+        "long": "x",
+        "wide": "z"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "pieceId": "a",
+      "parentId": null,
+      "insertionDirection": [
+        0,
+        0,
+        -1
+      ],
+      "fromOffset": [
+        0,
+        0,
+        4
+      ],
+      "axis": null
+    },
+    {
+      "pieceId": "b",
+      "parentId": "a",
+      "insertionDirection": [
+        0,
+        0,
+        -1
+      ],
+      "fromOffset": [
+        0,
+        0,
+        3
+      ],
+      "axis": "z"
+    },
+    {
+      "pieceId": "c",
+      "parentId": "a",
+      "insertionDirection": [
+        -1,
+        0,
+        0
+      ],
+      "fromOffset": [
+        3,
+        0,
+        0
+      ],
+      "axis": "x"
+    },
+    {
+      "pieceId": "d",
+      "parentId": "b",
+      "insertionDirection": [
+        -1,
+        0,
+        0
+      ],
+      "fromOffset": [
+        6,
+        0,
+        0
+      ],
+      "axis": "x"
+    },
+    {
+      "pieceId": "e",
+      "parentId": "d",
+      "insertionDirection": [
+        0,
+        0,
+        -1
+      ],
+      "fromOffset": [
+        0,
+        0,
+        5
+      ],
+      "axis": "y"
+    },
+    {
+      "pieceId": "f",
+      "parentId": "e",
+      "insertionDirection": [
+        0,
+        0,
+        -1
+      ],
+      "fromOffset": [
+        0,
+        0,
+        6
+      ],
+      "axis": "x"
+    },
+    {
+      "pieceId": "g",
+      "parentId": "f",
+      "insertionDirection": [
+        0,
+        -1,
+        0
+      ],
+      "fromOffset": [
+        0,
+        5,
+        0
+      ],
+      "axis": "z"
+    },
+    {
+      "pieceId": "h",
+      "parentId": "g",
+      "insertionDirection": [
+        -1,
+        0,
+        0
+      ],
+      "fromOffset": [
+        7,
+        0,
+        0
+      ],
+      "axis": "x"
+    }
+  ],
+  "count": 8,
+  "targetCount": 8,
+  "omitted": [],
+  "complete": true,
+  "signature": "4286b4c619d5ae2e58abc2bb2405fd5248daa7544aaedce4646f4acc0f37f6d2",
+  "rotationOrder": "XYZ",
+  "rotationUnit": "radians",
+  "gridScale": 3,
+  "validation": {
+    "method": "voxel-notch-joint-and-axis-sweep",
+    "stability": {
+      "supported": true,
+      "com": [
+        1.5,
+        1.5,
+        1.5
+      ],
+      "groundZ": -2.5,
+      "hull": [
+        [
+          -0.5,
+          2.5
+        ],
+        [
+          2.5,
+          -0.5
+        ],
+        [
+          3.5,
+          -0.5
+        ],
+        [
+          3.5,
+          0.5
+        ],
+        [
+          0.5,
+          3.5
+        ],
+        [
+          -0.5,
+          3.5
+        ]
+      ],
+      "minimumMargin": 0.7071067811865476,
+      "requiredMargin": 0.1,
+      "model": "equal-mass-static-centre-of-mass"
+    }
+  },
+  "stability": {
+    "supported": true,
+    "com": [
+      1.5,
+      1.5,
+      1.5
+    ],
+    "groundZ": -2.5,
+    "hull": [
+      [
+        -0.5,
+        2.5
+      ],
+      [
+        2.5,
+        -0.5
+      ],
+      [
+        3.5,
+        -0.5
+      ],
+      [
+        3.5,
+        0.5
+      ],
+      [
+        0.5,
+        3.5
+      ],
+      [
+        -0.5,
+        3.5
+      ]
+    ],
+    "minimumMargin": 0.7071067811865476,
+    "requiredMargin": 0.1,
+    "model": "equal-mass-static-centre-of-mass"
+  },
+  "buildable": true,
+  "assemblyMotionTested": true,
+  "assemblyMotionModel": "nominal-unit-cube-straight-axis-insertion"
+}

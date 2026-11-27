@@ -153,7 +153,7 @@ Den godkendte samling indeholder 15 skibe (inklusive Titanic med fire skorstene)
 
 ## Ret navne nemt
 
-Åbn **[data/navne.json](data/navne.json)** på GitHub og vælg blyanten. Filen indeholder kun 270 navne, ét pr. linje, sorteret efter navn. Ret teksten til højre og gem med Commit changes:
+Åbn **[data/navne.json](data/navne.json)** på GitHub og vælg blyanten. Filen indeholder kun 320 navne, ét pr. linje, sorteret efter navn. Ret teksten til højre og gem med Commit changes:
 
 ```json
 "tema62-titanic": "Titanic"
@@ -169,7 +169,7 @@ Behold nøglen til venstre (motivets ID), anførselstegn og kommaer. Appen koble
 
 ## Tre sværhedsgrader pr. motiv
 
-Alle 270 katalogmotiver har `variants.easy.p`, `variants.medium.p` og `variants.hard.p` i `data/motiver.json`: 810 byggevejledninger i alt. Let bruger 1–59 brikker, Mellem 60–84 og Svær 85–250 (op til 300 for Klublogoer). Navnefilen indeholder stadig kun 270 navne, da udgaverne deler navn og stabilt motiv-ID.
+Alle 270 flade katalogmotiver har `variants.easy.p`, `variants.medium.p` og `variants.hard.p` i `data/motiver.json`: 810 byggevejledninger i alt. Let bruger 1–59 brikker, Mellem 60–84 og Svær 85–250 (op til 300 for Klublogoer). Navnefilen indeholder stadig kun 320 navne, da udgaverne deler navn og stabilt motiv-ID.
 
 Vælg udgaven under Vælg sværhedsgrad før byggeriet. Kort og søgefiltre viser fortsat ét kort pr. motiv; et sværhedsfilter viser den tilsvarende udgave. Et rent brikloft beholder den oprindelige udgave, hvis den passer, ellers den største udgave under loftet.
 
@@ -205,8 +205,12 @@ Both shared-iPad and new live rooms use the connected row-piece planner. When a 
 
 New live rooms persist `planVersion: 2`. Existing rooms without this field retain version 1 task IDs, authorization and ledgers on the server; the updated UI pauses their old guide and offers **Start rum med den nye vejledning**, preserving the old room and requiring a new invitation link. Shared-iPad progress has a separate versioned key and explains old saved progress before starting the connected guide. Custom drawings with disconnected components explicitly start separate sections.
 
-### 50 visual 3D prototypes
+### 50 rumlige byggevejledninger
 
-The **3D-prototyper** category opens `#3d-prototyper`, a searchable gallery of the 50 approved concept images in five themes. Its separate `data/prototyper-3d.json` manifest deliberately contains no building patterns or verified piece counts: these are visual concepts, not validated construction guides. The existing 270 building motifs and 810 guides remain unchanged. Each card opens a larger view and the original numbered sheet.
+Kategorien **3D-figurer** indeholder 50 rumlige modeller med faktiske Plus-Plus-brikker i selvstændige positioner og retninger. Kataloget har nu 320 motiver: 270 mosaikker med tre sværhedsgrader og 50 rumlige vejledninger. De rumlige modeller har én konkret, materialeberegnet udgave hver og højst 250 brikker.
 
-The five approved image sheets are served as local SVG image wrappers containing lossless WebP; decoded source pixels are identical to the approved PNGs. CSS viewports expose individual motifs without changing the approved artwork. Assets are loaded only when the gallery is opened, and names and groups are editable in the manifest.
+Byg alene, på skift på samme iPad eller i et live-rum på flere enheder. Hver opgave er sammenhængende og bevarer den kontrollerede samlerækkefølge. Se det aktuelle stykke, sæt det på den samlede model og skift først derefter bygger. Hele processen kan drejes og ses forfra, fra siden og ovenfra. Fremdrift gemmes lokalt eller i live-rummet.
+
+`spatial-core.js` kontrollerer hele brikker, overlap, tap/not-samlinger, fri indføringsretning og modellens nominelle balance. De 50 figurer er digitalt kontrolleret, men ikke fysisk prøvebygget. Materialetolerancer og samlingernes faktiske styrke er ikke afprøvet. De tidligere illustrationsprototyper bruges ikke som byggevejledninger.
+
+Kør `npm test` for katalog, geometri, planlægning, grænseflade og synkronisering. Kildegeometri og dokumentation ligger i `spatial50/`. Byg 3D-viseren med `npm run build:spatial`.

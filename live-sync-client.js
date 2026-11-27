@@ -1,5 +1,5 @@
 /* Authenticated room transport. HTTP mutations are acknowledged; WebSockets broadcast snapshots. */
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiveRoomClient=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(()=>require('./spatial-core.js'));else root.LiveRoomClient=factory(()=>root.SpatialCore);})(typeof globalThis!=='undefined'?globalThis:this,function(resolveSpatialCore){
 'use strict';
 const ROOM=/^[a-f0-9]{32}$/i;
 const STORE='bv_live_rooms_v1';
@@ -36,8 +36,25 @@ class LiveRoomClient{
  }
  forget(roomId,me=this.activeRole(roomId)){try{const all=this.records();delete all[roomId+':'+me];this.storage?.setItem(STORE,JSON.stringify(all));if(this.activeRole(roomId)===me)this.clearRole(roomId)}catch{}}
  setStatus(status){if(status!==this.status){this.status=status;this.onStatus(status)}}
+ validateSnapshot(room){
+  if(!room||room.v!==1||!ROOM.test(room.roomId||'')||!room.model||!Array.isArray(room.builders)||!Number.isInteger(room.revision)||room.revision<0||!Number.isInteger(room.attached)||room.attached<0||!Array.isArray(room.ready))throw new RoomError('bad_snapshot','Byggerummet svarede ikke som forventet. Prøv at åbne linket igen.');
+  if(room.model.kind==='spatial'||room.model.scene!=null){
+   const model=room.model,scene=model.scene;
+   if(model.kind!=='spatial'||model.p!=null||room.planVersion!==3||typeof model.id!=='string'||!model.id.length||model.id.length>120||typeof model.name!=='string'||!model.name.trim()||model.name.length>100||![2,3].includes(room.builders.length)||!room.builders.every(n=>typeof n==='string'&&n.trim()&&n.length<=40)||!scene||typeof scene!=='object'||Array.isArray(scene)||!Array.isArray(scene.pieces)||scene.pieces.length<1||scene.pieces.length>250)throw new RoomError('bad_snapshot','Det rumlige byggeri har en ugyldig beskrivelse.');
+   const ids=new Set();
+   for(const piece of scene.pieces){
+    if(!piece||typeof piece!=='object'||typeof piece.id!=='string'||!piece.id.length||piece.id.length>120||ids.has(piece.id)||typeof piece.c!=='string'||!/^[rAROYGgBbPpWKNTS]$/.test(piece.c)||!Array.isArray(piece.position)||piece.position.length!==3||!piece.position.every(n=>Number.isFinite(n)&&Math.abs(n)<=256)||!Array.isArray(piece.rotation)||piece.rotation.length!==3||!piece.rotation.every(n=>Number.isFinite(n)&&Math.abs(n)<=Math.PI*20&&Math.abs(n/(Math.PI/2)-Math.round(n/(Math.PI/2)))<1e-8))throw new RoomError('bad_snapshot','Det rumlige byggeri har ugyldige brikpositioner.');
+    ids.add(piece.id);
+   }
+   if(room.attached>scene.pieces.length||room.ready.length>scene.pieces.length||!room.ready.every(id=>typeof id==='string'&&id.length>0&&id.length<=200))throw new RoomError('bad_snapshot','Det rumlige byggeri har ugyldig fremdrift.');
+   let serialized;try{serialized=JSON.stringify(scene)}catch{throw new RoomError('bad_snapshot','Det rumlige byggeri kan ikke læses.')}
+   if(new TextEncoder().encode(serialized).byteLength>120000)throw new RoomError('bad_snapshot','Det rumlige byggeri er for stort.');
+   try{const core=resolveSpatialCore();if(!core||!core.validateScene(scene,{maxPieces:250,require3D:true}).valid)throw new Error('invalid scene')}catch{throw new RoomError('bad_snapshot','Brikkerne i det rumlige byggeri har ugyldige samlinger.')}
+  }
+  return room;
+ }
  accept(room){
-  if(!room||room.v!==1||!ROOM.test(room.roomId||'')||!room.model||!Array.isArray(room.builders)||!Number.isInteger(room.revision)||!Number.isInteger(room.attached)||!Array.isArray(room.ready))throw new RoomError('bad_snapshot','Byggerummet svarede ikke som forventet. Prøv at åbne linket igen.');
+  this.validateSnapshot(room);
   if(this.credentials&&room.roomId!==this.credentials.roomId)throw new RoomError('wrong_room','Byggerummet passer ikke til denne enhed.');
   if(this.room&&room.roomId===this.room.roomId&&room.revision<this.room.revision)return this.room;
   this.room=room;if(this.credentials)this.remember(this.credentials);this.onRoom(room);
@@ -58,7 +75,7 @@ class LiveRoomClient{
  }
  async loadInvite(invite){
   if(!ROOM.test(invite?.roomId||''))throw new RoomError('bad_invite','Delingslinket er beskadiget.');
-  const data=await this.request('/rooms/'+invite.roomId,{token:invite.inviteToken});return data.room||data;
+  const data=await this.request('/rooms/'+invite.roomId,{token:invite.inviteToken});const room=this.validateSnapshot(data.room||data);if(room.roomId!==invite.roomId)throw new RoomError('wrong_room','Invitationen passer ikke til byggerummet.');return room;
  }
  async join(invite,builder){
   this.disconnect();this.disposed=false;const generation=this.generation;

@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "node scripts/preview-server.cjs",
     "test": "node --test tests/*.test.cjs",
-    "build:3d": "esbuild three/renderer.js --bundle --format=iife --global-name=Brick3DRenderer --platform=browser --target=es2020 --minify --outfile=vendor/three-viewer.js"
+    "build:3d": "esbuild three/renderer.js --bundle --format=iife --global-name=Brick3DRenderer --platform=browser --target=es2020 --minify --outfile=vendor/three-viewer.js",
+    "build:spatial": "esbuild spatial50/viewer/renderer.js --bundle --format=iife --global-name=Spatial3D --platform=browser --target=es2020 --minify --outfile=vendor/spatial-viewer.js"
   },
   "devDependencies": {
     "esbuild": "0.27.0",

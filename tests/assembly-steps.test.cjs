@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const Steps=require('../assembly-steps.js');
-const models=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../data/motiver.json'))).models;
+const models=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../data/motiver.json'))).models.filter(m=>m.kind!=='spatial');
 const key=t=>`${t.x},${t.y}`;
 function verify(p){
  const plan=Steps.create(p),seen=new Set();
