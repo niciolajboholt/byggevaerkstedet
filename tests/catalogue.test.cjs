@@ -38,20 +38,8 @@ test('a missing name file fails loading instead of silently showing outdated nam
  await assert.rejects(Catalogue.load('data/motiver.json',{fetch:async url=>url.endsWith('navne.json')?{ok:false}:{ok:true,json:async()=>raw}}));
 });
 
-// Four actual tab/notch joints form a dogleg spanning X, Y and Z.
 function spatialFixture(){
- return {id:'spatial-test',name:'Rumlig test',cat:'3D-figurer',kind:'spatial',spatialTheme:'Natur',preview:'assets/spatial/spatial-test.svg',scene:{
-  version:1,rotationUnit:'radians',rotationOrder:'XYZ',gridScale:3,
-  pieces:[
-   {id:'p001',c:'R',position:[0,0,0],rotation:[0,0,0],axes:{long:'x',wide:'y'}},
-   {id:'p002',c:'Y',position:[3,0,0],rotation:[Math.PI/2,0,Math.PI/2],axes:{long:'z',wide:'x'}},
-   {id:'p003',c:'G',position:[3,0,3],rotation:[Math.PI/2,0,0],axes:{long:'x',wide:'z'}},
-   {id:'p004',c:'B',position:[6,0,3],rotation:[0,0,Math.PI/2],axes:{long:'y',wide:'x'}},
-   {id:'p005',c:'P',position:[6,3,3],rotation:[0,Math.PI/2,0],axes:{long:'z',wide:'y'}}
-  ],
-  steps:[{pieceId:'p001',parentId:null,axis:null},{pieceId:'p002',parentId:'p001',axis:'x'},{pieceId:'p003',parentId:'p002',axis:'z'},{pieceId:'p004',parentId:'p003',axis:'x'},{pieceId:'p005',parentId:'p004',axis:'y'}],
-  count:5,targetCount:5,omitted:[],complete:true,assemblyMotionTested:false
- }};
+ return {id:'spatial-test',name:'Rumlig test',cat:'3D-figurer',kind:'spatial',spatialTheme:'Natur',preview:'assets/spatial/spatial-test.svg',scene:structuredClone(require('./fixtures/spatial-cube.json'))};
 }
 function spatialCatalogue(model=spatialFixture()){
  return {categories:['3D-figurer'],models:[model]};

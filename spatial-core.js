@@ -1,6 +1,7 @@
 /* Physical nine-cube Plus-Plus geometry, validator and connected 3D task plans.
  * Pose rotations: radians, Euler XYZ, matching THREE.Euler. Z is world up.
- * Static tab/notch feasibility is checked. Collision-free assembly motion is not proved.
+ * Nominal tab/notch grips, straight axis insertion and static balance are checked.
+ * Plastic tolerances, grip strength and physical builds are not certified.
  */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.SpatialCore=factory()})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';

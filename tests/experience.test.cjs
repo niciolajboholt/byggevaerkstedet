@@ -129,7 +129,7 @@ test('smallest part can be assigned to either named builder and survives swappin
 });
 test('smallest assignment preserves all bricks and physical assembly order for every motif and builder',async()=>{
  const a=app();await a.settle();
- const checks=JSON.parse(a.w.eval(`JSON.stringify(BUILDS.flatMap(b=>[2,3].flatMap(n=>Array.from({length:n},(_,selected)=>{
+ const checks=JSON.parse(a.w.eval(`JSON.stringify(BUILDS.filter(b=>b.kind!=='spatial').flatMap(b=>[2,3].flatMap(n=>Array.from({length:n},(_,selected)=>{
   cur=b;team.n=n;team.split='small';team.smallest=selected;buildParts();
   const physical=orderedParts();
   return {id:b.id,n,selected,minimum:Math.min(...parts.map(p=>p.n)),assigned:parts[selected].n,total:parts.reduce((s,p)=>s+p.n,0),expected:b.total,ordered:physical.every((p,i)=>!i||p.r0===physical[i-1].r1+1),first:physical[0].r0,last:physical.at(-1).r1,expectedLast:b.p.length-1};
@@ -238,7 +238,7 @@ test('ordinary model opening defaults to shared iPad despite a saved dedicated-s
 
 test('four new categories expose all 62 approved motifs and large crests remain visible by default',async()=>{
  const a=app();await a.settle();
- assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,320);
  for(const [cat,n] of [['Skibe',15],['Blomster',15],['Eksotiske dyr',15],['Klublogoer',17]]){
   a.choose(`.featured-categories [data-theme-category="${cat}"]`);
   assert.equal(a.doc.querySelectorAll('#grid .card').length,n);
@@ -248,7 +248,7 @@ test('four new categories expose all 62 approved motifs and large crests remain 
  a.doc.getElementById('pieceLimit').value='250';a.doc.getElementById('pieceLimit').dispatchEvent(new a.w.Event('change'));
  assert.equal(a.doc.querySelectorAll('#grid .card').length,17);
  assert.ok(Array.from(a.doc.querySelectorAll('#grid .card .meta')).every(el=>+el.textContent.match(/(\d+) brikker/)[1]<=250));
- a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
+ a.click('resetFilters');assert.equal(a.doc.querySelectorAll('#grid .card').length,320);
  a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();a.click('aloneStart');assert.match(a.doc.getElementById('rowTitle').textContent,/Trin 1/);
  assert.deepEqual(a.errors,[]);a.close();
 });
@@ -258,7 +258,7 @@ test('catalogue load failure can retry without touching saved user data',async()
  const storage={bv_likes:JSON.stringify(['motiver50-01'])};
  const a=app({storage,catalogueFetch:async()=>{if(!calls++)throw Error('offline');return {ok:true,json:async()=>data}}});await a.settle();
  assert.equal(a.doc.getElementById('catalogueStatus').getAttribute('role'),'alert');assert.equal(a.doc.getElementById('listView').inert,true);assert.equal(a.w.localStorage.getItem('bv_likes'),storage.bv_likes);
- a.click('catalogueRetry');await a.settle();assert.equal(a.doc.querySelectorAll('#grid .card').length,270);assert.equal(a.doc.getElementById('listView').inert,false);assert.deepEqual(a.errors,[]);a.close();
+ a.click('catalogueRetry');await a.settle();assert.equal(a.doc.querySelectorAll('#grid .card').length,320);assert.equal(a.doc.getElementById('listView').inert,false);assert.deepEqual(a.errors,[]);a.close();
 });
 test('renaming a motif through JSON preserves its favourite and saved solo step',async()=>{
  const a=app({url:'https://example.test/#m-motiver50-01'});await a.settle();a.click('guideFavorite');a.click('aloneStart');a.click('next');const storage=snapshotStorage(a);a.close();
@@ -296,7 +296,7 @@ test('difficulty and piece filters choose one matching version of each motif',as
  const a=app();await a.settle();
  for(const [label,key] of [['Let','easy'],['Mellem','medium'],['Svær','hard']]){
   a.doc.getElementById('diff').value=label;a.doc.getElementById('diff').dispatchEvent(new a.w.Event('change'));
-  assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
+  assert.equal(a.doc.querySelectorAll('#grid .card').length,270+JSON.parse(a.w.eval('JSON.stringify(BUILDS.filter(b=>b.kind==="spatial"&&b.level==="'+label+'"))')).length);
   a.choose('[data-id="motiver50-01"] .model-link');await a.settle();
   assert.match(a.w.location.hash,new RegExp('level='+key));
   assert.equal(a.doc.querySelector('#variantOptions [aria-pressed="true"]').dataset.level,key);
@@ -304,7 +304,7 @@ test('difficulty and piece filters choose one matching version of each motif',as
   a.click('detailBack');await a.settle();
  }
  a.click('resetFilters');a.doc.getElementById('pieceLimit').value='60';a.doc.getElementById('pieceLimit').dispatchEvent(new a.w.Event('change'));
- assert.equal(a.doc.querySelectorAll('#grid .card').length,270);
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,271);
  assert.ok(Array.from(a.doc.querySelectorAll('#grid .card .meta')).every(el=>+el.textContent.match(/(\d+) brikker/)[1]<=60));
  a.choose('[data-id="tema62-titanic"] .model-link');await a.settle();assert.ok(a.w.eval('cur.total')<=60);
  assert.deepEqual(a.errors,[]);a.close();
@@ -382,16 +382,14 @@ test('old row-only progress is kept but never mistaken for a connected step inde
 });
 
 
-test('prototype category exposes fifty approved concepts, filters them and returns to the building catalogue',async()=>{
- const a=app();await a.settle();a.choose('.featured-categories [data-theme-category="3D-prototyper"]');await a.settle();
- assert.equal(a.w.location.hash,'#3d-prototyper');assert.equal(a.doc.getElementById('prototypeView').classList.contains('hide'),false);
- assert.equal(a.doc.getElementById('listView').classList.contains('hide'),true);assert.equal(a.doc.querySelectorAll('.prototype-card').length,50);
- assert.match(a.doc.getElementById('prototypeCount').textContent,/50 af 50/);
- assert.equal(a.doc.querySelector('.prototype-card img').style.top,'-50%');
- a.choose('[data-prototype-theme="Dyr"]');assert.equal(a.doc.querySelectorAll('.prototype-card').length,10);
- const q=a.doc.getElementById('prototypeSearch');q.value='pingvin';q.dispatchEvent(new a.w.Event('input'));assert.equal(a.doc.querySelectorAll('.prototype-card').length,1);
- a.choose('.prototype-card');assert.equal(a.doc.getElementById('prototypeDialog').open,true);assert.match(a.doc.getElementById('prototypeDialog').textContent,/Byggevejledningen er ikke klar/);
- assert.equal(a.doc.querySelector('#prototypeDialog a').getAttribute('href'),'assets/3d-prototypes/board-1.svg');
- a.doc.querySelector('#prototypeDialog button').click();a.click('prototypeBack');await a.settle();
- assert.equal(a.doc.getElementById('prototypeView').classList.contains('hide'),true);assert.equal(a.doc.querySelectorAll('#grid .card').length,270);assert.deepEqual(a.errors,[]);a.close();
+test('3D category contains fifty real guides and retains search, favourites and the old category link',async()=>{
+ const a=app();await a.settle();a.choose('.featured-categories [data-theme-category="3D-figurer"]');await a.settle();
+ assert.equal(a.doc.querySelectorAll('#grid .card').length,50);
+ const q=a.doc.getElementById('q');q.value='pingvin';q.dispatchEvent(new a.w.Event('input'));assert.equal(a.doc.querySelectorAll('#grid .card').length,1);
+ a.choose('[data-id="spatial50-01"] .heart');a.choose('[data-id="spatial50-01"] .model-link');await a.settle();
+ assert.equal(a.doc.getElementById('spatialView').classList.contains('hide'),false);
+ assert.equal(a.doc.getElementById('spatialName').textContent,'Pingvin');
+ a.click('spatialBack');await a.settle();assert.equal(a.doc.getElementById('spatialView').classList.contains('hide'),true);
+ const b=app({url:'https://example.test/#3d-prototyper'});await b.settle();assert.equal(b.doc.querySelectorAll('#grid .card').length,50);
+ assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();
 });

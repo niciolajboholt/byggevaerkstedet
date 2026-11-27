@@ -8,16 +8,7 @@ const Core=require('../sync/room-core.cjs');
 const Tasks=require('../build-tasks.js');
 const Client=require('../live-sync-client.js');
 const ID='a'.repeat(32),at=1000000,P=Math.PI/2;
-const freshScene=()=>({rotationUnit:'radians',rotationOrder:'XYZ',pieces:[
- {id:'a',c:'R',position:[0,0,0],rotation:[0,0,0]},
- {id:'b',c:'B',position:[3,0,0],rotation:[0,0,P]},
- {id:'c',c:'G',position:[3,3,0],rotation:[0,P,0]},
- {id:'d',c:'Y',position:[3,3,3],rotation:[P,0,0]},
- {id:'e',c:'R',position:[6,3,3],rotation:[0,0,P]},
- {id:'f',c:'B',position:[6,6,3],rotation:[0,P,0]},
- {id:'g',c:'G',position:[6,6,6],rotation:[P,0,0]},
- {id:'h',c:'Y',position:[9,6,6],rotation:[0,0,P]}
-],steps:'abcdefgh'.split('').map((pieceId,i)=>{const axis=i===0?2:(i-1)%3,insertionDirection=[0,0,0],fromOffset=[0,0,0];insertionDirection[axis]=-1;fromOffset[axis]=12;return {pieceId,parentId:i?'abcdefgh'[i-1]:null,insertionDirection,fromOffset}})});
+const freshScene=()=>structuredClone(require('./fixtures/spatial-cube.json'));
 const input=()=>({model:{id:'spatial-proof',name:'Rumlig prøve',kind:'spatial',scene:freshScene()},builders:['Jens','Alfred'],smallest:null});
 const make=()=>Core.newRoom(ID,input(),{hostHash:'host-hash',inviteHash:'invite-hash'},at);
 const plan=room=>Tasks.createPlan(room.model.scene,{builderCount:room.builders.length,smallest:room.smallest,version:room.planVersion});

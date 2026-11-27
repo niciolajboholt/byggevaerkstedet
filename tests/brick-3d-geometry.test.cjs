@@ -47,7 +47,7 @@ test('brick placement uses exact flat-instruction coordinates and orientation bo
 
 test('all 810 variants preserve every source brick, colour, orientation, square, and overall bounds', () => {
   let variants=0;
-  for (const model of raw.models) for (const variant of Object.values(model.variants)) {
+  for (const model of raw.models.filter(m=>m.kind!=='spatial')) for (const variant of Object.values(model.variants)) {
     variants++;
     const tiles=[], expected=new Set(), colourCounts={};
     for (let y=0;y<variant.p.length;y++) for (let x=0;x<variant.p[y].length;x++) {

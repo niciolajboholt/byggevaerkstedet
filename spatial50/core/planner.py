@@ -108,19 +108,23 @@ def support_stability(positions,voxels,margin=.1):
  distances=[cross(a,hull[(i+1)%len(hull)],com)/math.dist(a,hull[(i+1)%len(hull)]) for i,a in enumerate(hull)] if len(hull)>=3 else [-math.inf]
  return dict(supported=min(distances)>=margin-1e-8,com=com,groundZ=ground-.5,hull=[list(p) for p in hull],minimumMargin=min(distances),requiredMargin=margin,model='equal-mass-static-centre-of-mass')
 
-def generate(cells,*,name='',model_id='',max_pieces=250,seed=0,attempts=120):
+def generate(cells,*,name='',model_id='',max_pieces=250,seed=0,attempts=120, level_supports=False):
  nodes=validate_mask(cells,max_pieces);node_set=set(nodes)
  near={p:[q for q in nodes if q!=p and max(abs(p[i]-q[i]) for i in range(3))<=1] for p in nodes}
  adjacent={p:[plus(p,d) for d in DIRECTIONS if plus(p,d) in node_set] for p in nodes}
  world_voxels={(p,o):[plus(tuple(3*v for v in p),q) for q in ORIENTATIONS[o]['voxels']] for p in nodes for o in range(6)}
+ ground=[p for p in nodes if p[2]==min(q[2] for q in nodes)]
+ supports={min(ground,key=lambda p:sx*p[0]+sy*p[1]) for sx,sy in ((1,1),(1,-1),(-1,1),(-1,-1))} if level_supports else set()
+ allowed={p:{i for i,o in enumerate(ORIENTATIONS) if p not in supports or o['axisIndices'][0]==2} for p in nodes}
  rng=random.Random(seed);best=[];best_parents={};best_assigned={};best_reason='no_attempts';best_insertions={};best_supported=False
  # Prefer low-degree tips, but rotate start/orientation across deterministic retries.
  starts=sorted(nodes,key=lambda p:(len(adjacent[p]),p[2],p[1],p[0]))
  for attempt in range(max(1,attempts)):
   start=starts[0] if attempt==0 else rng.choice(starts[:max(1,len(starts)//2)])
   orientation=attempt%6 if attempt<6 else rng.randrange(6)
+  if orientation not in allowed[start]:orientation=rng.choice(sorted(allowed[start]))
   ranges=[{}, {}, {}];insertions={start:insertion(world_voxels[start,orientation],ranges)};add_ranges(ranges,world_voxels[start,orientation])
-  assigned={start:orientation};order=[start];parents={start:None};domains={p:set(range(6)) for p in nodes if p!=start}
+  assigned={start:orientation};order=[start];parents={start:None};domains={p:allowed[p].copy() for p in nodes if p!=start}
   frontier=set(adjacent[start]);failed=False
   def constrain(p,ori):
    for q in near[p]:
@@ -132,7 +136,8 @@ def generate(cells,*,name='',model_id='',max_pieces=250,seed=0,attempts=120):
   if not constrain(start,orientation):failed=True
   while domains and not failed:
    choices=[]
-   for p in frontier:
+   ranked=sorted(frontier,key=lambda p:(len(domains[p]),-sum(q in assigned for q in near[p]),rng.random()))
+   for p in ranked:
     options=[]
     for o in domains[p]:
      certificate=insertion(world_voxels[p,o],ranges)
@@ -143,7 +148,10 @@ def generate(cells,*,name='',model_id='',max_pieces=250,seed=0,attempts=120):
       future=sum(sum(not REL[minus(q,p),o,n][0] for n in domains[q]) for q in near[p] if q in domains)
       reach=sum(any(REL[minus(q,p),o,n][1] for n in domains[q]) for q in adjacent[p] if q in domains)
       options.append((future+4*reach+rng.random()*(2 if attempt else .01),o,parents_possible[0],certificate))
-    if options:choices.append((len(options),-len([q for q in near[p] if q in assigned]),rng.random(),p,options))
+    if options:
+     choices.append((len(options),-len([q for q in near[p] if q in assigned]),rng.random(),p,options))
+     # Bound expensive insertion/scoring work to the most constrained frontier.
+     if len(choices)>=4:break
    if not choices:best_reason='no_legal_connected_frontier';break
    choices.sort(key=lambda t:t[:3]);_,_,_,p,options=choices[0]
    options.sort(key=lambda v:v[0],reverse=True);_,o,parent,certificate=options[0]

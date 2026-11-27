@@ -159,6 +159,8 @@ def models():
     _box(c,3,3,0,0,1,5,'S');_box(c,3,4,0,0,1,1,'S')
     c[3,-1,5]=c[3,1,5]='K'
     _path(c,[(-3,0,4),(-4,0,4),(-4,0,3)],'S')
+    # A broad plinth joins the four feet and provides a level footprint.
+    _box(c,-3,3,-2,2,-1,-1,'G')
     save(9,'Elefant',c)
 
     c={};_perch(c)

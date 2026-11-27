@@ -112,18 +112,15 @@ def models():
             for y in (-1,1):b(min(x,2 if x>0 else -2),max(x,2 if x>0 else -2),y,y,2,2,'K')
     model(18,'Piratskib',pirate)
     def titanic(c,b,p):
-        # Long black hull, red waterline, white superstructure and exactly four funnels.
-        for y in range(-8,9):
-            w=0 if abs(y)==8 else 1 if abs(y)>=6 else 2
+        # Compact stepped liner: four separate capped funnels remain essential.
+        for y in range(-7,8):
+            w=0 if abs(y)==7 else 1
             b(-w,w,y,y,0,0,'R');b(-w,w,y,y,1,1,'K')
-        b(-1,1,-6,6,2,2,'W');b(-1,1,-4,4,3,3,'W')
+        b(-1,1,-5,5,2,2,'W')
         b(0,0,-5,5,3,3,'W')
         for y in (-3,-1,1,3):
-            b(0,0,y,y,4,5,'O');p(0,y,6,'K')
-        for y in (-5,5):b(0,0,y,y,3,6,'N')
-        for x in (-2,2):
-            for y in (-3,0,3):p(x,y,2,'W')
-        b(-1,1,-6,-6,3,3,'W')
+            p(0,y,4,'O');p(0,y,5,'K')
+        for y in (-5,5):b(0,0,y,y,4,5,'N')
     model(19,'Titanic i miniature',titanic)
     def rocket(c,b,p):
         # Freestanding stepped launch pad, service tower and a solidly seated rocket.

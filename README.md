@@ -169,7 +169,7 @@ Behold nøglen til venstre (motivets ID), anførselstegn og kommaer. Appen koble
 
 ## Tre sværhedsgrader pr. motiv
 
-Alle 270 katalogmotiver har `variants.easy.p`, `variants.medium.p` og `variants.hard.p` i `data/motiver.json`: 810 byggevejledninger i alt. Let bruger 1–59 brikker, Mellem 60–84 og Svær 85–250 (op til 300 for Klublogoer). Navnefilen indeholder stadig kun 320 navne, da udgaverne deler navn og stabilt motiv-ID.
+Alle 270 flade katalogmotiver har `variants.easy.p`, `variants.medium.p` og `variants.hard.p` i `data/motiver.json`: 810 byggevejledninger i alt. Let bruger 1–59 brikker, Mellem 60–84 og Svær 85–250 (op til 300 for Klublogoer). Navnefilen indeholder stadig kun 320 navne, da udgaverne deler navn og stabilt motiv-ID.
 
 Vælg udgaven under Vælg sværhedsgrad før byggeriet. Kort og søgefiltre viser fortsat ét kort pr. motiv; et sværhedsfilter viser den tilsvarende udgave. Et rent brikloft beholder den oprindelige udgave, hvis den passer, ellers den største udgave under loftet.
 

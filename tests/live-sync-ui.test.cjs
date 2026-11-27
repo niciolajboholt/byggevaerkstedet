@@ -35,6 +35,7 @@ function app(backend,url='https://example.test/#m-motiver50-01',storage={},tabSt
   for(const [k,v]of Object.entries(storage))w.localStorage.setItem(k,v);
   for(const [k,v]of Object.entries(tabStorage))w.sessionStorage.setItem(k,v);
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
+  w.Spatial3D={createSpatialViewer:()=>({update(){},setStep(){},setView(){},zoom(){},dispose(){}})};
   w.HTMLCanvasElement.prototype.getContext=()=>new Proxy({},{get:(t,k)=>k==='measureText'?()=>({width:30}):()=>{},set:()=>true});
  }});
  const w=d.window,doc=w.document;
@@ -157,4 +158,24 @@ test('legacy live room offers a new connected room rather than reinterpreting sa
  const old=JSON.stringify(backend.state);a.click('next');await new Promise(r=>setTimeout(r,10));assert.equal(JSON.stringify(backend.state),old);
  a.click('upgradeRoom');await a.until(()=>backend.state.planVersion===2&&!a.doc.getElementById('upgradeRoom')&&!a.doc.getElementById('buildControls').classList.contains('hide'));
  assert.equal(a.doc.getElementById('buildControls').classList.contains('hide'),false);assert.deepEqual(a.errors,[]);a.close();
+});
+
+test('spatial guides connect two isolated device UIs, keep names and enforce attachment order',async()=>{
+ const backend=server(),a=app(backend,'https://example.test/#m-spatial50-01');
+ await a.until(()=>a.doc.getElementById('spatialName').textContent==='Pingvin'&&!a.doc.getElementById('spatialStart').disabled);a.choose('#spatialMode [data-mode="together"]');
+ const name=a.doc.getElementById('spatialName0');name.value='Nicolaj';name.dispatchEvent(new a.w.Event('change'));
+ a.click('spatialCreateLive');await a.until(()=>a.doc.getElementById('spatialInviteLink').value.includes('live='));
+ assert.deepEqual(backend.state.builders,['Nicolaj','Alfred']);assert.equal(backend.state.planVersion,3);
+ const b=app(backend,a.doc.getElementById('spatialInviteLink').value);await b.until(()=>b.doc.querySelector('[data-live-join="1"]'));b.choose('[data-live-join="1"]');
+ await b.until(()=>b.doc.getElementById('spatialPerson').textContent==='Alfred bygger'&&!b.doc.getElementById('spatialNext').disabled);
+ b.click('spatialNext');await b.until(()=>/Venter/.test(b.doc.getElementById('spatialNext').textContent));assert.equal(backend.state.attached,0);
+ a.click('spatialNext');await a.until(()=>a.doc.getElementById('spatialNext').textContent==='Stykket er sat på'&&!a.doc.getElementById('spatialNext').disabled);a.click('spatialNext');
+ await b.until(()=>backend.state.attached===1&&!b.doc.getElementById('spatialNext').disabled);b.click('spatialNext');await b.until(()=>backend.state.attached===2&&!b.doc.getElementById('spatialNext').disabled);
+ a.click('spatialCloseLive');await a.until(()=>a.doc.getElementById('confirmDialog').open);a.click('confirmAccept');await b.until(()=>backend.state.closed&&b.doc.getElementById('spatialNext').disabled);
+ assert.deepEqual([...a.errors,...b.errors],[]);a.close();b.close();
+});
+test('failed spatial room creation preserves usable local setup and reports the error',async()=>{
+ const a=app(server(),'https://example.test/#m-spatial50-01');await a.until(()=>a.doc.getElementById('spatialName').textContent==='Pingvin'&&!a.doc.getElementById('spatialStart').disabled);a.choose('#spatialMode [data-mode="together"]');
+ a.w.fetch=async()=>{throw Error('offline')};a.click('spatialCreateLive');await a.until(()=>/Forbindelsen er afbrudt/.test(a.doc.getElementById('spatialNotice').textContent));
+ assert.equal(a.doc.getElementById('spatialView').classList.contains('hide'),false);assert.equal(a.doc.getElementById('spatialStart').disabled,false);assert.equal(a.doc.getElementById('detailView').classList.contains('hide'),true);assert.deepEqual(a.errors,[]);a.close();
 });

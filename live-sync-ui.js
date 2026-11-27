@@ -73,10 +73,12 @@ function hideNormalSetup(live){
 }
 function render(){
  if(!isActive)return;
+ if(loading&&!loadingInvite&&!room&&cur?.kind==='spatial'&&SpatialBuilds.active())return;
  if(room?.model?.kind==='spatial'&&client?.credentials?.me!=null&&plan){
   panel()?.classList.add('hide');
-  SpatialBuilds.renderLive({room,plan,me:client.credentials.me,busy:busy||client.pending,connected:connected(),statusText,inviteLink,next,previous,leave:()=>go('')});return;
+  SpatialBuilds.renderLive({room,plan,me:client.credentials.me,busy:busy||client.pending,connected:connected(),statusText,inviteLink,next,previous,closeRoom,switchBuilder,notice,leave:()=>go('')});return;
  }
+ if(SpatialBuilds.active())SpatialBuilds.leave();
  showDetail();const me=client?.credentials?.me,joined=me!=null&&room&&plan;
  started=!!joined;phase='build';showAll=false;
  document.body.classList.toggle('building',!!joined);document.body.classList.toggle('task-building',!!joined);document.body.classList.toggle('live-building',!!joined);
@@ -154,14 +156,14 @@ function drawTaskMaterials(task){
 async function beginCreate(){
  if(busy||!cur)return;
  // Save a name still being edited before creating the shared immutable plan.
- document.querySelectorAll('#teamNames input').forEach(el=>team.names[+el.dataset.i]=el.value.trim());saveTeam();
+ if(cur.kind!=='spatial')document.querySelectorAll('#teamNames input').forEach(el=>team.names[+el.dataset.i]=el.value.trim());saveTeam();
  const maxBricks=cur.cat==='Klublogoer'?300:250;
  if(cur.total>maxBricks||(cur.kind!=='spatial'&&(cur.w>24||cur.p.length>24))){$id('resumeInfo').textContent=`Live byggeri understøtter højst ${maxBricks} brikker på 24 × 24 felter.`;return}
- const operation=++lifecycle;busy=true;loading=true;loadingInvite=null;notice='';isActive=true;ensureClient();render();
+ const operation=++lifecycle;room=null;plan=null;busy=true;loading=true;loadingInvite=null;notice='';isActive=true;ensureClient();render();
  try{
   const data=await client.create({model:cur.kind==='spatial'?{id:cur.id,name:cur.name,kind:'spatial',scene:cur.scene}:{id:cur.id,name:cur.name,p:cur.p},builders:Array.from({length:team.n},(_,i)=>team.names[i]||`Bygger ${i+1}`),smallest:team.split==='small'?smallestBuilder():null});
   if(operation!==lifecycle||!isActive)return;invite={roomId:data.roomId,inviteToken:data.inviteToken};location.hash='live='+encodeURIComponent(JSON.stringify(invite));
- }catch(e){if(operation!==lifecycle||!isActive)return;notice=friendly(e);isActive=false;started=false;client.disconnect();panel().classList.add('hide');document.querySelector('#detailView .viewer').classList.remove('hide');rootRender();$id('resumeInfo').textContent=notice}
+ }catch(e){if(operation!==lifecycle||!isActive)return;notice=friendly(e);isActive=false;started=false;client.disconnect();panel().classList.add('hide');if(cur.kind==='spatial'){$id('detailView').classList.add('hide');throw new Error(notice)}document.querySelector('#detailView .viewer').classList.remove('hide');rootRender();$id('resumeInfo').textContent=notice}
  finally{if(operation===lifecycle){busy=false;loading=false;if(isActive)render()}}
 }
 function rootRender(){if(typeof renderApp==='function')renderApp();else if(typeof root.render==='function')root.render();else if(typeof render==='function'){/* Root calls its render when needed; avoid recursive local render. */}}

@@ -13,7 +13,7 @@ const catalogueNames=JSON.parse(readFileSync(new URL('../data/navne.json',`file:
  vm.runInContext(script.slice(0,script.indexOf('// ---------- list ----------'))+'\nBUILDS.push(...catalogueData.models.map(enrich));CATS.push(...catalogueData.categories);catalogueReady=true;this.models=BUILDS;',context);
  return Array.from(context.models);
 }
-const models=catalogue();
+const models=catalogue().filter(m=>m.kind!=='spatial');
 
 for(const builders of [2,3]) test(`all catalogue models: ${builders} builders get a deterministic complete plan with correct parity`,()=>{
  for(const model of models){
