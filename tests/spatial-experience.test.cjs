@@ -16,11 +16,11 @@ function app(options={}){
  const w=dom.window,doc=w.document;
  return{w,doc,errors,renders,click:id=>doc.getElementById(id).click(),settle:async()=>{for(let i=0;i<4;i++)await new Promise(r=>w.setTimeout(r,0))},storage:()=>Object.fromEntries(Object.keys(w.localStorage).map(k=>[k,w.localStorage.getItem(k)])),close:()=>w.close()};
 }
-test('spatial solo uses one brick per step, shows placement, resumes and completes the same sculpture',async()=>{
+test('spatial solo uses connected parts of several bricks, shows placement, resumes and completes the same sculpture',async()=>{
  const a=app();await a.settle();assert.equal(a.doc.getElementById('spatialName').textContent,'Pingvin');assert.equal(a.doc.getElementById('spatialStart').disabled,false);
- a.click('spatialStart');assert.match(a.doc.getElementById('spatialStep').textContent,/Trin 1 af 78 · 1 brik/);
+ a.click('spatialStart');assert.match(a.doc.getElementById('spatialStep').textContent,/Trin 1 af 19 · 8 brikker/);
  a.click('spatialNext');assert.match(a.doc.getElementById('spatialNext').textContent,/sat på/);a.click('spatialNext');
- const b=app({storage:a.storage()});await b.settle();assert.equal(b.doc.getElementById('spatialStart').textContent,'Fortsæt byggeriet');b.click('spatialStart');assert.match(b.doc.getElementById('spatialStep').textContent,/Trin 2 af 78/);
+ const b=app({storage:a.storage()});await b.settle();assert.equal(b.doc.getElementById('spatialStart').textContent,'Fortsæt byggeriet');b.click('spatialStart');assert.match(b.doc.getElementById('spatialStep').textContent,/Trin 2 af 19/);
  for(let i=0;i<160&&!b.doc.getElementById('spatialNext').disabled;i++)b.click('spatialNext');
  assert.equal(b.doc.getElementById('spatialPerson').textContent,'Flot bygget!');assert.equal(b.doc.getElementById('spatialProgress').value,100);
  assert.deepEqual(a.errors.concat(b.errors),[]);a.close();b.close();

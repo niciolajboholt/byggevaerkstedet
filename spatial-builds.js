@@ -10,7 +10,7 @@ function sceneSignature(){return root.SpatialCore.sceneSignature(model.scene)}
 function key(){return JSON.stringify([model.id,sceneSignature(),mode,mode==='solo'?null:[settings.builderCount,settings.names.slice(0,settings.builderCount),settings.smallest]])}
 function saved(){const records=read('bv_spatial_progress',{});return records&&typeof records==='object'?records[key()]:null}
 function save(){if(!model||live||!started||!session)return;const records=read('bv_spatial_progress',{});write('bv_spatial_progress',{...(records&&typeof records==='object'?records:{}),[key()]:session})}
-function makePlan(){const k=JSON.stringify([mode,sceneSignature(),mode==='solo'?2:settings.builderCount,mode==='solo'?null:settings.smallest]);if(!planCache.has(k))planCache.set(k,root.SpatialCore.createPlan(model.scene,{builderCount:mode==='solo'?2:settings.builderCount,smallest:mode==='solo'?null:settings.smallest,maxTaskSize:mode==='solo'?1:4}));return planCache.get(k)}
+function makePlan(){const k=JSON.stringify([mode,sceneSignature(),mode==='solo'?2:settings.builderCount,mode==='solo'?null:settings.smallest]);if(!planCache.has(k))planCache.set(k,root.SpatialCore.createPlan(model.scene,{builderCount:mode==='solo'?2:settings.builderCount,smallest:mode==='solo'?null:settings.smallest,maxTaskSize:8,grouped:true}));return planCache.get(k)}
 function person(i){return settings.names[i]||`Bygger ${i+1}`}
 function colorEntry(c){const p=options.palette?.[c];return {name:Array.isArray(p)?p[0]:c,color:Array.isArray(p)?p[1]:p||'#777'}}
 function materialHTML(counts){return Object.entries(counts).map(([c,n])=>{const p=colorEntry(c);return `<span class="spatial-material"><i style="background:${/^#[0-9a-f]{3,8}$/i.test(p.color)?p.color:'#777'}" aria-hidden="true"></i>${n} × ${escape(p.name)}</span>`}).join('')}
@@ -72,7 +72,7 @@ function setup(){
  $('spatialSmallest').innerHTML='<option value="">Opgaver på skift</option>'+Array.from({length:settings.builderCount},(_,i)=>`<option value="${i}">Mindre opgaver til ${escape(person(i))}</option>`).join('');$('spatialSmallest').value=settings.smallest==null?'':String(settings.smallest);
  $('spatialSplitInfo').textContent=plan.totals.map((n,i)=>`${person(i)}: ${n} ${unit(n)}`).join(' · ')+(plan.assignmentNote?' · '+plan.assignmentNote:'');
  const previous=root.SpatialCore.restoreSession(plan,saved());$('spatialStart').textContent=previous?'Fortsæt byggeriet':'Start byggeriet';$('spatialStart').disabled=!viewer||busy;$('spatialRestart').classList.toggle('hide',!previous);$('spatialRestart').disabled=!viewer||busy;
- $('spatialResume').textContent=previous?'Dit fremskridt er gemt på denne enhed.':'I bygger et lille stykke ad gangen og sætter det på den samlede model.';
+ $('spatialResume').textContent=previous?'Dit fremskridt er gemt på denne enhed.':saved()?'Vejledningen er opdateret til større dele. Dette byggeri starter fra begyndelsen med den nye opdeling.':'I bygger et lille stykke ad gangen og sætter det på den samlede model.';
  $('spatialCreateLive').classList.toggle('hide',mode!=='together'||!options.createLive);$('spatialCreateLive').disabled=!viewer||busy;
 }
 function begin(restart){
