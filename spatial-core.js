@@ -104,8 +104,53 @@ function insertionFor(voxels,previousVoxels,knownRanges){
  }
  return null;
 }
-function createPlan(scene,{builderCount=2,smallest=null,maxTaskSize=4,require3D=true}={}){
+// Local subassembly plans may reorder future bricks only when the remaining
+// original insertion order is still possible after attaching the whole group.
+function groupedPlan(scene,{builderCount,smallest,maxTaskSize,require3D}){
+ const checked=validateScene(scene,{require3D});if(!checked.valid)throw Error('Invalid spatial scene');
+ const pieces=scene.pieces,vox=new Map(pieces.map(p=>[p.id,transformed(p)])),adj=new Map(pieces.map(p=>[p.id,new Set()]));
+ checked.edges.forEach(e=>{adj.get(e.a).add(e.b);adj.get(e.b).add(e.a)});
+ const placed=new Set(),previous=[],remaining=new Set(pieces.map(p=>p.id)),tasks=[];
+ function tailClear(group){
+  const ranges=[new Map(),new Map(),new Map()];
+  function remember(cubes){for(const v of cubes)for(let axis=0;axis<3;axis++){const k=v.filter((_,i)=>i!==axis).join(','),b=ranges[axis].get(k);ranges[axis].set(k,b?[Math.min(b[0],v[axis]),Math.max(b[1],v[axis])]:[v[axis],v[axis]])}}
+  remember(previous);group.forEach(p=>remember(vox.get(p.id)));
+  const members=new Set(group.map(p=>p.id));
+  for(const p of pieces)if(remaining.has(p.id)&&!members.has(p.id)){
+   const cubes=vox.get(p.id);if(!insertionFor(cubes,null,ranges))return false;remember(cubes);
+  }
+  return true;
+ }
+ while(remaining.size){
+  const owner=tasks.length%builderCount,limit=owner===smallest?Math.max(2,Math.floor(maxTaskSize/2)):maxTaskSize;
+  const seed=pieces.find(p=>remaining.has(p.id)),group=[seed],members=new Set([seed.id]);
+  let certificate=insertionFor(vox.get(seed.id),previous);
+  if(!certificate)throw Error('No legal next subassembly');
+  while(group.length<limit){
+   let found=false;const internal=group.flatMap(p=>vox.get(p.id));
+   for(const p of pieces){
+    if(!remaining.has(p.id)||members.has(p.id)||![...adj.get(p.id)].some(id=>members.has(id)))continue;
+    if(!insertionFor(vox.get(p.id),internal))continue;
+    const candidate=group.concat(p),motion=insertionFor(internal.concat(vox.get(p.id)),previous);
+    if(!motion||!tailClear(candidate))continue;
+    group.push(p);members.add(p.id);certificate=motion;found=true;break;
+   }
+   if(!found)break;
+  }
+  const counts={},attachmentEdges=checked.edges.filter(e=>(members.has(e.a)&&placed.has(e.b))||(members.has(e.b)&&placed.has(e.a)));
+  if(tasks.length&&!attachmentEdges.length)throw Error('Subassembly does not attach');
+  group.forEach(p=>{remaining.delete(p.id);placed.add(p.id);previous.push(...vox.get(p.id));counts[p.c]=(counts[p.c]||0)+1});
+  tasks.push({index:tasks.length,owner,pieceIds:group.map(p=>p.id),pieces:group,tiles:group,row:0,n:group.length,counts,attachmentEdges,requiresPrevious:tasks.length>0,...certificate});
+ }
+ const signature=JSON.stringify({grouped:1,scene:checked.signature,builderCount,smallest,maxTaskSize}),id='spatial-subassemblies-v1-'+hash(signature),totals=Array(builderCount).fill(0);
+ tasks.forEach((t,i)=>{totals[t.owner]+=t.n;t.id=id+'-'+String(i+1).padStart(3,'0');t.dependencies=i?[tasks[i-1].id]:[]});
+ const assignmentNote=smallest!==null&&totals[smallest]>=Math.min(...totals.filter((_,i)=>i!==smallest))?'Fordelingen følger de sammenhængende dele; færre brikker til den valgte bygger kan ikke garanteres.':'';
+ return {v:VERSION,id,planId:id,signature,sceneSignature:checked.signature,tasks,totals,total:pieces.length,assignmentNote,assemblyMotionTested:true,assemblyMotionModel:'nominal-unit-cube-straight-axis-insertion'};
+}
+
+function createPlan(scene,{builderCount=2,smallest=null,maxTaskSize=4,require3D=true,grouped=false}={}){
  if(![2,3].includes(builderCount)||!Number.isInteger(maxTaskSize)||maxTaskSize<1||maxTaskSize>12||(smallest!==null&&(!Number.isInteger(smallest)||smallest<0||smallest>=builderCount)))throw new TypeError('Invalid builder/task settings');
+ if(grouped)return groupedPlan(scene,{builderCount,smallest,maxTaskSize,require3D});
  const validation=validateScene(scene,{require3D});if(!validation.valid)throw new TypeError('Invalid physical scene: '+JSON.stringify(validation.errors.slice(0,3)));
  const pieces=new Map(scene.pieces.map(p=>[p.id,p])),rank=new Map(scene.pieces.map((p,i)=>[p.id,i])),adjacency=new Map(scene.pieces.map(p=>[p.id,[]]));
  validation.edges.forEach(e=>{adjacency.get(e.a).push(e.b);adjacency.get(e.b).push(e.a)});adjacency.forEach(list=>list.sort((a,b)=>rank.get(a)-rank.get(b)));

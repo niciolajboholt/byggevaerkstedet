@@ -209,7 +209,7 @@ New live rooms persist `planVersion: 2`. Existing rooms without this field retai
 
 Kategorien **3D-figurer** indeholder 50 rumlige modeller med faktiske Plus-Plus-brikker i selvstændige positioner og retninger. Kataloget har nu 320 motiver: 270 mosaikker med tre sværhedsgrader og 50 rumlige vejledninger. De rumlige modeller har én konkret, materialeberegnet udgave hver og højst 250 brikker.
 
-Byg alene, på skift på samme iPad eller i et live-rum på flere enheder. Hver opgave er sammenhængende og bevarer den kontrollerede samlerækkefølge. Se det aktuelle stykke, sæt det på den samlede model og skift først derefter bygger. Hele processen kan drejes og ses forfra, fra siden og ovenfra. Fremdrift gemmes lokalt eller i live-rummet.
+Byg alene, på skift på samme iPad eller i et live-rum på flere enheder. Alene og på samme iPad bygges sammenhængende dele på op til otte brikker, som derefter sættes på modellen. Enkelte brikker bruges, hvor større dele ikke kan monteres. Eksisterende live-rum bevarer deres oprindelige opdeling. Hver opgave er sammenhængende og bevarer den kontrollerede samlerækkefølge. Se det aktuelle stykke, sæt det på den samlede model og skift først derefter bygger. Hele processen kan drejes og ses forfra, fra siden og ovenfra. Fremdrift gemmes lokalt eller i live-rummet.
 
 `spatial-core.js` kontrollerer hele brikker, overlap, tap/not-samlinger, fri indføringsretning og modellens nominelle balance. De 50 figurer er digitalt kontrolleret, men ikke fysisk prøvebygget. Materialetolerancer og samlingernes faktiske styrke er ikke afprøvet. De tidligere illustrationsprototyper bruges ikke som byggevejledninger.
 

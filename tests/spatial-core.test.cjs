@@ -55,3 +55,18 @@ test('Titanic retains four orange funnels with separate black caps',()=>{
   assert.ok(m.scene.pieces.some(p=>p.grid[0]===0&&p.grid[1]===y&&p.grid[2]===5&&p.c==='K'));
  }
 });
+test('grouped guides reduce steps across all fifty figures while every part can be built and attached',()=>{
+ let steps=0,bricks=0,multi=0;
+ for(const m of models){
+  const plan=Core.createPlan(m.scene,{grouped:true,maxTaskSize:8}),covered=new Set(),previous=[];
+  for(const task of plan.tasks){
+   const internal=[];
+   for(const p of task.pieces){assert.ok(!covered.has(p.id));assert.ok(Core.insertionFor(Core.transformed(p),internal));internal.push(...Core.transformed(p));covered.add(p.id)}
+   assert.ok(Core.insertionFor(internal,previous));previous.push(...internal);
+   const connected=new Set([task.pieceIds[0]]);for(let k=0;k<task.n;k++)for(const p of task.pieces)if(task.pieces.some(q=>connected.has(q.id)&&Core.joint(p,q)))connected.add(p.id);
+   assert.equal(connected.size,task.n);assert.ok(task.n<=8);if(task.n>1)multi++;
+  }
+  assert.equal(covered.size,m.scene.pieces.length);assert.ok(plan.tasks.length<m.scene.pieces.length/2,m.id);steps+=plan.tasks.length;bricks+=plan.total;
+ }
+ assert.ok(steps<bricks/3);assert.ok(multi>steps/2);
+});
